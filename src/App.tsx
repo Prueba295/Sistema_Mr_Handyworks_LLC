@@ -87,9 +87,7 @@ const MainLayout: React.FC = () => {
           {currentPage === 'admin' ? (
             <AdminView />
           ) : (
-            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_250px] lg:items-start">
-              <div className="min-w-0">{renderSection(currentPage)}</div>
-
+            <div className="grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:items-start">
               <aside className="hidden lg:block">
                 <div className="sticky top-28 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm">
                   <div className="mb-3 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)]">
@@ -129,6 +127,8 @@ const MainLayout: React.FC = () => {
                   </div>
                 </div>
               </aside>
+
+              <div className="min-w-0">{renderSection(currentPage)}</div>
             </div>
           )}
         </main>
