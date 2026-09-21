@@ -9,6 +9,13 @@ import {
   X,
   ShieldCheck,
   Sparkles,
+  House,
+  Wrench,
+  Calculator,
+  Image as ImageIcon,
+  Star,
+  Briefcase,
+  UserRound,
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -25,6 +32,16 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const mobileNavItems = [
+    { key: 'home', labelEs: 'Inicio', labelEn: 'Home', icon: House },
+    { key: 'services', labelEs: 'Servicios', labelEn: 'Services', icon: Wrench },
+    { key: 'estimator', labelEs: 'Cotizador', labelEn: 'Estimator', icon: Calculator },
+    { key: 'portfolio', labelEs: 'Proyectos', labelEn: 'Projects', icon: ImageIcon },
+    { key: 'reviews', labelEs: 'Reseñas', labelEn: 'Reviews', icon: Star },
+    { key: 'credentials', labelEs: 'Credenciales', labelEn: 'Credentials', icon: Briefcase },
+    { key: 'admin', labelEs: 'Admin', labelEn: 'Admin', icon: UserRound },
+  ] as const;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--header-bg)] backdrop-blur-md shadow-[0_1px_0_var(--shadow)] transition-colors">
@@ -51,7 +68,7 @@ export const Header: React.FC = () => {
               title="Portal Privado"
             >
               <Lock className="w-3 h-3 text-amber-400" />
-              <span className="font-semibold">{adminUser.isAuthenticated ? (language === 'es' ? 'Admin' : 'Admin') : 'Admin'}</span>
+              <span className="font-semibold">{adminUser.isAuthenticated ? 'Admin' : 'Admin'}</span>
             </button>
           </div>
         </div>
@@ -81,19 +98,35 @@ export const Header: React.FC = () => {
           <button
             id="lang-toggle-btn"
             onClick={toggleLanguage}
-            className="flex items-center text-xs font-bold px-2.5 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-[#0B3C5D] transition-colors cursor-pointer"
-            title="Cambiar Idioma / Change Language"
+            aria-label="Toggle Language"
+            className="flex items-center gap-1 rounded-full border border-slate-300/80 bg-slate-100/90 p-1 shadow-sm transition-all dark:border-slate-700 dark:bg-slate-800/90"
+            title="Cambiar idioma"
           >
-            <span className={language === 'es' ? 'text-[#0B3C5D] dark:text-blue-400 font-black' : 'text-slate-400'}>ES</span>
-            <span className="mx-1 text-slate-400">/</span>
-            <span className={language === 'en' ? 'text-[#0B3C5D] dark:text-blue-400 font-black' : 'text-slate-400'}>EN</span>
+            <span
+              className={`min-w-[2rem] rounded-full px-2 py-1 text-[10px] font-black tracking-wide transition-colors ${
+                language === 'es'
+                  ? 'bg-[#0B3C5D] text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              ES
+            </span>
+            <span
+              className={`min-w-[2rem] rounded-full px-2 py-1 text-[10px] font-black tracking-wide transition-colors ${
+                language === 'en'
+                  ? 'bg-[#0B3C5D] text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              EN
+            </span>
           </button>
 
           <button
             id="theme-toggle-btn"
             onClick={toggleTheme}
-            className="p-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text)] hover:text-[var(--primary)] transition-colors cursor-pointer shadow-2xs"
-            title={theme === 'light' ? 'Cambiar a Modo Oscuro' : 'Cambiar a Modo Claro'}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text)] shadow-sm transition-colors cursor-pointer"
+            title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
             aria-label="Toggle Theme"
           >
             {theme === 'light' ? <Moon className="w-4 h-4 text-slate-700" /> : <Sun className="w-4 h-4 text-amber-400" />}
@@ -101,7 +134,7 @@ export const Header: React.FC = () => {
 
           <button
             onClick={() => openBookingWizard()}
-            className="inline-flex items-center gap-1.5 bg-[#0B3C5D] hover:bg-[#07273d] text-white font-black text-xs sm:text-sm px-4 py-2 rounded-xl shadow-xs transition-all cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 bg-[#0B3C5D] hover:bg-[#07273d] text-white font-black text-xs sm:text-sm px-4 py-2 rounded-xl shadow-xs transition-all cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-blue-200" />
             <span>{language === 'es' ? 'Solicitar' : 'Request'}</span>
@@ -109,7 +142,7 @@ export const Header: React.FC = () => {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+            className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text)] shadow-sm cursor-pointer"
             aria-label="Menu"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -118,61 +151,49 @@ export const Header: React.FC = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-[var(--border)] bg-[var(--surface)] px-4 pt-3 pb-6 space-y-2 shadow-lg">
-          <a href={`tel:${businessInfo.phoneRaw}`} className="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs flex items-center justify-center gap-2">
-            <Phone className="w-3.5 h-3.5 text-[#0B3C5D] dark:text-blue-400" />
-            <span>{language === 'es' ? `Llamar: ${businessInfo.phone}` : `Call: ${businessInfo.phone}`}</span>
-          </a>
+        <div className="md:hidden">
+          <button className="fixed inset-0 z-40 bg-slate-950/40" onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu" />
+          <aside className="fixed right-0 top-0 z-50 flex h-full w-[82vw] max-w-xs flex-col border-l border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+              <div className="text-sm font-black text-[var(--text)]">{language === 'es' ? 'Menú' : 'Menu'}</div>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="rounded-full p-2 hover:bg-[var(--surface-soft)]" aria-label="Close menu">
+                <X className="w-4 h-4 text-[var(--text)]" />
+              </button>
+            </div>
 
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              navigateTo('services');
-            }}
-            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-[var(--text)] hover:bg-[var(--surface-soft)] flex items-center gap-2.5"
-          >
-            <span>{language === 'es' ? 'Servicios' : 'Services'}</span>
-          </button>
+            <nav className="flex-1 space-y-2 p-4">
+              {mobileNavItems.map(({ key, labelEs, labelEn, icon: Icon }) => {
+                const isActive = currentPage === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigateTo(key as any);
+                    }}
+                    className={`flex w-full items-center justify-between gap-3 rounded-2xl px-3 py-3 text-left text-sm font-bold transition-colors ${
+                      isActive
+                        ? 'bg-[#0B3C5D] text-white shadow-sm'
+                        : 'bg-[var(--surface-soft)] text-[var(--text)]'
+                    }`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <Icon className="w-4 h-4" />
+                      <span>{language === 'es' ? labelEs : labelEn}</span>
+                    </span>
+                    <span className="text-[10px] opacity-80">→</span>
+                  </button>
+                );
+              })}
+            </nav>
 
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              navigateTo('estimator');
-            }}
-            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-[var(--text)] hover:bg-[var(--surface-soft)]"
-          >
-            {language === 'es' ? 'Cotizador' : 'Estimator'}
-          </button>
-
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              navigateTo('portfolio');
-            }}
-            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-[var(--text)] hover:bg-[var(--surface-soft)]"
-          >
-            {language === 'es' ? 'Proyectos' : 'Projects'}
-          </button>
-
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              navigateTo('reviews');
-            }}
-            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-[var(--text)] hover:bg-[var(--surface-soft)]"
-          >
-            {language === 'es' ? 'Reseñas' : 'Reviews'}
-          </button>
-
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              navigateTo('credentials');
-            }}
-            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-[var(--text)] hover:bg-[var(--surface-soft)]"
-          >
-            {language === 'es' ? 'Credenciales' : 'Credentials'}
-          </button>
+            <div className="border-t border-[var(--border)] p-4">
+              <a href={`tel:${businessInfo.phoneRaw}`} className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#0B3C5D] px-4 py-3 text-sm font-black text-white">
+                <Phone className="w-4 h-4" />
+                {businessInfo.phone}
+              </a>
+            </div>
+          </aside>
         </div>
       )}
     </header>

@@ -168,7 +168,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const toggleLanguage = () => {
-    setLanguage(language === 'es' ? 'en' : 'es');
+    const nextLang = language === 'es' ? 'en' : 'es';
+    setLanguage(nextLang);
   };
 
   // 2. Theme State
@@ -205,6 +206,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const navigateTo = (page: NavigationPage) => {
     setCurrentPage(page);
+    localStorage.setItem('mr_handyworks_current_page', page);
     window.location.hash = `#/${page}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -213,9 +215,86 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const handleHashChange = () => {
       const page = getPageFromHash();
       setCurrentPage(page);
+      localStorage.setItem('mr_handyworks_current_page', page);
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    const syncExternalChanges = (event: StorageEvent) => {
+      if (!event.key) return;
+
+      switch (event.key) {
+        case 'mr_handyworks_lang': {
+          const next = event.newValue;
+          if (next === 'es' || next === 'en') {
+            setLanguageState(next);
+            document.documentElement.lang = next;
+          }
+          break;
+        }
+        case 'mr_handyworks_theme': {
+          const next = event.newValue;
+          if (next === 'light' || next === 'dark') {
+            setThemeState(next);
+          }
+          break;
+        }
+        case 'mr_handyworks_current_page': {
+          const next = event.newValue as NavigationPage | null;
+          if (next && ['home', 'services', 'estimator', 'portfolio', 'reviews', 'schedule', 'credentials', 'admin'].includes(next)) {
+            setCurrentPage(next);
+          }
+          break;
+        }
+        case 'mr_handyworks_admin': {
+          const next = event.newValue ? JSON.parse(event.newValue) : { isAuthenticated: false, email: '', twoFactorActive: true };
+          setAdminUser(next);
+          break;
+        }
+        case 'mr_handyworks_biz_info': {
+          const next = event.newValue ? JSON.parse(event.newValue) : DEFAULT_BUSINESS_INFO;
+          setBusinessInfo(next);
+          break;
+        }
+        case 'mr_handyworks_services': {
+          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_SERVICES;
+          setServices(next);
+          break;
+        }
+        case 'mr_handyworks_portfolio': {
+          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_PORTFOLIO;
+          setPortfolio(next);
+          break;
+        }
+        case 'mr_handyworks_reviews': {
+          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_REVIEWS;
+          setReviews(next);
+          break;
+        }
+        case 'mr_handyworks_availability': {
+          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_AVAILABILITY;
+          setAvailability(next);
+          break;
+        }
+        case 'mr_handyworks_bookings': {
+          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_BOOKINGS;
+          setBookings(next);
+          break;
+        }
+        case 'mr_handyworks_qr': {
+          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_QR_METHODS;
+          setQrMethods(next);
+          break;
+        }
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('storage', syncExternalChanges);
+    return () => window.removeEventListener('storage', syncExternalChanges);
   }, []);
 
   // 4. Translations
@@ -494,6 +573,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return session ? JSON.parse(session) : { isAuthenticated: false, email: 'brian@mrhandyworks.com', twoFactorActive: true };
   });
 
+  useEffect(() => {
+    const syncAdminSession = (event: StorageEvent) => {
+      if (event.key !== 'mr_handyworks_admin') return;
+      if (!event.newValue) {
+        setAdminUser({ isAuthenticated: false, email: '', twoFactorActive: true });
+        return;
+      }
+      setAdminUser(JSON.parse(event.newValue));
+    };
+
+    window.addEventListener('storage', syncAdminSession);
+    return () => window.removeEventListener('storage', syncAdminSession);
+  }, []);
+
   const adminLogin = async (password: string): Promise<boolean> => {
     const cleanPassword = password.trim();
     const lockoutKey = 'mr_handyworks_admin_lockout';
@@ -524,6 +617,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
       setAdminUser(user);
       sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
+      localStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
       showNotification(language === 'es' ? 'Bienvenido Brian Cueva (Sesión Segura)' : 'Welcome Brian Cueva (Secure Session)');
       return true;
     }
@@ -543,6 +637,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const guest: AdminUser = { isAuthenticated: false, email: '', twoFactorActive: true };
     setAdminUser(guest);
     sessionStorage.removeItem('mr_handyworks_admin');
+    localStorage.removeItem('mr_handyworks_admin');
     setIsAdminModalOpen(false);
     showNotification(language === 'es' ? 'Sesión cerrada correctamente' : 'Signed out successfully');
   };
