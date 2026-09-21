@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 rounded-xl overflow-hidden border border-blue-400/40 bg-white">
                 <img 
-                  src="/images/mr_handyworks_logo.jpg" 
+                  src="/logo_handy.webp" 
                   alt="Mr Handyworks Logo" 
                   className="w-full h-full object-cover"
                 />

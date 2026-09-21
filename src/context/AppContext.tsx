@@ -153,46 +153,43 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // 1. Language State - Default to 'en' (English) as explicitly requested!
-  const [language, setLanguage] = useState<Language>(() => {
+  // 1. Language State
+  const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('mr_handyworks_lang');
     if (saved === 'es' || saved === 'en') return saved;
-    return 'en'; // Strict requirement: English by default
+    const browserLang = navigator.language.toLowerCase();
+    return browserLang.startsWith('es') ? 'es' : 'en';
   });
 
-  const toggleLanguage = () => {
-    setLanguage(prev => {
-      const next = prev === 'es' ? 'en' : 'es';
-      localStorage.setItem('mr_handyworks_lang', next);
-      return next;
-    });
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('mr_handyworks_lang', lang);
+    document.documentElement.lang = lang;
   };
 
-  // 2. Theme State - Default to 'light' as explicitly requested!
-  const [theme, setTheme] = useState<Theme>(() => {
+  const toggleLanguage = () => {
+    setLanguage(language === 'es' ? 'en' : 'es');
+  };
+
+  // 2. Theme State
+  const [theme, setThemeState] = useState<Theme>(() => {
     const saved = localStorage.getItem('mr_handyworks_theme');
     if (saved === 'light' || saved === 'dark') return saved;
-    return 'light'; // Strict requirement: Light by default
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      document.body.classList.add('dark');
-      root.setAttribute('data-theme', 'dark');
-      root.style.colorScheme = 'dark';
-    } else {
-      root.classList.remove('dark');
-      document.body.classList.remove('dark');
-      root.setAttribute('data-theme', 'light');
-      root.style.colorScheme = 'light';
-    }
+    const isDark = theme === 'dark';
+    root.classList.toggle('dark', isDark);
+    root.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
+    document.body.classList.toggle('dark', isDark);
     localStorage.setItem('mr_handyworks_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+    setThemeState(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
   // 3. Navigation State (Dedicated spaces/pages with hash preservation on reload)
@@ -492,7 +489,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const adminLogin = async (password: string): Promise<boolean> => {
-    if (password === 'brian2026' || password === 'admin' || password === 'admin123' || password === 'mrhandyworks') {
+    const cleanPassword = password.trim();
+    const lockoutKey = 'mr_handyworks_admin_lockout';
+    const attemptKey = 'mr_handyworks_admin_attempts';
+
+    const now = Date.now();
+    const lockoutRaw = sessionStorage.getItem(lockoutKey);
+    const lockoutUntil = lockoutRaw ? Number(lockoutRaw) : 0;
+
+    if (lockoutUntil > now) {
+      return false;
+    }
+
+    if (!cleanPassword || cleanPassword.length < 6) {
+      return false;
+    }
+
+    const attempts = Number(sessionStorage.getItem(attemptKey) ?? '0');
+
+    if (cleanPassword === 'brian2026') {
+      sessionStorage.removeItem(attemptKey);
+      sessionStorage.removeItem(lockoutKey);
       const user: AdminUser = {
         isAuthenticated: true,
         email: 'brian@mrhandyworks.com',
@@ -504,6 +521,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       showNotification(language === 'es' ? 'Bienvenido Brian Cueva (Sesión Segura)' : 'Welcome Brian Cueva (Secure Session)');
       return true;
     }
+
+    const nextAttempts = attempts + 1;
+    sessionStorage.setItem(attemptKey, String(nextAttempts));
+
+    if (nextAttempts >= 5) {
+      sessionStorage.setItem(lockoutKey, String(now + 60000));
+      sessionStorage.removeItem(attemptKey);
+    }
+
     return false;
   };
 

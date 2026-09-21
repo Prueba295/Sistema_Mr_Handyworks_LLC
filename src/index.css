@@ -3,20 +3,110 @@
 @variant dark (&:where(.dark, .dark *));
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --bg: #f4f6f9;
+  --bg-alt: #eef3f8;
+  --surface: #ffffff;
+  --surface-strong: #f8fafc;
+  --surface-soft: #edf2f7;
+  --surface-dark: #111827;
+  --header-bg: rgba(255, 255, 255, 0.94);
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --primary: #0b3c5d;
+  --primary-strong: #07273d;
+  --accent: #3b82f6;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --shadow: rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+  --bg: #0b111a;
+  --bg-alt: #121b2a;
+  --surface: #151e2b;
+  --surface-strong: #1c2636;
+  --surface-soft: #0f1722;
+  --surface-dark: #0b111a;
+  --header-bg: rgba(20, 29, 43, 0.96);
+  --border: rgba(148, 163, 184, 0.18);
+  --text: #f8fafc;
+  --text-muted: #cbd5e1;
+  --primary: #60a5fa;
+  --primary-strong: #93c5fd;
+  --accent: #7dd3fc;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --shadow: rgba(2, 6, 23, 0.38);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    min-height: 100%;
+    background-color: var(--bg);
   }
+
   body {
-    background-color: #F4F6F9;
-    color: #0F172A;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .dark body,
-  html.dark body {
-    background-color: #0B111A;
-    color: #F8FAFC;
+
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
+
+  a, button, input, select, textarea {
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    transition-duration: 200ms;
+  }
+
+  .app-shell {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px var(--shadow);
+  }
+
+  .panel-soft {
+    background: var(--surface-strong);
+    border: 1px solid var(--border);
+  }
+
+  .surface-muted {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+  }
+
+  .dark .shadow-2xs,
+  html.dark .shadow-2xs {
+    box-shadow: 0 1px 2px rgba(2, 6, 23, 0.38);
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-soft);
+}
+::-webkit-scrollbar-thumb {
+  background: #94A3B8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748B;
 }
 
 /* Custom subtle scrollbar */

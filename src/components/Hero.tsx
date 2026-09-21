@@ -49,7 +49,7 @@ export const Hero: React.FC = () => {
               {/* Profile Avatar / Emblem */}
               <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#0B3C5D] dark:border-blue-500 shadow-md bg-white shrink-0">
                 <img 
-                  src="/images/mr_handyworks_logo.jpg" 
+                  src="/logo_handy.webp" 
                   alt="Brian Cueva - Mr Handyworks LLC" 
                   className="w-full h-full object-cover"
                 />
@@ -119,13 +119,21 @@ export const Hero: React.FC = () => {
             {/* About Card */}
             <div className="bg-white dark:bg-[#151E2B] rounded-2xl p-6 sm:p-7 border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4">
               <h2 className="text-xl font-extrabold text-[#0B3C5D] dark:text-white">
-                {language === 'es' ? 'Sobre el Profesional' : 'About Brian Cueva'}
+                {language === 'es' ? 'Lo esencial de nuestro servicio' : 'What matters most about our service'}
               </h2>
               
               <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                 <p>
                   {language === 'es' ? businessInfo.bioEs : businessInfo.bioEn}
                 </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-1">
+                {['TV Mounting', 'Painting', 'Assembly', 'Repairs', 'Carpentry'].map((item) => (
+                  <span key={item} className="px-2.5 py-1 rounded-full text-[10px] font-bold border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                    {item}
+                  </span>
+                ))}
               </div>
 
               {/* Quick Action links */}

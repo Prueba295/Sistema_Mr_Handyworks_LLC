@@ -43,7 +43,7 @@ const MainLayout: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F4F6F9] dark:bg-[#0B111A] text-slate-900 dark:text-slate-100 selection:bg-[#0B3C5D] selection:text-white transition-colors flex flex-col justify-between">
+    <div className="app-shell min-h-screen selection:bg-[#0B3C5D] selection:text-white transition-colors flex flex-col justify-between">
       <div>
         {/* Top Sticky Header */}
         <Header />

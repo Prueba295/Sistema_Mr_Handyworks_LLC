@@ -50,7 +50,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#141D2B]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-2xs transition-colors">
+    <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--header-bg)] backdrop-blur-md shadow-[0_1px_0_var(--shadow)] transition-colors">
       
       {/* Top Micro-Bar: Trust credentials & direct phone call */}
       <div className="bg-slate-900 dark:bg-[#0B111B] text-slate-200 border-b border-slate-800/80 text-[11px] sm:text-xs py-1.5 px-4 sm:px-6">
@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
         >
           <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden border-2 border-[#0B3C5D] dark:border-blue-500 shadow-2xs bg-white">
             <img 
-              src="/images/mr_handyworks_logo.jpg" 
+              src="/logo_handy.webp" 
               alt="Mr Handyworks LLC Logo" 
               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
             />
@@ -125,18 +125,18 @@ export const Header: React.FC = () => {
         </div>
 
         {/* Clean Desktop Navigation Links (No Duplication) */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-xs sm:text-sm font-extrabold text-slate-700 dark:text-slate-200">
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-xs sm:text-sm font-extrabold text-[var(--text)]">
           <button
             onClick={() => handleNavClick('servicios')}
-            className="px-3.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#0B3C5D] dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <Wrench className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
+            <Wrench className="w-4 h-4 text-[var(--primary)]" />
             <span>{language === 'es' ? 'Servicios' : 'Services'}</span>
           </button>
 
           <button
             onClick={() => handleNavClick('cotizador')}
-            className="px-3.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#0B3C5D] dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Calculator className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>{language === 'es' ? 'Cotizador' : 'Instant Estimate'}</span>
@@ -144,7 +144,7 @@ export const Header: React.FC = () => {
 
           <button
             onClick={() => handleNavClick('proyectos')}
-            className="px-3.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#0B3C5D] dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <ImageIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             <span>{language === 'es' ? 'Fotos' : 'Portfolio'}</span>
@@ -152,7 +152,7 @@ export const Header: React.FC = () => {
 
           <button
             onClick={() => handleNavClick('resenas')}
-            className="px-3.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#0B3C5D] dark:hover:text-blue-400 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl hover:bg-[var(--surface-soft)] hover:text-[var(--primary)] transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
             <span>{language === 'es' ? 'Reseñas (5.0 ★)' : 'Reviews (5.0 ★)'}</span>
@@ -178,7 +178,7 @@ export const Header: React.FC = () => {
           <button
             id="theme-toggle-btn"
             onClick={toggleTheme}
-            className="p-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-amber-300 hover:text-[#0B3C5D] transition-colors cursor-pointer shadow-2xs"
+            className="p-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text)] hover:text-[var(--primary)] transition-colors cursor-pointer shadow-2xs"
             title={theme === 'light' ? 'Cambiar a Modo Oscuro' : 'Cambiar a Modo Claro'}
             aria-label="Toggle Theme"
           >
@@ -212,12 +212,12 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#141D2B] px-4 pt-3 pb-6 space-y-2 shadow-lg">
+        <div className="md:hidden border-t border-[var(--border)] bg-[var(--surface)] px-4 pt-3 pb-6 space-y-2 shadow-lg">
           <button
             onClick={() => handleNavClick('servicios')}
-            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2.5"
+            className="w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-sm text-[var(--text)] hover:bg-[var(--surface-soft)] flex items-center gap-2.5"
           >
-            <Wrench className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
+            <Wrench className="w-4 h-4 text-[var(--primary)]" />
             <span>{language === 'es' ? 'Servicios y Tarifas' : 'Services & Rates'}</span>
           </button>
 
