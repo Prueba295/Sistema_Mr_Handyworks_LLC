@@ -1,0 +1,6 @@
+{
+  "name": "Mr Handyworks LLC",
+  "description": "Professional home repairs, installation, and remodeling platform for Mr Handyworks LLC (Owner: Brian Cueva) in South Bend, IN. Top Pro 5.0 rated services with real-time booking, quote estimator, and admin suite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
