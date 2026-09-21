@@ -178,18 +178,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
-  useEffect(() => {
+  const applyTheme = (nextTheme: Theme) => {
     const root = document.documentElement;
-    const isDark = theme === 'dark';
+    const isDark = nextTheme === 'dark';
     root.classList.toggle('dark', isDark);
-    root.setAttribute('data-theme', theme);
-    root.style.colorScheme = theme;
+    root.setAttribute('data-theme', nextTheme);
+    root.style.colorScheme = nextTheme;
     document.body.classList.toggle('dark', isDark);
-    localStorage.setItem('mr_handyworks_theme', theme);
+    localStorage.setItem('mr_handyworks_theme', nextTheme);
+  };
+
+  useEffect(() => {
+    applyTheme(theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setThemeState(prev => (prev === 'light' ? 'dark' : 'light'));
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setThemeState(nextTheme);
+    applyTheme(nextTheme);
   };
 
   // 3. Navigation State (Dedicated spaces/pages with hash preservation on reload)
