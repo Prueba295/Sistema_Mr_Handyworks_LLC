@@ -61,6 +61,8 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   bioEn: 'Brian Cueva is the owner and master craftsman behind Mr Handyworks LLC in South Bend, IN. With over 8 years of hands-on experience and a 5.0 perfect rating on Thumbtack (Top Pro), Brian specializes in precision TV mounting, home repairs, painting, fixture installations, and custom handyman solutions with a 100% satisfaction guarantee.'
 };
 
+const LANGUAGE_STORAGE_KEY = 'mr_handyworks_lang_v2';
+
 const parseStoredValue = <T,>(value: string | null, fallback: T): T => {
   if (!value) return fallback;
   try {
@@ -170,15 +172,14 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // 1. Language State
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = readSyncedValue('mr_handyworks_lang');
+    const saved = readSyncedValue(LANGUAGE_STORAGE_KEY);
     if (saved === 'es' || saved === 'en') return saved;
-    const browserLang = navigator.language.toLowerCase();
-    return browserLang.startsWith('es') ? 'es' : 'en';
+    return 'en';
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    writeSyncedValue('mr_handyworks_lang', lang);
+    writeSyncedValue(LANGUAGE_STORAGE_KEY, lang);
     document.documentElement.lang = lang;
   };
 
@@ -248,7 +249,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     const syncExternalChanges = (event: { key: string; value: string | null }) => {
       switch (event.key) {
-        case 'mr_handyworks_lang': {
+        case LANGUAGE_STORAGE_KEY: {
           const next = event.value;
           if (next === 'es' || next === 'en') {
             setLanguageState(next);

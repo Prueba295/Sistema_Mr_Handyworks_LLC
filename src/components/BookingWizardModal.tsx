@@ -92,6 +92,7 @@ export const BookingWizardModal: React.FC = () => {
   const selectedServiceName = currentService && currentService.id === selectedServiceId
     ? (language === 'es' ? currentService.titleEs : currentService.titleEn)
     : selectedServiceId;
+  const normalizedServiceSearch = serviceSearch.trim().toLowerCase();
 
   // Calculate estimated price based on duration tier
   const calculateEstimatedPrice = (): number => {
@@ -170,17 +171,17 @@ export const BookingWizardModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-      <div className="relative max-w-2xl w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/75 p-2 backdrop-blur-xs sm:p-6">
+      <div className="relative my-2 flex max-h-[calc(100dvh-1rem)] w-full min-w-0 max-w-2xl flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900 sm:my-8 sm:max-h-[calc(100dvh-3rem)]">
         
         {/* Top Header */}
-        <div className="px-6 py-5 bg-[#0B3C5D] text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center justify-between gap-3 bg-[#0B3C5D] px-4 py-4 text-white sm:px-6 sm:py-5">
+          <div className="flex min-w-0 items-center gap-3">
             <div className="p-2 rounded-xl bg-white/10 text-amber-300">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base sm:text-lg">
+              <h3 className="truncate text-sm font-extrabold sm:text-lg">
                 {t.booking.title}
               </h3>
               <p className="text-xs text-amber-200">
@@ -198,7 +199,7 @@ export const BookingWizardModal: React.FC = () => {
 
         {/* Multi-Step Progress Indicator (if not completed) */}
         {!isCompleted && (
-          <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-800/60 sm:px-6 sm:py-4">
             <div className="flex items-center gap-2">
               <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                 step >= 1 ? 'bg-[#0B3C5D] text-white dark:bg-blue-600' : 'bg-slate-200 text-slate-600'
@@ -239,7 +240,7 @@ export const BookingWizardModal: React.FC = () => {
         )}
 
         {/* Modal Content */}
-        <div className="p-6 sm:p-8 max-h-[75vh] overflow-y-auto">
+        <div className="min-h-0 overflow-x-hidden overflow-y-auto p-4 sm:p-8">
           
           {/* STEP 1: Service Type, Zip, Hours */}
           {!isCompleted && step === 1 && (
@@ -267,21 +268,36 @@ export const BookingWizardModal: React.FC = () => {
                   className="mb-3 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--primary)]"
                 />
 
-                <select
-                  value={selectedServiceId}
-                  onChange={(e) => setSelectedServiceId(e.target.value)}
-                  size={5}
-                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                >
+                <div className="max-h-52 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5">
                   {services.map(s => {
                     const label = language === 'es' ? s.titleEs : s.titleEn;
-                    if (serviceSearch && !label.toLowerCase().includes(serviceSearch.toLowerCase())) return null;
-                    return <option key={s.id} value={s.id}>{label} ({s.rateEstimate})</option>;
+                    if (normalizedServiceSearch && !label.toLowerCase().includes(normalizedServiceSearch)) return null;
+                    const isSelected = selectedServiceId === s.id;
+                    return (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => setSelectedServiceId(s.id)}
+                        className={`w-full rounded-lg px-3 py-2 text-left text-xs font-semibold leading-snug transition-colors ${isSelected ? 'bg-[#0B3C5D] text-white' : 'text-[var(--text)] hover:bg-[var(--surface-soft)]'}`}
+                      >
+                        {label} <span className="opacity-70">({s.rateEstimate})</span>
+                      </button>
+                    );
                   })}
-                  {REAL_SERVICE_OPTIONS.filter(option => !serviceSearch || option.toLowerCase().includes(serviceSearch.toLowerCase())).map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
+                  {REAL_SERVICE_OPTIONS.filter(option => !normalizedServiceSearch || option.toLowerCase().includes(normalizedServiceSearch)).map(option => {
+                    const isSelected = selectedServiceId === option;
+                    return (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => setSelectedServiceId(option)}
+                        className={`w-full rounded-lg px-3 py-2 text-left text-xs font-semibold leading-snug transition-colors ${isSelected ? 'bg-[#0B3C5D] text-white' : 'text-[var(--text)] hover:bg-[var(--surface-soft)]'}`}
+                      >
+                        {option}
+                      </button>
+                    );
+                  })}
+                </div>
                 <div className="mt-2 text-xs font-bold text-[var(--primary)]">
                   {language === 'es' ? 'Seleccionado:' : 'Selected:'} {selectedServiceName}
                 </div>
@@ -693,7 +709,7 @@ export const BookingWizardModal: React.FC = () => {
 
         {/* Footer Navigation Buttons */}
         {!isCompleted && (
-          <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-800/80 sm:px-6 sm:py-4">
             {step > 1 ? (
               <button
                 type="button"
