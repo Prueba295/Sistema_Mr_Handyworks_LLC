@@ -526,7 +526,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // 9. Availability State & Actions
   const [availability, setAvailability] = useState<AvailabilityDay[]>(() => {
     const saved = readSyncedValue('mr_handyworks_availability');
-    return parseStoredValue(saved, INITIAL_AVAILABILITY);
+    const current = parseStoredValue(saved, INITIAL_AVAILABILITY);
+    const demoSeedKey = 'mr_handyworks_demo_busy_dates_v1';
+    if (!readSyncedValue(demoSeedKey)) {
+      const demoBusyDates = new Set(['2026-09-24', '2026-09-27', '2026-09-29']);
+      const seeded = [...current];
+      demoBusyDates.forEach(date => {
+        const existingIndex = seeded.findIndex(day => day.date === date);
+        const busyDay = { date, isBlocked: true, slots: [], note: 'Booked - unavailable' };
+        if (existingIndex >= 0) seeded[existingIndex] = { ...seeded[existingIndex], ...busyDay };
+        else seeded.push(busyDay);
+      });
+      writeSyncedValue('mr_handyworks_availability', JSON.stringify(seeded));
+      writeSyncedValue(demoSeedKey, 'true');
+      return seeded;
+    }
+    return current;
   });
 
   const toggleDateBlock = (dateStr: string) => {

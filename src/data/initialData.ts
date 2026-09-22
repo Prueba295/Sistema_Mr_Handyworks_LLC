@@ -612,8 +612,9 @@ export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   },
   {
     date: '2026-09-24',
-    isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM', '06:30 PM']
+    isBlocked: true,
+    slots: [],
+    note: 'Booked - unavailable'
   },
   {
     date: '2026-09-25',
@@ -630,7 +631,7 @@ export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
     date: '2026-09-27',
     isBlocked: true,
     slots: [],
-    note: 'Sunday closed'
+    note: 'Booked - unavailable'
   },
   {
     date: '2026-09-28',
@@ -639,8 +640,9 @@ export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   },
   {
     date: '2026-09-29',
-    isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']
+    isBlocked: true,
+    slots: [],
+    note: 'Booked - unavailable'
   },
   {
     date: '2026-09-30',

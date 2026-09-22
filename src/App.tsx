@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { Credentials } from './components/Credentials';
 import { ServicesCatalog } from './components/ServicesCatalog';
 import { EstimateCalculatorSection } from './components/EstimateCalculatorSection';
+import { AvailabilityCalendar } from './components/AvailabilityCalendar';
 import { MediaGallery } from './components/MediaGallery';
 import { ReviewsSection } from './components/ReviewsSection';
 import { AdminView } from './components/AdminView';
@@ -30,6 +31,7 @@ const sectionLinks = [
   { key: 'home', label: 'Home', icon: House },
   { key: 'services', label: 'Services', icon: Wrench },
   { key: 'estimator', label: 'Estimator', icon: Calculator },
+  { key: 'schedule', label: 'Availability', icon: Calendar },
   { key: 'portfolio', label: 'Projects', icon: ImageIcon },
   { key: 'reviews', label: 'Reviews', icon: Star },
   { key: 'credentials', label: 'Credentials', icon: ShieldCheck },
@@ -42,6 +44,8 @@ const renderSection = (page: string) => {
       return <ServicesCatalog />;
     case 'estimator':
       return <EstimateCalculatorSection />;
+    case 'schedule':
+      return <AvailabilityCalendar />;
     case 'portfolio':
       return <MediaGallery />;
     case 'reviews':

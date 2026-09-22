@@ -274,12 +274,13 @@ export const BookingWizardModal: React.FC = () => {
 
                 {isServicePickerOpen && (
                   <div className="relative">
-                    <div className="absolute right-2 top-2 z-10">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-muted)]">Choose a service</span>
                       <button type="button" onClick={() => setIsServicePickerOpen(false)} aria-label="Close service search" title="Close service search" className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]">
                         <X className="h-4 w-4" />
                       </button>
                     </div>
-                    <div className="max-h-52 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 pt-10">
+                    <div className="max-h-52 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5">
                   {services.map(s => {
                     const label = language === 'es' ? s.titleEs : s.titleEn;
                     if (normalizedServiceSearch && !label.toLowerCase().includes(normalizedServiceSearch)) return null;
