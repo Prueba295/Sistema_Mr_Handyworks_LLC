@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { language, businessInfo, navigateTo } = useApp();
+  const { businessInfo, navigateTo } = useApp();
 
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--surface)]">
@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 overflow-hidden rounded-xl border border-[var(--border)] bg-white">
-              <img src="/logo_handy.webp" alt="Mr Handyworks LLC" className="h-full w-full object-cover" />
+              <img src="/logo_handyworks.jpeg" alt="Mr Handyworks LLC" className="h-full w-full object-cover" />
             </div>
             <div>
               <div className="text-sm font-black text-[var(--text)]">Mr Handyworks LLC</div>
@@ -32,15 +32,15 @@ export const Footer: React.FC = () => {
 
           <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--text-muted)]">
             <a href={`tel:${businessInfo.phoneRaw}`} className="hover:text-[var(--text)]">{businessInfo.phone}</a>
-            <button onClick={() => navigateTo('services')} className="hover:text-[var(--text)]">{language === 'es' ? 'Servicios' : 'Services'}</button>
-            <button onClick={() => navigateTo('portfolio')} className="hover:text-[var(--text)]">{language === 'es' ? 'Proyectos' : 'Projects'}</button>
-            <button onClick={() => navigateTo('admin')} className="hover:text-[var(--text)]">{language === 'es' ? 'Admin' : 'Admin'}</button>
+            <button onClick={() => navigateTo('services')} className="hover:text-[var(--text)]">Services</button>
+            <button onClick={() => navigateTo('portfolio')} className="hover:text-[var(--text)]">Projects</button>
+            <button onClick={() => navigateTo('admin')} className="hover:text-[var(--text)]">Admin</button>
           </div>
         </div>
 
         <div className="mt-4 border-t border-[var(--border)] pt-4 text-[11px] text-[var(--text-muted)] flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} Mr Handyworks LLC</span>
-          <span>{language === 'es' ? 'Trabajo limpio, claro y confiable.' : 'Clean, clear and reliable work.'}</span>
+          <span>Clean, clear and reliable work.</span>
         </div>
       </div>
     </footer>

@@ -44,7 +44,7 @@ export const Credentials: React.FC = () => {
               <div className="flex items-center gap-4 pb-4 border-b border-slate-200 dark:border-slate-700">
                 <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#0B3C5D] shadow-sm bg-white shrink-0">
                   <img 
-                    src="/logo_handy.webp" 
+                    src="/logo_handyworks.jpeg"
                     alt="Brian Cueva - Mr Handyworks LLC" 
                     className="w-full h-full object-cover"
                   />

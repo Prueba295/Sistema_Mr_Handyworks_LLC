@@ -172,20 +172,17 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // 1. Language State
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = readSyncedValue(LANGUAGE_STORAGE_KEY);
-    if (saved === 'es' || saved === 'en') return saved;
     return 'en';
   });
 
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    writeSyncedValue(LANGUAGE_STORAGE_KEY, lang);
-    document.documentElement.lang = lang;
+    setLanguageState('en');
+    writeSyncedValue(LANGUAGE_STORAGE_KEY, 'en');
+    document.documentElement.lang = 'en';
   };
 
   const toggleLanguage = () => {
-    const nextLang = language === 'es' ? 'en' : 'es';
-    setLanguage(nextLang);
+    setLanguage('en');
   };
 
   useEffect(() => {
@@ -250,11 +247,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const syncExternalChanges = (event: { key: string; value: string | null }) => {
       switch (event.key) {
         case LANGUAGE_STORAGE_KEY: {
-          const next = event.value;
-          if (next === 'es' || next === 'en') {
-            setLanguageState(next);
-            document.documentElement.lang = next;
-          }
+          setLanguageState('en');
+          document.documentElement.lang = 'en';
           break;
         }
         case 'mr_handyworks_theme': {

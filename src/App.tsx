@@ -27,13 +27,13 @@ import {
 } from 'lucide-react';
 
 const sectionLinks = [
-  { key: 'home', es: 'Inicio', en: 'Home', icon: House },
-  { key: 'services', es: 'Servicios', en: 'Services', icon: Wrench },
-  { key: 'estimator', es: 'Cotizador', en: 'Estimator', icon: Calculator },
-  { key: 'portfolio', es: 'Proyectos', en: 'Projects', icon: ImageIcon },
-  { key: 'reviews', es: 'Reseñas', en: 'Reviews', icon: Star },
-  { key: 'credentials', es: 'Credenciales', en: 'Credentials', icon: ShieldCheck },
-  { key: 'admin', es: 'Admin', en: 'Admin', icon: UserRound },
+  { key: 'home', label: 'Home', icon: House },
+  { key: 'services', label: 'Services', icon: Wrench },
+  { key: 'estimator', label: 'Estimator', icon: Calculator },
+  { key: 'portfolio', label: 'Projects', icon: ImageIcon },
+  { key: 'reviews', label: 'Reviews', icon: Star },
+  { key: 'credentials', label: 'Credentials', icon: ShieldCheck },
+  { key: 'admin', label: 'Admin', icon: UserRound },
 ] as const;
 
 const renderSection = (page: string) => {
@@ -91,11 +91,11 @@ const MainLayout: React.FC = () => {
               <aside className="hidden lg:block">
                 <div className="sticky top-28 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm">
                   <div className="mb-3 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                    {language === 'es' ? 'Navegación' : 'Navigation'}
+                    Navigation
                   </div>
 
                   <nav className="space-y-1.5">
-                    {sectionLinks.map(({ key, es, en, icon: Icon }) => {
+                    {sectionLinks.map(({ key, label, icon: Icon }) => {
                       const isActive = currentPage === key;
                       return (
                         <button
@@ -109,7 +109,7 @@ const MainLayout: React.FC = () => {
                         >
                           <span className="flex items-center gap-2.5">
                             <Icon className="w-4 h-4" />
-                            <span>{language === 'es' ? es : en}</span>
+                            <span>{label}</span>
                           </span>
                           <span className="text-[10px] opacity-80">→</span>
                         </button>
@@ -153,7 +153,7 @@ const MainLayout: React.FC = () => {
           <a
             href={`tel:${businessInfo.phoneRaw}`}
             className="p-3 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-            title="Llamar a Brian"
+            title="Call Brian"
           >
             <Phone className="w-4 h-4 text-blue-300" />
           </a>

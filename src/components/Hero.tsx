@@ -4,6 +4,7 @@ import {
   ShieldCheck,
   Phone,
   ArrowRight,
+  ExternalLink,
   Award,
   Clock3,
   MapPin,
@@ -43,7 +44,7 @@ export const Hero: React.FC = () => {
           <div className="flex flex-col justify-between gap-6 p-6 sm:p-9">
             <div>
               <div className="flex items-center gap-3">
-                <img src="/logo_handy.webp" alt="Mr Handyworks LLC" className="h-14 w-14 rounded-2xl border-2 border-[#0B3C5D] bg-white object-cover" />
+                <img src="/logo_handyworks.jpeg" alt="Mr Handyworks LLC" className="h-14 w-14 rounded-2xl border-2 border-[#0B3C5D] bg-white object-cover" />
                 <div>
                   <div className="text-xs font-black uppercase tracking-[0.16em] text-[var(--text-muted)]">Mr Handyworks LLC</div>
                   <div className="mt-1 text-xl font-black text-[var(--text)]">Brian Cueva, owner</div>
@@ -64,6 +65,7 @@ export const Hero: React.FC = () => {
                 Request your estimate <ArrowRight className="h-4 w-4" />
               </button>
               <a href={`tel:${businessInfo.phoneRaw}`} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-3 text-sm font-bold text-[var(--text)]"><Phone className="h-4 w-4 text-[var(--primary)]" /> {businessInfo.phone}</a>
+              <a href={businessInfo.thumbtackUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-3 text-sm font-black text-[var(--text)] hover:border-amber-500"><Star className="h-4 w-4 fill-amber-400 text-amber-500" /> Visit Thumbtack <ExternalLink className="h-4 w-4" /></a>
             </div>
           </div>
         </div>

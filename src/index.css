@@ -41,6 +41,51 @@
   --shadow: rgba(2, 6, 23, 0.38);
 }
 
+/* Keep legacy utility blocks tied to the active theme across desktop and mobile. */
+.bg-white {
+  background-color: var(--surface) !important;
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border)) !important;
+}
+
+.bg-slate-50,
+.bg-slate-100,
+.bg-slate-200 {
+  background-color: var(--surface-soft) !important;
+  border-color: var(--border) !important;
+}
+
+.dark .bg-slate-700,
+.dark .bg-slate-800,
+.dark .bg-slate-900 {
+  background-color: var(--surface-soft) !important;
+  border-color: var(--border) !important;
+}
+
+.text-slate-900,
+.text-slate-800,
+.text-slate-700 {
+  color: var(--text) !important;
+}
+
+.text-slate-600,
+.text-slate-500,
+.text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
+.border-slate-200,
+.border-slate-300,
+.border-slate-600,
+.border-slate-700,
+.border-slate-800 {
+  border-color: var(--border) !important;
+}
+
+.app-shell [class*="bg-[#F4F6F9]"],
+.app-shell [class*="bg-[#0B111A]"] {
+  background-color: var(--bg) !important;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

@@ -21,7 +21,6 @@ import {
 export const Header: React.FC = () => {
   const {
     language,
-    toggleLanguage,
     theme,
     toggleTheme,
     openBookingWizard,
@@ -34,13 +33,13 @@ export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const mobileNavItems = [
-    { key: 'home', labelEs: 'Inicio', labelEn: 'Home', icon: House },
-    { key: 'services', labelEs: 'Servicios', labelEn: 'Services', icon: Wrench },
-    { key: 'estimator', labelEs: 'Cotizador', labelEn: 'Estimator', icon: Calculator },
-    { key: 'portfolio', labelEs: 'Proyectos', labelEn: 'Projects', icon: ImageIcon },
-    { key: 'reviews', labelEs: 'Reseñas', labelEn: 'Reviews', icon: Star },
-    { key: 'credentials', labelEs: 'Credenciales', labelEn: 'Credentials', icon: Briefcase },
-    { key: 'admin', labelEs: 'Admin', labelEn: 'Admin', icon: UserRound },
+    { key: 'home', label: 'Home', icon: House },
+    { key: 'services', label: 'Services', icon: Wrench },
+    { key: 'estimator', label: 'Estimator', icon: Calculator },
+    { key: 'portfolio', label: 'Projects', icon: ImageIcon },
+    { key: 'reviews', label: 'Reviews', icon: Star },
+    { key: 'credentials', label: 'Credentials', icon: Briefcase },
+    { key: 'admin', label: 'Admin', icon: UserRound },
   ] as const;
 
   return (
@@ -83,7 +82,7 @@ export const Header: React.FC = () => {
           }}
         >
           <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border-2 border-[#0B3C5D] bg-white shadow-2xs dark:border-blue-500 sm:h-11 sm:w-11">
-            <img src="/logo_handy.webp" alt="Mr Handyworks LLC Logo" className="w-full h-full object-cover" />
+            <img src="/logo_handyworks.jpeg" alt="Mr Handyworks LLC Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
@@ -95,33 +94,6 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-3">
-          <button
-            id="lang-toggle-btn"
-            onClick={toggleLanguage}
-            aria-label="Toggle Language"
-            className="flex items-center gap-0.5 rounded-full border border-slate-300/80 bg-slate-100/90 p-0.5 shadow-sm transition-all dark:border-slate-700 dark:bg-slate-800/90 sm:gap-1 sm:p-1"
-            title="Cambiar idioma"
-          >
-            <span
-                className={`min-w-[1.75rem] rounded-full px-1.5 py-1 text-[10px] font-black tracking-wide transition-colors sm:min-w-[2rem] sm:px-2 ${
-                language === 'es'
-                  ? 'bg-[#0B3C5D] text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400'
-              }`}
-            >
-              ES
-            </span>
-            <span
-                className={`min-w-[1.75rem] rounded-full px-1.5 py-1 text-[10px] font-black tracking-wide transition-colors sm:min-w-[2rem] sm:px-2 ${
-                language === 'en'
-                  ? 'bg-[#0B3C5D] text-white shadow-sm'
-                  : 'text-slate-500 dark:text-slate-400'
-              }`}
-            >
-              EN
-            </span>
-          </button>
-
           <button
             id="theme-toggle-btn"
             onClick={toggleTheme}
@@ -162,7 +134,7 @@ export const Header: React.FC = () => {
             </div>
 
             <nav className="flex-1 space-y-2 p-4">
-              {mobileNavItems.map(({ key, labelEs, labelEn, icon: Icon }) => {
+              {mobileNavItems.map(({ key, label, icon: Icon }) => {
                 const isActive = currentPage === key;
                 return (
                   <button
@@ -179,7 +151,7 @@ export const Header: React.FC = () => {
                   >
                     <span className="flex items-center gap-3">
                       <Icon className="w-4 h-4" />
-                      <span>{language === 'es' ? labelEs : labelEn}</span>
+                      <span>{label}</span>
                     </span>
                     <span className="text-[10px] opacity-80">→</span>
                   </button>

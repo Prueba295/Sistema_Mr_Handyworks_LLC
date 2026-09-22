@@ -46,6 +46,7 @@ export const BookingWizardModal: React.FC = () => {
   // Step 1 Form fields
   const [selectedServiceId, setSelectedServiceId] = useState<string>('tv-mount');
   const [serviceSearch, setServiceSearch] = useState<string>('');
+  const [isServicePickerOpen, setIsServicePickerOpen] = useState<boolean>(false);
   const [zipCode, setZipCode] = useState<string>('46617');
   const [isZipValid, setIsZipValid] = useState<boolean>(true);
   const [durationTier, setDurationTier] = useState<string>('2-5 hrs');
@@ -263,12 +264,20 @@ export const BookingWizardModal: React.FC = () => {
                 <input
                   type="search"
                   value={serviceSearch}
+                  onFocus={() => setIsServicePickerOpen(true)}
                   onChange={(e) => setServiceSearch(e.target.value)}
                   placeholder={language === 'es' ? 'Buscar TV, pintura, plomería...' : 'Search TV, painting, plumbing...'}
                   className="mb-3 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--primary)]"
                 />
 
-                <div className="max-h-52 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5">
+                {isServicePickerOpen && (
+                  <div className="relative">
+                    <div className="absolute right-2 top-2 z-10">
+                      <button type="button" onClick={() => setIsServicePickerOpen(false)} className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-1 text-[10px] font-bold text-[var(--text-muted)] hover:text-[var(--text)]">
+                        Close
+                      </button>
+                    </div>
+                    <div className="max-h-52 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 pt-10">
                   {services.map(s => {
                     const label = language === 'es' ? s.titleEs : s.titleEn;
                     if (normalizedServiceSearch && !label.toLowerCase().includes(normalizedServiceSearch)) return null;
@@ -277,7 +286,7 @@ export const BookingWizardModal: React.FC = () => {
                       <button
                         key={s.id}
                         type="button"
-                        onClick={() => setSelectedServiceId(s.id)}
+                        onClick={() => { setSelectedServiceId(s.id); setIsServicePickerOpen(false); }}
                         className={`w-full rounded-lg px-3 py-2 text-left text-xs font-semibold leading-snug transition-colors ${isSelected ? 'bg-[#0B3C5D] text-white' : 'text-[var(--text)] hover:bg-[var(--surface-soft)]'}`}
                       >
                         {label} <span className="opacity-70">({s.rateEstimate})</span>
@@ -290,14 +299,16 @@ export const BookingWizardModal: React.FC = () => {
                       <button
                         key={option}
                         type="button"
-                        onClick={() => setSelectedServiceId(option)}
+                        onClick={() => { setSelectedServiceId(option); setIsServicePickerOpen(false); }}
                         className={`w-full rounded-lg px-3 py-2 text-left text-xs font-semibold leading-snug transition-colors ${isSelected ? 'bg-[#0B3C5D] text-white' : 'text-[var(--text)] hover:bg-[var(--surface-soft)]'}`}
                       >
                         {option}
                       </button>
                     );
                   })}
-                </div>
+                    </div>
+                  </div>
+                )}
                 <div className="mt-2 text-xs font-bold text-[var(--primary)]">
                   {language === 'es' ? 'Seleccionado:' : 'Selected:'} {selectedServiceName}
                 </div>
@@ -487,10 +498,10 @@ export const BookingWizardModal: React.FC = () => {
                     onChange={(e) => setScheduledSlot(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-semibold text-slate-900 dark:text-white"
                   >
-                    <option value="09:00 AM - 11:30 AM">09:00 AM - 11:30 AM (Mañana)</option>
-                    <option value="11:30 AM - 02:00 PM">11:30 AM - 02:00 PM (Mediodía)</option>
-                    <option value="02:00 PM - 04:30 PM">02:00 PM - 04:30 PM (Tarde)</option>
-                    <option value="04:30 PM - 07:00 PM">04:30 PM - 07:00 PM (Final de tarde)</option>
+                    <option value="09:00 AM - 11:30 AM">09:00 AM - 11:30 AM (Morning)</option>
+                    <option value="11:30 AM - 02:00 PM">11:30 AM - 02:00 PM (Midday)</option>
+                    <option value="02:00 PM - 04:30 PM">02:00 PM - 04:30 PM (Afternoon)</option>
+                    <option value="04:30 PM - 07:00 PM">04:30 PM - 07:00 PM (Late afternoon)</option>
                   </select>
                 </div>
               </div>
