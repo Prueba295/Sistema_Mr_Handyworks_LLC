@@ -192,9 +192,11 @@ export const BookingWizardModal: React.FC = () => {
           </div>
           <button
             onClick={closeBookingWizard}
-            className="p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            aria-label="Close estimate form"
+            title="Close estimate form"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="h-5 w-5" />
           </button>
         </div>
 
@@ -273,8 +275,8 @@ export const BookingWizardModal: React.FC = () => {
                 {isServicePickerOpen && (
                   <div className="relative">
                     <div className="absolute right-2 top-2 z-10">
-                      <button type="button" onClick={() => setIsServicePickerOpen(false)} className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-1 text-[10px] font-bold text-[var(--text-muted)] hover:text-[var(--text)]">
-                        Close
+                      <button type="button" onClick={() => setIsServicePickerOpen(false)} aria-label="Close service search" title="Close service search" className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]">
+                        <X className="h-4 w-4" />
                       </button>
                     </div>
                     <div className="max-h-52 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 pt-10">

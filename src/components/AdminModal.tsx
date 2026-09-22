@@ -110,9 +110,11 @@ export const AdminModal: React.FC = () => {
             )}
             <button
               onClick={() => setIsAdminModalOpen(false)}
-              className="p-1.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="Close admin portal"
+              title="Close admin portal"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
           </div>
         </div>

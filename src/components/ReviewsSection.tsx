@@ -313,9 +313,11 @@ export const ReviewsSection: React.FC = () => {
           <div className="relative max-w-lg w-full bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8">
             <button
               onClick={() => setIsSubmitModalOpen(false)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              aria-label="Close review form"
+              title="Close review form"
+              className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-lg text-slate-400 hover:bg-[var(--surface-soft)] hover:text-slate-600 dark:hover:text-slate-200"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
 
             <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">

@@ -98,7 +98,7 @@ export const Header: React.FC = () => {
             id="theme-toggle-btn"
             onClick={toggleTheme}
             className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text)] shadow-sm transition-colors cursor-pointer"
-            title={theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'}
+            title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
             aria-label="Toggle Theme"
           >
             {theme === 'light' ? <Moon className="w-4 h-4 text-slate-700" /> : <Sun className="w-4 h-4 text-amber-400" />}
@@ -128,8 +128,8 @@ export const Header: React.FC = () => {
           <aside className="fixed right-0 top-0 z-50 flex h-full w-[82vw] max-w-xs flex-col border-l border-[var(--border)] bg-[var(--surface)] shadow-2xl">
             <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
               <div className="text-sm font-black text-[var(--text)]">{language === 'es' ? 'Menú' : 'Menu'}</div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="rounded-full p-2 hover:bg-[var(--surface-soft)]" aria-label="Close menu">
-                <X className="w-4 h-4 text-[var(--text)]" />
+              <button onClick={() => setIsMobileMenuOpen(false)} className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-[var(--surface-soft)]" aria-label="Close menu" title="Close menu">
+                <X className="h-5 w-5 text-[var(--text)]" />
               </button>
             </div>
 

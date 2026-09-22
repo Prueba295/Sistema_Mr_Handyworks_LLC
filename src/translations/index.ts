@@ -319,7 +319,7 @@ export const translations = {
       liveSyncBadge: 'Live Calendar Sync'
     },
     booking: {
-      title: 'Request an Estimate & Book Appointment',
+      title: 'Request an Estimate',
       step1: '1. Service & Location',
       step2: '2. Project Details',
       step3: '3. Date, Contact & Payment',

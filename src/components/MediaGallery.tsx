@@ -278,9 +278,11 @@ export const MediaGallery: React.FC = () => {
             {/* Close button */}
             <button
               onClick={() => setLightboxMedia(null)}
-              className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/60 hover:bg-black/90 text-white transition-colors cursor-pointer"
+              aria-label="Close project preview"
+              title="Close project preview"
+              className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black/95 cursor-pointer"
             >
-              <X className="w-6 h-6" />
+              <X className="h-5 w-5" />
             </button>
 
             {/* High Res Image */}
