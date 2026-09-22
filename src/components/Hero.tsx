@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import {
   ShieldCheck,
   Phone,
+  ArrowRight,
 } from 'lucide-react';
 
 export const Hero: React.FC = () => {
@@ -79,6 +80,29 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="mt-4 grid gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-strong)] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div>
+              <div className="text-xs font-black uppercase tracking-[0.15em] text-[var(--primary)]">
+                {language === 'es' ? 'Empieza tu proyecto' : 'Start your project'}
+              </div>
+              <div className="mt-1 text-base font-black text-[var(--text)]">
+                {language === 'es' ? 'Elige el servicio, indica tu zona y agenda una fecha.' : 'Choose a service, add your area and select a date.'}
+              </div>
+              <div className="mt-2 flex flex-wrap gap-2 text-[11px] font-bold text-[var(--text-muted)]">
+                <span className="rounded-full bg-[var(--surface)] px-2.5 py-1">01 {language === 'es' ? 'Servicio' : 'Service'}</span>
+                <span className="rounded-full bg-[var(--surface)] px-2.5 py-1">02 ZIP</span>
+                <span className="rounded-full bg-[var(--surface)] px-2.5 py-1">03 {language === 'es' ? 'Fecha' : 'Date'}</span>
+              </div>
+            </div>
+            <button
+              onClick={() => openBookingWizard()}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0B3C5D] px-4 py-3 text-sm font-black text-white shadow-sm hover:bg-[#07273d]"
+            >
+              {language === 'es' ? 'Comenzar' : 'Get started'}
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>

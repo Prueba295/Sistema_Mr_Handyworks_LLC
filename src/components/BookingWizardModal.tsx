@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { BUSINESS_INFO } from '../data/initialData';
+import { BUSINESS_INFO, PROJECT_TYPE_OPTIONS, REAL_SERVICE_OPTIONS } from '../data/initialData';
 import { generateQuotePDF } from '../utils/pdfGenerator';
 import confetti from 'canvas-confetti';
 import { 
@@ -45,9 +45,11 @@ export const BookingWizardModal: React.FC = () => {
 
   // Step 1 Form fields
   const [selectedServiceId, setSelectedServiceId] = useState<string>('tv-mount');
+  const [serviceSearch, setServiceSearch] = useState<string>('');
   const [zipCode, setZipCode] = useState<string>('46617');
   const [isZipValid, setIsZipValid] = useState<boolean>(true);
   const [durationTier, setDurationTier] = useState<string>('2-5 hrs');
+  const [projectType, setProjectType] = useState<string>('Repairs');
 
   // Step 2 Form fields
   const [projectDetails, setProjectDetails] = useState<string>('');
@@ -87,6 +89,9 @@ export const BookingWizardModal: React.FC = () => {
   if (!isBookingWizardOpen) return null;
 
   const currentService = services.find(s => s.id === selectedServiceId) || services[0];
+  const selectedServiceName = currentService && currentService.id === selectedServiceId
+    ? (language === 'es' ? currentService.titleEs : currentService.titleEn)
+    : selectedServiceId;
 
   // Calculate estimated price based on duration tier
   const calculateEstimatedPrice = (): number => {
@@ -126,11 +131,11 @@ export const BookingWizardModal: React.FC = () => {
         : 'CASH';
 
     const newBooking = addBooking({
-      serviceType: language === 'es' ? currentService.titleEs : currentService.titleEn,
+      serviceType: selectedServiceName,
       zipCode: zipCode.trim() || '46601',
       estimatedHours: durationTier,
       estimatedPrice: price,
-      projectDetails: projectDetails.trim() || (language === 'es' ? 'Consulta de servicio estándar' : 'Standard service request'),
+      projectDetails: `${projectType}: ${projectDetails.trim() || (language === 'es' ? 'Consulta de servicio estándar' : 'Standard service request')}`,
       photoUrl: uploadedPhotos[0] || undefined,
       scheduledDate,
       scheduledTimeSlot: scheduledSlot,
@@ -239,30 +244,53 @@ export const BookingWizardModal: React.FC = () => {
           {/* STEP 1: Service Type, Zip, Hours */}
           {!isCompleted && step === 1 && (
             <div className="space-y-6">
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
-                  {t.booking.selectService} *
-                </label>
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4 sm:p-5">
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <div>
+                    <label className="block text-sm font-black text-[var(--text)]">
+                      {language === 'es' ? '1. ¿Qué servicio necesitas?' : '1. What service do you need?'}
+                    </label>
+                    <p className="mt-1 text-xs text-[var(--text-muted)]">
+                      {language === 'es' ? 'Elige una opción del catálogo real de Brian.' : 'Choose from Brian\'s real service catalog.'}
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-[var(--surface)] px-2.5 py-1 text-[10px] font-black text-[var(--primary)]">
+                    {REAL_SERVICE_OPTIONS.length}+ {language === 'es' ? 'opciones' : 'options'}
+                  </span>
+                </div>
+
+                <input
+                  type="search"
+                  value={serviceSearch}
+                  onChange={(e) => setServiceSearch(e.target.value)}
+                  placeholder={language === 'es' ? 'Buscar TV, pintura, plomería...' : 'Search TV, painting, plumbing...'}
+                  className="mb-3 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3.5 py-2.5 text-sm text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                />
+
                 <select
                   value={selectedServiceId}
                   onChange={(e) => setSelectedServiceId(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-[#0B3C5D]"
+                  size={5}
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text)] outline-none focus:ring-2 focus:ring-[var(--primary)]"
                 >
-                  {services.map(s => (
-                    <option key={s.id} value={s.id}>
-                      {language === 'es' ? s.titleEs : s.titleEn} ({s.rateEstimate})
-                    </option>
+                  {services.map(s => {
+                    const label = language === 'es' ? s.titleEs : s.titleEn;
+                    if (serviceSearch && !label.toLowerCase().includes(serviceSearch.toLowerCase())) return null;
+                    return <option key={s.id} value={s.id}>{label} ({s.rateEstimate})</option>;
+                  })}
+                  {REAL_SERVICE_OPTIONS.filter(option => !serviceSearch || option.toLowerCase().includes(serviceSearch.toLowerCase())).map(option => (
+                    <option key={option} value={option}>{option}</option>
                   ))}
-                  <option value="custom">
-                    {language === 'es' ? 'Otro Proyecto Residencial Personalizado' : 'Other Custom Residential Project'}
-                  </option>
                 </select>
+                <div className="mt-2 text-xs font-bold text-[var(--primary)]">
+                  {language === 'es' ? 'Seleccionado:' : 'Selected:'} {selectedServiceName}
+                </div>
               </div>
 
               {/* Zip Code with instant radius check */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
-                  {t.booking.zipCode} *
+                  2. {t.booking.zipCode} *
                 </label>
                 <div className="relative">
                   <MapPin className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -289,10 +317,23 @@ export const BookingWizardModal: React.FC = () => {
                 </div>
               </div>
 
+              <div>
+                <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                  {language === 'es' ? '3. Tipo de proyecto' : '3. Project type'}
+                </label>
+                <select
+                  value={projectType}
+                  onChange={(e) => setProjectType(e.target.value)}
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                >
+                  {PROJECT_TYPE_OPTIONS.map(option => <option key={option} value={option}>{option}</option>)}
+                </select>
+              </div>
+
               {/* Hours Duration Calculator */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
-                  {t.booking.estimatedHours}
+                  4. {t.booking.estimatedHours}
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
@@ -319,6 +360,19 @@ export const BookingWizardModal: React.FC = () => {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                  5. {language === 'es' ? 'Fecha preferida' : 'Preferred date'}
+                </label>
+                <input
+                  type="date"
+                  value={scheduledDate}
+                  min={new Date().toISOString().split('T')[0]}
+                  onChange={(e) => setScheduledDate(e.target.value)}
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                />
               </div>
 
               {/* Instant rate estimate box */}

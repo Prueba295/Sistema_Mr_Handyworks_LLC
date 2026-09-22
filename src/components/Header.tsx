@@ -76,34 +76,34 @@ export const Header: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
         <div
-          className="flex items-center space-x-3 cursor-pointer group shrink-0"
+          className="flex min-w-0 items-center space-x-2 sm:space-x-3 cursor-pointer group shrink"
           onClick={() => {
             if (currentPage === 'admin') navigateTo('home');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         >
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden border-2 border-[#0B3C5D] dark:border-blue-500 shadow-2xs bg-white">
+          <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border-2 border-[#0B3C5D] bg-white shadow-2xs dark:border-blue-500 sm:h-11 sm:w-11">
             <img src="/logo_handy.webp" alt="Mr Handyworks LLC Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-black text-base sm:text-lg tracking-tight text-[#0B3C5D] dark:text-white">MR HANDYWORKS</span>
-              <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">LLC</span>
+              <span className="truncate text-sm font-black tracking-tight text-[#0B3C5D] dark:text-white sm:text-lg">MR HANDYWORKS</span>
+              <span className="hidden rounded border border-blue-500/20 bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-blue-700 dark:text-blue-300 sm:inline">LLC</span>
             </div>
             <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 leading-tight">Brian Cueva</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-3">
           <button
             id="lang-toggle-btn"
             onClick={toggleLanguage}
             aria-label="Toggle Language"
-            className="flex items-center gap-1 rounded-full border border-slate-300/80 bg-slate-100/90 p-1 shadow-sm transition-all dark:border-slate-700 dark:bg-slate-800/90"
+            className="flex items-center gap-0.5 rounded-full border border-slate-300/80 bg-slate-100/90 p-0.5 shadow-sm transition-all dark:border-slate-700 dark:bg-slate-800/90 sm:gap-1 sm:p-1"
             title="Cambiar idioma"
           >
             <span
-              className={`min-w-[2rem] rounded-full px-2 py-1 text-[10px] font-black tracking-wide transition-colors ${
+                className={`min-w-[1.75rem] rounded-full px-1.5 py-1 text-[10px] font-black tracking-wide transition-colors sm:min-w-[2rem] sm:px-2 ${
                 language === 'es'
                   ? 'bg-[#0B3C5D] text-white shadow-sm'
                   : 'text-slate-500 dark:text-slate-400'
@@ -112,7 +112,7 @@ export const Header: React.FC = () => {
               ES
             </span>
             <span
-              className={`min-w-[2rem] rounded-full px-2 py-1 text-[10px] font-black tracking-wide transition-colors ${
+                className={`min-w-[1.75rem] rounded-full px-1.5 py-1 text-[10px] font-black tracking-wide transition-colors sm:min-w-[2rem] sm:px-2 ${
                 language === 'en'
                   ? 'bg-[#0B3C5D] text-white shadow-sm'
                   : 'text-slate-500 dark:text-slate-400'
