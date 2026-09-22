@@ -23,6 +23,12 @@ import {
   BUSINESS_INFO
 } from '../data/initialData';
 import { translations } from '../translations';
+import {
+  readSyncedValue,
+  removeSyncedValue,
+  subscribeToSync,
+  writeSyncedValue,
+} from '../utils/realtimeSync';
 
 interface BookingWizardPreload {
   serviceId?: string;
@@ -53,6 +59,15 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   yearsExperience: 8,
   bioEs: 'Brian Cueva es el fundador y maestro artesano detrás de Mr Handyworks LLC en South Bend, IN. Con más de 8 años de experiencia directa y una calificación perfecta de 5.0 en Thumbtack (Top Pro), Brian se especializa en montaje de TV, instalaciones residenciales, pintura, plomería menor y reparaciones generales con garantía de satisfacción del 100%.',
   bioEn: 'Brian Cueva is the owner and master craftsman behind Mr Handyworks LLC in South Bend, IN. With over 8 years of hands-on experience and a 5.0 perfect rating on Thumbtack (Top Pro), Brian specializes in precision TV mounting, home repairs, painting, fixture installations, and custom handyman solutions with a 100% satisfaction guarantee.'
+};
+
+const parseStoredValue = <T,>(value: string | null, fallback: T): T => {
+  if (!value) return fallback;
+  try {
+    return JSON.parse(value) as T;
+  } catch {
+    return fallback;
+  }
 };
 
 const getPageFromHash = (): NavigationPage => {
@@ -155,7 +170,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // 1. Language State
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('mr_handyworks_lang');
+    const saved = readSyncedValue('mr_handyworks_lang');
     if (saved === 'es' || saved === 'en') return saved;
     const browserLang = navigator.language.toLowerCase();
     return browserLang.startsWith('es') ? 'es' : 'en';
@@ -163,7 +178,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('mr_handyworks_lang', lang);
+    writeSyncedValue('mr_handyworks_lang', lang);
     document.documentElement.lang = lang;
   };
 
@@ -172,9 +187,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setLanguage(nextLang);
   };
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   // 2. Theme State
   const [theme, setThemeState] = useState<Theme>(() => {
-    const saved = localStorage.getItem('mr_handyworks_theme');
+    const saved = readSyncedValue('mr_handyworks_theme');
     if (saved === 'light' || saved === 'dark') return saved;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
@@ -186,7 +205,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     root.setAttribute('data-theme', nextTheme);
     root.style.colorScheme = nextTheme;
     document.body.classList.toggle('dark', isDark);
-    localStorage.setItem('mr_handyworks_theme', nextTheme);
+    writeSyncedValue('mr_handyworks_theme', nextTheme);
   };
 
   useEffect(() => {
@@ -201,12 +220,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 3. Navigation State (Dedicated spaces/pages with hash preservation on reload)
   const [currentPage, setCurrentPage] = useState<NavigationPage>(() => {
-    return getPageFromHash();
+    const hashPage = getPageFromHash();
+    if (hashPage !== 'home') return hashPage;
+    const savedPage = readSyncedValue('mr_handyworks_current_page');
+    return savedPage && ['home', 'services', 'estimator', 'portfolio', 'reviews', 'schedule', 'credentials', 'admin'].includes(savedPage)
+      ? savedPage as NavigationPage
+      : 'home';
   });
 
   const navigateTo = (page: NavigationPage) => {
     setCurrentPage(page);
-    localStorage.setItem('mr_handyworks_current_page', page);
+    writeSyncedValue('mr_handyworks_current_page', page);
     window.location.hash = `#/${page}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -215,19 +239,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const handleHashChange = () => {
       const page = getPageFromHash();
       setCurrentPage(page);
-      localStorage.setItem('mr_handyworks_current_page', page);
+      writeSyncedValue('mr_handyworks_current_page', page);
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   useEffect(() => {
-    const syncExternalChanges = (event: StorageEvent) => {
-      if (!event.key) return;
-
+    const syncExternalChanges = (event: { key: string; value: string | null }) => {
       switch (event.key) {
         case 'mr_handyworks_lang': {
-          const next = event.newValue;
+          const next = event.value;
           if (next === 'es' || next === 'en') {
             setLanguageState(next);
             document.documentElement.lang = next;
@@ -235,57 +257,116 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           break;
         }
         case 'mr_handyworks_theme': {
-          const next = event.newValue;
+          const next = event.value;
           if (next === 'light' || next === 'dark') {
             setThemeState(next);
           }
           break;
         }
         case 'mr_handyworks_current_page': {
-          const next = event.newValue as NavigationPage | null;
+          const next = event.value as NavigationPage | null;
           if (next && ['home', 'services', 'estimator', 'portfolio', 'reviews', 'schedule', 'credentials', 'admin'].includes(next)) {
             setCurrentPage(next);
+            if (window.location.hash !== `#/${next}`) {
+              window.history.replaceState(null, '', `#/${next}`);
+            }
           }
           break;
         }
         case 'mr_handyworks_admin': {
-          const next = event.newValue ? JSON.parse(event.newValue) : { isAuthenticated: false, email: '', twoFactorActive: true };
-          setAdminUser(next);
+          if (!event.value) {
+            setAdminUser({ isAuthenticated: false, email: '', twoFactorActive: true });
+            break;
+          }
+          try {
+            setAdminUser(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_biz_info': {
-          const next = event.newValue ? JSON.parse(event.newValue) : DEFAULT_BUSINESS_INFO;
-          setBusinessInfo(next);
+          if (!event.value) {
+            setBusinessInfo(DEFAULT_BUSINESS_INFO);
+            break;
+          }
+          try {
+            setBusinessInfo(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_services': {
-          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_SERVICES;
-          setServices(next);
+          if (!event.value) {
+            setServices(INITIAL_SERVICES);
+            break;
+          }
+          try {
+            setServices(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_portfolio': {
-          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_PORTFOLIO;
-          setPortfolio(next);
+          if (!event.value) {
+            setPortfolio(INITIAL_PORTFOLIO);
+            break;
+          }
+          try {
+            setPortfolio(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_reviews': {
-          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_REVIEWS;
-          setReviews(next);
+          if (!event.value) {
+            setReviews(INITIAL_REVIEWS);
+            break;
+          }
+          try {
+            setReviews(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_availability': {
-          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_AVAILABILITY;
-          setAvailability(next);
+          if (!event.value) {
+            setAvailability(INITIAL_AVAILABILITY);
+            break;
+          }
+          try {
+            setAvailability(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_bookings': {
-          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_BOOKINGS;
-          setBookings(next);
+          if (!event.value) {
+            setBookings(INITIAL_BOOKINGS);
+            break;
+          }
+          try {
+            setBookings(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         case 'mr_handyworks_qr': {
-          const next = event.newValue ? JSON.parse(event.newValue) : INITIAL_QR_METHODS;
-          setQrMethods(next);
+          if (!event.value) {
+            setQrMethods(INITIAL_QR_METHODS);
+            break;
+          }
+          try {
+            setQrMethods(JSON.parse(event.value));
+          } catch {
+            break;
+          }
           break;
         }
         default:
@@ -293,8 +374,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     };
 
-    window.addEventListener('storage', syncExternalChanges);
-    return () => window.removeEventListener('storage', syncExternalChanges);
+    return subscribeToSync(syncExternalChanges);
   }, []);
 
   // 4. Translations
@@ -302,14 +382,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 5. Business Info (Fully editable by admin)
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>(() => {
-    const saved = localStorage.getItem('mr_handyworks_biz_info');
-    return saved ? JSON.parse(saved) : DEFAULT_BUSINESS_INFO;
+    const saved = readSyncedValue('mr_handyworks_biz_info');
+    return parseStoredValue(saved, DEFAULT_BUSINESS_INFO);
   });
 
   const updateBusinessInfo = (updated: Partial<BusinessInfo>) => {
     setBusinessInfo(prev => {
       const next = { ...prev, ...updated };
-      localStorage.setItem('mr_handyworks_biz_info', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_biz_info', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Información del negocio guardada' : 'Business information updated');
@@ -317,8 +397,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 6. Services State & CRUD
   const [services, setServices] = useState<Service[]>(() => {
-    const saved = localStorage.getItem('mr_handyworks_services');
-    return saved ? JSON.parse(saved) : INITIAL_SERVICES;
+    const saved = readSyncedValue('mr_handyworks_services');
+    return parseStoredValue(saved, INITIAL_SERVICES);
   });
 
   const addService = (newServ: Omit<Service, 'id'>) => {
@@ -326,7 +406,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const s: Service = { ...newServ, id };
     setServices(prev => {
       const next = [s, ...prev];
-      localStorage.setItem('mr_handyworks_services', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_services', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Servicio agregado con éxito' : 'Service added successfully');
@@ -335,7 +415,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateService = (id: string, partial: Partial<Service>) => {
     setServices(prev => {
       const next = prev.map(s => s.id === id ? { ...s, ...partial } : s);
-      localStorage.setItem('mr_handyworks_services', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_services', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Servicio actualizado' : 'Service updated');
@@ -344,7 +424,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const deleteService = (id: string) => {
     setServices(prev => {
       const next = prev.filter(s => s.id !== id);
-      localStorage.setItem('mr_handyworks_services', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_services', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Servicio eliminado' : 'Service deleted');
@@ -352,8 +432,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 7. Portfolio State & CRUD
   const [portfolio, setPortfolio] = useState<PortfolioMedia[]>(() => {
-    const saved = localStorage.getItem('mr_handyworks_portfolio');
-    return saved ? JSON.parse(saved) : INITIAL_PORTFOLIO;
+    const saved = readSyncedValue('mr_handyworks_portfolio');
+    return parseStoredValue(saved, INITIAL_PORTFOLIO);
   });
 
   const addPortfolioItem = (item: Omit<PortfolioMedia, 'id'>) => {
@@ -363,7 +443,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setPortfolio(prev => {
       const next = [newItem, ...prev];
-      localStorage.setItem('mr_handyworks_portfolio', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_portfolio', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Proyecto añadido al portafolio' : 'Project added to portfolio');
@@ -372,7 +452,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updatePortfolioItem = (id: string, partial: Partial<PortfolioMedia>) => {
     setPortfolio(prev => {
       const next = prev.map(p => p.id === id ? { ...p, ...partial } : p);
-      localStorage.setItem('mr_handyworks_portfolio', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_portfolio', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Proyecto actualizado' : 'Portfolio item updated');
@@ -381,7 +461,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const deletePortfolioItem = (id: string) => {
     setPortfolio(prev => {
       const next = prev.filter(p => p.id !== id);
-      localStorage.setItem('mr_handyworks_portfolio', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_portfolio', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Proyecto eliminado' : 'Portfolio item deleted');
@@ -389,8 +469,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 8. Reviews State & CRUD
   const [reviews, setReviews] = useState<Review[]>(() => {
-    const saved = localStorage.getItem('mr_handyworks_reviews');
-    return saved ? JSON.parse(saved) : INITIAL_REVIEWS;
+    const saved = readSyncedValue('mr_handyworks_reviews');
+    return parseStoredValue(saved, INITIAL_REVIEWS);
   });
 
   const addReview = (newRev: Omit<Review, 'id' | 'date' | 'isVerified' | 'source' | 'status'>) => {
@@ -404,7 +484,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setReviews(prev => {
       const next = [rev, ...prev];
-      localStorage.setItem('mr_handyworks_reviews', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_reviews', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? '¡Gracias! Tu reseña ha sido publicada.' : 'Thank you! Your review has been published.');
@@ -413,7 +493,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateReview = (id: string, partial: Partial<Review>) => {
     setReviews(prev => {
       const next = prev.map(r => r.id === id ? { ...r, ...partial } : r);
-      localStorage.setItem('mr_handyworks_reviews', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_reviews', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Reseña actualizada' : 'Review updated');
@@ -422,7 +502,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const approveReview = (id: string) => {
     setReviews(prev => {
       const next = prev.map(r => r.id === id ? { ...r, status: 'APPROVED' as const } : r);
-      localStorage.setItem('mr_handyworks_reviews', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_reviews', JSON.stringify(next));
       return next;
     });
   };
@@ -430,7 +510,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const deleteReview = (id: string) => {
     setReviews(prev => {
       const next = prev.filter(r => r.id !== id);
-      localStorage.setItem('mr_handyworks_reviews', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_reviews', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Reseña eliminada' : 'Review deleted');
@@ -442,7 +522,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } else {
       setReviews(prev => {
         const next = prev.map(r => r.id === id ? { ...r, status: action } : r);
-        localStorage.setItem('mr_handyworks_reviews', JSON.stringify(next));
+        writeSyncedValue('mr_handyworks_reviews', JSON.stringify(next));
         return next;
       });
     }
@@ -450,8 +530,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 9. Availability State & Actions
   const [availability, setAvailability] = useState<AvailabilityDay[]>(() => {
-    const saved = localStorage.getItem('mr_handyworks_availability');
-    return saved ? JSON.parse(saved) : INITIAL_AVAILABILITY;
+    const saved = readSyncedValue('mr_handyworks_availability');
+    return parseStoredValue(saved, INITIAL_AVAILABILITY);
   });
 
   const toggleDateBlock = (dateStr: string) => {
@@ -463,7 +543,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } else {
         next = [...prev, { date: dateStr, isBlocked: true, slots: [] }];
       }
-      localStorage.setItem('mr_handyworks_availability', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_availability', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Disponibilidad actualizada' : 'Availability synced');
@@ -479,7 +559,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } else {
         next = [...prev, { date: dateStr, isBlocked: false, slots: [slotStr] }];
       }
-      localStorage.setItem('mr_handyworks_availability', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_availability', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Horario agregado' : 'Slot added to calendar');
@@ -488,7 +568,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const removeSlotFromDate = (dateStr: string, slotStr: string) => {
     setAvailability(prev => {
       const next = prev.map(d => d.date === dateStr ? { ...d, slots: d.slots.filter(s => s !== slotStr) } : d);
-      localStorage.setItem('mr_handyworks_availability', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_availability', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Horario removido' : 'Slot removed from calendar');
@@ -496,8 +576,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 10. Bookings State
   const [bookings, setBookings] = useState<Booking[]>(() => {
-    const saved = localStorage.getItem('mr_handyworks_bookings');
-    return saved ? JSON.parse(saved) : INITIAL_BOOKINGS;
+    const saved = readSyncedValue('mr_handyworks_bookings');
+    return parseStoredValue(saved, INITIAL_BOOKINGS);
   });
 
   const addBooking = (bookingData: Omit<Booking, 'id' | 'createdAt'>): Booking => {
@@ -509,7 +589,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setBookings(prev => {
       const next = [newBooking, ...prev];
-      localStorage.setItem('mr_handyworks_bookings', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_bookings', JSON.stringify(next));
       return next;
     });
 
@@ -525,7 +605,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           }
           return day;
         });
-        localStorage.setItem('mr_handyworks_availability', JSON.stringify(next));
+        writeSyncedValue('mr_handyworks_availability', JSON.stringify(next));
         return next;
       });
     }
@@ -537,7 +617,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateBookingStatus = (id: string, status: BookingStatus) => {
     setBookings(prev => {
       const next = prev.map(b => b.id === id ? { ...b, status } : b);
-      localStorage.setItem('mr_handyworks_bookings', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_bookings', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? `Cita #${id} actualizada a ${status}` : `Booking #${id} updated to ${status}`);
@@ -546,7 +626,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const deleteBooking = (id: string) => {
     setBookings(prev => {
       const next = prev.filter(b => b.id !== id);
-      localStorage.setItem('mr_handyworks_bookings', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_bookings', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Cita eliminada' : 'Booking removed');
@@ -554,14 +634,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 11. Payment QR Methods
   const [qrMethods, setQrMethods] = useState<PaymentQR[]>(() => {
-    const saved = localStorage.getItem('mr_handyworks_qr');
-    return saved ? JSON.parse(saved) : INITIAL_QR_METHODS;
+    const saved = readSyncedValue('mr_handyworks_qr');
+    return parseStoredValue(saved, INITIAL_QR_METHODS);
   });
 
   const updateQRMethod = (id: string, accountInfo: string) => {
     setQrMethods(prev => {
       const next = prev.map(q => q.id === id ? { ...q, accountInfo } : q);
-      localStorage.setItem('mr_handyworks_qr', JSON.stringify(next));
+      writeSyncedValue('mr_handyworks_qr', JSON.stringify(next));
       return next;
     });
     showNotification(language === 'es' ? 'Información de pago actualizada' : 'Payment info updated');
@@ -617,7 +697,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
       setAdminUser(user);
       sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
-      localStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
+      writeSyncedValue('mr_handyworks_admin', JSON.stringify(user));
       showNotification(language === 'es' ? 'Bienvenido Brian Cueva (Sesión Segura)' : 'Welcome Brian Cueva (Secure Session)');
       return true;
     }
@@ -637,7 +717,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const guest: AdminUser = { isAuthenticated: false, email: '', twoFactorActive: true };
     setAdminUser(guest);
     sessionStorage.removeItem('mr_handyworks_admin');
-    localStorage.removeItem('mr_handyworks_admin');
+    removeSyncedValue('mr_handyworks_admin');
     setIsAdminModalOpen(false);
     showNotification(language === 'es' ? 'Sesión cerrada correctamente' : 'Signed out successfully');
   };
@@ -674,13 +754,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const resetToDefaults = () => {
-    localStorage.removeItem('mr_handyworks_services');
-    localStorage.removeItem('mr_handyworks_portfolio');
-    localStorage.removeItem('mr_handyworks_reviews');
-    localStorage.removeItem('mr_handyworks_availability');
-    localStorage.removeItem('mr_handyworks_bookings');
-    localStorage.removeItem('mr_handyworks_qr');
-    localStorage.removeItem('mr_handyworks_biz_info');
+    removeSyncedValue('mr_handyworks_services');
+    removeSyncedValue('mr_handyworks_portfolio');
+    removeSyncedValue('mr_handyworks_reviews');
+    removeSyncedValue('mr_handyworks_availability');
+    removeSyncedValue('mr_handyworks_bookings');
+    removeSyncedValue('mr_handyworks_qr');
+    removeSyncedValue('mr_handyworks_biz_info');
     setServices(INITIAL_SERVICES);
     setPortfolio(INITIAL_PORTFOLIO);
     setReviews(INITIAL_REVIEWS);
