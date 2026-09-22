@@ -1,0 +1,3395 @@
+{
+  "__typename": "ServicePage",
+  "servicePageToken": "{\"RequestCategoryPK\":\"109125193401647362\",\"ServicePK\":\"557892581429960708\",\"SearchFormPK\":524529961203294220,\"SearchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"SupportedCategoryPKs\":[109125193401647362,114396162735251717,114396692442300678,114400570923630858,122681972262289742,122766917521637728,122769389996753250,123455490521014685,124313679584068004,124317070955717033,124317505632420266,124332153761079733,124332799881036214,135129626356957466,135130438449717531,135215266436333870,135220443616796979,135470679694180664,135471073929404729,135472302663352634,135541422406828360,135555687046078803,135559407444107609,135561404650053979,135562409194258780,135563123555541341,135646566440370544,135813002240917912,135819519598035364,136162747862475231,150845832577090008,150850272033989083,150851985734336988,150853516047139294,150854742092538335,151361673291145477,151363177091744006,151436204227846419,151452842457252122,151457230055776541,151798527975375154,152059271518609759,152396937238036850,152409361638957433,152474580423786878,166570397309092258,166571307103969699,166573479455678887,166573940288061864,166573972257055145,166575510761349549,166577475042034098,166578864770154932,167177250904949178,167177288863408571,167189361873928642,168387173861163472,168387209743442385,168391220982882773,195347818552893937,201564094514635045,205008655513608487,206935519438151981,206936878363328818,206937032281719092,206937083829731638,212276959831908671,212281409812316482,212282574864154948,212471919713870163,217811130503651679,217891607650558311,234041504938762645,234489736316256728,234489848778138073,240123621172183344,242200623019737538,242201292996895171,242224544494477771,242251650519736793,242254535857062374,243044996758831608,248046574763368751,261968547570794818,261970175153856855,283053288559083920,283111542232826318,283300384734896599,539568903139852290,539568953925722132,539569257027780625],\"IsProUnavailable\":false,\"ZipCode\":\"46615\",\"IsInNBWOnSPTreatment\":false,\"IsNearMatchPro\":false,\"IsInHideProPricingForChx\":true}",
+  "inputToken": "{\"Input\":{\"servicePK\":\"557892581429960708\",\"supportedSections\":[\"HEADER\",\"HEADER_V2\",\"BUSINESS_FACTS\",\"BUSINESS_INFO\",\"SECONDARY_CTAS_V2\",\"QUESTIONS\",\"SPECIALTIES\",\"SPECIALTIES_V2\",\"REVIEWS\",\"MEDIA\",\"ACTION_CARD_V2_PRECONTACT\",\"ACTION_CARD_V4_PRECONTACT\",\"ACTION_CARD_V2_POSTCONTACT\",\"ACTION_CARD_V3_PRECONTACT\",\"ACTION_CARD_PRECONTACT_HARD_GATE\",\"CREDENTIALS\",\"SAFETY_MEASURES\",\"SERVICE_VISIT_BACK_LINK\",\"BREADCRUMBS\",\"INTERNAL_LINKS\",\"BADGE_EXPLANATION\",\"REVIEWS_SUMMARY\",\"CREDENTIALS_V2\",\"CREDIBILITY_INFO\",\"SIMILAR_PROS\",\"PRO_SUMMARY\",\"SERVICE_VISIT_JOIN\"],\"categoryPK\":\"109125193401647362\",\"searchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"searchQuery\":\"Handyman\",\"zipCode\":\"46615\",\"relevantServiceCategoryPks\":[\"109125193401647362\",\"114396162735251717\",\"114396692442300678\",\"114400570923630858\",\"122681972262289742\",\"122766917521637728\",\"122769389996753250\",\"123455490521014685\",\"124313679584068004\",\"124317070955717033\",\"124317505632420266\",\"124332153761079733\",\"124332799881036214\",\"135129626356957466\",\"135130438449717531\",\"135215266436333870\",\"135220443616796979\",\"135470679694180664\",\"135471073929404729\",\"135472302663352634\",\"135541422406828360\",\"135555687046078803\",\"135559407444107609\",\"135561404650053979\",\"135562409194258780\",\"135563123555541341\",\"135646566440370544\",\"135813002240917912\",\"135819519598035364\",\"136162747862475231\",\"150845832577090008\",\"150850272033989083\",\"150851985734336988\",\"150853516047139294\",\"150854742092538335\",\"151361673291145477\",\"151363177091744006\",\"151436204227846419\",\"151452842457252122\",\"151457230055776541\",\"151798527975375154\",\"152059271518609759\",\"152396937238036850\",\"152409361638957433\",\"152474580423786878\",\"166570397309092258\",\"166571307103969699\",\"166573479455678887\",\"166573940288061864\",\"166573972257055145\",\"166575510761349549\",\"166577475042034098\",\"166578864770154932\",\"167177250904949178\",\"167177288863408571\",\"167189361873928642\",\"168387173861163472\",\"168387209743442385\",\"168391220982882773\",\"195347818552893937\",\"201564094514635045\",\"205008655513608487\",\"206935519438151981\",\"206936878363328818\",\"206937032281719092\",\"206937083829731638\",\"212276959831908671\",\"212281409812316482\",\"212282574864154948\",\"212471919713870163\",\"217811130503651679\",\"217891607650558311\",\"234041504938762645\",\"234489736316256728\",\"234489848778138073\",\"240123621172183344\",\"242200623019737538\",\"242201292996895171\",\"242224544494477771\",\"242251650519736793\",\"242254535857062374\",\"243044996758831608\",\"248046574763368751\",\"261968547570794818\",\"261970175153856855\",\"283053288559083920\",\"283111542232826318\",\"283300384734896599\",\"539568903139852290\",\"539568953925722132\",\"539569257027780625\"],\"supportedIntroTypes\":[\"availability\",\"call\",\"contact\",\"estimation\",\"instant_book_upsell\",\"connect_to_book\"],\"supportedMediaTypes\":[\"IMAGE\",\"PROJECT\",\"VIDEO\",\"REVIEW\"],\"hasFilterAnswersOnLanding\":false,\"hasNonNbwFilterAnswersOnLanding\":false,\"isNearMePage\":false,\"pageUrl\":\"/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708\",\"isOrganicExternalTraffic\":true,\"utmParameters\":{}},\"ServicePK\":557892581429960708,\"CategoryPK\":109125193401647362,\"SupportedCategoryPKs\":[109125193401647362,114396162735251717,114396692442300678,114400570923630858,122681972262289742,122766917521637728,122769389996753250,123455490521014685,124313679584068004,124317070955717033,124317505632420266,124332153761079733,124332799881036214,135129626356957466,135130438449717531,135215266436333870,135220443616796979,135470679694180664,135471073929404729,135472302663352634,135541422406828360,135555687046078803,135559407444107609,135561404650053979,135562409194258780,135563123555541341,135646566440370544,135813002240917912,135819519598035364,136162747862475231,150845832577090008,150850272033989083,150851985734336988,150853516047139294,150854742092538335,151361673291145477,151363177091744006,151436204227846419,151452842457252122,151457230055776541,151798527975375154,152059271518609759,152396937238036850,152409361638957433,152474580423786878,166570397309092258,166571307103969699,166573479455678887,166573940288061864,166573972257055145,166575510761349549,166577475042034098,166578864770154932,167177250904949178,167177288863408571,167189361873928642,168387173861163472,168387209743442385,168391220982882773,195347818552893937,201564094514635045,205008655513608487,206935519438151981,206936878363328818,206937032281719092,206937083829731638,212276959831908671,212281409812316482,212282574864154948,212471919713870163,217811130503651679,217891607650558311,234041504938762645,234489736316256728,234489848778138073,240123621172183344,242200623019737538,242201292996895171,242224544494477771,242251650519736793,242254535857062374,243044996758831608,248046574763368751,261968547570794818,261970175153856855,283053288559083920,283111542232826318,283300384734896599,539568903139852290,539568953925722132,539569257027780625],\"ProjectPK\":null,\"KeywordPK\":null,\"RequestPK\":null,\"ProListRequestPK\":null,\"SearchQuery\":\"Handyman\",\"ZipCode\":\"46615\",\"Source\":\"\",\"SearchFormID\":null,\"SearchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"IsInNBWOnSPTreatment\":false}",
+  "multimodalQueryPk": null,
+  "multimodalDiagnosisPk": null,
+  "sections": [
+    {
+      "__typename": "ServicePageBreadcrumbsSection",
+      "id": "ServicePageBreadcrumbsSection",
+      "links": [
+        {
+          "__typename": "NavigationAction",
+          "text": "Thumbtack",
+          "url": "/",
+          "clickTrackingData": {
+            "__typename": "TrackingData",
+            "eventType": "service page/breadcrumbs link click",
+            "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"destinationUrl\":\"/\"}"
+          }
+        },
+        {
+          "__typename": "NavigationAction",
+          "text": "handyman",
+          "url": "/k/handyman/near-me",
+          "clickTrackingData": {
+            "__typename": "TrackingData",
+            "eventType": "service page/breadcrumbs link click",
+            "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"destinationUrl\":\"/k/handyman/near-me\"}"
+          }
+        },
+        {
+          "__typename": "NavigationAction",
+          "text": "Mr Handyworks LLC",
+          "url": "",
+          "clickTrackingData": null
+        }
+      ]
+    },
+    {
+      "__typename": "ServicePageHeaderSection",
+      "id": "ServicePageHeaderSection",
+      "businessSummaryPrefab": {
+        "__typename": "BusinessSummaryPrefab",
+        "businessSummary": {
+          "__typename": "BusinessSummary",
+          "businessName": "Mr Handyworks LLC",
+          "proAvatar": {
+            "__typename": "UserAvatar",
+            "imageV2": {
+              "__typename": "Image",
+              "imagePk": "579465204213997570"
+            },
+            "initials": "M",
+            "fullName": "Mr Handyworks LLC"
+          },
+          "avatarClickTrackingData": {
+            "__typename": "TrackingData",
+            "eventType": "service page/avatar click",
+            "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\"}"
+          },
+          "isOnline": false,
+          "badge": {
+            "__typename": "BusinessSummaryBadge",
+            "icon": "topPro",
+            "text": "Top Pro"
+          },
+          "badges": [],
+          "reviewSummaryPrefab": {
+            "__typename": "ReviewSummaryPrefab",
+            "reviewSummary": {
+              "__typename": "ReviewSummary",
+              "averageRating": {
+                "__typename": "StarRating",
+                "rating": 5
+              },
+              "reviewQualifier": "Exceptional",
+              "numReviews": 80
+            }
+          }
+        }
+      },
+      "profilePills": [],
+      "inlinePills": [],
+      "cta": {
+        "__typename": "ServicePageTokenCta",
+        "text": "Request estimate",
+        "icon": null,
+        "ctaToken": "{\"IntroType\":\"availability\",\"IsEditMode\":false,\"CtaText\":\"Request estimate\"}",
+        "isDisabled": false,
+        "ctaClickTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "Service page / click cta",
+          "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"SP_PROFILE_IMAGE_PAGE_CTA\",\"ctaText\":\"Request estimate\"}"
+        },
+        "ctaClickTrackingDataV2": {
+          "__typename": "TrackingDataV2",
+          "clientEventsV1Base64": "kgNfCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIQUmVxdWVzdCBlc3RpbWF0ZSgEMgA6DEFWQUlMQUJJTElUWUABYAE="
+        },
+        "theme": null
+      },
+      "viewTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"HEADER\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false}"
+      },
+      "reviewRedirectClickTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review section redirect click",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\"}"
+      },
+      "businessFacts": null
+    },
+    {
+      "__typename": "ServicePageActionCardV2PreContactSection",
+      "id": "ActionCardV2PreContactSection",
+      "isMvpVariant": true,
+      "priceHidingUpsell": null,
+      "priceSubsectionPrefab": {
+        "__typename": "ServicePagePriceSubsectionPrefab",
+        "servicePagePriceSubsection": {
+          "__typename": "ServicePagePriceSubsectionNoPrice",
+          "icon": "CONTACT",
+          "text": "Contact for price",
+          "clickToken": null,
+          "clickTrackingData": null,
+          "clickTrackingDataV2": null
+        }
+      },
+      "priceSubsectionPrefabV2": null,
+      "priceDetailsSubsection": null,
+      "proMismatchCarousel": null,
+      "filtersSubsection": {
+        "__typename": "ServicePageActionCardFiltersSubsection",
+        "searchFormId": "524529961203294220",
+        "filters": [
+          {
+            "__typename": "CategoryPickerQuestion",
+            "id": "400000000000000000",
+            "label": "Select a service",
+            "singleSelect": {
+              "__typename": "SingleSelect",
+              "options": [
+                {
+                  "__typename": "Option",
+                  "id": "109125193401647362",
+                  "label": "Handyman"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "114396162735251717",
+                  "label": "Home Theater System Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "114396692442300678",
+                  "label": "Computer Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "114400570923630858",
+                  "label": "General Contracting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "122681972262289742",
+                  "label": "Interior Painting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "122766917521637728",
+                  "label": "Lawn Mowing and Trimming"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "122769389996753250",
+                  "label": "Electrical and Wiring Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "123455490521014685",
+                  "label": "Tile Installation and Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "124313679584068004",
+                  "label": "Deck or Porch Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "124317070955717033",
+                  "label": "Gutter Cleaning and Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "124317505632420266",
+                  "label": "Pressure Washing"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "124332153761079733",
+                  "label": "Exterior Painting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "124332799881036214",
+                  "label": "Plumbing Drain Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135129626356957466",
+                  "label": "TV Repair Services"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135130438449717531",
+                  "label": "Lock Installation and Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135215266436333870",
+                  "label": "Odor Removal"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135220443616796979",
+                  "label": "Masonry Construction Services"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135470679694180664",
+                  "label": "Smart Home Installation or Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135471073929404729",
+                  "label": "Lighting Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135472302663352634",
+                  "label": "Holiday Lighting Installation and Removal"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135541422406828360",
+                  "label": "Home Security and Alarms Install"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135555687046078803",
+                  "label": "Furniture Assembly"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135559407444107609",
+                  "label": "Central Air Conditioning Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135561404650053979",
+                  "label": "Water Treatment System Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135562409194258780",
+                  "label": "Picture Hanging and Art Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135563123555541341",
+                  "label": "Shower and Bathtub Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135646566440370544",
+                  "label": "Trim or Molding Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135813002240917912",
+                  "label": "Closet and Shelving System Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "135819519598035364",
+                  "label": "Exercise Equipment Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "136162747862475231",
+                  "label": "Framing Carpentry"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "150845832577090008",
+                  "label": "Drywall Installation and Hanging"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "150850272033989083",
+                  "label": "Plumbing Pipe Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "150851985734336988",
+                  "label": "Sink or Faucet Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "150853516047139294",
+                  "label": "Plumbing Pipe Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "150854742092538335",
+                  "label": "Water Heater Repair or Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "151361673291145477",
+                  "label": "Wiring Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "151363177091744006",
+                  "label": "Switch and Outlet Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "151436204227846419",
+                  "label": "Floor Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "151452842457252122",
+                  "label": "Duct and Vent Cleaning"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "151457230055776541",
+                  "label": "Thermostat Installation or Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "151798527975375154",
+                  "label": "Window Treatment Installation or Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "152059271518609759",
+                  "label": "Well System Work"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "152396937238036850",
+                  "label": "TV Mounting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "152409361638957433",
+                  "label": "Screen Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "152474580423786878",
+                  "label": "Barbecue and Grill Services"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166570397309092258",
+                  "label": "Window Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166571307103969699",
+                  "label": "Window Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166573479455678887",
+                  "label": "Heating System Repair or Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166573940288061864",
+                  "label": "Appliance Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166573972257055145",
+                  "label": "Appliance Repair or Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166575510761349549",
+                  "label": "Garage Door Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166577475042034098",
+                  "label": "Central Air Conditioning Repair or Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "166578864770154932",
+                  "label": "Dishwasher Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "167177250904949178",
+                  "label": "Fence and Gate Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "167177288863408571",
+                  "label": "Fence and Gate Repairs"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "167189361873928642",
+                  "label": "Fan Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "168387173861163472",
+                  "label": "Door Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "168387209743442385",
+                  "label": "Door Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "168391220982882773",
+                  "label": "Play Equipment Construction and Assembly"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "195347818552893937",
+                  "label": "Patio Cover and Awning Services"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "201564094514635045",
+                  "label": "Bathroom Remodel"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "205008655513608487",
+                  "label": "Phone or Tablet Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "206935519438151981",
+                  "label": "Window, Wall, or Portable AC Repair or Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "206936878363328818",
+                  "label": "Water Heater Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "206937032281719092",
+                  "label": "Toilet Installation or Replacement"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "206937083829731638",
+                  "label": "Shower and Bathtub Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "212276959831908671",
+                  "label": "Stair Installation, Remodel, or Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "212281409812316482",
+                  "label": "Railing Installation or Remodel"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "212282574864154948",
+                  "label": "Deck or Porch Remodel or Addition"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "212471919713870163",
+                  "label": "Switch and Outlet Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "217811130503651679",
+                  "label": "Home Security System Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "217891607650558311",
+                  "label": "Drywall Repair and Texturing"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "234041504938762645",
+                  "label": "Furniture Moving and Heavy Lifting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "234489736316256728",
+                  "label": "Cabinet Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "234489848778138073",
+                  "label": "Custom Cabinet Building"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "240123621172183344",
+                  "label": "Full Service Lawn Care"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "242200623019737538",
+                  "label": "Garbage Disposal Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "242201292996895171",
+                  "label": "Garbage Disposal Repair"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "242224544494477771",
+                  "label": "Patio Remodel or Addition"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "242251650519736793",
+                  "label": "Window Tinting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "242254535857062374",
+                  "label": "Basement Finishing or Remodeling"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "243044996758831608",
+                  "label": "Fitness Equipment Assembly"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "248046574763368751",
+                  "label": "Snow Plowing"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "261968547570794818",
+                  "label": "Duct and Vent Installation or Removal"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "261970175153856855",
+                  "label": "Air Quality and Environmental Testing"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "283053288559083920",
+                  "label": "Closet Remodel"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "283111542232826318",
+                  "label": "Finish Carpentry"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "283300384734896599",
+                  "label": "Emergency Plumbing"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "539568903139852290",
+                  "label": "Mobile Auto Brake Services"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "539568953925722132",
+                  "label": "Mobile Auto Battery Services"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "539569257027780625",
+                  "label": "Mobile Auto Detailing"
+                }
+              ],
+              "placeholder": null,
+              "value": "109125193401647362"
+            },
+            "type": "DROPDOWN"
+          },
+          {
+            "__typename": "SearchFormTextBoxQuestion",
+            "id": "396923378967764995",
+            "label": "Zip code",
+            "questionIndex": null,
+            "isZipCode": true,
+            "clearTextCta": null,
+            "textbox": {
+              "__typename": "TextBox",
+              "placeholder": "Zip code",
+              "value": "46615",
+              "keyboardType": "NUMBER_PAD",
+              "validator": {
+                "__typename": "TextBoxValidator",
+                "minLength": 5,
+                "maxLength": 5
+              },
+              "viewTrackingData": null,
+              "viewTrackingDataV2": null,
+              "changeTrackingData": null,
+              "changeTrackingDataV2": null
+            }
+          },
+          {
+            "__typename": "SearchFormDatePickerQuestion",
+            "id": "70111",
+            "label": "Scheduling",
+            "questionIndex": null,
+            "datePicker": {
+              "__typename": "DatePicker",
+              "value": null,
+              "disabledDays": []
+            },
+            "validator": {
+              "__typename": "SearchFormQuestionValidator",
+              "atLeast": 0,
+              "atMost": 7,
+              "minLength": 0,
+              "maxLength": 16384
+            }
+          },
+          {
+            "__typename": "SearchFormSingleSelectQuestion",
+            "id": "462400873126559756",
+            "label": "Estimated hours",
+            "questionIndex": 2,
+            "singleSelect": {
+              "__typename": "SingleSelect",
+              "options": [
+                {
+                  "__typename": "Option",
+                  "id": "389251972166328323",
+                  "label": "Less than 2 hours (Simple tasks)"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "389251972258611203",
+                  "label": "2 - 5 hours (A few different projects)"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "389251972355448844",
+                  "label": "A full day (Complex or long-term projects)"
+                }
+              ],
+              "placeholder": "Select answer",
+              "value": null
+            },
+            "validator": {
+              "__typename": "SearchFormQuestionValidator",
+              "atLeast": 0,
+              "atMost": 1,
+              "minLength": null,
+              "maxLength": null
+            },
+            "type": "RADIO"
+          },
+          {
+            "__typename": "SearchFormMultiSelectQuestion",
+            "id": "462400874758537228",
+            "label": "Project type",
+            "questionIndex": 3,
+            "multiSelect": {
+              "__typename": "MultiSelect",
+              "options": [
+                {
+                  "__typename": "Option",
+                  "id": "396923376879386629",
+                  "label": "Repairs"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "396923376980975628",
+                  "label": "Installation"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "396923377100562433",
+                  "label": "Maintenance"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "396923377193451523",
+                  "label": "Assembly"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "396923377289945091",
+                  "label": "Painting"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "396923377385799681",
+                  "label": "Cleaning"
+                },
+                {
+                  "__typename": "Option",
+                  "id": "396923377483694091",
+                  "label": "Other"
+                }
+              ],
+              "placeholder": "Select answer(s)",
+              "value": null,
+              "overrideSelectOptionId": null
+            },
+            "validator": {
+              "__typename": "SearchFormQuestionValidator",
+              "atLeast": 0,
+              "atMost": 7,
+              "minLength": null,
+              "maxLength": null
+            },
+            "type": "CHECKBOX"
+          }
+        ],
+        "filterChangedTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "service page/filter changed client",
+          "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\"}"
+        }
+      },
+      "instantBookSubsection": null,
+      "projectDetailsSubsection": null,
+      "fallbackCta": null,
+      "educationalBanner": null,
+      "proUnavailableSubsection": null,
+      "cta": {
+        "__typename": "ServicePageTokenCta",
+        "text": "Request estimate",
+        "icon": null,
+        "ctaToken": "{\"IntroType\":\"availability\",\"IsEditMode\":false,\"CtaText\":\"Request estimate\"}",
+        "isDisabled": false,
+        "ctaClickTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "Service page / click cta",
+          "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"ACTION_CARD_PRIMARY_CTA\",\"ctaText\":\"Request estimate\"}"
+        },
+        "ctaClickTrackingDataV2": {
+          "__typename": "TrackingDataV2",
+          "clientEventsV1Base64": "kgNfCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIQUmVxdWVzdCBlc3RpbWF0ZSgCMgA6DEFWQUlMQUJJTElUWUABYAE="
+        },
+        "theme": null
+      },
+      "proMismatchCta": null,
+      "bottomText": null,
+      "bottomResponsivenessSubsection": {
+        "__typename": "ServicePageActionCardResponsivenessSubsection",
+        "responsiveness": {
+          "__typename": "FormattedTextWithIcon",
+          "icon": {
+            "__typename": "Icon",
+            "type": "CHAT",
+            "color": null
+          },
+          "text": {
+            "__typename": "FormattedText",
+            "segments": [
+              {
+                "__typename": "FormattedTextSegment",
+                "text": "Responds in about ",
+                "emphasis": [],
+                "url": null,
+                "color": null,
+                "colorV2": null,
+                "clickTrackingData": null,
+                "clickTrackingDataV2": null
+              },
+              {
+                "__typename": "FormattedTextSegment",
+                "text": "2 hours",
+                "emphasis": [
+                  "BOLD"
+                ],
+                "url": null,
+                "color": null,
+                "colorV2": null,
+                "clickTrackingData": null,
+                "clickTrackingDataV2": null
+              }
+            ]
+          }
+        },
+        "onlineNowDotPosition": null,
+        "viewTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "service page/responsiveness subsection view",
+          "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\",\"searchQuery\":\"Handyman\",\"isOnline\":false,\"responseTimeText\":\"Responds in about 2 hours\"}"
+        }
+      },
+      "availabilitySlotsSubsection": null,
+      "viewTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"ACTION_CARD_V2_PRECONTACT\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false}"
+      },
+      "guaranteeSubsection": {
+        "__typename": "Banner",
+        "icon": {
+          "__typename": "Icon",
+          "type": "GUARANTEE"
+        },
+        "title": {
+          "__typename": "FormattedText",
+          "segments": [
+            {
+              "__typename": "FormattedTextSegment",
+              "text": "Thumbtack Guarantee",
+              "emphasis": [
+                "BOLD"
+              ],
+              "url": null,
+              "clickTrackingData": null,
+              "clickTrackingDataV2": null
+            }
+          ]
+        },
+        "text": [
+          {
+            "__typename": "FormattedText",
+            "segments": [
+              {
+                "__typename": "FormattedTextSegment",
+                "text": "If you hire this pro, you’re covered by a money-back guarantee. ",
+                "emphasis": [],
+                "url": null,
+                "color": "BLACK300",
+                "colorV2": null,
+                "clickTrackingData": null,
+                "clickTrackingDataV2": null
+              },
+              {
+                "__typename": "FormattedTextSegment",
+                "text": "Learn more",
+                "emphasis": [],
+                "url": "https://www.thumbtack.com/guarantee",
+                "color": "BLUE",
+                "colorV2": null,
+                "clickTrackingData": {
+                  "__typename": "TrackingData",
+                  "eventType": "service page/guarantee section url click",
+                  "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\"}"
+                },
+                "clickTrackingDataV2": null
+              }
+            ]
+          }
+        ],
+        "viewTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "service page/guarantee section view",
+          "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\"}"
+        },
+        "backgroundColor": "GREY200"
+      },
+      "directCallCta": null,
+      "directCallText": null,
+      "notOfferedBanner": null
+    },
+    {
+      "__typename": "ServicePageBusinessInfoSection",
+      "id": "ServicePageBusinessInfoSection",
+      "title": "About this pro",
+      "introduction": "Hi, I’m Brian, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.\nFrom TV mounting and fixture installations to carpentry, painting, and general repairs, I take pride in delivering clean, precise work with strong attention to detail. No shortcuts, no guesswork, just solid, dependable results.\nMost of my work comes from repeat clients and referrals, which reflects the quality and consistency I bring to every job.\nMr. Handyworks LLC is fully insured and bonded, so you can have peace of mind knowing your home is in safe, professional hands. I believe in clear communication, fair pricing, and showing up when I say I will.\nIf you’re looking for someone reliable who treats your home with respect and takes pride in the work, I’m ready to help.",
+      "subsections": [
+        {
+          "__typename": "ServicePageBusinessFactsSubsection",
+          "heading": "Overview",
+          "facts": [
+            {
+              "__typename": "ServicePageBusinessFact",
+              "text": "Current Top Pro",
+              "url": null,
+              "icon": "topPro"
+            },
+            {
+              "__typename": "ServicePageBusinessFact",
+              "text": "Hired 101 times",
+              "url": null,
+              "icon": "trophy"
+            },
+            {
+              "__typename": "ServicePageBusinessFact",
+              "text": "24 similar jobs done near you",
+              "url": null,
+              "icon": "location"
+            },
+            {
+              "__typename": "ServicePageBusinessFact",
+              "text": "Background checked",
+              "url": null,
+              "icon": "backgroundCheck"
+            },
+            {
+              "__typename": "ServicePageBusinessFact",
+              "text": "1 employee",
+              "url": null,
+              "icon": "profiles"
+            },
+            {
+              "__typename": "ServicePageBusinessFact",
+              "text": "1 year in business",
+              "url": null,
+              "icon": "clock"
+            }
+          ]
+        },
+        {
+          "__typename": "ServicePageAvailabilityBusinessHoursSubsection",
+          "heading": "Business hours",
+          "hoursWithTimezone": {
+            "__typename": "ServicePageAvailabilityBusinessHoursAndTimezone",
+            "hours": [
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Sun",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Closed",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              },
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Mon",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "9:00 am - 8:00 pm",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              },
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Tues",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "9:00 am - 8:00 pm",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              },
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Wed",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "9:00 am - 8:00 pm",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              },
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Thurs",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "9:00 am - 8:00 pm",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              },
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Fri",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "9:00 am - 8:00 pm",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              },
+              {
+                "__typename": "BusinessDaySummary",
+                "day": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "Sat",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                },
+                "hours": {
+                  "__typename": "FormattedText",
+                  "segments": [
+                    {
+                      "__typename": "FormattedTextSegment",
+                      "text": "9:00 am - 6:00 pm",
+                      "emphasis": [],
+                      "url": null,
+                      "clickTrackingData": null,
+                      "clickTrackingDataV2": null
+                    }
+                  ]
+                }
+              }
+            ],
+            "timezoneText": {
+              "__typename": "FormattedText",
+              "segments": [
+                {
+                  "__typename": "FormattedTextSegment",
+                  "text": "Times in Eastern Time Zone",
+                  "emphasis": [],
+                  "url": null,
+                  "color": "BLACK300",
+                  "colorV2": null,
+                  "clickTrackingData": null,
+                  "clickTrackingDataV2": null
+                }
+              ]
+            }
+          },
+          "flexibleHoursText": null
+        },
+        {
+          "__typename": "ServicePagePaymentMethodsSubsection",
+          "heading": "Payment methods",
+          "paymentMethods": "This pro accepts payments via Apple Pay, Cash, Credit card, PayPal, Venmo, and Zelle."
+        },
+        {
+          "__typename": "ServicePageSocialMediaSubsection",
+          "heading": "Social media",
+          "items": [
+            {
+              "__typename": "ServicePageSocialMediaSubsectionItem",
+              "text": "Facebook",
+              "url": "/websites/services/557892581429960708/facebook/redirect",
+              "trackingDataURLClick": {
+                "__typename": "TrackingData",
+                "eventType": "service page/social media link click",
+                "kvPairsJSON": "{\"categoryPk\":\"109125193401647362\",\"eventComponent\":\"instant_results\",\"eventStyle\":\"COBALT_HYBRID\",\"servicePk\":\"557892581429960708\"}"
+              }
+            }
+          ]
+        }
+      ],
+      "trackingDataView": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"BUSINESS_INFO\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false}"
+      },
+      "trackingDataIntroductionReadMoreClick": {
+        "__typename": "TrackingData",
+        "eventType": "service page/introduction section read more",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\"}"
+      }
+    },
+    {
+      "__typename": "ServicePageSecondaryCtasV2Section",
+      "id": "ServicePageSecondaryCtasV2Section",
+      "viewTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"SECONDARY_CTAS_V2\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false}"
+      },
+      "ctas": [
+        {
+          "__typename": "ServicePageTokenCta",
+          "text": "Message",
+          "icon": "MESSAGE",
+          "ctaToken": "{\"IntroType\":\"contact\",\"IsEditMode\":false,\"CtaText\":\"Message\"}",
+          "isDisabled": false,
+          "ctaClickTrackingData": {
+            "__typename": "TrackingData",
+            "eventType": "Service page / click cta",
+            "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"CONTACT\",\"slotId\":\"\",\"ctaType\":\"SECONDARY_SECTION_CTA\",\"ctaText\":\"Message\"}"
+          },
+          "ctaClickTrackingDataV2": {
+            "__typename": "TrackingDataV2",
+            "clientEventsV1Base64": "kgNRCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIHTWVzc2FnZSgJMgA6B0NPTlRBQ1RAAWAB"
+          },
+          "theme": "SECONDARY_BUTTON"
+        },
+        {
+          "__typename": "ServicePageTokenCta",
+          "text": "Request a call",
+          "icon": "REQUEST_CALL",
+          "ctaToken": "{\"IntroType\":\"call\",\"IsEditMode\":false,\"CtaText\":\"Request a call\"}",
+          "isDisabled": false,
+          "ctaClickTrackingData": {
+            "__typename": "TrackingData",
+            "eventType": "Service page / click cta",
+            "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"CALL\",\"slotId\":\"\",\"ctaType\":\"SECONDARY_SECTION_CTA\",\"ctaText\":\"Request a call\"}"
+          },
+          "ctaClickTrackingDataV2": {
+            "__typename": "TrackingDataV2",
+            "clientEventsV1Base64": "kgNVCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIOUmVxdWVzdCBhIGNhbGwoCTIAOgRDQUxMQAFgAQ=="
+          },
+          "theme": "SECONDARY_BUTTON"
+        }
+      ]
+    },
+    {
+      "__typename": "ServicePageSpecialtiesSection",
+      "id": "ServicePageSpecialtiesSection",
+      "title": "Services offered",
+      "sections": [
+        {
+          "__typename": "ServicePageSpecialtiesSubsection",
+          "heading": "Project type",
+          "numUninterestedItems": 2,
+          "interestedItems": [
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Repairs",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": "{\"IntroType\":\"availability\",\"RequestFormAnswers\":[{\"questionID\":\"352863195608047634\",\"selectedAnswers\":[\"306287243396980940\"]}],\"IsEditMode\":false,\"CtaText\":\"Repairs\"}",
+              "trackingDataLaunchRF": {
+                "__typename": "TrackingData",
+                "eventType": "Service page / click cta",
+                "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"SPECIALTY_CTA\",\"ctaText\":\"Repairs\"}"
+              },
+              "trackingDataLaunchRfV2": {
+                "__typename": "TrackingDataV2",
+                "clientEventsV1Base64": "kgNWCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIHUmVwYWlycygLMgA6DEFWQUlMQUJJTElUWUABYAE="
+              }
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Installation",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": "{\"IntroType\":\"availability\",\"RequestFormAnswers\":[{\"questionID\":\"352863195608047634\",\"selectedAnswers\":[\"306287243409719525\"]}],\"IsEditMode\":false,\"CtaText\":\"Installation\"}",
+              "trackingDataLaunchRF": {
+                "__typename": "TrackingData",
+                "eventType": "Service page / click cta",
+                "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"SPECIALTY_CTA\",\"ctaText\":\"Installation\"}"
+              },
+              "trackingDataLaunchRfV2": {
+                "__typename": "TrackingDataV2",
+                "clientEventsV1Base64": "kgNbCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIMSW5zdGFsbGF0aW9uKAsyADoMQVZBSUxBQklMSVRZQAFgAQ=="
+              }
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Assembly",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": "{\"IntroType\":\"availability\",\"RequestFormAnswers\":[{\"questionID\":\"352863195608047634\",\"selectedAnswers\":[\"306287243418148892\"]}],\"IsEditMode\":false,\"CtaText\":\"Assembly\"}",
+              "trackingDataLaunchRF": {
+                "__typename": "TrackingData",
+                "eventType": "Service page / click cta",
+                "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"SPECIALTY_CTA\",\"ctaText\":\"Assembly\"}"
+              },
+              "trackingDataLaunchRfV2": {
+                "__typename": "TrackingDataV2",
+                "clientEventsV1Base64": "kgNXCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIIQXNzZW1ibHkoCzIAOgxBVkFJTEFCSUxJVFlAAWAB"
+              }
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Painting",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": "{\"IntroType\":\"availability\",\"RequestFormAnswers\":[{\"questionID\":\"352863195608047634\",\"selectedAnswers\":[\"306287243579302108\"]}],\"IsEditMode\":false,\"CtaText\":\"Painting\"}",
+              "trackingDataLaunchRF": {
+                "__typename": "TrackingData",
+                "eventType": "Service page / click cta",
+                "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"SPECIALTY_CTA\",\"ctaText\":\"Painting\"}"
+              },
+              "trackingDataLaunchRfV2": {
+                "__typename": "TrackingDataV2",
+                "clientEventsV1Base64": "kgNXCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIIUGFpbnRpbmcoCzIAOgxBVkFJTEFCSUxJVFlAAWAB"
+              }
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Other handyman services",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": "{\"IntroType\":\"availability\",\"RequestFormAnswers\":[{\"questionID\":\"352863195608047634\",\"selectedAnswers\":[\"352863187915063314\"]}],\"IsEditMode\":false,\"CtaText\":\"Other handyman services\"}",
+              "trackingDataLaunchRF": {
+                "__typename": "TrackingData",
+                "eventType": "Service page / click cta",
+                "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"SPECIALTY_CTA\",\"ctaText\":\"Other handyman services\"}"
+              },
+              "trackingDataLaunchRfV2": {
+                "__typename": "TrackingDataV2",
+                "clientEventsV1Base64": "kgNmCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIXT3RoZXIgaGFuZHltYW4gc2VydmljZXMoCzIAOgxBVkFJTEFCSUxJVFlAAWAB"
+              }
+            }
+          ],
+          "interestedItemsStyle": "CHIP",
+          "initialNumRowsDisplayed": 2,
+          "uninterestedItems": [
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Doesn’t offer: ",
+                    "emphasis": [
+                      "BOLD"
+                    ],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  },
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Maintenance, Cleaning",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "__typename": "ServicePageSpecialtiesSubsection",
+          "heading": "Estimated hours",
+          "numUninterestedItems": 0,
+          "interestedItems": [
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Less than 2 hours of work",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "2-5 hours of work",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "A full day of work",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            }
+          ],
+          "interestedItemsStyle": "DEFAULT",
+          "initialNumRowsDisplayed": 2,
+          "uninterestedItems": []
+        },
+        {
+          "__typename": "ServicePageSpecialtiesSubsection",
+          "heading": "Work focus",
+          "numUninterestedItems": 1,
+          "interestedItems": [
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Doors",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Windows",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Interior walls",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Exterior walls",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Cabinets",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Shelving",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Molding or baseboards",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Flooring",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Tiling",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Appliances",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Plumbing",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Electrical",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Lighting",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Hanging pictures or mirrors",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Furniture repair",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Other",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            }
+          ],
+          "interestedItemsStyle": "DEFAULT",
+          "initialNumRowsDisplayed": 2,
+          "uninterestedItems": [
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Doesn’t offer: ",
+                    "emphasis": [
+                      "BOLD"
+                    ],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  },
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Gutters",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "__typename": "ServicePageSpecialtiesSubsection",
+          "heading": "Property type",
+          "numUninterestedItems": 0,
+          "interestedItems": [
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Residential",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            },
+            {
+              "__typename": "ServicePageSpecialtiesSubsectionItem",
+              "specialty": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Commercial",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "ctaToken": null,
+              "trackingDataLaunchRF": null,
+              "trackingDataLaunchRfV2": null
+            }
+          ],
+          "interestedItemsStyle": "DEFAULT",
+          "initialNumRowsDisplayed": 2,
+          "uninterestedItems": []
+        }
+      ],
+      "trackingDataView": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"SPECIALTIES\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false,\"isInProCapabilitiesVariant\":true}"
+      },
+      "isInProCapabilitiesVariant": true,
+      "expandSectionCta": {
+        "__typename": "Cta",
+        "text": "Show more",
+        "clickTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "service page/services offered show more click",
+          "kvPairsJSON": "{\"servicePK\":\"557892581429960708\",\"categoryPK\":\"109125193401647362\",\"zipCode\":\"46615\",\"isSpecialitiesV2\":false}"
+        },
+        "clickTrackingDataV2": {
+          "__typename": "TrackingDataV2",
+          "clientEventsV1Base64": "mgVMCgIIBBABGicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4gACoJU2hvdyBtb3JlMgA6ChCNwKWf99femQhIAQ=="
+        },
+        "redirectUrl": null,
+        "size": null,
+        "theme": "LINK",
+        "leftIcon": null,
+        "rightIcon": null
+      },
+      "collapseSectionCta": {
+        "__typename": "Cta",
+        "text": "Show less",
+        "clickTrackingData": {
+          "__typename": "TrackingData",
+          "eventType": "service page/services offered show less click",
+          "kvPairsJSON": "{\"servicePK\":\"557892581429960708\",\"categoryPK\":\"109125193401647362\",\"zipCode\":\"46615\",\"isSpecialitiesV2\":false}"
+        },
+        "clickTrackingDataV2": {
+          "__typename": "TrackingDataV2",
+          "clientEventsV1Base64": "mgVMCgIIBBADGicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4gACoJU2hvdyBsZXNzMgA6ChCNwKWf99femQhIAQ=="
+        },
+        "redirectUrl": null,
+        "size": null,
+        "theme": "LINK",
+        "leftIcon": null,
+        "rightIcon": null
+      }
+    },
+    {
+      "__typename": "ServicePageMediaSection",
+      "id": "ServicePageMediaSection",
+      "title": "Projects and media",
+      "media": {
+        "__typename": "ServicePageMediaContainer",
+        "mediaPageToken": "{\"Input\":{\"servicePK\":\"557892581429960708\",\"supportedSections\":[\"HEADER\",\"HEADER_V2\",\"BUSINESS_FACTS\",\"BUSINESS_INFO\",\"SECONDARY_CTAS_V2\",\"QUESTIONS\",\"SPECIALTIES\",\"SPECIALTIES_V2\",\"REVIEWS\",\"MEDIA\",\"ACTION_CARD_V2_PRECONTACT\",\"ACTION_CARD_V4_PRECONTACT\",\"ACTION_CARD_V2_POSTCONTACT\",\"ACTION_CARD_V3_PRECONTACT\",\"ACTION_CARD_PRECONTACT_HARD_GATE\",\"CREDENTIALS\",\"SAFETY_MEASURES\",\"SERVICE_VISIT_BACK_LINK\",\"BREADCRUMBS\",\"INTERNAL_LINKS\",\"BADGE_EXPLANATION\",\"REVIEWS_SUMMARY\",\"CREDENTIALS_V2\",\"CREDIBILITY_INFO\",\"SIMILAR_PROS\",\"PRO_SUMMARY\",\"SERVICE_VISIT_JOIN\"],\"categoryPK\":\"109125193401647362\",\"searchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"searchQuery\":\"Handyman\",\"zipCode\":\"46615\",\"relevantServiceCategoryPks\":[\"109125193401647362\",\"114396162735251717\",\"114396692442300678\",\"114400570923630858\",\"122681972262289742\",\"122766917521637728\",\"122769389996753250\",\"123455490521014685\",\"124313679584068004\",\"124317070955717033\",\"124317505632420266\",\"124332153761079733\",\"124332799881036214\",\"135129626356957466\",\"135130438449717531\",\"135215266436333870\",\"135220443616796979\",\"135470679694180664\",\"135471073929404729\",\"135472302663352634\",\"135541422406828360\",\"135555687046078803\",\"135559407444107609\",\"135561404650053979\",\"135562409194258780\",\"135563123555541341\",\"135646566440370544\",\"135813002240917912\",\"135819519598035364\",\"136162747862475231\",\"150845832577090008\",\"150850272033989083\",\"150851985734336988\",\"150853516047139294\",\"150854742092538335\",\"151361673291145477\",\"151363177091744006\",\"151436204227846419\",\"151452842457252122\",\"151457230055776541\",\"151798527975375154\",\"152059271518609759\",\"152396937238036850\",\"152409361638957433\",\"152474580423786878\",\"166570397309092258\",\"166571307103969699\",\"166573479455678887\",\"166573940288061864\",\"166573972257055145\",\"166575510761349549\",\"166577475042034098\",\"166578864770154932\",\"167177250904949178\",\"167177288863408571\",\"167189361873928642\",\"168387173861163472\",\"168387209743442385\",\"168391220982882773\",\"195347818552893937\",\"201564094514635045\",\"205008655513608487\",\"206935519438151981\",\"206936878363328818\",\"206937032281719092\",\"206937083829731638\",\"212276959831908671\",\"212281409812316482\",\"212282574864154948\",\"212471919713870163\",\"217811130503651679\",\"217891607650558311\",\"234041504938762645\",\"234489736316256728\",\"234489848778138073\",\"240123621172183344\",\"242200623019737538\",\"242201292996895171\",\"242224544494477771\",\"242251650519736793\",\"242254535857062374\",\"243044996758831608\",\"248046574763368751\",\"261968547570794818\",\"261970175153856855\",\"283053288559083920\",\"283111542232826318\",\"283300384734896599\",\"539568903139852290\",\"539568953925722132\",\"539569257027780625\"],\"supportedIntroTypes\":[\"availability\",\"call\",\"contact\",\"estimation\",\"instant_book_upsell\",\"connect_to_book\"],\"supportedMediaTypes\":[\"IMAGE\",\"PROJECT\",\"VIDEO\",\"REVIEW\"],\"hasFilterAnswersOnLanding\":false,\"hasNonNbwFilterAnswersOnLanding\":false,\"isNearMePage\":false,\"pageUrl\":\"/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708\",\"isOrganicExternalTraffic\":true,\"utmParameters\":{}},\"StartID\":\"0\",\"ProfileMediaStartID\":\"5\",\"ExcludedMedia\":null,\"Source\":\"\\\"SERVICE_PAGE\\\"\"}",
+        "items": [
+          {
+            "__typename": "ServicePageMediaItem",
+            "media": {
+              "__typename": "ReviewImage",
+              "reviewPk": "569553641474179079",
+              "imageIndex": 0,
+              "image": {
+                "__typename": "Image",
+                "imagePk": "569553639910694926",
+                "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/569553639910694926/desktop/retina/centered_large_thumb"
+              }
+            },
+            "title": null,
+            "formattedSubtext": null,
+            "starRating": null,
+            "description": null,
+            "trackingDataClick": {
+              "__typename": "TrackingData",
+              "eventType": "Service page / click media",
+              "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"media_type\":\"REVIEW_IMAGE\",\"media_pk\":\"569553639910694926\",\"source\":\"SERVICE_PAGE\",\"mediaSection\":\"ALL_MEDIA_SECTION\"}"
+            },
+            "viewTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/media view",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\",\"searchQuery\":\"Handyman\",\"mediaPk\":\"569553639910694926\",\"mediaType\":\"REVIEW_IMAGE\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageMediaItem",
+            "media": {
+              "__typename": "ReviewImage",
+              "reviewPk": "569553641474179079",
+              "imageIndex": 1,
+              "image": {
+                "__typename": "Image",
+                "imagePk": "569553640531558414",
+                "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/569553640531558414/desktop/retina/centered_large_thumb"
+              }
+            },
+            "title": null,
+            "formattedSubtext": null,
+            "starRating": null,
+            "description": null,
+            "trackingDataClick": {
+              "__typename": "TrackingData",
+              "eventType": "Service page / click media",
+              "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"media_type\":\"REVIEW_IMAGE\",\"media_pk\":\"569553640531558414\",\"source\":\"SERVICE_PAGE\",\"mediaSection\":\"ALL_MEDIA_SECTION\"}"
+            },
+            "viewTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/media view",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\",\"searchQuery\":\"Handyman\",\"mediaPk\":\"569553640531558414\",\"mediaType\":\"REVIEW_IMAGE\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageMediaItem",
+            "media": {
+              "__typename": "ReviewImage",
+              "reviewPk": "566524139567398914",
+              "imageIndex": 0,
+              "image": {
+                "__typename": "Image",
+                "imagePk": "566524396090687490",
+                "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/566524396090687490/desktop/retina/centered_large_thumb"
+              }
+            },
+            "title": null,
+            "formattedSubtext": null,
+            "starRating": null,
+            "description": null,
+            "trackingDataClick": {
+              "__typename": "TrackingData",
+              "eventType": "Service page / click media",
+              "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"media_type\":\"REVIEW_IMAGE\",\"media_pk\":\"566524396090687490\",\"source\":\"SERVICE_PAGE\",\"mediaSection\":\"ALL_MEDIA_SECTION\"}"
+            },
+            "viewTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/media view",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\",\"searchQuery\":\"Handyman\",\"mediaPk\":\"566524396090687490\",\"mediaType\":\"REVIEW_IMAGE\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageMediaItem",
+            "media": {
+              "__typename": "ReviewImage",
+              "reviewPk": "582841863715897349",
+              "imageIndex": 0,
+              "image": {
+                "__typename": "Image",
+                "imagePk": "582841862834618372",
+                "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/582841862834618372/desktop/retina/centered_large_thumb"
+              }
+            },
+            "title": null,
+            "formattedSubtext": null,
+            "starRating": null,
+            "description": null,
+            "trackingDataClick": {
+              "__typename": "TrackingData",
+              "eventType": "Service page / click media",
+              "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"media_type\":\"REVIEW_IMAGE\",\"media_pk\":\"582841862834618372\",\"source\":\"SERVICE_PAGE\",\"mediaSection\":\"ALL_MEDIA_SECTION\"}"
+            },
+            "viewTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/media view",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\",\"searchQuery\":\"Handyman\",\"mediaPk\":\"582841862834618372\",\"mediaType\":\"REVIEW_IMAGE\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageMediaItem",
+            "media": {
+              "__typename": "ReviewImage",
+              "reviewPk": "587304500823629826",
+              "imageIndex": 0,
+              "image": {
+                "__typename": "Image",
+                "imagePk": "587304499874766855",
+                "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/587304499874766855/desktop/retina/centered_large_thumb"
+              }
+            },
+            "title": null,
+            "formattedSubtext": null,
+            "starRating": null,
+            "description": null,
+            "trackingDataClick": {
+              "__typename": "TrackingData",
+              "eventType": "Service page / click media",
+              "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"media_type\":\"REVIEW_IMAGE\",\"media_pk\":\"587304499874766855\",\"source\":\"SERVICE_PAGE\",\"mediaSection\":\"ALL_MEDIA_SECTION\"}"
+            },
+            "viewTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/media view",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"eventCategoryPk\":\"109125193401647362\",\"zipCode\":\"46615\",\"searchQuery\":\"Handyman\",\"mediaPk\":\"587304499874766855\",\"mediaType\":\"REVIEW_IMAGE\"}"
+            }
+          }
+        ],
+        "businessSummaryPrefab": {
+          "__typename": "BusinessSummaryPrefab",
+          "businessSummary": {
+            "__typename": "BusinessSummary",
+            "proAvatar": {
+              "__typename": "UserAvatar",
+              "imageV2": {
+                "__typename": "Image",
+                "imagePk": "579465204213997570"
+              },
+              "initials": "M",
+              "fullName": "Mr Handyworks LLC"
+            },
+            "businessName": "Mr Handyworks LLC"
+          }
+        }
+      },
+      "trackingDataView": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"MEDIA\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false,\"hasMediaImprovements\":true}"
+      },
+      "numMediaItems": 125,
+      "overflowPageText": "See all (125)",
+      "mediaPageInputToken": "{\"Input\":{\"servicePK\":\"557892581429960708\",\"supportedSections\":[\"HEADER\",\"HEADER_V2\",\"BUSINESS_FACTS\",\"BUSINESS_INFO\",\"SECONDARY_CTAS_V2\",\"QUESTIONS\",\"SPECIALTIES\",\"SPECIALTIES_V2\",\"REVIEWS\",\"MEDIA\",\"ACTION_CARD_V2_PRECONTACT\",\"ACTION_CARD_V4_PRECONTACT\",\"ACTION_CARD_V2_POSTCONTACT\",\"ACTION_CARD_V3_PRECONTACT\",\"ACTION_CARD_PRECONTACT_HARD_GATE\",\"CREDENTIALS\",\"SAFETY_MEASURES\",\"SERVICE_VISIT_BACK_LINK\",\"BREADCRUMBS\",\"INTERNAL_LINKS\",\"BADGE_EXPLANATION\",\"REVIEWS_SUMMARY\",\"CREDENTIALS_V2\",\"CREDIBILITY_INFO\",\"SIMILAR_PROS\",\"PRO_SUMMARY\",\"SERVICE_VISIT_JOIN\"],\"categoryPK\":\"109125193401647362\",\"searchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"searchQuery\":\"Handyman\",\"zipCode\":\"46615\",\"relevantServiceCategoryPks\":[\"109125193401647362\",\"114396162735251717\",\"114396692442300678\",\"114400570923630858\",\"122681972262289742\",\"122766917521637728\",\"122769389996753250\",\"123455490521014685\",\"124313679584068004\",\"124317070955717033\",\"124317505632420266\",\"124332153761079733\",\"124332799881036214\",\"135129626356957466\",\"135130438449717531\",\"135215266436333870\",\"135220443616796979\",\"135470679694180664\",\"135471073929404729\",\"135472302663352634\",\"135541422406828360\",\"135555687046078803\",\"135559407444107609\",\"135561404650053979\",\"135562409194258780\",\"135563123555541341\",\"135646566440370544\",\"135813002240917912\",\"135819519598035364\",\"136162747862475231\",\"150845832577090008\",\"150850272033989083\",\"150851985734336988\",\"150853516047139294\",\"150854742092538335\",\"151361673291145477\",\"151363177091744006\",\"151436204227846419\",\"151452842457252122\",\"151457230055776541\",\"151798527975375154\",\"152059271518609759\",\"152396937238036850\",\"152409361638957433\",\"152474580423786878\",\"166570397309092258\",\"166571307103969699\",\"166573479455678887\",\"166573940288061864\",\"166573972257055145\",\"166575510761349549\",\"166577475042034098\",\"166578864770154932\",\"167177250904949178\",\"167177288863408571\",\"167189361873928642\",\"168387173861163472\",\"168387209743442385\",\"168391220982882773\",\"195347818552893937\",\"201564094514635045\",\"205008655513608487\",\"206935519438151981\",\"206936878363328818\",\"206937032281719092\",\"206937083829731638\",\"212276959831908671\",\"212281409812316482\",\"212282574864154948\",\"212471919713870163\",\"217811130503651679\",\"217891607650558311\",\"234041504938762645\",\"234489736316256728\",\"234489848778138073\",\"240123621172183344\",\"242200623019737538\",\"242201292996895171\",\"242224544494477771\",\"242251650519736793\",\"242254535857062374\",\"243044996758831608\",\"248046574763368751\",\"261968547570794818\",\"261970175153856855\",\"283053288559083920\",\"283111542232826318\",\"283300384734896599\",\"539568903139852290\",\"539568953925722132\",\"539569257027780625\"],\"supportedIntroTypes\":[\"availability\",\"call\",\"contact\",\"estimation\",\"instant_book_upsell\",\"connect_to_book\"],\"supportedMediaTypes\":[\"IMAGE\",\"PROJECT\",\"VIDEO\",\"REVIEW\"],\"hasFilterAnswersOnLanding\":false,\"hasNonNbwFilterAnswersOnLanding\":false,\"isNearMePage\":false,\"pageUrl\":\"/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708\",\"isOrganicExternalTraffic\":true,\"utmParameters\":{}},\"ServicePK\":557892581429960708,\"CategoryPK\":109125193401647362,\"SupportedCategoryPKs\":null,\"ProjectPK\":null,\"KeywordPK\":null,\"RequestPK\":null,\"ProListRequestPK\":null,\"SearchQuery\":\"Handyman\",\"ZipCode\":\"46615\",\"Source\":\"\",\"SearchFormID\":null,\"SearchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"IsInNBWOnSPTreatment\":false}",
+      "theme": "LARGE_GRAY_OVERLAY"
+    },
+    {
+      "__typename": "ServicePageReviewsSection",
+      "id": "ServicePageReviewsSection",
+      "title": "Reviews",
+      "overview": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Customers rated this pro highly for ",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "professionalism",
+            "emphasis": [
+              "BOLD"
+            ],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": ", ",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "work quality",
+            "emphasis": [
+              "BOLD"
+            ],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": ", and ",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "responsiveness",
+            "emphasis": [
+              "BOLD"
+            ],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": ".",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "reviewSummaryPrefab": {
+        "__typename": "ReviewSummaryPrefab",
+        "reviewSummary": {
+          "__typename": "ReviewSummary",
+          "averageRatingText": "5.0",
+          "averageRating": {
+            "__typename": "StarRating",
+            "tooltip": "5 out of 5 star rating",
+            "rating": 5
+          },
+          "shortNumReviewsText": "(80)",
+          "reviewQualifier": "Exceptional"
+        }
+      },
+      "histogramItems": [
+        {
+          "__typename": "ServicePageReviewsHistogramItem",
+          "rating": "1",
+          "percent": "0%",
+          "fraction": 0
+        },
+        {
+          "__typename": "ServicePageReviewsHistogramItem",
+          "rating": "2",
+          "percent": "0%",
+          "fraction": 0
+        },
+        {
+          "__typename": "ServicePageReviewsHistogramItem",
+          "rating": "3",
+          "percent": "1%",
+          "fraction": 0.01
+        },
+        {
+          "__typename": "ServicePageReviewsHistogramItem",
+          "rating": "4",
+          "percent": "1%",
+          "fraction": 0.01
+        },
+        {
+          "__typename": "ServicePageReviewsHistogramItem",
+          "rating": "5",
+          "percent": "98%",
+          "fraction": 0.98
+        }
+      ],
+      "reviews": {
+        "__typename": "ServicePageReviewsContainer",
+        "reviewsPageToken": "{\"Input\":{\"servicePK\":\"557892581429960708\",\"supportedSections\":[\"HEADER\",\"HEADER_V2\",\"BUSINESS_FACTS\",\"BUSINESS_INFO\",\"SECONDARY_CTAS_V2\",\"QUESTIONS\",\"SPECIALTIES\",\"SPECIALTIES_V2\",\"REVIEWS\",\"MEDIA\",\"ACTION_CARD_V2_PRECONTACT\",\"ACTION_CARD_V4_PRECONTACT\",\"ACTION_CARD_V2_POSTCONTACT\",\"ACTION_CARD_V3_PRECONTACT\",\"ACTION_CARD_PRECONTACT_HARD_GATE\",\"CREDENTIALS\",\"SAFETY_MEASURES\",\"SERVICE_VISIT_BACK_LINK\",\"BREADCRUMBS\",\"INTERNAL_LINKS\",\"BADGE_EXPLANATION\",\"REVIEWS_SUMMARY\",\"CREDENTIALS_V2\",\"CREDIBILITY_INFO\",\"SIMILAR_PROS\",\"PRO_SUMMARY\",\"SERVICE_VISIT_JOIN\"],\"categoryPK\":\"109125193401647362\",\"searchFormAnswers\":[{\"questionID\":\"396923378967764995\",\"textAnswers\":[\"46615\"]}],\"searchQuery\":\"Handyman\",\"zipCode\":\"46615\",\"relevantServiceCategoryPks\":[\"109125193401647362\",\"114396162735251717\",\"114396692442300678\",\"114400570923630858\",\"122681972262289742\",\"122766917521637728\",\"122769389996753250\",\"123455490521014685\",\"124313679584068004\",\"124317070955717033\",\"124317505632420266\",\"124332153761079733\",\"124332799881036214\",\"135129626356957466\",\"135130438449717531\",\"135215266436333870\",\"135220443616796979\",\"135470679694180664\",\"135471073929404729\",\"135472302663352634\",\"135541422406828360\",\"135555687046078803\",\"135559407444107609\",\"135561404650053979\",\"135562409194258780\",\"135563123555541341\",\"135646566440370544\",\"135813002240917912\",\"135819519598035364\",\"136162747862475231\",\"150845832577090008\",\"150850272033989083\",\"150851985734336988\",\"150853516047139294\",\"150854742092538335\",\"151361673291145477\",\"151363177091744006\",\"151436204227846419\",\"151452842457252122\",\"151457230055776541\",\"151798527975375154\",\"152059271518609759\",\"152396937238036850\",\"152409361638957433\",\"152474580423786878\",\"166570397309092258\",\"166571307103969699\",\"166573479455678887\",\"166573940288061864\",\"166573972257055145\",\"166575510761349549\",\"166577475042034098\",\"166578864770154932\",\"167177250904949178\",\"167177288863408571\",\"167189361873928642\",\"168387173861163472\",\"168387209743442385\",\"168391220982882773\",\"195347818552893937\",\"201564094514635045\",\"205008655513608487\",\"206935519438151981\",\"206936878363328818\",\"206937032281719092\",\"206937083829731638\",\"212276959831908671\",\"212281409812316482\",\"212282574864154948\",\"212471919713870163\",\"217811130503651679\",\"217891607650558311\",\"234041504938762645\",\"234489736316256728\",\"234489848778138073\",\"240123621172183344\",\"242200623019737538\",\"242201292996895171\",\"242224544494477771\",\"242251650519736793\",\"242254535857062374\",\"243044996758831608\",\"248046574763368751\",\"261968547570794818\",\"261970175153856855\",\"283053288559083920\",\"283111542232826318\",\"283300384734896599\",\"539568903139852290\",\"539568953925722132\",\"539569257027780625\"],\"supportedIntroTypes\":[\"availability\",\"call\",\"contact\",\"estimation\",\"instant_book_upsell\",\"connect_to_book\"],\"supportedMediaTypes\":[\"IMAGE\",\"PROJECT\",\"VIDEO\",\"REVIEW\"],\"hasFilterAnswersOnLanding\":false,\"hasNonNbwFilterAnswersOnLanding\":false,\"isNearMePage\":false,\"pageUrl\":\"/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708\",\"isOrganicExternalTraffic\":true,\"utmParameters\":{}},\"inputToken\":\"{\\\"Input\\\":{\\\"supportedSections\\\":null},\\\"ServicePK\\\":557892581429960708,\\\"CategoryPK\\\":109125193401647362,\\\"SupportedCategoryPKs\\\":null,\\\"ProjectPK\\\":null,\\\"KeywordPK\\\":null,\\\"RequestPK\\\":null,\\\"ProListRequestPK\\\":null,\\\"SearchQuery\\\":\\\"\\\",\\\"ZipCode\\\":\\\"46615\\\",\\\"Source\\\":\\\"\\\",\\\"SearchFormID\\\":null,\\\"SearchFormAnswers\\\":null,\\\"IsInNBWOnSPTreatment\\\":false}\",\"Offset\":\"5\"}",
+        "itemsV2": [
+          {
+            "__typename": "ServicePageReviewsItemV2",
+            "reviewV2": {
+              "__typename": "ServicePageReviewV2",
+              "header": {
+                "__typename": "ServicePageReviewHeader",
+                "attribution": "Tara C.",
+                "attributionAvatar": {
+                  "__typename": "Image",
+                  "imagePk": "431288513193426972"
+                },
+                "category": null,
+                "rating": {
+                  "__typename": "StarRating",
+                  "tooltip": "5 out of 5 star rating",
+                  "rating": 5,
+                  "theme": "GREEN"
+                },
+                "date": "2 weeks ago",
+                "verifier": {
+                  "__typename": "ServicePageReviewVerifier",
+                  "source": "VERIFIED",
+                  "text": "Hired on Thumbtack"
+                }
+              },
+              "text": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "jobDetailsV2": "Details: Wall mount above fireplace • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • No, I’ll purchase the mount or stand • Tilt (angled up or down) • None",
+              "images": [],
+              "imageClickTrackingData": null,
+              "labels": [
+                {
+                  "__typename": "ServicePageReviewLabel",
+                  "icon": null,
+                  "text": "TV Mounting"
+                }
+              ],
+              "response": null
+            },
+            "originalReviewsV2": []
+          },
+          {
+            "__typename": "ServicePageReviewsItemV2",
+            "reviewV2": {
+              "__typename": "ServicePageReviewV2",
+              "header": {
+                "__typename": "ServicePageReviewHeader",
+                "attribution": "Sushruta N.",
+                "attributionAvatar": {
+                  "__typename": "Image",
+                  "imagePk": "431288469664604162"
+                },
+                "category": null,
+                "rating": {
+                  "__typename": "StarRating",
+                  "tooltip": "5 out of 5 star rating",
+                  "rating": 5,
+                  "theme": "GREEN"
+                },
+                "date": "Aug 1, 2026",
+                "verifier": {
+                  "__typename": "ServicePageReviewVerifier",
+                  "source": "VERIFIED",
+                  "text": "Hired on Thumbtack"
+                }
+              },
+              "text": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Outstanding Job. Set up up my whole home theater including surround speakers and made changes till it was absolutely perfect!",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • Sound bar",
+              "images": [
+                {
+                  "__typename": "Image",
+                  "imagePk": "586492808112529414"
+                }
+              ],
+              "imageClickTrackingData": {
+                "__typename": "TrackingData",
+                "eventType": "service page/review section image click",
+                "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"152396937238036850\"}"
+              },
+              "labels": [
+                {
+                  "__typename": "ServicePageReviewLabel",
+                  "icon": null,
+                  "text": "TV Mounting"
+                }
+              ],
+              "response": null
+            },
+            "originalReviewsV2": []
+          },
+          {
+            "__typename": "ServicePageReviewsItemV2",
+            "reviewV2": {
+              "__typename": "ServicePageReviewV2",
+              "header": {
+                "__typename": "ServicePageReviewHeader",
+                "attribution": "Mark F.",
+                "attributionAvatar": {
+                  "__typename": "Image",
+                  "imagePk": "431288235474542596"
+                },
+                "category": null,
+                "rating": {
+                  "__typename": "StarRating",
+                  "tooltip": "5 out of 5 star rating",
+                  "rating": 5,
+                  "theme": "GREEN"
+                },
+                "date": "Apr 1, 2026",
+                "verifier": {
+                  "__typename": "ServicePageReviewVerifier",
+                  "source": "VERIFIED",
+                  "text": "Hired on Thumbtack"
+                }
+              },
+              "text": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Hired to fix a plumbing leak and replace an exterior door. He was fast to reply, quoted a fair and consistent price for the labor with clear pricing for labor and materials, and was able to schedule in a timely manner. All his interactions were pleasant and professional and he remained true to his initial quote and was able to adapt and accommodate throughout the process of the job. I will be using him again for any future work that I need completed.",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Repairs • Installation • Basement • Garage • Doors • Plumbing • Home",
+              "images": [],
+              "imageClickTrackingData": null,
+              "labels": [
+                {
+                  "__typename": "ServicePageReviewLabel",
+                  "icon": null,
+                  "text": "Handyman"
+                }
+              ],
+              "response": null
+            },
+            "originalReviewsV2": []
+          },
+          {
+            "__typename": "ServicePageReviewsItemV2",
+            "reviewV2": {
+              "__typename": "ServicePageReviewV2",
+              "header": {
+                "__typename": "ServicePageReviewHeader",
+                "attribution": "Patrick E.",
+                "attributionAvatar": {
+                  "__typename": "Image",
+                  "imagePk": "431288335579283467"
+                },
+                "category": null,
+                "rating": {
+                  "__typename": "StarRating",
+                  "tooltip": "5 out of 5 star rating",
+                  "rating": 5,
+                  "theme": "GREEN"
+                },
+                "date": "Jun 20, 2026",
+                "verifier": {
+                  "__typename": "ServicePageReviewVerifier",
+                  "source": "VERIFIED",
+                  "text": "Hired on Thumbtack"
+                }
+              },
+              "text": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house.",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "jobDetailsV2": "Details: No, I do not need to replace a sink • Pedestal sink • 0 sinks • 1 faucet • House",
+              "images": [
+                {
+                  "__typename": "Image",
+                  "imagePk": "582841862834618372"
+                }
+              ],
+              "imageClickTrackingData": {
+                "__typename": "TrackingData",
+                "eventType": "service page/review section image click",
+                "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"150851985734336988\"}"
+              },
+              "labels": [
+                {
+                  "__typename": "ServicePageReviewLabel",
+                  "icon": null,
+                  "text": "Sink or Faucet Installation or Replacement"
+                }
+              ],
+              "response": null
+            },
+            "originalReviewsV2": []
+          },
+          {
+            "__typename": "ServicePageReviewsItemV2",
+            "reviewV2": {
+              "__typename": "ServicePageReviewV2",
+              "header": {
+                "__typename": "ServicePageReviewHeader",
+                "attribution": "Dennis A.",
+                "attributionAvatar": {
+                  "__typename": "Image",
+                  "imagePk": "431288513193426972"
+                },
+                "category": null,
+                "rating": {
+                  "__typename": "StarRating",
+                  "tooltip": "5 out of 5 star rating",
+                  "rating": 5,
+                  "theme": "GREEN"
+                },
+                "date": "May 28, 2026",
+                "verifier": {
+                  "__typename": "ServicePageReviewVerifier",
+                  "source": "VERIFIED",
+                  "text": "Hired on Thumbtack"
+                }
+              },
+              "text": {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Installation • Deck or porch • Home",
+              "images": [],
+              "imageClickTrackingData": null,
+              "labels": [
+                {
+                  "__typename": "ServicePageReviewLabel",
+                  "icon": null,
+                  "text": "Handyman"
+                }
+              ],
+              "response": null
+            },
+            "originalReviewsV2": []
+          }
+        ],
+        "trackingDataPagination": null
+      },
+      "disclaimerText": null,
+      "reviewGuidelinesText": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Your trust means everything to us. ",
+            "url": null,
+            "color": "BLACK",
+            "colorV2": null,
+            "emphasis": [],
+            "clickAction": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          },
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Learn about our review guidelines.",
+            "url": null,
+            "color": "BLUE",
+            "colorV2": null,
+            "emphasis": [
+              "BOLD"
+            ],
+            "clickAction": "OPEN_GUIDELINES_MODAL",
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "reviewGuidelinesTextClickTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review guidelines click",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\"}"
+      },
+      "reviewGuidelines": {
+        "__typename": "ServicePageReviewGuidelines",
+        "header": {
+          "__typename": "FormattedText",
+          "segments": [
+            {
+              "__typename": "FormattedTextSegment",
+              "text": "Our review guidelines",
+              "emphasis": [
+                "BOLD"
+              ],
+              "url": null,
+              "clickTrackingData": null,
+              "clickTrackingDataV2": null
+            }
+          ]
+        },
+        "details": [
+          "We're here to help you find the best pro for your project and reviews are an important part of your search.",
+          "",
+          "We'll remove any reviews that:"
+        ],
+        "guidelines": [
+          "Are not directly related to pro's professionalism, interactions, or performance",
+          "Misrepresent a customer’s experience",
+          "Are not posted within a reasonable period after the work is completed",
+          "Endorses illegal, violent, discriminatory, vulgar, or threatening activities",
+          "Promotes commercial promotion of products or services",
+          "Disclose confidential information"
+        ],
+        "illustrationImageId": "433018740414693376"
+      },
+      "filterText": null,
+      "filterCtaText": null,
+      "searchTextBox": {
+        "__typename": "TextBox",
+        "icon": "search",
+        "placeholder": "Search reviews",
+        "value": null
+      },
+      "searchSortSelect": {
+        "__typename": "SingleSelect",
+        "options": [
+          {
+            "__typename": "Option",
+            "id": "mostRelevant",
+            "label": "Most relevant"
+          },
+          {
+            "__typename": "Option",
+            "id": "highestRated",
+            "label": "Highest rated"
+          },
+          {
+            "__typename": "Option",
+            "id": "lowestRated",
+            "label": "Lowest rated"
+          },
+          {
+            "__typename": "Option",
+            "id": "newestFirst",
+            "label": "Newest first"
+          },
+          {
+            "__typename": "Option",
+            "id": "oldestFirst",
+            "label": "Oldest first"
+          }
+        ],
+        "placeholder": null,
+        "value": "mostRelevant"
+      },
+      "keywordsMultiSelect": {
+        "__typename": "ServicePageReviewKeywordsMultiSelect",
+        "label": "Read reviews that mention:",
+        "options": [
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "jobs",
+            "keyword": "jobs",
+            "count": 26,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"jobs\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"jobs\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "install",
+            "keyword": "install",
+            "count": 10,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"install\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"install\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "project",
+            "keyword": "project",
+            "count": 8,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"project\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"project\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "quality",
+            "keyword": "quality",
+            "count": 8,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"quality\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"quality\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "hire",
+            "keyword": "hire",
+            "count": 6,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"hire\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"hire\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "tv",
+            "keyword": "tv",
+            "count": 5,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"tv\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"tv\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "fixed",
+            "keyword": "fixed",
+            "count": 4,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"fixed\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"fixed\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "handyman",
+            "keyword": "handyman",
+            "count": 3,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"handyman\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"handyman\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "door",
+            "keyword": "door",
+            "count": 3,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"door\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"door\"}"
+            }
+          },
+          {
+            "__typename": "ServicePageReviewKeywordOption",
+            "id": "bathroom",
+            "keyword": "bathroom",
+            "count": 3,
+            "selectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword select",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"bathroom\"}"
+            },
+            "deselectTrackingData": {
+              "__typename": "TrackingData",
+              "eventType": "service page/review section keyword deselect",
+              "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"keyword\":\"bathroom\"}"
+            }
+          }
+        ],
+        "value": []
+      },
+      "trackingDataSearchChange": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review section search change",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\"}"
+      },
+      "trackingDataResetReviewsClick": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review section reset reviews",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\"}"
+      },
+      "trackingDataView": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"REVIEWS\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false}"
+      },
+      "viewTrackingDataV2": {
+        "__typename": "TrackingDataV2",
+        "clientEventsV1Base64": "ig5BCgIIARInCgU0NjYxNRCCgoGmkJnswQEohMDVl42Lgt8HMAFCCEhhbmR5bWFuGgoQjcCln/fX3pkIIAlqAHAAUgA="
+      },
+      "trackingDataSortSelectChange": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review section sort change",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\"}"
+      }
+    },
+    {
+      "__typename": "ServicePageCredentialsSection",
+      "id": "ServicePageCredentialsSection",
+      "title": "Credentials",
+      "definitions": {
+        "__typename": "ServicePageCredentialDefinitions",
+        "title": "Credential Information",
+        "definitions": [
+          {
+            "__typename": "ServicePageCredentialDefinition",
+            "term": "Background Check",
+            "definition": [
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "All account owners must take and pass a criminal background check through a nationally accredited third-party provider when they create a Thumbtack account.",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Learn more",
+                    "emphasis": [
+                      "BOLD"
+                    ],
+                    "url": "https://www.thumbtack.com/safety/",
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__typename": "ServicePageCredentialDefinition",
+            "term": "Business Verifications",
+            "definition": [
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Thumbtack uses third-party data to verify that a Pro’s business meets a set of criteria to determine the business entity is legitimate and does not have unsatisfied liens or judgments over $100.",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Learn more",
+                    "emphasis": [
+                      "BOLD"
+                    ],
+                    "url": "https://help.thumbtack.com/article/verified-businesses",
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__typename": "ServicePageCredentialDefinition",
+            "term": "Licenses",
+            "definition": [
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Occupational licenses show that a pro has met the requirements of the relevant regulatory body to perform a certain type of work. The requirements to obtain a license for an occupation vary widely by state, and type of license. When a pro gives Thumbtack their license number, Thumbtack will verify that the license is valid and current at the time the pro submitted their license number through a public database.",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "inlineCredentials": [
+        {
+          "__typename": "ServicePageCredential",
+          "title": "Background Check",
+          "icon": "CHECK",
+          "details": [
+            {
+              "__typename": "FormattedText",
+              "segments": [
+                {
+                  "__typename": "FormattedTextSegment",
+                  "text": "Brian Cueva",
+                  "emphasis": [],
+                  "url": null,
+                  "clickTrackingData": null,
+                  "clickTrackingDataV2": null
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "detailsModal": {
+        "__typename": "ServicePageCredentialsModal",
+        "title": "Credential Details",
+        "credentials": [
+          {
+            "__typename": "ServicePageCredential",
+            "title": "Background Check",
+            "icon": "CHECK",
+            "details": [
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Brian Cueva",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              },
+              {
+                "__typename": "FormattedText",
+                "segments": [
+                  {
+                    "__typename": "FormattedTextSegment",
+                    "text": "Completed on 9/29/2025",
+                    "emphasis": [],
+                    "url": null,
+                    "clickTrackingData": null,
+                    "clickTrackingDataV2": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "detailsLink": "View credential details",
+      "openCredentialsTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "service page/credential details open",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"origin\":\"CREDENTIAL_SECTION\",\"zipcode\":\"46615\"}"
+      },
+      "openInformationTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "service page/credential definitions open",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"109125193401647362\",\"zipcode\":\"46615\"}"
+      },
+      "viewTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / view section",
+        "kvPairsJSON": "{\"sectionType\":\"CREDENTIALS\",\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"mismatchRecovery\":false,\"availableIBPros\":false}"
+      }
+    },
+    {
+      "__typename": "ServicePageInternalLinksSection",
+      "id": "ServicePageInternalLinksSection",
+      "internalLinkItems": [
+        {
+          "__typename": "FrontDoorPageInternalLinkItem",
+          "title": "Related cost information",
+          "links": [
+            {
+              "__typename": "NavigationAction",
+              "text": "Handyman prices",
+              "url": "/p/handyman-prices",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Christmas light installation prices",
+              "url": "/p/christmas-light-installation-prices",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Sink repair cost",
+              "url": "/p/sink-repair-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Art installation cost",
+              "url": "/p/art-installation-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Furniture assembly cost",
+              "url": "/p/furniture-assembly-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Bed frame assembly cost",
+              "url": "/p/bed-frame-assembly-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Pool plastering cost",
+              "url": "/p/pool-plastering-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Window seal repair cost",
+              "url": "/p/window-seal-repair-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Door repair cost",
+              "url": "/p/door-repair-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Custom closet cost",
+              "url": "/p/custom-closet-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Stucco repair cost",
+              "url": "/p/stucco-repair-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Exterior door installation cost",
+              "url": "/p/exterior-door-installation-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Sump pump installation cost",
+              "url": "/p/sump-pump-installation-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Carpet installation cost",
+              "url": "/p/carpet-installation-cost",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Cost to install shower door",
+              "url": "/p/cost-to-install-shower-door",
+              "clickTrackingData": null
+            }
+          ]
+        },
+        {
+          "__typename": "FrontDoorPageInternalLinkItem",
+          "title": "Popular in South Bend",
+          "links": [
+            {
+              "__typename": "NavigationAction",
+              "text": "House cleaning South Bend",
+              "url": "/in/south-bend/house-cleaning",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Painting South Bend",
+              "url": "/in/south-bend/painting",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Voice lessons South Bend",
+              "url": "/in/south-bend/voice-lessons",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Welding South Bend",
+              "url": "/in/south-bend/welding",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Web design South Bend",
+              "url": "/in/south-bend/web-design",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Framing contractors South Bend",
+              "url": "/in/south-bend/framing-contractors",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Travel agency South Bend",
+              "url": "/in/south-bend/travel-agency",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Sprinkler systems repair South Bend",
+              "url": "/in/south-bend/sprinkler-systems-repair",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Deck and porch build South Bend",
+              "url": "/in/south-bend/deck-and-porch-build",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Plumbing South Bend",
+              "url": "/in/south-bend/plumbing",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Drywall contractors South Bend",
+              "url": "/in/south-bend/drywall-contractors",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Soul food caterers South Bend",
+              "url": "/in/south-bend/soul-food-caterers",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Playground assembly South Bend",
+              "url": "/in/south-bend/playground-assembly",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Entertainers South Bend",
+              "url": "/in/south-bend/entertainers",
+              "clickTrackingData": null
+            }
+          ]
+        },
+        {
+          "__typename": "FrontDoorPageInternalLinkItem",
+          "title": "You might also like",
+          "links": [
+            {
+              "__typename": "NavigationAction",
+              "text": "Handyman near me",
+              "url": "/k/handyman/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Mailbox installers near me",
+              "url": "/k/mailbox-installers/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Home repair near me",
+              "url": "/k/home-repair/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Furniture assembly near me",
+              "url": "/k/furniture-assembly/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Picture hanging near me",
+              "url": "/k/picture-hanging/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Holiday lighting installation near me",
+              "url": "/k/holiday-lighting-installation/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Cabinet repair near me",
+              "url": "/k/cabinet-repair/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Carpet installation near me",
+              "url": "/k/carpet-installation/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Seamless gutter installation near me",
+              "url": "/k/seamless-gutter-installation/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Vinyl siding install near me",
+              "url": "/k/vinyl-siding-install/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Property management near me",
+              "url": "/k/property-management/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Door repair near me",
+              "url": "/k/door-repair/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Window screen companies near me",
+              "url": "/k/window-screen-companies/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Carpenters near me",
+              "url": "/k/carpenters/near-me",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Garage door repair near me",
+              "url": "/k/garage-door-repair/near-me",
+              "clickTrackingData": null
+            }
+          ]
+        },
+        {
+          "__typename": "FrontDoorPageInternalLinkItem",
+          "title": "In other nearby areas",
+          "links": [
+            {
+              "__typename": "NavigationAction",
+              "text": "Mishawaka handyman",
+              "url": "/in/mishawaka/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Elkhart handyman",
+              "url": "/in/elkhart/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Goshen handyman",
+              "url": "/in/goshen/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "La Porte handyman",
+              "url": "/in/la-porte/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Michigan City handyman",
+              "url": "/in/michigan-city/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Valparaiso handyman",
+              "url": "/in/valparaiso/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Portage handyman",
+              "url": "/in/portage/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Portage handyman",
+              "url": "/mi/portage/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Hobart handyman",
+              "url": "/in/hobart/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Kalamazoo handyman",
+              "url": "/mi/kalamazoo/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Gary handyman",
+              "url": "/in/gary/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Merrillville handyman",
+              "url": "/in/merrillville/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Crown Point handyman",
+              "url": "/in/crown-point/handyman",
+              "clickTrackingData": null
+            },
+            {
+              "__typename": "NavigationAction",
+              "text": "Griffith handyman",
+              "url": "/in/griffith/handyman",
+              "clickTrackingData": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actionFooterV2": {
+    "__typename": "ServicePageActionFooterV2",
+    "priceSubsectionPrefab": {
+      "__typename": "ServicePagePriceSubsectionPrefab",
+      "servicePagePriceSubsection": {
+        "__typename": "ServicePagePriceSubsectionNoPrice",
+        "icon": "CONTACT",
+        "text": "Contact for price",
+        "clickToken": null,
+        "clickTrackingData": null,
+        "clickTrackingDataV2": null
+      }
+    },
+    "cta": {
+      "__typename": "ServicePageTokenCta",
+      "text": "Request estimate",
+      "icon": null,
+      "ctaToken": "{\"IntroType\":\"availability\",\"IsEditMode\":false,\"CtaText\":\"Request estimate\"}",
+      "isDisabled": false,
+      "ctaClickTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "Service page / click cta",
+        "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"introType\":\"AVAILABILITY\",\"slotId\":\"\",\"ctaType\":\"STICKY_FOOTER_CTA\",\"ctaText\":\"Request estimate\"}"
+      },
+      "ctaClickTrackingDataV2": {
+        "__typename": "TrackingDataV2",
+        "clientEventsV1Base64": "kgNfCicKBTQ2NjE1EIKCgaaQmezBASiEwNWXjYuC3wcwAUIISGFuZHltYW4SChCNwKWf99femQgYACIQUmVxdWVzdCBlc3RpbWF0ZSgDMgA6DEFWQUlMQUJJTElUWUABYAE="
+      },
+      "theme": null
+    },
+    "alternateCta": null,
+    "isSticky": false
+  },
+  "shareableURL": "https://www.thumbtack.com/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708",
+  "trackingDataShare": {
+    "__typename": "TrackingData",
+    "eventType": "Share profile",
+    "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\"}"
+  },
+  "trackingDataView": {
+    "__typename": "TrackingData",
+    "eventType": "Service page / view",
+    "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\",\"eventCategoryPK\":\"109125193401647362\",\"postContact\":false,\"source\":\"\",\"is_request_a_consult_enabled\":false,\"is_instant_book_enabled\":false,\"mismatchRecovery\":false,\"is_multi_category\":true,\"availableIBPros\":false,\"isInSpReviewRelevance\":false}"
+  },
+  "trackingDataTimeSpent": {
+    "__typename": "TrackingData",
+    "eventType": "Service page / spend time",
+    "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\"}"
+  },
+  "priceDetailsOpenTrackingData": {
+    "__typename": "TrackingData",
+    "eventType": "service page/price details open",
+    "kvPairsJSON": "{\"service_pk\":\"557892581429960708\",\"category_pk\":\"109125193401647362\"}"
+  },
+  "isInMvp": true,
+  "hasVerifiedPhoneNumber": false,
+  "isInProTagTrustSignalsExperiment": null,
+  "spAtfCtaTestExperimentBucket": "baseline",
+  "keepStickySectionTabs": false,
+  "pushpinStyle": false
+}

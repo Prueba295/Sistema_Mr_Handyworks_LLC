@@ -116,17 +116,18 @@ export const ReviewsSection: React.FC = () => {
             <p className="font-bold text-sm text-slate-800 dark:text-slate-200">
               {t.reviews.totalReviews}
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              98% {language === 'es' ? 'calificaciones de 5 estrellas' : '5-star ratings'}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2 justify-center lg:justify-start">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold mt-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>{t.reviews.thumbtackSyncBadge}</span>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2 justify-center lg:justify-start">
               <a
                 href={BUSINESS_INFO.thumbtackUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 transition-colors"
               >
-                <span>Thumbtack Top Pro</span>
+                <span>Ver Perfil en Thumbtack</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>
@@ -137,9 +138,9 @@ export const ReviewsSection: React.FC = () => {
             <div className="flex items-center gap-3">
               <span className="w-14 text-slate-700 dark:text-slate-300">5 {language === 'es' ? 'estrellas' : 'stars'}</span>
               <div className="flex-1 h-3 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
-                <div className="h-full bg-amber-500 rounded-full w-[98%]"></div>
+                <div className="h-full bg-amber-500 rounded-full w-[100%]"></div>
               </div>
-              <span className="w-8 text-right text-slate-600 dark:text-slate-400">98%</span>
+              <span className="w-8 text-right text-slate-600 dark:text-slate-400">100%</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="w-14 text-slate-700 dark:text-slate-300">4 {language === 'es' ? 'estrellas' : 'stars'}</span>
@@ -151,9 +152,9 @@ export const ReviewsSection: React.FC = () => {
             <div className="flex items-center gap-3">
               <span className="w-14 text-slate-700 dark:text-slate-300">3 {language === 'es' ? 'estrellas' : 'stars'}</span>
               <div className="flex-1 h-3 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
-                <div className="h-full bg-amber-500/30 rounded-full w-[1%]"></div>
+                <div className="h-full bg-amber-500/30 rounded-full w-[0%]"></div>
               </div>
-              <span className="w-8 text-right text-slate-600 dark:text-slate-400">1%</span>
+              <span className="w-8 text-right text-slate-600 dark:text-slate-400">0%</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="w-14 text-slate-700 dark:text-slate-300">2 {language === 'es' ? 'estrellas' : 'stars'}</span>
@@ -165,25 +166,34 @@ export const ReviewsSection: React.FC = () => {
             <div className="flex items-center gap-3">
               <span className="w-14 text-slate-700 dark:text-slate-300">1 {language === 'es' ? 'estrella' : 'star'}</span>
               <div className="flex-1 h-3 rounded-full bg-slate-100 dark:bg-slate-700 overflow-hidden">
-                <div className="h-full bg-amber-500/30 rounded-full w-[1%]"></div>
+                <div className="h-full bg-amber-500/30 rounded-full w-[0%]"></div>
               </div>
-              <span className="w-8 text-right text-slate-600 dark:text-slate-400">1%</span>
+              <span className="w-8 text-right text-slate-600 dark:text-slate-400">0%</span>
             </div>
           </div>
 
           {/* Action to leave a review with Corporate Blue */}
-          <div className="lg:col-span-3 text-center lg:text-right space-y-3">
+          <div className="lg:col-span-3 text-center lg:text-right flex flex-col gap-2.5">
             <p className="text-xs text-slate-500 dark:text-slate-400">
               {language === 'es' 
-                ? '¿Brian realizó un trabajo en tu hogar? Tu testimonio es muy valioso.' 
-                : 'Did Brian work on your home? We value your review.'}
+                ? '¿Brian realizó un trabajo en tu hogar? Tu testimonio es muy valioso:' 
+                : 'Did Brian work on your home? We value your review:'}
             </p>
+            <a
+              href={BUSINESS_INFO.thumbtackUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#009FD9] hover:bg-[#0088ba] text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>{t.reviews.leaveReviewThumbtack}</span>
+            </a>
             <button
               onClick={() => setIsSubmitModalOpen(true)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-all cursor-pointer border border-slate-300 dark:border-slate-700"
             >
-              <PlusCircle className="w-4 h-4" />
-              <span>{t.reviews.leaveReviewBtn}</span>
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>{t.reviews.leaveReviewDirect}</span>
             </button>
           </div>
 

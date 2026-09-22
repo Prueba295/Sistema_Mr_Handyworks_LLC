@@ -154,3 +154,12 @@
   background: #64748B;
 }
 
+@keyframes reviewProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+

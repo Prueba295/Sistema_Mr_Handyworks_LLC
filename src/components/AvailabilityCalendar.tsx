@@ -12,6 +12,7 @@ import {
   ArrowRight,
   ShieldCheck
 } from 'lucide-react';
+import { ReviewsTickerCard } from './ReviewsTickerCard';
 
 export const AvailabilityCalendar: React.FC = () => {
   const { t, language, availability, openBookingWizard } = useApp();
@@ -198,6 +199,9 @@ export const AvailabilityCalendar: React.FC = () => {
           </div>
 
         </div>
+
+        {/* Live Reviews Carousel Block */}
+        <ReviewsTickerCard />
 
       </div>
     </section>

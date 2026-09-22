@@ -15,6 +15,7 @@ import {
   Info
 } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/initialData';
+import { ReviewsTickerCard } from './ReviewsTickerCard';
 
 export const EstimateCalculatorSection: React.FC = () => {
   const { language, openBookingWizard } = useApp();
@@ -24,14 +25,14 @@ export const EstimateCalculatorSection: React.FC = () => {
   const [hardwareIncluded, setHardwareIncluded] = useState(true);
   const [urgency, setUrgency] = useState<'standard' | 'priority'>('standard');
 
-  // Pricing calculation
-  const baseRates: Record<string, { hourly: number; base: number; labelEs: string; labelEn: string }> = {
-    tv: { hourly: 45, base: 75, labelEs: 'Montaje de TV y Audio', labelEn: 'TV Mounting & Audio' },
-    drywall: { hourly: 50, base: 70, labelEs: 'Drywall, Yeso y Pintura', labelEn: 'Drywall & Painting' },
-    assembly: { hourly: 40, base: 60, labelEs: 'Ensamblaje de Muebles / Gimnasio', labelEn: 'Furniture / Gym Assembly' },
-    doors: { hourly: 48, base: 75, labelEs: 'Puertas de Granero y Cerraduras', labelEn: 'Barn Doors & Locks' },
-    plumbing: { hourly: 55, base: 85, labelEs: 'Fontanería Menor y Grifería', labelEn: 'Minor Plumbing & Fixtures' },
-    carpentry: { hourly: 52, base: 80, labelEs: 'Repisas Flotantes y Carpintería', labelEn: 'Shelving & Woodwork' },
+  // Pricing calculation based on South Bend / Michiana market benchmark with 3% direct discount
+  const baseRates: Record<string, { hourly: number; base: number; marketBase: number; marketHourly: number; labelEs: string; labelEn: string }> = {
+    tv: { hourly: 72, base: 120, marketBase: 125, marketHourly: 75, labelEs: 'Montaje de TV y Audio', labelEn: 'TV Mounting & Audio' },
+    drywall: { hourly: 78, base: 110, marketBase: 115, marketHourly: 80, labelEs: 'Drywall, Yeso y Pintura', labelEn: 'Drywall & Painting' },
+    assembly: { hourly: 63, base: 92, marketBase: 95, marketHourly: 65, labelEs: 'Ensamblaje de Muebles / Gimnasio', labelEn: 'Furniture / Gym Assembly' },
+    doors: { hourly: 77, base: 130, marketBase: 135, marketHourly: 80, labelEs: 'Puertas de Granero y Cerraduras', labelEn: 'Barn Doors & Locks' },
+    plumbing: { hourly: 87, base: 140, marketBase: 145, marketHourly: 90, labelEs: 'Fontanería Menor y Grifería', labelEn: 'Minor Plumbing & Fixtures' },
+    carpentry: { hourly: 78, base: 125, marketBase: 130, marketHourly: 80, labelEs: 'Repisas Flotantes y Carpintería', labelEn: 'Shelving & Woodwork' },
   };
 
   const currentRate = baseRates[serviceType] || baseRates.tv;
@@ -39,8 +40,11 @@ export const EstimateCalculatorSection: React.FC = () => {
   const urgencyMultiplier = urgency === 'priority' ? 1.25 : 1.0;
 
   const estimatedTotal = Math.round((currentRate.base + currentRate.hourly * (hours - 1) + hardwareCost) * urgencyMultiplier);
-  const lowRange = Math.max(70, Math.round(estimatedTotal * 0.92));
-  const highRange = Math.round(estimatedTotal * 1.08);
+  const marketTotal = Math.round((currentRate.marketBase + currentRate.marketHourly * (hours - 1) + hardwareCost) * urgencyMultiplier);
+  const savings = Math.max(5, marketTotal - estimatedTotal);
+
+  const lowRange = Math.max(95, Math.round(estimatedTotal * 0.94));
+  const highRange = Math.round(estimatedTotal * 1.06);
 
   return (
     <section id="cotizador" className="py-12 sm:py-20 bg-[#F4F6F9] dark:bg-[#0B111A] transition-colors">
@@ -169,8 +173,13 @@ export const EstimateCalculatorSection: React.FC = () => {
           <div className="lg:col-span-5 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-[#131B28] dark:to-[#172132] rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 border-slate-300 dark:border-slate-700 shadow-md space-y-6 text-center lg:text-left">
             
             <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-black mb-2.5">
+                <span>🏷️</span>
+                <span>{language === 'es' ? '3% Descuento Directo Online vs. Mercado' : '3% Online Discount vs. Market'}</span>
+              </div>
+
               <div className="text-xs uppercase tracking-wider font-extrabold text-[#0B3C5D] dark:text-blue-300">
-                {language === 'es' ? 'Estimado Preliminar Calculado:' : 'Calculated Estimate Range:'}
+                {language === 'es' ? 'Estimado Preliminar con Descuento:' : 'Calculated Estimate Range:'}
               </div>
               
               <div className="mt-2 text-4xl sm:text-5xl font-black text-[#0B3C5D] dark:text-white tracking-tight flex items-baseline justify-center lg:justify-start gap-1">
@@ -178,10 +187,19 @@ export const EstimateCalculatorSection: React.FC = () => {
                 <span className="text-2xl text-slate-400 font-normal">-</span>
                 <span>${highRange}</span>
               </div>
+
+              <div className="mt-1.5 flex items-center justify-center lg:justify-start gap-2 text-xs">
+                <span className="line-through text-slate-400 font-semibold">
+                  ${Math.round(lowRange * 1.03)} - ${Math.round(highRange * 1.03)}
+                </span>
+                <span className="text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded">
+                  {language === 'es' ? `Ahorras ~$${savings}` : `Save ~$${savings}`}
+                </span>
+              </div>
               
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 flex items-center justify-center lg:justify-start gap-1">
                 <Info className="w-3.5 h-3.5" />
-                <span>{language === 'es' ? 'Incluye inspección, herramientas y limpieza final.' : 'Includes inspection, pro tooling & clean-up.'}</span>
+                <span>{language === 'es' ? 'Tarifas transparentes para South Bend / Michiana.' : 'Transparent South Bend / Michiana market rates.'}</span>
               </p>
             </div>
 
@@ -220,6 +238,9 @@ export const EstimateCalculatorSection: React.FC = () => {
           </div>
 
         </div>
+
+        {/* Live Reviews Carousel Block */}
+        <ReviewsTickerCard />
 
       </div>
     </section>

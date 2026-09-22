@@ -17,6 +17,7 @@ import {
   Sparkles,
   Search
 } from 'lucide-react';
+import { ReviewsTickerCard } from './ReviewsTickerCard';
 
 export const ServicesCatalog: React.FC = () => {
   const { t, language, services, openBookingWizard } = useApp();
@@ -89,13 +90,13 @@ export const ServicesCatalog: React.FC = () => {
             />
           </div>
 
-          {/* Categories Pill Scroll */}
-          <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 px-1 scrollbar-none">
+          {/* Categories Pill Container */}
+          <div className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto px-2 py-1">
             {categories.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                   activeCategory === cat.id
                     ? 'bg-[#0B3C5D] text-white shadow-md shadow-[#0B3C5D]/20 dark:bg-blue-600'
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:border-[#0B3C5D]'
@@ -183,6 +184,9 @@ export const ServicesCatalog: React.FC = () => {
             {language === 'es' ? 'Consultar con Brian' : 'Inquire with Brian'}
           </button>
         </div>
+
+        {/* Live Reviews Carousel Block */}
+        <ReviewsTickerCard />
 
       </div>
     </section>

@@ -1,4 +1,6 @@
 import { Service, PortfolioMedia, Review, PaymentQR, AvailabilityDay, Booking } from '../types';
+import { REAL_PORTFOLIO_ITEMS } from './realJobsPortfolio';
+import { REAL_THUMBTACK_REVIEWS } from './realReviews';
 
 export const BUSINESS_INFO = {
   name: 'Mr Handyworks LLC',
@@ -201,7 +203,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Instalación profesional de televisores de 32" a 85"+ sobre paneles de yeso, chimeneas de piedra o ladrillo, con ocultamiento limpio de cables y soportes para Apple TV/consolas.',
     descEn: 'Expert mounting for 32" to 85"+ displays over drywall, stone or brick fireplaces. Complete in-wall cable concealment and hidden Apple TV/streaming box bracket setups.',
     estimatedHours: '1 - 2.5 hrs',
-    rateEstimate: '$85 - $160',
+    rateEstimate: '$120 - $220',
     iconName: 'Tv',
     popular: true
   },
@@ -213,7 +215,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Configuración acústica de barras de sonido, altavoces envolventes de pared/techo, paneles acústicos y cableado oculto para una experiencia de audio inmersiva.',
     descEn: 'Acoustic placement of soundbars, in-wall/ceiling surround speakers, acoustic wall slat panels and clean wire routing for premium home cinema audio.',
     estimatedHours: '2 - 4.5 hrs',
-    rateEstimate: '$140 - $280',
+    rateEstimate: '$180 - $340',
     iconName: 'Speaker',
     popular: true
   },
@@ -225,7 +227,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Parcheo de paneles de yeso, reparación de fugas menores de fontanería, reemplazo de molduras, fijación de azulejos sueltos y mantenimiento preventivo.',
     descEn: 'Drywall patching and texture matching, minor plumbing drain fixes, loose tile re-grouting, baseboard repairs, and all-around house fixes.',
     estimatedHours: '1.5 - 4 hrs',
-    rateEstimate: '$90 - $220',
+    rateEstimate: '$125 - $260',
     iconName: 'Wrench',
     popular: true
   },
@@ -237,7 +239,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Armado rápido y sólido de muebles IKEA, Wayfair, escritorios de oficina, armarios modulares, camas y máquinas de gimnasio con calibración perfecta.',
     descEn: 'Precision assembly of flat-pack furniture (IKEA, Wayfair, Amazon), office executive desks, bed frames, dressers, and home gym exercise gear.',
     estimatedHours: '1.5 - 3.5 hrs',
-    rateEstimate: '$80 - $190',
+    rateEstimate: '$95 - $210',
     iconName: 'Hammer',
     popular: true
   },
@@ -249,7 +251,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Pintura impecable de habitaciones, techos, puertas, rodapiés y paredes decorativas con bordes nítidos, preparación exhaustiva y protección de pisos.',
     descEn: 'Immaculate painting of bedrooms, living spaces, ceilings, door casings, and accent walls with razor-sharp lines and meticulous surface masking.',
     estimatedHours: '3 - 8 hrs',
-    rateEstimate: '$180 - $480',
+    rateEstimate: '$210 - $490',
     iconName: 'Paintbrush',
     popular: true
   },
@@ -261,7 +263,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Instalación de puertas correderas tipo granero con herrajes industriales, ajuste de bisagras que rozan, cerraduras inteligentes y burletes térmicos.',
     descEn: 'Heavy sliding barn door hardware install, door realignment, smart deadbolt/handle installations, weatherstripping and interior casing repairs.',
     estimatedHours: '2 - 4 hrs',
-    rateEstimate: '$120 - $260',
+    rateEstimate: '$140 - $290',
     iconName: 'DoorOpen',
     popular: true
   },
@@ -273,7 +275,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Fabricación y anclaje reforzado de repisas flotantes de roble o pino con tiras LED integradas, revestimiento de paredes y molduras decorativas.',
     descEn: 'Heavy-duty wall anchoring of solid hardwood floating shelves with optional warm LED underglow, custom closet storage, and decorative finish carpentry.',
     estimatedHours: '2.5 - 5 hrs',
-    rateEstimate: '$150 - $320',
+    rateEstimate: '$160 - $340',
     iconName: 'Layers',
     popular: false
   },
@@ -285,213 +287,16 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Reemplazo de lámparas colgantes, instalación de ventiladores de techo balanceados, espejos LED táctiles y cambio de lavabos o grifería.',
     descEn: 'Replacing old chandeliers with modern pendant lights, ceiling fan balancing, backlit LED vanity mirrors, and bathroom sink/faucet upgrades.',
     estimatedHours: '1.5 - 3.5 hrs',
-    rateEstimate: '$95 - $220',
+    rateEstimate: '$130 - $260',
     iconName: 'Lightbulb',
     popular: true
   }
 ];
 
-export const INITIAL_PORTFOLIO: PortfolioMedia[] = [
-  {
-    id: 'port-1',
-    titleEs: 'Montaje de TV 65" sobre Chimenea de Piedra',
-    titleEn: '65" TV Mounted over Stone Fireplace',
-    type: 'IMAGE',
-    url: '/images/tv_fireplace_mount.jpg',
-    category: 'TV_MOUNTING',
-    tags: ['TV Mounting', 'Fireplace', 'Concealed Wires', 'South Bend'],
-    descriptionEs: 'Montaje ultra nivelado sobre mampostería de piedra con enrutamiento de cables 100% oculto y soporte basculante para ángulo de visión óptimo.',
-    descriptionEn: 'Ultra-flush precision mount onto stone masonry fireplace with completely concealed power and HDMI channels, plus tilting bracket.',
-    featured: true
-  },
-  {
-    id: 'port-2',
-    titleEs: 'Remodelación de Baño: Tocador y Azulejos',
-    titleEn: 'Bathroom Makeover: Vanity & Hexagon Tiles',
-    type: 'BEFORE_AFTER',
-    url: '/images/bath_after.jpg',
-    beforeUrl: '/images/bath_before.jpg',
-    category: 'REPAIRS',
-    tags: ['Bathroom', 'Before & After', 'Tile', 'Vanity Install'],
-    descriptionEs: 'Transformación completa de baño de los años 80: azulejos hexagonales de mármol, tocador azul marino con herrajes dorados y espejo LED.',
-    descriptionEn: 'Full 1980s bathroom overhaul: marble hexagon tile flooring, navy shaker vanity with brushed brass hardware, and modern LED mirror.',
-    featured: true
-  },
-  {
-    id: 'port-3',
-    titleEs: 'Cine en Casa con Altavoces Empotrados',
-    titleEn: 'Home Cinema with Recessed Audio & Slat Wall',
-    type: 'IMAGE',
-    url: '/images/home_theater_setup.jpg',
-    category: 'HOME_THEATER',
-    tags: ['Home Theater', 'Surround Sound', 'Audio Setup', 'Granger'],
-    descriptionEs: 'Instalación de sistema de cine envolvente con paneles de madera acústica, cableado interno e iluminación ambiental cálida.',
-    descriptionEn: 'Surround sound system installation with acoustic wood slat feature wall, in-wall speaker wire routing, and warm ambient backlighting.',
-    featured: true
-  },
-  {
-    id: 'port-4',
-    titleEs: 'Repisas Flotantes de Roble con LED Integrado',
-    titleEn: 'Custom Solid White Oak Floating Shelves',
-    type: 'IMAGE',
-    url: '/images/carpentry_shelves.jpg',
-    category: 'CARPENTRY',
-    tags: ['Floating Shelves', 'Carpentry', 'LED Lighting', 'Mishawaka'],
-    descriptionEs: 'Construcción y anclaje a vigas de repisas de madera maciza de roble blanco con canaleta oculta para iluminación LED cálida.',
-    descriptionEn: 'Stud-anchored heavy solid white oak floating shelves with precision recessed channel for warm undertone LED accent lighting.',
-    featured: false
-  },
-  {
-    id: 'port-5',
-    titleEs: 'Puerta Corredera de Granero con Riel Industrial',
-    titleEn: 'Craftsman Sliding Barn Door & Steel Hardware',
-    type: 'IMAGE',
-    url: '/images/door_window_install.jpg',
-    category: 'DOORS_WINDOWS',
-    tags: ['Barn Door', 'Doors & Windows', 'Matte Black Hardware'],
-    descriptionEs: 'Colocación de riel de acero negro mate de alta resistencia y calibración de puerta corredera estilo artesanal con cierre suave.',
-    descriptionEn: 'Heavy duty matte black steel track mounting and soft-close calibration for modern craftsman sliding barn door hallway divider.',
-    featured: false
-  }
-];
+export const INITIAL_PORTFOLIO: PortfolioMedia[] = REAL_PORTFOLIO_ITEMS;
 
-export const INITIAL_REVIEWS: Review[] = [
-  {
-    id: 'rev-1',
-    authorName: 'Tara C.',
-    location: 'South Bend, IN',
-    rating: 5,
-    date: '2026-08-14',
-    commentEs: '¡Brian es absolutamente increíble! Montó nuestra TV de 65" sobre la chimenea de piedra y ocultó cada cable sin dejar rastro. Además, le pedimos a última hora si podía montar el Apple TV detrás de la pantalla y lo solucionó de inmediato sin dudar. Muy puntual, ordenado y profesional. ¡Totalmente recomendado!',
-    commentEn: 'Brian is absolutely amazing! He mounted our 65" TV above the stone fireplace and completely concealed every cord without a trace. We even asked him last minute if he could mount our Apple TV box behind the screen and he adapted immediately without hesitation. Very punctual, clean, and professional. Highly recommended!',
-    tags: ['TV Mounting', 'Fireplace', 'Cable Concealment'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'TV Mounting on Fireplace',
-    featured: true,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-2',
-    authorName: 'Sushruta N.',
-    location: 'Granger, IN',
-    rating: 5,
-    date: '2026-07-28',
-    commentEs: 'Contraté a Brian para la instalación de un cine en casa completo y altavoces envolventes. Su conocimiento de acústica, alineación láser y enrutamiento limpio de cables superó mis expectativas. Es difícil encontrar profesionales con este nivel de pulcritud en el área de South Bend.',
-    commentEn: 'Hired Brian for a full home theater setup and surround sound speakers installation. His knowledge of acoustics, laser alignment, and clean cable routing exceeded my expectations. Hard to find handymen with this level of meticulous craftsmanship in the South Bend area.',
-    tags: ['Home Theater', 'Surround Sound', 'Wiring'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'Home Theater Installation',
-    featured: true,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-3',
-    authorName: 'Rebecca M.',
-    location: 'Mishawaka, IN',
-    rating: 5,
-    date: '2026-08-02',
-    commentEs: 'Brian y su asistente llegaron exactamente a la hora convenida, fueron sumamente educados y realizaron un trabajo de alta calidad arreglando las puertas interiores y parches de yeso en nuestra casa. Limpiaron todo antes de marcharse. ¡Lo recomiendo al 100%!',
-    commentEn: 'Brian and his assistant arrived right on time, were very polite, and did top quality work repairing our interior doors and drywall damage. They cleaned up every speck of dust before leaving. I highly recommend him!',
-    tags: ['Repairs', 'Doors', 'Drywall'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'Drywall & Door Repair',
-    featured: true,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-4',
-    authorName: 'Patrick E.',
-    location: 'South Bend, IN',
-    rating: 5,
-    date: '2026-06-19',
-    commentEs: 'Quedé gratamente impresionado con el calibre del servicio prestado y el precio honesto que cobró. Brian respetó la cotización original a pesar de que el trabajo requirió un ajuste extra. Sin duda será nuestro hombre de confianza para cualquier arreglo en casa.',
-    commentEn: 'Impressed with the caliber of services as well as the fair price. Brian honored his original quote even when an extra wall framing adjustment was needed. He will definitely be our go-to for any future fixes around the house.',
-    tags: ['General Repairs', 'Carpentry', 'Fair Price'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'General Home Maintenance',
-    featured: false,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-5',
-    authorName: 'Kristen D.',
-    location: 'Notre Dame, IN',
-    rating: 5,
-    date: '2026-07-11',
-    commentEs: 'Brian instaló tres lámparas colgantes y un candelabro en el comedor. Un verdadero profesional que cuida cada detalle de seguridad eléctrica. Trabajo rápido, limpio y estético.',
-    commentEn: 'Brian installed three pendant lights and a dining room chandelier. A true professional who takes every electrical safety precaution with great care. Fast, tidy, and aesthetic finish.',
-    tags: ['Light Fixtures', 'Installation', 'Punctual'],
-    isVerified: true,
-    source: 'HomeAdvisor',
-    jobType: 'Chandelier & Pendant Installation',
-    featured: false,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-6',
-    authorName: 'Mark S.',
-    location: 'Elkhart, IN',
-    rating: 5,
-    date: '2026-05-30',
-    commentEs: 'Nos ayudó a ensamblar un escritorio de oficina ejecutivo de 12 piezas y dos estanterías grandes. Lo armó con una firmeza impecable en menos de cuatro horas. Vale cada centavo por el tiempo y dolor de cabeza que nos ahorró.',
-    commentEn: 'He helped us assemble a massive 12-piece executive desk and two large wall book units. Finished with rock-solid rigidity in under four hours. Worth every penny for the stress and time he saved us.',
-    tags: ['Assembly', 'Furniture', 'Fast Service'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'Executive Office Assembly',
-    featured: false,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-7',
-    authorName: 'David W.',
-    location: 'South Bend, IN',
-    rating: 5,
-    date: '2026-06-04',
-    commentEs: 'Instalación de puerta de granero corrediza con herrajes de acero negro. Brian midió con nivel láser y la puerta se desliza suave como mantequilla. Se nota que ama lo que hace.',
-    commentEn: 'Sliding barn door installation with heavy matte black steel track. Brian measured with laser level and the door glides smooth as butter. You can tell he takes pride in his work.',
-    tags: ['Doors & Windows', 'Hardware', 'Precision'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'Barn Door Installation',
-    featured: false,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-8',
-    authorName: 'Jessica L.',
-    location: 'Mishawaka, IN',
-    rating: 5,
-    date: '2026-05-18',
-    commentEs: 'Reemplazo de tocador de baño y nueva grifería. Cero filtraciones, silicona perfectamente aplicada y dejó el baño más limpio que antes de empezar. Una persona de total confianza.',
-    commentEn: 'Bathroom vanity replacement and new faucet installation. Zero leaks, silicone sealant applied with perfection, and left the room spotless. Completely trustworthy.',
-    tags: ['Bathroom', 'Vanity Install', 'Clean Work'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'Vanity & Plumbing Fixtures',
-    featured: false,
-    status: 'APPROVED'
-  },
-  {
-    id: 'rev-9',
-    authorName: 'Carlos R.',
-    location: 'South Bend, IN',
-    rating: 5,
-    date: '2026-08-20',
-    commentEs: 'Excelente trabajo de Brian. Pintó toda la sala y el pasillo con líneas nítidas en molduras y techos. Muy puntual, honesto y trabajador. ¡100% recomendado para la comunidad hispana y local!',
-    commentEn: 'Superb work by Brian. He painted the entire living room and hallway with crisp lines along crown moldings and ceilings. Very punctual, honest, and hardworking. 100% recommended!',
-    tags: ['Painting', 'Interior Remodel', 'Spanish Speaker'],
-    isVerified: true,
-    source: 'Thumbtack',
-    jobType: 'Interior Living Room Painting',
-    featured: false,
-    status: 'APPROVED'
-  }
-];
+export const INITIAL_REVIEWS: Review[] = REAL_THUMBTACK_REVIEWS;
+
 
 export const INITIAL_QR_METHODS: PaymentQR[] = [
   {

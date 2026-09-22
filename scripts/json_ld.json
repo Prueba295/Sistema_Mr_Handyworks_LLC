@@ -1,0 +1,106 @@
+[
+  {
+    "@context": "http://schema.org",
+    "@graph": [
+      {
+        "@context": "http://schema.org",
+        "@type": "GeneralContractor",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "South Bend",
+          "addressRegion": "IN",
+          "postalCode": "46615"
+        },
+        "name": "Mr Handyworks LLC",
+        "description": "Hi, I’m Brian, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.\nFrom TV mounting and fixture installations to carpentry, painting, and general repairs, I take pride in delivering clean, precise work with strong attention to detail. No shortcuts, no guesswork, just solid, dependable results.\nMost of my work comes from repeat clients and referrals, which reflects the quality and consistency I bring to every job.\nMr. Handyworks LLC is fully insured and bonded, so you can have peace of mind knowing your home is in safe, professional hands. I believe in clear communication, fair pricing, and showing up when I say I will.\nIf you’re looking for someone reliable who treats your home with respect and takes pride in the work, I’m ready to help.",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": 4.962025316455696,
+          "reviewCount": 79,
+          "bestRating": 5,
+          "worstRating": 0
+        },
+        "image": "https://production-next-images-cdn.thumbtack.com/i/579465204213997570/desktop/standard/thumb",
+        "@id": "https://www.thumbtack.com/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708?spotlightWebMarkupEnabled=1",
+        "url": "https://www.thumbtack.com/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708?spotlightWebMarkupEnabled=1",
+        "review": [
+          [
+            {
+              "@type": "Review",
+              "datePublished": "Jan 17, 2026",
+              "description": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bathroom working again.",
+              "author": {
+                "@type": "Person",
+                "name": "Emma M."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": 5
+              }
+            }
+          ],
+          [
+            {
+              "@type": "Review",
+              "datePublished": "Sep 9, 2026",
+              "description": "Brian replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again.",
+              "author": {
+                "@type": "Person",
+                "name": "Jyoti B."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": 3
+              }
+            }
+          ],
+          [
+            {
+              "@type": "Review",
+              "datePublished": "Sep 3, 2026",
+              "description": "I had some odds and ends things around the house I needed done.   Brian was professional and did a great job on all my projects!",
+              "author": {
+                "@type": "Person",
+                "name": "Tracy W."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": 5
+              }
+            }
+          ],
+          [
+            {
+              "@type": "Review",
+              "datePublished": "Aug 19, 2026",
+              "description": "\"I had an excellent experience! Handyman LLC. Brian and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca",
+              "author": {
+                "@type": "Person",
+                "name": "Rebecca M."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": 5
+              }
+            }
+          ],
+          [
+            {
+              "@type": "Review",
+              "datePublished": "Aug 5, 2026",
+              "description": "I had a great experience working with  Mr Handyman. He was very flexible with my requests for my short term rental and over-delivered. I’ll keep him at the top of my list for future projects.",
+              "author": {
+                "@type": "Person",
+                "name": "Kevin M."
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": 5
+              }
+            }
+          ]
+        ]
+      }
+    ]
+  }
+]

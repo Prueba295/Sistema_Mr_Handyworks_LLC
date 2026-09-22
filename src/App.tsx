@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { HomeView } from './components/HomeView';
 import { Credentials } from './components/Credentials';
 import { ServicesCatalog } from './components/ServicesCatalog';
 import { EstimateCalculatorSection } from './components/EstimateCalculatorSection';
@@ -55,7 +56,7 @@ const renderSection = (page: string) => {
     case 'admin':
       return <AdminView />;
     default:
-      return <Hero />;
+      return <HomeView />;
   }
 };
 
@@ -91,50 +92,9 @@ const MainLayout: React.FC = () => {
           {currentPage === 'admin' ? (
             <AdminView />
           ) : (
-            <div className="grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:items-start">
-              <aside className="hidden lg:block">
-                <div className="sticky top-28 rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm">
-                  <div className="mb-3 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                    Navigation
-                  </div>
-
-                  <nav className="space-y-1.5">
-                    {sectionLinks.map(({ key, label, icon: Icon }) => {
-                      const isActive = currentPage === key;
-                      return (
-                        <button
-                          key={key}
-                          onClick={() => navigateTo(key as any)}
-                          className={`w-full flex items-center justify-between gap-2 rounded-2xl px-3 py-2.5 text-left text-sm font-bold transition-colors ${
-                            isActive
-                              ? 'bg-[#0B3C5D] text-white shadow-sm'
-                              : 'bg-[var(--surface-soft)] text-[var(--text)] hover:bg-[var(--surface-strong)]'
-                          }`}
-                        >
-                          <span className="flex items-center gap-2.5">
-                            <Icon className="w-4 h-4" />
-                            <span>{label}</span>
-                          </span>
-                          <span className="text-[10px] opacity-80">→</span>
-                        </button>
-                      );
-                    })}
-                  </nav>
-
-                  <div className="mt-4 rounded-2xl bg-[var(--surface-soft)] p-3">
-                    <div className="mb-1 text-[11px] font-bold text-[var(--text-muted)]">
-                      {language === 'es' ? 'Contacto directo' : 'Direct contact'}
-                    </div>
-                    <a href={`tel:${businessInfo.phoneRaw}`} className="block text-sm font-bold text-[var(--text)]">
-                      {businessInfo.phone}
-                    </a>
-                  </div>
-                </div>
-              </aside>
-
-              <div className="min-w-0">{renderSection(currentPage)}</div>
-            </div>
+            <div className="w-full min-w-0">{renderSection(currentPage)}</div>
           )}
+
         </main>
       </div>
 

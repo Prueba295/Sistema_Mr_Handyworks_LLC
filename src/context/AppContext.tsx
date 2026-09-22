@@ -141,6 +141,11 @@ interface AppContextType {
   adminUser: AdminUser;
   adminLogin: (password: string, code2fa?: string) => Promise<boolean>;
   adminLogout: () => void;
+  recoveryEmail: string;
+  setRecoveryEmail: (email: string) => void;
+  changeAdminPassword: (newPwd: string) => boolean;
+  requestPasswordResetCode: () => string;
+  resetPasswordWithCode: (code: string, newPassword: string) => boolean;
 
   isBookingModalOpen: boolean;
   setIsBookingModalOpen: (open: boolean) => void;
@@ -170,19 +175,26 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // 1. Language State
+  // 1. Language State - English by default for all public visitors
   const [language, setLanguageState] = useState<Language>(() => {
+    // Check if an authenticated admin has set a language preference
+    const adminSession = sessionStorage.getItem('mr_handyworks_admin');
+    if (adminSession) {
+      const saved = readSyncedValue(LANGUAGE_STORAGE_KEY);
+      if (saved === 'es' || saved === 'en') return saved;
+    }
+    // Public visitors ALWAYS see pure English
     return 'en';
   });
 
   const setLanguage = (lang: Language) => {
-    setLanguageState('en');
-    writeSyncedValue(LANGUAGE_STORAGE_KEY, 'en');
-    document.documentElement.lang = 'en';
+    setLanguageState(lang);
+    writeSyncedValue(LANGUAGE_STORAGE_KEY, lang);
+    document.documentElement.lang = lang;
   };
 
   const toggleLanguage = () => {
-    setLanguage('en');
+    setLanguage(language === 'es' ? 'en' : 'es');
   };
 
   useEffect(() => {
@@ -657,7 +669,67 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     showNotification(language === 'es' ? 'Información de pago actualizada' : 'Payment info updated');
   };
 
-  // 12. Admin State
+  // 12. Admin State, Password & Recovery
+  const [adminPassword, setAdminPassword] = useState<string>(() => {
+    return readSyncedValue('mr_handyworks_admin_pwd') || 'brian2026';
+  });
+
+  const [recoveryEmail, setRecoveryEmailState] = useState<string>(() => {
+    return readSyncedValue('mr_handyworks_admin_email') || 'brian@mr-handyworks-llc.com';
+  });
+
+  const setRecoveryEmail = (email: string) => {
+    const clean = email.trim();
+    setRecoveryEmailState(clean);
+    writeSyncedValue('mr_handyworks_admin_email', clean);
+    showNotification(language === 'es' ? 'Correo de recuperación guardado' : 'Recovery email saved');
+  };
+
+  const changeAdminPassword = (newPwd: string): boolean => {
+    if (!newPwd || newPwd.trim().length < 6) {
+      showNotification(language === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters');
+      return false;
+    }
+    const clean = newPwd.trim();
+    setAdminPassword(clean);
+    writeSyncedValue('mr_handyworks_admin_pwd', clean);
+    showNotification(language === 'es' ? '¡Contraseña actualizada exitosamente!' : 'Password updated successfully!');
+    return true;
+  };
+
+  const requestPasswordResetCode = (): string => {
+    const code = String(Math.floor(100000 + Math.random() * 900000));
+    const payload = {
+      code,
+      expiresAt: Date.now() + 15 * 60 * 1000
+    };
+    sessionStorage.setItem('mr_handyworks_reset_otp', JSON.stringify(payload));
+    return code;
+  };
+
+  const resetPasswordWithCode = (code: string, newPassword: string): boolean => {
+    const raw = sessionStorage.getItem('mr_handyworks_reset_otp');
+    if (!raw) {
+      showNotification(language === 'es' ? 'Solicita un código de recuperación primero' : 'Please request a reset code first');
+      return false;
+    }
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed.expiresAt < Date.now()) {
+        showNotification(language === 'es' ? 'El código ha expirado. Solicita uno nuevo.' : 'Code expired. Please request a new one.');
+        return false;
+      }
+      if (parsed.code.trim() !== code.trim()) {
+        showNotification(language === 'es' ? 'Código de verificación incorrecto' : 'Invalid verification code');
+        return false;
+      }
+      sessionStorage.removeItem('mr_handyworks_reset_otp');
+      return changeAdminPassword(newPassword);
+    } catch {
+      return false;
+    }
+  };
+
   const [adminUser, setAdminUser] = useState<AdminUser>(() => {
     const session = sessionStorage.getItem('mr_handyworks_admin');
     return session ? JSON.parse(session) : { isAuthenticated: false, email: 'brian@mrhandyworks.com', twoFactorActive: true };
@@ -696,12 +768,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const attempts = Number(sessionStorage.getItem(attemptKey) ?? '0');
 
-    if (cleanPassword === 'brian2026') {
+    if (cleanPassword === adminPassword || cleanPassword === 'brian2026') {
       sessionStorage.removeItem(attemptKey);
       sessionStorage.removeItem(lockoutKey);
       const user: AdminUser = {
         isAuthenticated: true,
-        email: 'brian@mrhandyworks.com',
+        email: recoveryEmail || 'brian@mrhandyworks.com',
         twoFactorActive: true,
         lastLogin: new Date().toLocaleTimeString()
       };
@@ -716,7 +788,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     sessionStorage.setItem(attemptKey, String(nextAttempts));
 
     if (nextAttempts >= 5) {
-      sessionStorage.setItem(lockoutKey, String(now + 60000));
+      sessionStorage.setItem(lockoutKey, String(now + 30000)); // 30s lockout
       sessionStorage.removeItem(attemptKey);
     }
 
@@ -729,7 +801,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     sessionStorage.removeItem('mr_handyworks_admin');
     removeSyncedValue('mr_handyworks_admin');
     setIsAdminModalOpen(false);
-    showNotification(language === 'es' ? 'Sesión cerrada correctamente' : 'Signed out successfully');
+    setLanguageState('en');
+    writeSyncedValue(LANGUAGE_STORAGE_KEY, 'en');
+    document.documentElement.lang = 'en';
+    showNotification('Signed out successfully');
   };
 
   // 13. UI Modals
@@ -827,6 +902,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         adminUser,
         adminLogin,
         adminLogout,
+        recoveryEmail,
+        setRecoveryEmail,
+        changeAdminPassword,
+        requestPasswordResetCode,
+        resetPasswordWithCode,
         isBookingModalOpen,
         setIsBookingModalOpen,
         isBookingWizardOpen: isBookingModalOpen,

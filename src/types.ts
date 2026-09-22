@@ -68,6 +68,8 @@ export interface PortfolioMedia {
   descriptionEs: string;
   descriptionEn: string;
   featured?: boolean;
+  author?: string | null;
+  date?: string | null;
 }
 
 export interface Review {
@@ -82,6 +84,7 @@ export interface Review {
   isVerified: boolean;
   source: 'Thumbtack' | 'Direct' | 'HomeAdvisor';
   jobType: string;
+  jobDetails?: string;
   featured?: boolean;
   status: 'APPROVED' | 'PENDING' | 'REJECTED';
 }

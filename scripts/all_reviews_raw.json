@@ -1,0 +1,2487 @@
+[
+  {
+    "__typename": "ServicePageReviewsItemV2",
+    "reviewV2": {
+      "__typename": "ServicePageReviewV2",
+      "header": {
+        "__typename": "ServicePageReviewHeader",
+        "attribution": "Tara C.",
+        "attributionAvatar": {
+          "__typename": "Image",
+          "imagePk": "431288513193426972"
+        },
+        "category": null,
+        "rating": {
+          "__typename": "StarRating",
+          "tooltip": "5 out of 5 star rating",
+          "rating": 5,
+          "theme": "GREEN"
+        },
+        "date": "2 weeks ago",
+        "verifier": {
+          "__typename": "ServicePageReviewVerifier",
+          "source": "VERIFIED",
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount above fireplace • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • No, I’ll purchase the mount or stand • Tilt (angled up or down) • None",
+      "images": [],
+      "imageClickTrackingData": null,
+      "labels": [
+        {
+          "__typename": "ServicePageReviewLabel",
+          "icon": null,
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    },
+    "originalReviewsV2": []
+  },
+  {
+    "__typename": "ServicePageReviewsItemV2",
+    "reviewV2": {
+      "__typename": "ServicePageReviewV2",
+      "header": {
+        "__typename": "ServicePageReviewHeader",
+        "attribution": "Sushruta N.",
+        "attributionAvatar": {
+          "__typename": "Image",
+          "imagePk": "431288469664604162"
+        },
+        "category": null,
+        "rating": {
+          "__typename": "StarRating",
+          "tooltip": "5 out of 5 star rating",
+          "rating": 5,
+          "theme": "GREEN"
+        },
+        "date": "Aug 1, 2026",
+        "verifier": {
+          "__typename": "ServicePageReviewVerifier",
+          "source": "VERIFIED",
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Outstanding Job. Set up up my whole home theater including surround speakers and made changes till it was absolutely perfect!",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • Sound bar",
+      "images": [
+        {
+          "__typename": "Image",
+          "imagePk": "586492808112529414"
+        }
+      ],
+      "imageClickTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review section image click",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"152396937238036850\"}"
+      },
+      "labels": [
+        {
+          "__typename": "ServicePageReviewLabel",
+          "icon": null,
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    },
+    "originalReviewsV2": []
+  },
+  {
+    "__typename": "ServicePageReviewsItemV2",
+    "reviewV2": {
+      "__typename": "ServicePageReviewV2",
+      "header": {
+        "__typename": "ServicePageReviewHeader",
+        "attribution": "Mark F.",
+        "attributionAvatar": {
+          "__typename": "Image",
+          "imagePk": "431288235474542596"
+        },
+        "category": null,
+        "rating": {
+          "__typename": "StarRating",
+          "tooltip": "5 out of 5 star rating",
+          "rating": 5,
+          "theme": "GREEN"
+        },
+        "date": "Apr 1, 2026",
+        "verifier": {
+          "__typename": "ServicePageReviewVerifier",
+          "source": "VERIFIED",
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Hired to fix a plumbing leak and replace an exterior door. He was fast to reply, quoted a fair and consistent price for the labor with clear pricing for labor and materials, and was able to schedule in a timely manner. All his interactions were pleasant and professional and he remained true to his initial quote and was able to adapt and accommodate throughout the process of the job. I will be using him again for any future work that I need completed.",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Repairs • Installation • Basement • Garage • Doors • Plumbing • Home",
+      "images": [],
+      "imageClickTrackingData": null,
+      "labels": [
+        {
+          "__typename": "ServicePageReviewLabel",
+          "icon": null,
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    },
+    "originalReviewsV2": []
+  },
+  {
+    "__typename": "ServicePageReviewsItemV2",
+    "reviewV2": {
+      "__typename": "ServicePageReviewV2",
+      "header": {
+        "__typename": "ServicePageReviewHeader",
+        "attribution": "Patrick E.",
+        "attributionAvatar": {
+          "__typename": "Image",
+          "imagePk": "431288335579283467"
+        },
+        "category": null,
+        "rating": {
+          "__typename": "StarRating",
+          "tooltip": "5 out of 5 star rating",
+          "rating": 5,
+          "theme": "GREEN"
+        },
+        "date": "Jun 20, 2026",
+        "verifier": {
+          "__typename": "ServicePageReviewVerifier",
+          "source": "VERIFIED",
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house.",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: No, I do not need to replace a sink • Pedestal sink • 0 sinks • 1 faucet • House",
+      "images": [
+        {
+          "__typename": "Image",
+          "imagePk": "582841862834618372"
+        }
+      ],
+      "imageClickTrackingData": {
+        "__typename": "TrackingData",
+        "eventType": "service page/review section image click",
+        "kvPairsJSON": "{\"servicePk\":\"557892581429960708\",\"categoryPk\":\"150851985734336988\"}"
+      },
+      "labels": [
+        {
+          "__typename": "ServicePageReviewLabel",
+          "icon": null,
+          "text": "Sink or Faucet Installation or Replacement"
+        }
+      ],
+      "response": null
+    },
+    "originalReviewsV2": []
+  },
+  {
+    "__typename": "ServicePageReviewsItemV2",
+    "reviewV2": {
+      "__typename": "ServicePageReviewV2",
+      "header": {
+        "__typename": "ServicePageReviewHeader",
+        "attribution": "Dennis A.",
+        "attributionAvatar": {
+          "__typename": "Image",
+          "imagePk": "431288513193426972"
+        },
+        "category": null,
+        "rating": {
+          "__typename": "StarRating",
+          "tooltip": "5 out of 5 star rating",
+          "rating": 5,
+          "theme": "GREEN"
+        },
+        "date": "May 28, 2026",
+        "verifier": {
+          "__typename": "ServicePageReviewVerifier",
+          "source": "VERIFIED",
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "__typename": "FormattedText",
+        "segments": [
+          {
+            "__typename": "FormattedTextSegment",
+            "text": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
+            "emphasis": [],
+            "url": null,
+            "clickTrackingData": null,
+            "clickTrackingDataV2": null
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Installation • Deck or porch • Home",
+      "images": [],
+      "imageClickTrackingData": null,
+      "labels": [
+        {
+          "__typename": "ServicePageReviewLabel",
+          "icon": null,
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    },
+    "originalReviewsV2": []
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Paul W.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Dec 26, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Need to be able to mark ALL good things!  They came same day as my request, worked hard, interacted with my family and did quality work hanging two new ceiling fans.  Cannot thank them enough! I will be using them again!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Installation • Living room • Bedroom • Electrical • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Angela B.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 13, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Installation • Doors • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Theresa B.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 11, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Flat against wall (fixed) • Sound bar",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Terry T.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 11, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Installation or replacement • Leaks • No hot water • Gas tank • Closet • House • Owner",
+      "images": [
+        {
+          "imagePk": "587304499874766855",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/587304499874766855/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Water Heater Repair or Maintenance"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ray G.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Nov 17, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "They did an excellent job install installing my TV mount and TV.  They also moved a piece of furniture for me while they were here. I would definitely use them again in the future."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount above fireplace • Wood • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Emma M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jan 17, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bathroom working again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Repairs • Installation • Assembly • Bathroom • Home",
+      "images": [
+        {
+          "imagePk": "569553639910694926",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/569553639910694926/desktop/standard/400square-legacy"
+        },
+        {
+          "imagePk": "569553640531558414",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/569553640531558414/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Eric R.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 23, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Really happy with the work Brian did for us. He was easy to communicate with, showed up on time, and knocked the job out quickly. Everything looks great and works perfectly. Thanks again!"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Black V.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Dec 26, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian did an excellent job installing my security  camera. communication was great, h arrived on time, and everything worked flawlessly"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • Yes, I already have a mount or stand • As recommended by the professional • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Donald S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Feb 4, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had a good experience, very punctual and responsive. Cleaned after the work was completed and respected my home.The work was done to my specifications."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • No, I’ll purchase the mount or stand • Articulating (tilts up and down, moves side to side) • Sound bar",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ashley W.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 20, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Quick response and was able to come out within an hour or so to install my ceiling fan!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Yes, the location has an existing fan • Ceiling • 8 - 10 feet (standard ceiling)",
+      "images": [],
+      "labels": [
+        {
+          "text": "Fan Installation"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Markiesha M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Dec 13, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Brian!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Yes, the location has an existing heater • Gas tank (standard) • I already purchased the water heater • House",
+      "images": [
+        {
+          "imagePk": "566524396090687490",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/566524396090687490/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Water Heater Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Carol S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jan 10, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian did a quality job securing my mailbox door. He is very efficient, got the job done quickly, even while raining outside.  I highly reccomend him."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Repairs • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Adriana M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Dec 27, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had a problem and he was able to fix it on Christmas Eve. That’s amazing! Will use again for my "
+          },
+          {
+            "text": "handyman"
+          },
+          {
+            "text": " needs."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • Yes, I already have a mount or stand • As recommended by the professional • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Paul N.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Mar 10, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Had a large TV mounted.  Great work, quick response and reasonable price.  Would definitely use again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • Cable or satellite box • DVD or Blu-ray player • Surround sound system",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Marco C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 11, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian replaced three toilets for us, and once he got into the job, he found a few issues with the subfloor that needed to be fixed. He let us know what was going on, took care of everything, and never made it feel like a headache. The price was fair, the work turned out great, and everything was cleaned up before he left. Ill definitely be calling him again"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Margaret S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 13, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "He installed a toilet for me and it works great. It was an emergency and he came right away"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Install a new toilet (no existing toilet) • 1 toilet",
+      "images": [],
+      "labels": [
+        {
+          "text": "Toilet Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ekom E.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 14, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Had a water filter installed and am very happy with the results!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Water softener (most common) • I already purchased the water treatment system • House",
+      "images": [],
+      "labels": [
+        {
+          "text": "Water Treatment System Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Tracy W.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "3 weeks ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had some odds and ends things around the house I needed done.   Brian was professional and did a great job on all my projects!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Repairs • Bathroom • Electrical • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Jasmine W.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Mar 18, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I was struggling to put up my bed reached out Brain and he had me booked the next day ! Came here did an awesome job ! Will definitely be back for any other projects I may have ! Thank you !"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 items • Dresser • Bed frame • Yes, I have assembly instructions or make and model information",
+      "images": [],
+      "labels": [
+        {
+          "text": "Furniture Assembly"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Rebecca M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 19, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "\"I had an excellent experience! "
+          },
+          {
+            "text": "Handyman"
+          },
+          {
+            "text": " LLC. Brian and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Living room • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Hannah G.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 10, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Our water heater finally quit, and I was not looking forward to dealing with it. I called Mr Handyworks, and Brian and his helper came out to replace it. They got the old one out, installed the new one, and had everything working again sooner than I expected, The price was a little higher than a couple of the other quotes I got, but after seeing the quality of the work, I completely understand why. They took their time, answered the questions I had, and never made me feel like they were just trying to rush through the job. The whole experience was a lot less stressful than I expected, and Im really glad I went with them. Ill definitely be calling Brian again the next time I need something done around the house"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kevin M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 5, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had a great experience working with  Mr "
+          },
+          {
+            "text": "Handyman"
+          },
+          {
+            "text": ". He was very flexible with my requests for my short term rental and over-delivered. I’ll keep him at the top of my list for future projects."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Repairs • Kitchen • Appliances • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Joe M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "2 days ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Great work quality, reasonable price, and professionalism in mounting my TV! I would highly recommend Mr Handyworks LLC."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • No, I’d like help in selecting a mount or stand • Flat against wall (fixed) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kiana B.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Apr 13, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Amazing work. They arrived on time and quickly completed the task I booked with them. I will definitely book again if I need help in the future."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Jyoti B.",
+        "rating": {
+          "rating": 3
+        },
+        "date": "2 weeks ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again."
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": {
+        "attribution": "Mr Handyworks LLC's reply",
+        "text": "Hi Jyoti, I’m sorry you feel this way, but I would like to clarify what happened. The original request was to inspect the dryer. You later requested additional work, including cleaning the dryer vent and checking and replacing the shower head. I explained in our messages that these additional services would be priced separately, and you agreed.\n\nThe shower head price difference was due to a different color being purchased at a lower price. Once I reviewed the receipt, I sent it to you and corrected the invoice accordingly. This was an honest adjustment, not an attempt to misrepresent the cost.\n\nAll work was completed around 6:00 p.m., including the additional services, and payment was not completed until close to midnight after several follow-ups. I respect your decision not to use my services again, but I strongly disagree with the suggestion that I was dishonest."
+      }
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Alejandro G.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Feb 16, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "They work nicely and professional. They explain everything throughly and options to sort anything out. Good communication and friendly."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ross S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Dec 16, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "He did a great job replacing our bathroom exhaust fan! Highly recommend!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Yes, the location has an existing fan • Bath exhaust • 10 - 14 feet (high ceiling)",
+      "images": [],
+      "labels": [
+        {
+          "text": "Fan Installation"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Katie C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Feb 28, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian put together several pieces of furniture for us and did an excellent job!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 6 items • Bed frame • Dresser • Couch • No, I don’t have assembly instructions or make and model information",
+      "images": [],
+      "labels": [
+        {
+          "text": "Furniture Assembly"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ian C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Apr 23, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "He assembled two difficult nightstands i purchased from amazon and was very communicative throughout the process."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 items • Desk or table • Yes, I have assembly instructions or make and model information",
+      "images": [],
+      "labels": [
+        {
+          "text": "Furniture Assembly"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kristen D.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 14, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Very happy with the service. Brian explained everything clearly, completed the job quickly, and cleaned up afterward. Highly recommend"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ray G.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 16, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I  have used them on three separate occasions and am always pleased with the results. Highly recommended!!!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Installation • Deck or porch • Doors • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kyle C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 8, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Had Brian install vinyl flooring in my house and it came out better than I expected. Everything looks clean and professionally done, and the room feels completely different now. He was straightforward, showed up on time, and got the job done without any headaches. Its hard to find someone who actually cares about the quality of their work these days. Id definitely hire him again"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Michael Y.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 7, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian and his helper painted three rooms in our house, and we couldnt be happier with how everything turned out. They repaired a few damaged spots in the drywall before painting, and you would never know there was any damage. The paint looks great, the lines are clean, and the whole house feels brighter. Brian was easy to work with, the price was fair, and he kept us updated throughout the job. You can tell he has plenty of experience because everything turned out exactly the way we were hoping. Well definitely be calling him again for our next project"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Andrew M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 6, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian and his crew did a great job replacing our fence. They were on time, worked hard, and kept me updated throughout the project. The finished fence looks solid and exactly how I wanted it. Its nice to find someone who takes pride in their work. Id definitely call Mr Handyworks LLC again for future projects"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Rachel T.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 30, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had a great experience with Brian. He was professional, arrived on time, and did exactly what he said he would. The quality of the work was excellent, and he made sure everything was done right before he left. Fair pricing, great communication, and very reliable. Ill definitely be calling him again for future projects. Highly recommend!"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Joan F.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 6, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "The work that Brian did and his overall responsiveness was excellent and I will definitely use again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Fence sections need replacement • Wood • Residential",
+      "images": [],
+      "labels": [
+        {
+          "text": "Fence and Gate Repairs"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Dusti C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "May 3, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian is phenomenal! I will use his services every single time that I need any work done on my home."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Repairs • Painting • Kitchen • Furniture • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kim T.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "May 3, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Did an excellent job. I will hire for additional projects."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Fence is leaning or sagging • Wood • Residential",
+      "images": [],
+      "labels": [
+        {
+          "text": "Fence and Gate Repairs"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Jevaughn C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Mar 15, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Elite work! Awesome person! Great communicator and works very quickly! Super pleased with his work!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Amanda R.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Mar 4, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "My job was completed quickly, professionally, and for reasonable price.  I would absolutely hire Brian and again!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Repairs • Bathroom • Plumbing • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Patrick e.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Nov 24, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Shut up same day kind of repair done and were very polite to the tenants"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Repairs • Bathroom • Plumbing • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kyngstonn V.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 15, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Bryan was great! In n out and easy to communicate with. No problems."
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Sheila S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 10, 2026",
+        "verifier": {
+          "text": "From Google"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "He did a great job. He is very knowledgeable on alot of different things"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Austin V.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "4 weeks ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Great to get some needed work done quickly!"
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Handyman A.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "6 days ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian, was on time and did a quality work."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Installation • Bedroom • Wall hangings • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Andrew t.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 22, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "They were awesome"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 1 - 5 • No, none of my items are more than 6 ft long or weigh more than 20 pounds • Ladder required • Wood • Residential",
+      "images": [],
+      "labels": [
+        {
+          "text": "Picture Hanging and Art Installation"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Julie G.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 23, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Would recommend"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Replacement of existing lighting • 1 light • Under 8 feet (low ceiling) • Indoors • Existing property • House",
+      "images": [],
+      "labels": [
+        {
+          "text": "Lighting Installation"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kaiyuan T.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "May 16, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Very good pro, recommend to everyone read this"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Installation • Kitchen • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Nyla S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Mar 14, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Great experience, great work"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Toby O.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Feb 21, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Great experience, will hire again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Fill in cracks • Patch damaged drywall • 1 room • Wall(s) • Ceiling(s) • Residential",
+      "images": [],
+      "labels": [
+        {
+          "text": "Drywall Repair and Texturing"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Cara R.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Feb 9, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Excellent work!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • Yes, I already have a mount or stand • Flat against wall (fixed) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Annie B.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Nov 24, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "great job will hire again"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Electrical not functioning normally • Circuit breaker panel or fuse box • 8 - 10 feet (standard ceiling) • House",
+      "images": [],
+      "labels": [
+        {
+          "text": "Electrical and Wiring Repair"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Richard P.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Nov 21, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Great work thanks"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Syd A.",
+        "rating": {
+          "rating": 4
+        },
+        "date": "Nov 25, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Excellent"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Installation • Bathroom • Basement • Lighting • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Danea M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Nov 8, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Very polite, pleasant and  professional."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 6 items • Desk or table • Chair • Dresser • Yes, I have assembly instructions or make and model information",
+      "images": [],
+      "labels": [
+        {
+          "text": "Furniture Assembly"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Dusti C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "May 3, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian is phenomenal! I will use his services every single time that I need any work done on my home."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Repairs • Painting • Kitchen • Furniture • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Dennis A.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "May 28, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Installation • Deck or porch • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Joan F.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 6, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "The work that Brian did and his overall responsiveness was excellent and I will definitely use again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Fence sections need replacement • Wood • Residential",
+      "images": [],
+      "labels": [
+        {
+          "text": "Fence and Gate Repairs"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Angela B.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 13, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Installation • Doors • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Margaret S.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 13, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "He installed a toilet for me and it works great. It was an emergency and he came right away"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Install a new toilet (no existing toilet) • 1 toilet",
+      "images": [],
+      "labels": [
+        {
+          "text": "Toilet Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ashley W.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 20, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Quick response and was able to come out within an hour or so to install my ceiling fan!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Yes, the location has an existing fan • Ceiling • 8 - 10 feet (standard ceiling)",
+      "images": [],
+      "labels": [
+        {
+          "text": "Fan Installation"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ekom E.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 14, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Had a water filter installed and am very happy with the results!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Water softener (most common) • I already purchased the water treatment system • House",
+      "images": [],
+      "labels": [
+        {
+          "text": "Water Treatment System Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Ray G.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jul 16, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I  have used them on three separate occasions and am always pleased with the results. Highly recommended!!!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Installation • Deck or porch • Doors • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Kevin M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 5, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had a great experience working with  Mr Handyman. He was very flexible with my requests for my short term rental and over-delivered. I’ll keep him at the top of my list for future projects."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Less than 2 hours (Simple tasks) • Repairs • Kitchen • Appliances • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Theresa B.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 11, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Flat against wall (fixed) • Sound bar",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Rebecca M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 19, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "\"I had an excellent experience! Handyman LLC. Brian and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Living room • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Tracy W.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "3 weeks ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I had some odds and ends things around the house I needed done.   Brian was professional and did a great job on all my projects!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: 2 - 5 hours (A few different projects) • Repairs • Bathroom • Electrical • Home",
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Jyoti B.",
+        "rating": {
+          "rating": 3
+        },
+        "date": "2 weeks ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again."
+          }
+        ]
+      },
+      "jobDetailsV2": null,
+      "images": [],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": {
+        "attribution": "Mr Handyworks LLC's reply",
+        "text": "Hi Jyoti, I’m sorry you feel this way, but I would like to clarify what happened. The original request was to inspect the dryer. You later requested additional work, including cleaning the dryer vent and checking and replacing the shower head. I explained in our messages that these additional services would be priced separately, and you agreed.\n\nThe shower head price difference was due to a different color being purchased at a lower price. Once I reviewed the receipt, I sent it to you and corrected the invoice accordingly. This was an honest adjustment, not an attempt to misrepresent the cost.\n\nAll work was completed around 6:00 p.m., including the additional services, and payment was not completed until close to midnight after several follow-ups. I respect your decision not to use my services again, but I strongly disagree with the suggestion that I was dishonest."
+      }
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Tara C.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "2 weeks ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount above fireplace • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • No, I’ll purchase the mount or stand • Tilt (angled up or down) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Joe M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "2 days ago",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Great work quality, reasonable price, and professionalism in mounting my TV! I would highly recommend Mr Handyworks LLC."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • No, I’d like help in selecting a mount or stand • Flat against wall (fixed) • None",
+      "images": [],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Markiesha M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Dec 13, 2025",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Brian!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Yes, the location has an existing heater • Gas tank (standard) • I already purchased the water heater • House",
+      "images": [
+        {
+          "imagePk": "566524396090687490",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/566524396090687490/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Water Heater Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Emma M.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jan 17, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bathroom working again."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: A full day (Complex or long-term projects) • Repairs • Installation • Assembly • Bathroom • Home",
+      "images": [
+        {
+          "imagePk": "569553639910694926",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/569553639910694926/desktop/standard/400square-legacy"
+        },
+        {
+          "imagePk": "569553640531558414",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/569553640531558414/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Handyman"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Patrick E.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Jun 20, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house."
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: No, I do not need to replace a sink • Pedestal sink • 0 sinks • 1 faucet • House",
+      "images": [
+        {
+          "imagePk": "582841862834618372",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/582841862834618372/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Sink or Faucet Installation or Replacement"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Sushruta N.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 1, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "Outstanding Job. Set up up my whole home theater including surround speakers and made changes till it was absolutely perfect!"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • Sound bar",
+      "images": [
+        {
+          "imagePk": "586492808112529414",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/586492808112529414/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "TV Mounting"
+        }
+      ],
+      "response": null
+    }
+  },
+  {
+    "reviewV2": {
+      "header": {
+        "attribution": "Terry T.",
+        "rating": {
+          "rating": 5
+        },
+        "date": "Aug 11, 2026",
+        "verifier": {
+          "text": "Hired on Thumbtack"
+        }
+      },
+      "text": {
+        "segments": [
+          {
+            "text": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future"
+          }
+        ]
+      },
+      "jobDetailsV2": "Details: Installation or replacement • Leaks • No hot water • Gas tank • Closet • House • Owner",
+      "images": [
+        {
+          "imagePk": "587304499874766855",
+          "thumbnailURL": "https://production-next-images-cdn.thumbtack.com/i/587304499874766855/desktop/standard/400square-legacy"
+        }
+      ],
+      "labels": [
+        {
+          "text": "Water Heater Repair or Maintenance"
+        }
+      ],
+      "response": null
+    }
+  }
+]

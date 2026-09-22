@@ -1,0 +1,1581 @@
+{
+  "business": {
+    "name": "Mr Handyworks LLC",
+    "owner": "Brian Cueva",
+    "location": "South Bend, IN 46615",
+    "category": "Handyman, Home Improvement, General Contractor",
+    "badge": "Top Pro",
+    "thumbtackRating": 5,
+    "totalReviews": 60,
+    "responseTime": "Responds in about 2 hours",
+    "status": "Licensed, Bonded & Insured",
+    "backgroundCheck": "Verified by Thumbtack",
+    "moneyBackGuarantee": "Thumbtack Guarantee Eligible",
+    "introduction": "Hi, I’m Brian, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.\nFrom TV mounting and fixture installations to carpentry, painting, and general repairs, I take pride in delivering clean, precise work with strong attention to detail. No shortcuts, no guesswork, just solid, dependable results.\nMost of my work comes from repeat clients and referrals, which reflects the quality and consistency I bring to every job.\nMr. Handyworks LLC is fully insured and bonded, so you can have peace of mind knowing your home is in safe, professional hands. I believe in clear communication, fair pricing, and showing up when I say I will.\nIf you’re looking for someone reliable who treats your home with respect and takes pride in the work, I’m ready to help.",
+    "phone": "(574) 279-9355",
+    "thumbtackUrl": "https://www.thumbtack.com/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708"
+  },
+  "photos": {
+    "total": 125,
+    "folder": "jobs",
+    "items": [
+      {
+        "filename": "job_006_586492808112529414.jpeg",
+        "id": "586492808112529414",
+        "type": "ReviewImage",
+        "localPath": "jobs/job_006_586492808112529414.jpeg"
+      },
+      {
+        "filename": "job_004_582841862834618372.jpeg",
+        "id": "582841862834618372",
+        "type": "ReviewImage",
+        "localPath": "jobs/job_004_582841862834618372.jpeg"
+      },
+      {
+        "filename": "job_001_569553639910694926.jpeg",
+        "id": "569553639910694926",
+        "type": "ReviewImage",
+        "localPath": "jobs/job_001_569553639910694926.jpeg"
+      },
+      {
+        "filename": "job_003_566524396090687490.jpeg",
+        "id": "566524396090687490",
+        "type": "ReviewImage",
+        "localPath": "jobs/job_003_566524396090687490.jpeg"
+      },
+      {
+        "filename": "job_002_569553640531558414.jpeg",
+        "id": "569553640531558414",
+        "type": "ReviewImage",
+        "localPath": "jobs/job_002_569553640531558414.jpeg"
+      },
+      {
+        "filename": "job_005_587304499874766855.jpeg",
+        "id": "587304499874766855",
+        "type": "ReviewImage",
+        "localPath": "jobs/job_005_587304499874766855.jpeg"
+      },
+      {
+        "filename": "job_008_588050729373147137.jpeg",
+        "id": "588050729373147137",
+        "type": "Image",
+        "localPath": "jobs/job_008_588050729373147137.jpeg"
+      },
+      {
+        "filename": "job_010_588045933606207492.jpeg",
+        "id": "588045933606207492",
+        "type": "Image",
+        "localPath": "jobs/job_010_588045933606207492.jpeg"
+      },
+      {
+        "filename": "job_012_587623902717992960.jpeg",
+        "id": "587623902717992960",
+        "type": "Image",
+        "localPath": "jobs/job_012_587623902717992960.jpeg"
+      },
+      {
+        "filename": "job_007_588309384845443078.jpeg",
+        "id": "588309384845443078",
+        "type": "Image",
+        "localPath": "jobs/job_007_588309384845443078.jpeg"
+      },
+      {
+        "filename": "job_011_587865914842374146.jpeg",
+        "id": "587865914842374146",
+        "type": "Image",
+        "localPath": "jobs/job_011_587865914842374146.jpeg"
+      },
+      {
+        "filename": "job_009_588050727517093896.jpeg",
+        "id": "588050727517093896",
+        "type": "Image",
+        "localPath": "jobs/job_009_588050727517093896.jpeg"
+      },
+      {
+        "filename": "job_013_587623901065060358.jpeg",
+        "id": "587623901065060358",
+        "type": "Image",
+        "localPath": "jobs/job_013_587623901065060358.jpeg"
+      },
+      {
+        "filename": "job_018_582858249500942341.jpeg",
+        "id": "582858249500942341",
+        "type": "Image",
+        "localPath": "jobs/job_018_582858249500942341.jpeg"
+      },
+      {
+        "filename": "job_017_587103584989896710.jpeg",
+        "id": "587103584989896710",
+        "type": "Image",
+        "localPath": "jobs/job_017_587103584989896710.jpeg"
+      },
+      {
+        "filename": "job_014_587432409755828237.jpeg",
+        "id": "587432409755828237",
+        "type": "Image",
+        "localPath": "jobs/job_014_587432409755828237.jpeg"
+      },
+      {
+        "filename": "job_016_587111774011572229.jpeg",
+        "id": "587111774011572229",
+        "type": "Image",
+        "localPath": "jobs/job_016_587111774011572229.jpeg"
+      },
+      {
+        "filename": "job_015_587430719275221005.jpeg",
+        "id": "587430719275221005",
+        "type": "Image",
+        "localPath": "jobs/job_015_587430719275221005.jpeg"
+      },
+      {
+        "filename": "job_019_582857965472956433.jpeg",
+        "id": "582857965472956433",
+        "type": "Image",
+        "localPath": "jobs/job_019_582857965472956433.jpeg"
+      },
+      {
+        "filename": "job_022_582429406056202246.jpeg",
+        "id": "582429406056202246",
+        "type": "Image",
+        "localPath": "jobs/job_022_582429406056202246.jpeg"
+      },
+      {
+        "filename": "job_021_582857962276790290.jpeg",
+        "id": "582857962276790290",
+        "type": "Image",
+        "localPath": "jobs/job_021_582857962276790290.jpeg"
+      },
+      {
+        "filename": "job_023_582232879844818945.jpeg",
+        "id": "582232879844818945",
+        "type": "Image",
+        "localPath": "jobs/job_023_582232879844818945.jpeg"
+      },
+      {
+        "filename": "job_020_582857964074745856.jpeg",
+        "id": "582857964074745856",
+        "type": "Image",
+        "localPath": "jobs/job_020_582857964074745856.jpeg"
+      },
+      {
+        "filename": "job_024_581632504667709450.jpeg",
+        "id": "581632504667709450",
+        "type": "Image",
+        "localPath": "jobs/job_024_581632504667709450.jpeg"
+      },
+      {
+        "filename": "job_025_581489799806525450.jpeg",
+        "id": "581489799806525450",
+        "type": "Image",
+        "localPath": "jobs/job_025_581489799806525450.jpeg"
+      },
+      {
+        "filename": "job_027_580794336415391751.jpeg",
+        "id": "580794336415391751",
+        "type": "Image",
+        "localPath": "jobs/job_027_580794336415391751.jpeg"
+      },
+      {
+        "filename": "job_028_580628634546733060.jpeg",
+        "id": "580628634546733060",
+        "type": "Image",
+        "localPath": "jobs/job_028_580628634546733060.jpeg"
+      },
+      {
+        "filename": "job_026_581489798259539972.jpeg",
+        "id": "581489798259539972",
+        "type": "Image",
+        "localPath": "jobs/job_026_581489798259539972.jpeg"
+      },
+      {
+        "filename": "job_029_580628632590008322.jpeg",
+        "id": "580628632590008322",
+        "type": "Image",
+        "localPath": "jobs/job_029_580628632590008322.jpeg"
+      },
+      {
+        "filename": "job_030_579841079438049299.jpeg",
+        "id": "579841079438049299",
+        "type": "Image",
+        "localPath": "jobs/job_030_579841079438049299.jpeg"
+      },
+      {
+        "filename": "job_033_578621799572389900.jpeg",
+        "id": "578621799572389900",
+        "type": "Image",
+        "localPath": "jobs/job_033_578621799572389900.jpeg"
+      },
+      {
+        "filename": "job_032_578808195854098434.jpeg",
+        "id": "578808195854098434",
+        "type": "Image",
+        "localPath": "jobs/job_032_578808195854098434.jpeg"
+      },
+      {
+        "filename": "job_031_578808197378670603.jpeg",
+        "id": "578808197378670603",
+        "type": "Image",
+        "localPath": "jobs/job_031_578808197378670603.jpeg"
+      },
+      {
+        "filename": "job_034_578621798141386764.jpeg",
+        "id": "578621798141386764",
+        "type": "Image",
+        "localPath": "jobs/job_034_578621798141386764.jpeg"
+      },
+      {
+        "filename": "job_035_578621797178875910.jpeg",
+        "id": "578621797178875910",
+        "type": "Image",
+        "localPath": "jobs/job_035_578621797178875910.jpeg"
+      },
+      {
+        "filename": "job_037_577944559225126925.jpeg",
+        "id": "577944559225126925",
+        "type": "Image",
+        "localPath": "jobs/job_037_577944559225126925.jpeg"
+      },
+      {
+        "filename": "job_039_577944379941642248.jpeg",
+        "id": "577944379941642248",
+        "type": "Image",
+        "localPath": "jobs/job_039_577944379941642248.jpeg"
+      },
+      {
+        "filename": "job_036_578621795959865344.jpeg",
+        "id": "578621795959865344",
+        "type": "Image",
+        "localPath": "jobs/job_036_578621795959865344.jpeg"
+      },
+      {
+        "filename": "job_038_577944381268049922.jpeg",
+        "id": "577944381268049922",
+        "type": "Image",
+        "localPath": "jobs/job_038_577944381268049922.jpeg"
+      },
+      {
+        "filename": "job_041_577594708771880964.jpeg",
+        "id": "577594708771880964",
+        "type": "Image",
+        "localPath": "jobs/job_041_577594708771880964.jpeg"
+      },
+      {
+        "filename": "job_040_577944378673537038.jpeg",
+        "id": "577944378673537038",
+        "type": "Image",
+        "localPath": "jobs/job_040_577944378673537038.jpeg"
+      },
+      {
+        "filename": "job_044_577594092810231815.jpeg",
+        "id": "577594092810231815",
+        "type": "Image",
+        "localPath": "jobs/job_044_577594092810231815.jpeg"
+      },
+      {
+        "filename": "job_042_577594411153719297.jpeg",
+        "id": "577594411153719297",
+        "type": "Image",
+        "localPath": "jobs/job_042_577594411153719297.jpeg"
+      },
+      {
+        "filename": "job_047_577593661136879620.jpeg",
+        "id": "577593661136879620",
+        "type": "Image",
+        "localPath": "jobs/job_047_577593661136879620.jpeg"
+      },
+      {
+        "filename": "job_046_577593662314389504.jpeg",
+        "id": "577593662314389504",
+        "type": "Image",
+        "localPath": "jobs/job_046_577593662314389504.jpeg"
+      },
+      {
+        "filename": "job_045_577593878815514628.jpeg",
+        "id": "577593878815514628",
+        "type": "Image",
+        "localPath": "jobs/job_045_577593878815514628.jpeg"
+      },
+      {
+        "filename": "job_043_577594278969450500.jpeg",
+        "id": "577594278969450500",
+        "type": "Image",
+        "localPath": "jobs/job_043_577594278969450500.jpeg"
+      },
+      {
+        "filename": "job_049_577593439293218821.jpeg",
+        "id": "577593439293218821",
+        "type": "Image",
+        "localPath": "jobs/job_049_577593439293218821.jpeg"
+      },
+      {
+        "filename": "job_048_577593660043878400.jpeg",
+        "id": "577593660043878400",
+        "type": "Image",
+        "localPath": "jobs/job_048_577593660043878400.jpeg"
+      },
+      {
+        "filename": "job_050_576982518578659338.jpeg",
+        "id": "576982518578659338",
+        "type": "Image",
+        "localPath": "jobs/job_050_576982518578659338.jpeg"
+      },
+      {
+        "filename": "job_051_576796893634207756.jpeg",
+        "id": "576796893634207756",
+        "type": "Image",
+        "localPath": "jobs/job_051_576796893634207756.jpeg"
+      },
+      {
+        "filename": "job_053_576796853454651401.jpeg",
+        "id": "576796853454651401",
+        "type": "Image",
+        "localPath": "jobs/job_053_576796853454651401.jpeg"
+      },
+      {
+        "filename": "job_052_576796854744997890.jpeg",
+        "id": "576796854744997890",
+        "type": "Image",
+        "localPath": "jobs/job_052_576796854744997890.jpeg"
+      },
+      {
+        "filename": "job_054_576796852382171146.jpeg",
+        "id": "576796852382171146",
+        "type": "Image",
+        "localPath": "jobs/job_054_576796852382171146.jpeg"
+      },
+      {
+        "filename": "job_055_576796851415621641.jpeg",
+        "id": "576796851415621641",
+        "type": "Image",
+        "localPath": "jobs/job_055_576796851415621641.jpeg"
+      },
+      {
+        "filename": "job_057_576796848976584716.jpeg",
+        "id": "576796848976584716",
+        "type": "Image",
+        "localPath": "jobs/job_057_576796848976584716.jpeg"
+      },
+      {
+        "filename": "job_058_573362257304346629.jpeg",
+        "id": "573362257304346629",
+        "type": "Image",
+        "localPath": "jobs/job_058_573362257304346629.jpeg"
+      },
+      {
+        "filename": "job_056_576796850200870914.jpeg",
+        "id": "576796850200870914",
+        "type": "Image",
+        "localPath": "jobs/job_056_576796850200870914.jpeg"
+      },
+      {
+        "filename": "job_059_573362256031924253.jpeg",
+        "id": "573362256031924253",
+        "type": "Image",
+        "localPath": "jobs/job_059_573362256031924253.jpeg"
+      },
+      {
+        "filename": "job_062_571543898354401288.jpeg",
+        "id": "571543898354401288",
+        "type": "Image",
+        "localPath": "jobs/job_062_571543898354401288.jpeg"
+      },
+      {
+        "filename": "job_061_571543899541929991.jpeg",
+        "id": "571543899541929991",
+        "type": "Image",
+        "localPath": "jobs/job_061_571543899541929991.jpeg"
+      },
+      {
+        "filename": "job_065_570758120502894592.jpeg",
+        "id": "570758120502894592",
+        "type": "Image",
+        "localPath": "jobs/job_065_570758120502894592.jpeg"
+      },
+      {
+        "filename": "job_063_571543897015320584.jpeg",
+        "id": "571543897015320584",
+        "type": "Image",
+        "localPath": "jobs/job_063_571543897015320584.jpeg"
+      },
+      {
+        "filename": "job_060_573362254836015133.jpeg",
+        "id": "573362254836015133",
+        "type": "Image",
+        "localPath": "jobs/job_060_573362254836015133.jpeg"
+      },
+      {
+        "filename": "job_067_569212846185144335.jpeg",
+        "id": "569212846185144335",
+        "type": "Image",
+        "localPath": "jobs/job_067_569212846185144335.jpeg"
+      },
+      {
+        "filename": "job_066_570160420916338693.jpeg",
+        "id": "570160420916338693",
+        "type": "Image",
+        "localPath": "jobs/job_066_570160420916338693.jpeg"
+      },
+      {
+        "filename": "job_064_571366696066605064.jpeg",
+        "id": "571366696066605064",
+        "type": "Image",
+        "localPath": "jobs/job_064_571366696066605064.jpeg"
+      },
+      {
+        "filename": "job_069_568846121978585094.jpeg",
+        "id": "568846121978585094",
+        "type": "Image",
+        "localPath": "jobs/job_069_568846121978585094.jpeg"
+      },
+      {
+        "filename": "job_071_568656657887395849.jpeg",
+        "id": "568656657887395849",
+        "type": "Image",
+        "localPath": "jobs/job_071_568656657887395849.jpeg"
+      },
+      {
+        "filename": "job_068_569106936361263114.jpeg",
+        "id": "569106936361263114",
+        "type": "Image",
+        "localPath": "jobs/job_068_569106936361263114.jpeg"
+      },
+      {
+        "filename": "job_073_567741743472508930.jpeg",
+        "id": "567741743472508930",
+        "type": "Image",
+        "localPath": "jobs/job_073_567741743472508930.jpeg"
+      },
+      {
+        "filename": "job_070_568787980252741647.jpeg",
+        "id": "568787980252741647",
+        "type": "Image",
+        "localPath": "jobs/job_070_568787980252741647.jpeg"
+      },
+      {
+        "filename": "job_072_568495458085773314.jpeg",
+        "id": "568495458085773314",
+        "type": "Image",
+        "localPath": "jobs/job_072_568495458085773314.jpeg"
+      },
+      {
+        "filename": "job_075_567648764896002051.jpeg",
+        "id": "567648764896002051",
+        "type": "Image",
+        "localPath": "jobs/job_075_567648764896002051.jpeg"
+      },
+      {
+        "filename": "job_076_567648763780538381.jpeg",
+        "id": "567648763780538381",
+        "type": "Image",
+        "localPath": "jobs/job_076_567648763780538381.jpeg"
+      },
+      {
+        "filename": "job_074_567723264507199495.jpeg",
+        "id": "567723264507199495",
+        "type": "Image",
+        "localPath": "jobs/job_074_567723264507199495.jpeg"
+      },
+      {
+        "filename": "job_078_567456815009767431.jpeg",
+        "id": "567456815009767431",
+        "type": "Image",
+        "localPath": "jobs/job_078_567456815009767431.jpeg"
+      },
+      {
+        "filename": "job_077_567456816947732483.jpeg",
+        "id": "567456816947732483",
+        "type": "Image",
+        "localPath": "jobs/job_077_567456816947732483.jpeg"
+      },
+      {
+        "filename": "job_079_566528548953292802.jpeg",
+        "id": "566528548953292802",
+        "type": "Image",
+        "localPath": "jobs/job_079_566528548953292802.jpeg"
+      },
+      {
+        "filename": "job_081_566008284114550797.jpeg",
+        "id": "566008284114550797",
+        "type": "Image",
+        "localPath": "jobs/job_081_566008284114550797.jpeg"
+      },
+      {
+        "filename": "job_080_566528547896279042.jpeg",
+        "id": "566528547896279042",
+        "type": "Image",
+        "localPath": "jobs/job_080_566528547896279042.jpeg"
+      },
+      {
+        "filename": "job_083_565930268931244040.jpeg",
+        "id": "565930268931244040",
+        "type": "Image",
+        "localPath": "jobs/job_083_565930268931244040.jpeg"
+      },
+      {
+        "filename": "job_082_566008271210815491.jpeg",
+        "id": "566008271210815491",
+        "type": "Image",
+        "localPath": "jobs/job_082_566008271210815491.jpeg"
+      },
+      {
+        "filename": "job_084_565901767630913546.jpeg",
+        "id": "565901767630913546",
+        "type": "Image",
+        "localPath": "jobs/job_084_565901767630913546.jpeg"
+      },
+      {
+        "filename": "job_086_565665554932580355.jpeg",
+        "id": "565665554932580355",
+        "type": "Image",
+        "localPath": "jobs/job_086_565665554932580355.jpeg"
+      },
+      {
+        "filename": "job_087_565218420461060110.jpeg",
+        "id": "565218420461060110",
+        "type": "Image",
+        "localPath": "jobs/job_087_565218420461060110.jpeg"
+      },
+      {
+        "filename": "job_090_565218373510537216.jpeg",
+        "id": "565218373510537216",
+        "type": "Image",
+        "localPath": "jobs/job_090_565218373510537216.jpeg"
+      },
+      {
+        "filename": "job_089_565218417933885445.jpeg",
+        "id": "565218417933885445",
+        "type": "Image",
+        "localPath": "jobs/job_089_565218417933885445.jpeg"
+      },
+      {
+        "filename": "job_091_565218362013409284.jpeg",
+        "id": "565218362013409284",
+        "type": "Image",
+        "localPath": "jobs/job_091_565218362013409284.jpeg"
+      },
+      {
+        "filename": "job_085_565822717751304200.jpeg",
+        "id": "565822717751304200",
+        "type": "Image",
+        "localPath": "jobs/job_085_565822717751304200.jpeg"
+      },
+      {
+        "filename": "job_088_565218419246579720.jpeg",
+        "id": "565218419246579720",
+        "type": "Image",
+        "localPath": "jobs/job_088_565218419246579720.jpeg"
+      },
+      {
+        "filename": "job_092_564286796157657097.jpeg",
+        "id": "564286796157657097",
+        "type": "Image",
+        "localPath": "jobs/job_092_564286796157657097.jpeg"
+      },
+      {
+        "filename": "job_095_564200034729893891.jpeg",
+        "id": "564200034729893891",
+        "type": "Image",
+        "localPath": "jobs/job_095_564200034729893891.jpeg"
+      },
+      {
+        "filename": "job_093_564200036919934982.jpeg",
+        "id": "564200036919934982",
+        "type": "Image",
+        "localPath": "jobs/job_093_564200036919934982.jpeg"
+      },
+      {
+        "filename": "job_094_564200035919061002.jpeg",
+        "id": "564200035919061002",
+        "type": "Image",
+        "localPath": "jobs/job_094_564200035919061002.jpeg"
+      },
+      {
+        "filename": "job_097_564113734570115081.jpeg",
+        "id": "564113734570115081",
+        "type": "Image",
+        "localPath": "jobs/job_097_564113734570115081.jpeg"
+      },
+      {
+        "filename": "job_096_564113735873150986.jpeg",
+        "id": "564113735873150986",
+        "type": "Image",
+        "localPath": "jobs/job_096_564113735873150986.jpeg"
+      },
+      {
+        "filename": "job_098_564005149343006730.jpeg",
+        "id": "564005149343006730",
+        "type": "Image",
+        "localPath": "jobs/job_098_564005149343006730.jpeg"
+      },
+      {
+        "filename": "job_099_564005148038651918.jpeg",
+        "id": "564005148038651918",
+        "type": "Image",
+        "localPath": "jobs/job_099_564005148038651918.jpeg"
+      },
+      {
+        "filename": "job_100_564005146756997129.jpeg",
+        "id": "564005146756997129",
+        "type": "Image",
+        "localPath": "jobs/job_100_564005146756997129.jpeg"
+      },
+      {
+        "filename": "job_102_564005144174854147.jpeg",
+        "id": "564005144174854147",
+        "type": "Image",
+        "localPath": "jobs/job_102_564005144174854147.jpeg"
+      },
+      {
+        "filename": "job_101_564005145248038913.jpeg",
+        "id": "564005145248038913",
+        "type": "Image",
+        "localPath": "jobs/job_101_564005145248038913.jpeg"
+      },
+      {
+        "filename": "job_104_563944535981481985.jpeg",
+        "id": "563944535981481985",
+        "type": "Image",
+        "localPath": "jobs/job_104_563944535981481985.jpeg"
+      },
+      {
+        "filename": "job_103_563944537216786445.jpeg",
+        "id": "563944537216786445",
+        "type": "Image",
+        "localPath": "jobs/job_103_563944537216786445.jpeg"
+      },
+      {
+        "filename": "job_105_563944534976733187.jpeg",
+        "id": "563944534976733187",
+        "type": "Image",
+        "localPath": "jobs/job_105_563944534976733187.jpeg"
+      },
+      {
+        "filename": "job_106_563778025381552131.jpeg",
+        "id": "563778025381552131",
+        "type": "Image",
+        "localPath": "jobs/job_106_563778025381552131.jpeg"
+      },
+      {
+        "filename": "job_107_563777944319590413.jpeg",
+        "id": "563777944319590413",
+        "type": "Image",
+        "localPath": "jobs/job_107_563777944319590413.jpeg"
+      },
+      {
+        "filename": "job_109_563777902058766345.jpeg",
+        "id": "563777902058766345",
+        "type": "Image",
+        "localPath": "jobs/job_109_563777902058766345.jpeg"
+      },
+      {
+        "filename": "job_108_563777903129542661.jpeg",
+        "id": "563777903129542661",
+        "type": "Image",
+        "localPath": "jobs/job_108_563777903129542661.jpeg"
+      },
+      {
+        "filename": "job_111_563777899391320069.jpeg",
+        "id": "563777899391320069",
+        "type": "Image",
+        "localPath": "jobs/job_111_563777899391320069.jpeg"
+      },
+      {
+        "filename": "job_112_563777837762068483.jpeg",
+        "id": "563777837762068483",
+        "type": "Image",
+        "localPath": "jobs/job_112_563777837762068483.jpeg"
+      },
+      {
+        "filename": "job_114_563777785179914249.jpeg",
+        "id": "563777785179914249",
+        "type": "Image",
+        "localPath": "jobs/job_114_563777785179914249.jpeg"
+      },
+      {
+        "filename": "job_113_563777786293723141.jpeg",
+        "id": "563777786293723141",
+        "type": "Image",
+        "localPath": "jobs/job_113_563777786293723141.jpeg"
+      },
+      {
+        "filename": "job_110_563777900570419205.jpeg",
+        "id": "563777900570419205",
+        "type": "Image",
+        "localPath": "jobs/job_110_563777900570419205.jpeg"
+      },
+      {
+        "filename": "job_116_563777782625583114.jpeg",
+        "id": "563777782625583114",
+        "type": "Image",
+        "localPath": "jobs/job_116_563777782625583114.jpeg"
+      },
+      {
+        "filename": "job_117_563777781438496778.jpeg",
+        "id": "563777781438496778",
+        "type": "Image",
+        "localPath": "jobs/job_117_563777781438496778.jpeg"
+      },
+      {
+        "filename": "job_115_563777783915266053.jpeg",
+        "id": "563777783915266053",
+        "type": "Image",
+        "localPath": "jobs/job_115_563777783915266053.jpeg"
+      },
+      {
+        "filename": "job_118_563777779646234633.jpeg",
+        "id": "563777779646234633",
+        "type": "Image",
+        "localPath": "jobs/job_118_563777779646234633.jpeg"
+      },
+      {
+        "filename": "job_119_563513157557010455.jpeg",
+        "id": "563513157557010455",
+        "type": "Image",
+        "localPath": "jobs/job_119_563513157557010455.jpeg"
+      },
+      {
+        "filename": "job_121_563513155262865414.jpeg",
+        "id": "563513155262865414",
+        "type": "Image",
+        "localPath": "jobs/job_121_563513155262865414.jpeg"
+      },
+      {
+        "filename": "job_120_563513156417249297.jpeg",
+        "id": "563513156417249297",
+        "type": "Image",
+        "localPath": "jobs/job_120_563513156417249297.jpeg"
+      },
+      {
+        "filename": "job_123_563299694284103681.jpeg",
+        "id": "563299694284103681",
+        "type": "Image",
+        "localPath": "jobs/job_123_563299694284103681.jpeg"
+      },
+      {
+        "filename": "job_124_563299692950315025.jpeg",
+        "id": "563299692950315025",
+        "type": "Image",
+        "localPath": "jobs/job_124_563299692950315025.jpeg"
+      },
+      {
+        "filename": "job_125_563299691854217239.jpeg",
+        "id": "563299691854217239",
+        "type": "Image",
+        "localPath": "jobs/job_125_563299691854217239.jpeg"
+      },
+      {
+        "filename": "job_122_563513153894613015.jpeg",
+        "id": "563513153894613015",
+        "type": "Image",
+        "localPath": "jobs/job_122_563513153894613015.jpeg"
+      }
+    ]
+  },
+  "specialties": [
+    {
+      "category": "Project type",
+      "services": [
+        "Repairs",
+        "Installation",
+        "Assembly",
+        "Painting",
+        "Other handyman services"
+      ],
+      "notOffered": [
+        "Doesn’t offer: Maintenance, Cleaning"
+      ]
+    },
+    {
+      "category": "Estimated hours",
+      "services": [
+        "Less than 2 hours of work",
+        "2-5 hours of work",
+        "A full day of work"
+      ],
+      "notOffered": []
+    },
+    {
+      "category": "Work focus",
+      "services": [
+        "Doors",
+        "Windows",
+        "Interior walls",
+        "Exterior walls",
+        "Cabinets",
+        "Shelving",
+        "Molding or baseboards",
+        "Flooring",
+        "Tiling",
+        "Appliances",
+        "Plumbing",
+        "Electrical",
+        "Lighting",
+        "Hanging pictures or mirrors",
+        "Furniture repair",
+        "Other"
+      ],
+      "notOffered": [
+        "Doesn’t offer: Gutters"
+      ]
+    },
+    {
+      "category": "Property type",
+      "services": [
+        "Residential",
+        "Commercial"
+      ],
+      "notOffered": []
+    }
+  ],
+  "subsections": [
+    {
+      "title": "Info",
+      "items": []
+    },
+    {
+      "title": "Info",
+      "items": []
+    },
+    {
+      "title": "Info",
+      "items": []
+    },
+    {
+      "title": "Info",
+      "items": []
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "author": "Tara C.",
+      "rating": 5,
+      "date": "2 weeks ago",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount above fireplace • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • No, I’ll purchase the mount or stand • Tilt (angled up or down) • None",
+      "text": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 2,
+      "author": "Sushruta N.",
+      "rating": 5,
+      "date": "Aug 1, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • Sound bar",
+      "text": "Outstanding Job. Set up up my whole home theater including surround speakers and made changes till it was absolutely perfect!",
+      "images": [
+        "586492808112529414"
+      ],
+      "response": null
+    },
+    {
+      "id": 3,
+      "author": "Mark F.",
+      "rating": 5,
+      "date": "Apr 1, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: 2 - 5 hours (A few different projects) • Repairs • Installation • Basement • Garage • Doors • Plumbing • Home",
+      "text": "Hired to fix a plumbing leak and replace an exterior door. He was fast to reply, quoted a fair and consistent price for the labor with clear pricing for labor and materials, and was able to schedule in a timely manner. All his interactions were pleasant and professional and he remained true to his initial quote and was able to adapt and accommodate throughout the process of the job. I will be using him again for any future work that I need completed.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 4,
+      "author": "Patrick E.",
+      "rating": 5,
+      "date": "Jun 20, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Sink or Faucet Installation or Replacement",
+      "jobDetails": "Details: No, I do not need to replace a sink • Pedestal sink • 0 sinks • 1 faucet • House",
+      "text": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house.",
+      "images": [
+        "582841862834618372"
+      ],
+      "response": null
+    },
+    {
+      "id": 5,
+      "author": "Dennis A.",
+      "rating": 5,
+      "date": "May 28, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: A full day (Complex or long-term projects) • Installation • Deck or porch • Home",
+      "text": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 6,
+      "author": "Paul W.",
+      "rating": 5,
+      "date": "Dec 26, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: 2 - 5 hours (A few different projects) • Installation • Living room • Bedroom • Electrical • Home",
+      "text": "Need to be able to mark ALL good things!  They came same day as my request, worked hard, interacted with my family and did quality work hanging two new ceiling fans.  Cannot thank them enough! I will be using them again!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 7,
+      "author": "Angela B.",
+      "rating": 5,
+      "date": "Jun 13, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Installation • Doors • Home",
+      "text": "Brian installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 8,
+      "author": "Theresa B.",
+      "rating": 5,
+      "date": "Aug 11, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Flat against wall (fixed) • Sound bar",
+      "text": "Brian was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 9,
+      "author": "Terry T.",
+      "rating": 5,
+      "date": "Aug 11, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Water Heater Repair or Maintenance",
+      "jobDetails": "Details: Installation or replacement • Leaks • No hot water • Gas tank • Closet • House • Owner",
+      "text": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
+      "images": [
+        "587304499874766855"
+      ],
+      "response": null
+    },
+    {
+      "id": 10,
+      "author": "Ray G.",
+      "rating": 5,
+      "date": "Nov 17, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount above fireplace • Wood • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • None",
+      "text": "They did an excellent job install installing my TV mount and TV.  They also moved a piece of furniture for me while they were here. I would definitely use them again in the future.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 11,
+      "author": "Emma M.",
+      "rating": 5,
+      "date": "Jan 17, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: A full day (Complex or long-term projects) • Repairs • Installation • Assembly • Bathroom • Home",
+      "text": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bathroom working again.",
+      "images": [
+        "569553639910694926",
+        "569553640531558414"
+      ],
+      "response": null
+    },
+    {
+      "id": 12,
+      "author": "Eric R.",
+      "rating": 5,
+      "date": "Jun 23, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Really happy with the work Brian did for us. He was easy to communicate with, showed up on time, and knocked the job out quickly. Everything looks great and works perfectly. Thanks again!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 13,
+      "author": "Black V.",
+      "rating": 5,
+      "date": "Dec 26, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • Yes, I already have a mount or stand • As recommended by the professional • None",
+      "text": "Brian did an excellent job installing my security  camera. communication was great, h arrived on time, and everything worked flawlessly",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 14,
+      "author": "Donald S.",
+      "rating": 5,
+      "date": "Feb 4, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • No, I’ll purchase the mount or stand • Articulating (tilts up and down, moves side to side) • Sound bar",
+      "text": "I had a good experience, very punctual and responsive. Cleaned after the work was completed and respected my home.The work was done to my specifications.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 15,
+      "author": "Ashley W.",
+      "rating": 5,
+      "date": "Jun 20, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Fan Installation",
+      "jobDetails": "Details: Yes, the location has an existing fan • Ceiling • 8 - 10 feet (standard ceiling)",
+      "text": "Quick response and was able to come out within an hour or so to install my ceiling fan!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 16,
+      "author": "Markiesha M.",
+      "rating": 5,
+      "date": "Dec 13, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Water Heater Installation or Replacement",
+      "jobDetails": "Details: Yes, the location has an existing heater • Gas tank (standard) • I already purchased the water heater • House",
+      "text": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Brian!",
+      "images": [
+        "566524396090687490"
+      ],
+      "response": null
+    },
+    {
+      "id": 17,
+      "author": "Carol S.",
+      "rating": 5,
+      "date": "Jan 10, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Repairs • Home",
+      "text": "Brian did a quality job securing my mailbox door. He is very efficient, got the job done quickly, even while raining outside.  I highly reccomend him.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 18,
+      "author": "Adriana M.",
+      "rating": 5,
+      "date": "Dec 27, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • Yes, I already have a mount or stand • As recommended by the professional • None",
+      "text": "I had a problem and he was able to fix it on Christmas Eve. That’s amazing! Will use again for my  handyman  needs.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 19,
+      "author": "Paul N.",
+      "rating": 5,
+      "date": "Mar 10, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • Cable or satellite box • DVD or Blu-ray player • Surround sound system",
+      "text": "Had a large TV mounted.  Great work, quick response and reasonable price.  Would definitely use again.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 20,
+      "author": "Marco C.",
+      "rating": 5,
+      "date": "Jul 11, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Brian replaced three toilets for us, and once he got into the job, he found a few issues with the subfloor that needed to be fixed. He let us know what was going on, took care of everything, and never made it feel like a headache. The price was fair, the work turned out great, and everything was cleaned up before he left. Ill definitely be calling him again",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 21,
+      "author": "Margaret S.",
+      "rating": 5,
+      "date": "Jun 13, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Toilet Installation or Replacement",
+      "jobDetails": "Details: Install a new toilet (no existing toilet) • 1 toilet",
+      "text": "He installed a toilet for me and it works great. It was an emergency and he came right away",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 22,
+      "author": "Ekom E.",
+      "rating": 5,
+      "date": "Jul 14, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Water Treatment System Installation or Replacement",
+      "jobDetails": "Details: Water softener (most common) • I already purchased the water treatment system • House",
+      "text": "Had a water filter installed and am very happy with the results!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 23,
+      "author": "Tracy W.",
+      "rating": 5,
+      "date": "3 weeks ago",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: 2 - 5 hours (A few different projects) • Repairs • Bathroom • Electrical • Home",
+      "text": "I had some odds and ends things around the house I needed done.   Brian was professional and did a great job on all my projects!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 24,
+      "author": "Jasmine W.",
+      "rating": 5,
+      "date": "Mar 18, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Furniture Assembly",
+      "jobDetails": "Details: 2 items • Dresser • Bed frame • Yes, I have assembly instructions or make and model information",
+      "text": "I was struggling to put up my bed reached out Brain and he had me booked the next day ! Came here did an awesome job ! Will definitely be back for any other projects I may have ! Thank you !",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 25,
+      "author": "Rebecca M.",
+      "rating": 5,
+      "date": "Aug 19, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: 2 - 5 hours (A few different projects) • Living room • Home",
+      "text": "\"I had an excellent experience!  Handyman  LLC. Brian and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 26,
+      "author": "Hannah G.",
+      "rating": 5,
+      "date": "Jul 10, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Our water heater finally quit, and I was not looking forward to dealing with it. I called Mr Handyworks, and Brian and his helper came out to replace it. They got the old one out, installed the new one, and had everything working again sooner than I expected, The price was a little higher than a couple of the other quotes I got, but after seeing the quality of the work, I completely understand why. They took their time, answered the questions I had, and never made me feel like they were just trying to rush through the job. The whole experience was a lot less stressful than I expected, and Im really glad I went with them. Ill definitely be calling Brian again the next time I need something done around the house",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 27,
+      "author": "Kevin M.",
+      "rating": 5,
+      "date": "Aug 5, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Repairs • Kitchen • Appliances • Home",
+      "text": "I had a great experience working with  Mr  Handyman . He was very flexible with my requests for my short term rental and over-delivered. I’ll keep him at the top of my list for future projects.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 28,
+      "author": "Joe M.",
+      "rating": 5,
+      "date": "2 days ago",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • No, I’d like help in selecting a mount or stand • Flat against wall (fixed) • None",
+      "text": "Great work quality, reasonable price, and professionalism in mounting my TV! I would highly recommend Mr Handyworks LLC.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 29,
+      "author": "Kiana B.",
+      "rating": 5,
+      "date": "Apr 13, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • None",
+      "text": "Amazing work. They arrived on time and quickly completed the task I booked with them. I will definitely book again if I need help in the future.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 30,
+      "author": "Jyoti B.",
+      "rating": 3,
+      "date": "2 weeks ago",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Brian replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again.",
+      "images": [],
+      "response": "Hi Jyoti, I’m sorry you feel this way, but I would like to clarify what happened. The original request was to inspect the dryer. You later requested additional work, including cleaning the dryer vent and checking and replacing the shower head. I explained in our messages that these additional services would be priced separately, and you agreed.\n\nThe shower head price difference was due to a different color being purchased at a lower price. Once I reviewed the receipt, I sent it to you and corrected the invoice accordingly. This was an honest adjustment, not an attempt to misrepresent the cost.\n\nAll work was completed around 6:00 p.m., including the additional services, and payment was not completed until close to midnight after several follow-ups. I respect your decision not to use my services again, but I strongly disagree with the suggestion that I was dishonest."
+    },
+    {
+      "id": 31,
+      "author": "Alejandro G.",
+      "rating": 5,
+      "date": "Feb 16, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • None",
+      "text": "They work nicely and professional. They explain everything throughly and options to sort anything out. Good communication and friendly.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 32,
+      "author": "Ross S.",
+      "rating": 5,
+      "date": "Dec 16, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Fan Installation",
+      "jobDetails": "Details: Yes, the location has an existing fan • Bath exhaust • 10 - 14 feet (high ceiling)",
+      "text": "He did a great job replacing our bathroom exhaust fan! Highly recommend!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 33,
+      "author": "Katie C.",
+      "rating": 5,
+      "date": "Feb 28, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Furniture Assembly",
+      "jobDetails": "Details: 6 items • Bed frame • Dresser • Couch • No, I don’t have assembly instructions or make and model information",
+      "text": "Brian put together several pieces of furniture for us and did an excellent job!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 34,
+      "author": "Ian C.",
+      "rating": 5,
+      "date": "Apr 23, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Furniture Assembly",
+      "jobDetails": "Details: 2 items • Desk or table • Yes, I have assembly instructions or make and model information",
+      "text": "He assembled two difficult nightstands i purchased from amazon and was very communicative throughout the process.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 35,
+      "author": "Kristen D.",
+      "rating": 5,
+      "date": "Jun 14, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Very happy with the service. Brian explained everything clearly, completed the job quickly, and cleaned up afterward. Highly recommend",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 36,
+      "author": "Ray G.",
+      "rating": 5,
+      "date": "Jul 16, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Installation • Deck or porch • Doors • Home",
+      "text": "I  have used them on three separate occasions and am always pleased with the results. Highly recommended!!!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 37,
+      "author": "Kyle C.",
+      "rating": 5,
+      "date": "Jul 8, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Had Brian install vinyl flooring in my house and it came out better than I expected. Everything looks clean and professionally done, and the room feels completely different now. He was straightforward, showed up on time, and got the job done without any headaches. Its hard to find someone who actually cares about the quality of their work these days. Id definitely hire him again",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 38,
+      "author": "Michael Y.",
+      "rating": 5,
+      "date": "Jul 7, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Brian and his helper painted three rooms in our house, and we couldnt be happier with how everything turned out. They repaired a few damaged spots in the drywall before painting, and you would never know there was any damage. The paint looks great, the lines are clean, and the whole house feels brighter. Brian was easy to work with, the price was fair, and he kept us updated throughout the job. You can tell he has plenty of experience because everything turned out exactly the way we were hoping. Well definitely be calling him again for our next project",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 39,
+      "author": "Andrew M.",
+      "rating": 5,
+      "date": "Jul 6, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Brian and his crew did a great job replacing our fence. They were on time, worked hard, and kept me updated throughout the project. The finished fence looks solid and exactly how I wanted it. Its nice to find someone who takes pride in their work. Id definitely call Mr Handyworks LLC again for future projects",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 40,
+      "author": "Rachel T.",
+      "rating": 5,
+      "date": "Jun 30, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "I had a great experience with Brian. He was professional, arrived on time, and did exactly what he said he would. The quality of the work was excellent, and he made sure everything was done right before he left. Fair pricing, great communication, and very reliable. Ill definitely be calling him again for future projects. Highly recommend!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 41,
+      "author": "Joan F.",
+      "rating": 5,
+      "date": "Jun 6, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Fence and Gate Repairs",
+      "jobDetails": "Details: Fence sections need replacement • Wood • Residential",
+      "text": "The work that Brian did and his overall responsiveness was excellent and I will definitely use again.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 42,
+      "author": "Dusti C.",
+      "rating": 5,
+      "date": "May 3, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: A full day (Complex or long-term projects) • Repairs • Painting • Kitchen • Furniture • Home",
+      "text": "Brian is phenomenal! I will use his services every single time that I need any work done on my home.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 43,
+      "author": "Kim T.",
+      "rating": 5,
+      "date": "May 3, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Fence and Gate Repairs",
+      "jobDetails": "Details: Fence is leaning or sagging • Wood • Residential",
+      "text": "Did an excellent job. I will hire for additional projects.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 44,
+      "author": "Jevaughn C.",
+      "rating": 5,
+      "date": "Mar 15, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • None",
+      "text": "Elite work! Awesome person! Great communicator and works very quickly! Super pleased with his work!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 45,
+      "author": "Amanda R.",
+      "rating": 5,
+      "date": "Mar 4, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Repairs • Bathroom • Plumbing • Home",
+      "text": "My job was completed quickly, professionally, and for reasonable price.  I would absolutely hire Brian and again!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 46,
+      "author": "Patrick e.",
+      "rating": 5,
+      "date": "Nov 24, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Repairs • Bathroom • Plumbing • Home",
+      "text": "Shut up same day kind of repair done and were very polite to the tenants",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 47,
+      "author": "Kyngstonn V.",
+      "rating": 5,
+      "date": "Jun 15, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Bryan was great! In n out and easy to communicate with. No problems.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 48,
+      "author": "Sheila S.",
+      "rating": 5,
+      "date": "Jun 10, 2026",
+      "verified": "From Google",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "He did a great job. He is very knowledgeable on alot of different things",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 49,
+      "author": "Austin V.",
+      "rating": 5,
+      "date": "4 weeks ago",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "",
+      "text": "Great to get some needed work done quickly!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 50,
+      "author": "Handyman A.",
+      "rating": 5,
+      "date": "6 days ago",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Installation • Bedroom • Wall hangings • Home",
+      "text": "Brian, was on time and did a quality work.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 51,
+      "author": "Andrew t.",
+      "rating": 5,
+      "date": "Aug 22, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Picture Hanging and Art Installation",
+      "jobDetails": "Details: 1 - 5 • No, none of my items are more than 6 ft long or weigh more than 20 pounds • Ladder required • Wood • Residential",
+      "text": "They were awesome",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 52,
+      "author": "Julie G.",
+      "rating": 5,
+      "date": "Jun 23, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Lighting Installation",
+      "jobDetails": "Details: Replacement of existing lighting • 1 light • Under 8 feet (low ceiling) • Indoors • Existing property • House",
+      "text": "Would recommend",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 53,
+      "author": "Kaiyuan T.",
+      "rating": 5,
+      "date": "May 16, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: 2 - 5 hours (A few different projects) • Installation • Kitchen • Home",
+      "text": "Very good pro, recommend to everyone read this",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 54,
+      "author": "Nyla S.",
+      "rating": 5,
+      "date": "Mar 14, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Swivel (moves side to side) • None",
+      "text": "Great experience, great work",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 55,
+      "author": "Toby O.",
+      "rating": 5,
+      "date": "Feb 21, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Drywall Repair and Texturing",
+      "jobDetails": "Details: Fill in cracks • Patch damaged drywall • 1 room • Wall(s) • Ceiling(s) • Residential",
+      "text": "Great experience, will hire again.",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 56,
+      "author": "Cara R.",
+      "rating": 5,
+      "date": "Feb 9, 2026",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Not sure, need professional's help to determine • TV smaller or equal to 60 inches • Yes, there’s an electrical outlet nearby • Yes, I need to conceal cables and wires • Yes, I already have a mount or stand • Flat against wall (fixed) • None",
+      "text": "Excellent work!",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 57,
+      "author": "Annie B.",
+      "rating": 5,
+      "date": "Nov 24, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Electrical and Wiring Repair",
+      "jobDetails": "Details: Electrical not functioning normally • Circuit breaker panel or fuse box • 8 - 10 feet (standard ceiling) • House",
+      "text": "great job will hire again",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 58,
+      "author": "Richard P.",
+      "rating": 5,
+      "date": "Nov 21, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "TV Mounting",
+      "jobDetails": "Details: Wall mount • Drywall • TV larger than 60 inches • Yes, there’s an electrical outlet nearby • No, I don’t need to conceal cables and wires • Yes, I already have a mount or stand • Articulating (tilts up and down, moves side to side) • None",
+      "text": "Great work thanks",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 59,
+      "author": "Syd A.",
+      "rating": 4,
+      "date": "Nov 25, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Handyman",
+      "jobDetails": "Details: Less than 2 hours (Simple tasks) • Installation • Bathroom • Basement • Lighting • Home",
+      "text": "Excellent",
+      "images": [],
+      "response": null
+    },
+    {
+      "id": 60,
+      "author": "Danea M.",
+      "rating": 5,
+      "date": "Nov 8, 2025",
+      "verified": "Hired on Thumbtack",
+      "jobLabel": "Furniture Assembly",
+      "jobDetails": "Details: 6 items • Desk or table • Chair • Dresser • Yes, I have assembly instructions or make and model information",
+      "text": "Very polite, pleasant and  professional.",
+      "images": [],
+      "response": null
+    }
+  ]
+}

@@ -15,6 +15,8 @@ import {
   CreditCard, 
   QrCode, 
   Calendar as CalendarIcon, 
+  ChevronLeft,
+  ChevronRight,
   Phone, 
   Sparkles, 
   Download, 
@@ -58,6 +60,7 @@ export const BookingWizardModal: React.FC = () => {
 
   // Step 3 Form fields
   const [scheduledDate, setScheduledDate] = useState<string>('2026-09-22');
+  const [calendarMonth, setCalendarMonth] = useState(() => new Date(2026, 8, 1));
   const [scheduledSlot, setScheduledSlot] = useState<string>('09:00 AM - 11:30 AM');
   const [clientName, setClientName] = useState<string>('');
   const [clientPhone, setClientPhone] = useState<string>('');
@@ -74,6 +77,8 @@ export const BookingWizardModal: React.FC = () => {
       }
       if (bookingWizardInitialData.date) {
         setScheduledDate(bookingWizardInitialData.date);
+        const [year, month] = bookingWizardInitialData.date.split('-').map(Number);
+        setCalendarMonth(new Date(year, month - 1, 1));
       }
       if (bookingWizardInitialData.timeSlot) {
         setScheduledSlot(bookingWizardInitialData.timeSlot);
@@ -94,6 +99,36 @@ export const BookingWizardModal: React.FC = () => {
     ? (language === 'es' ? currentService.titleEs : currentService.titleEn)
     : selectedServiceId;
   const normalizedServiceSearch = serviceSearch.trim().toLowerCase();
+
+  const toDateKey = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const todayKey = toDateKey(new Date());
+  const getAvailabilityForDate = (dateKey: string) => availability.find(day => day.date === dateKey);
+  const isDateBlocked = (dateKey: string) => getAvailabilityForDate(dateKey)?.isBlocked === true;
+  const calendarMonthLabel = calendarMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const calendarDays = Array.from({ length: 42 }, (_, index) => {
+    const firstDay = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+    const date = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1 - firstDay.getDay() + index);
+    const dateKey = toDateKey(date);
+    const info = getAvailabilityForDate(dateKey);
+    return {
+      date,
+      dateKey,
+      isCurrentMonth: date.getMonth() === calendarMonth.getMonth(),
+      isPast: dateKey < todayKey,
+      isBlocked: info?.isBlocked === true,
+      isFull: Boolean(info && !info.isBlocked && info.slots.length === 0),
+    };
+  });
+
+  const changeCalendarMonth = (offset: number) => {
+    setCalendarMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + offset, 1));
+  };
 
   // Calculate estimated price based on duration tier
   const calculateEstimatedPrice = (): number => {
@@ -148,7 +183,7 @@ export const BookingWizardModal: React.FC = () => {
       status: 'PENDING',
       paymentMethod: mappedPayment,
       paymentStatus: isDeposit ? 'DEPOSIT_PAID' : 'UNPAID',
-      depositAmount: isDeposit ? 50 : undefined
+      depositAmount: isDeposit ? 25 : undefined
     });
 
     setCreatedBooking(newBooking);
@@ -396,13 +431,58 @@ export const BookingWizardModal: React.FC = () => {
                 <label className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   5. {language === 'es' ? 'Fecha preferida' : 'Preferred date'}
                 </label>
-                <input
-                  type="date"
-                  value={scheduledDate}
-                  min={new Date().toISOString().split('T')[0]}
-                  onChange={(e) => setScheduledDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
-                />
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-3 sm:p-4">
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <button type="button" onClick={() => changeCalendarMonth(-1)} aria-label="Previous month" className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--primary)]">
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <div className="text-sm font-black text-[var(--text)]">{calendarMonthLabel}</div>
+                    <button type="button" onClick={() => changeCalendarMonth(1)} aria-label="Next month" className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--primary)]">
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  <div className="mb-1 grid grid-cols-7 text-center text-[10px] font-black uppercase text-[var(--text-muted)]">
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => <span key={day} className="py-1">{day.slice(0, 2)}</span>)}
+                  </div>
+
+                  <div className="grid grid-cols-7 gap-1">
+                    {calendarDays.map(day => {
+                      const isSelected = scheduledDate === day.dateKey;
+                      const isDisabled = day.isPast || day.isBlocked;
+                      return (
+                        <button
+                          key={day.dateKey}
+                          type="button"
+                          disabled={isDisabled}
+                          onClick={() => setScheduledDate(day.dateKey)}
+                          title={day.isBlocked ? 'Booked - unavailable' : day.isFull ? 'No open time slots' : 'Available'}
+                          className={`relative min-h-9 rounded-lg text-xs font-bold transition-colors sm:min-h-10 ${
+                            isSelected
+                              ? 'bg-[#0B3C5D] text-white ring-2 ring-blue-400'
+                              : day.isBlocked
+                              ? 'cursor-not-allowed bg-rose-500/15 text-rose-500 line-through'
+                              : day.isFull
+                              ? 'bg-amber-500/15 text-amber-600'
+                              : day.isCurrentMonth
+                              ? 'bg-[var(--surface)] text-[var(--text)] hover:border hover:border-[var(--primary)]'
+                              : 'text-[var(--text-muted)] opacity-40'
+                          }`}
+                        >
+                          {day.date.getDate()}
+                          {day.isBlocked && <span className="absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-rose-500" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap gap-3 text-[10px] font-bold text-[var(--text-muted)]">
+                    <span className="inline-flex items-center gap-1"><i className="h-2 w-2 rounded-full bg-[var(--primary)]" /> Selected</span>
+                    <span className="inline-flex items-center gap-1"><i className="h-2 w-2 rounded-full bg-rose-500" /> Booked</span>
+                    <span className="inline-flex items-center gap-1"><i className="h-2 w-2 rounded-full bg-amber-500" /> Full</span>
+                  </div>
+                  <div className="mt-2 text-xs font-black text-[var(--primary)]">Selected date: {scheduledDate}</div>
+                </div>
               </div>
 
               {/* Instant rate estimate box */}
@@ -585,11 +665,11 @@ export const BookingWizardModal: React.FC = () => {
                           {t.booking.payWithQR}
                         </div>
                         <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                          {language === 'es' ? 'Abono de $50 mediante Zelle, PayPal, Venmo o CashApp' : '$50 deposit via Zelle, PayPal, Venmo, or CashApp'}
+                          {language === 'es' ? 'Abono de $25 mediante Zelle, PayPal, Venmo o CashApp' : '$25 deposit via Zelle, PayPal, Venmo, or CashApp'}
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs font-extrabold text-amber-600">$50 Deposit</span>
+                    <span className="text-xs font-extrabold text-amber-600">$25 Deposit</span>
                   </div>
 
                   {/* Option 2: Stripe Tokenization Simulation */}
@@ -703,7 +783,7 @@ export const BookingWizardModal: React.FC = () => {
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-sm transition-colors cursor-pointer"
                   >
                     <QrCode className="w-4 h-4" />
-                    <span>{language === 'es' ? 'Ver Código QR para Abono ($50)' : 'Open QR Code for Deposit ($50)'}</span>
+                    <span>{language === 'es' ? 'Ver Código QR para Abono ($25)' : 'Open QR Code for Deposit ($25)'}</span>
                   </button>
                 )}
 
