@@ -62,12 +62,10 @@ export const Header: React.FC = () => {
   const mobileNavItems = [
     { key: 'home', label: language === 'es' ? 'Inicio' : 'Home', icon: House },
     { key: 'services', label: language === 'es' ? 'Servicios' : 'Services', icon: Wrench },
-    { key: 'estimator', label: language === 'es' ? 'Cotizador Online' : 'Estimator', icon: Calculator },
     { key: 'schedule', label: language === 'es' ? 'Disponibilidad' : 'Availability', icon: Calendar },
     { key: 'portfolio', label: language === 'es' ? 'Proyectos' : 'Projects', icon: ImageIcon },
     { key: 'reviews', label: language === 'es' ? 'Reseñas' : 'Reviews', icon: Star },
     { key: 'credentials', label: language === 'es' ? 'Credenciales' : 'Credentials', icon: Briefcase },
-    { key: 'admin', label: 'Admin', icon: UserRound },
   ] as const;
 
   const mobileMenuContent = isMobileMenuOpen && typeof document !== 'undefined' ? (
@@ -172,7 +170,7 @@ export const Header: React.FC = () => {
             className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-bold text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
           >
             <Phone className="w-4 h-4 text-emerald-500" />
-            <span>{businessInfo.phone}</span>
+            <span>{language === 'es' ? 'Llamar a Servicio' : 'Call Service Desk'}</span>
           </a>
 
           <div className="flex items-center justify-center gap-1.5 text-[10px] font-semibold text-slate-500 dark:text-slate-400 pt-1">
@@ -196,21 +194,23 @@ export const Header: React.FC = () => {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <a href={`tel:${businessInfo.phoneRaw}`} className="inline-flex items-center gap-1.5 text-white hover:text-blue-300 font-bold transition-colors">
-                <Phone className="w-3 h-3 text-blue-400" />
-                <span>{businessInfo.phone}</span>
-              </a>
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  navigateTo('admin');
-                }}
-                className="inline-flex items-center gap-1 text-[11px] text-slate-300 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-2 py-0.5 rounded cursor-pointer"
-                title="Portal Privado"
+            <div className="flex items-center gap-2">
+              <a 
+                href={`tel:${businessInfo.phoneRaw}`} 
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-600/30 hover:bg-emerald-600/50 text-white font-bold text-[11px] transition-colors shadow-2xs border border-emerald-500/30"
+                title={language === 'es' ? 'Llamar al servicio' : 'Call service desk'}
               >
-                <Lock className="w-3 h-3 text-amber-400" />
-                <span className="font-semibold">{adminUser.isAuthenticated ? 'Admin' : 'Admin'}</span>
+                <Phone className="w-3 h-3 text-emerald-400" />
+                <span>{language === 'es' ? 'Llamar' : 'Call Now'}</span>
+              </a>
+
+              <button 
+                onClick={() => navigateTo('admin')} 
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/10 hover:bg-white/25 text-white font-bold text-[11px] transition-colors shadow-2xs border border-white/20 cursor-pointer"
+                title="Admin Portal"
+              >
+                <Lock className="w-3 h-3 text-amber-300" />
+                <span>Admin</span>
               </button>
             </div>
           </div>
@@ -254,16 +254,8 @@ export const Header: React.FC = () => {
             </div>
           </div>
 
-          {/* Right: Phone, Theme Toggle & Quote CTA */}
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <a
-              href={`tel:${businessInfo.phoneRaw}`}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-[#0B3C5D] dark:hover:text-blue-400 transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-emerald-500" />
-              <span>{businessInfo.phone}</span>
-            </a>
-
+          {/* Right: Theme Toggle & Quote CTA */}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             <button
               id="theme-toggle-btn"
               onClick={toggleTheme}

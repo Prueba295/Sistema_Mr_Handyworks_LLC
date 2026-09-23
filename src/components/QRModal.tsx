@@ -139,8 +139,21 @@ export const QRModal: React.FC = () => {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 flex flex-col items-center text-center space-y-5">
+        <div className="p-6 sm:p-8 flex flex-col items-center text-center space-y-4">
           
+          {/* Fee & Direct Payment Callout */}
+          <div className="w-full max-w-sm p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-left flex items-start gap-2.5">
+            <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+            <div className="text-xs text-slate-700 dark:text-slate-300">
+              <span className="font-extrabold text-slate-900 dark:text-white block">
+                {language === 'es' ? 'Pago Directo a Brian Cueva' : 'Direct Payment to Brian Cueva'}
+              </span>
+              {language === 'es' 
+                ? 'Tarifa fija de consulta en sitio: $125. Puedes coordinar tu pago y comprobante directamente por WhatsApp o llamada.' 
+                : 'Fixed on-site consultation fee: $125. You can coordinate your payment and receipt directly via WhatsApp or phone call.'}
+            </div>
+          </div>
+
           <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm">
             {t.qrModal.scanNotice}
           </p>

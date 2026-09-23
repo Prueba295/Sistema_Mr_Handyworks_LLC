@@ -15,7 +15,8 @@ import {
   Check, 
   ArrowRight, 
   Sparkles,
-  Search
+  Search,
+  ShieldCheck
 } from 'lucide-react';
 import { ReviewsTickerCard } from './ReviewsTickerCard';
 
@@ -108,33 +109,56 @@ export const ServicesCatalog: React.FC = () => {
           </div>
         </div>
 
+        {/* Consultation & Deposit Policy Banner */}
+        <div className="mb-10 max-w-4xl mx-auto p-4 sm:p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-xs">
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 rounded-xl bg-[#0B3C5D] text-white shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div className="text-xs text-slate-700 dark:text-slate-300">
+              <span className="font-extrabold text-[#0B3C5D] dark:text-blue-300 block text-sm sm:text-base">
+                {language === 'es' ? 'Tarifa Fija de Consulta en Sitio: $125' : 'Fixed On-Site Diagnostic & Consultation: $125'}
+              </span>
+              <span className="mt-0.5 block text-slate-600 dark:text-slate-400">
+                {language === 'es'
+                  ? 'Mano de obra y materiales presupuestados en sitio según horas y tipo de instalación. Reserva coordinada directamente por llamada o WhatsApp con Brian Cueva.'
+                  : 'Labor and materials quoted on-site based on project hours, size, and scope. Booking coordinated directly via phone call or WhatsApp with Brian Cueva.'}
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={() => openBookingWizard()}
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xs transition-colors shrink-0 cursor-pointer"
+          >
+            {t.services.bookService}
+          </button>
+        </div>
+
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredServices.map(service => {
             const title = language === 'es' ? service.titleEs : service.titleEn;
             const desc = language === 'es' ? service.descEs : service.descEn;
 
             return (
-              <div
+              <div 
                 key={service.id}
-                className="group relative rounded-2xl bg-white dark:bg-[#1C2636] p-6 border border-slate-300 dark:border-slate-700 shadow-xs hover:shadow-lg hover:border-[#0B3C5D] dark:hover:border-blue-500 transition-all flex flex-col justify-between"
+                className="group relative flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 shadow-xs hover:shadow-md hover:border-[#0B3C5D]/40 transition-all duration-300"
               >
                 <div>
-                  {/* Top bar with Icon & Popular Pill */}
-                  <div className="flex items-start justify-between mb-4">
+                  {/* Top Category Badge & Icon */}
+                  <div className="flex items-center justify-between">
                     <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                       {getIcon(service.iconName)}
                     </div>
                     {service.popular && (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-blue-500/15 text-[#0B3C5D] dark:text-blue-300 border border-blue-500/20">
-                        <Sparkles className="w-3 h-3" />
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20">
                         {t.services.popularBadge}
                       </span>
                     )}
                   </div>
 
-                  {/* Title & Description */}
-                  <h3 className="font-extrabold text-lg sm:text-xl text-slate-900 dark:text-white group-hover:text-[#0B3C5D] dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="mt-4 text-base font-bold text-slate-900 dark:text-white group-hover:text-[#0B3C5D] dark:group-hover:text-blue-300 transition-colors">
                     {title}
                   </h3>
                   <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -150,7 +174,11 @@ export const ServicesCatalog: React.FC = () => {
                       <span>{t.services.estimatedHours} <strong className="text-slate-800 dark:text-slate-200">{service.estimatedHours}</strong></span>
                     </span>
                     <span className="flex items-center gap-1 font-semibold text-[#0B3C5D] dark:text-blue-300">
-                      <span>{service.rateEstimate}</span>
+                      <span>
+                        {language === 'es'
+                          ? 'Consulta: $125 (Precio varía por horas)'
+                          : 'Consultation: $125 (Varies by hours)'}
+                      </span>
                     </span>
                   </div>
 
@@ -167,23 +195,7 @@ export const ServicesCatalog: React.FC = () => {
           })}
         </div>
 
-        {/* Custom inquiry banner with softer corporate styling */}
-        <div className="mt-12 rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#151E2B] text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center sm:text-left">
-            <h4 className="font-black text-lg sm:text-xl text-[#0B3C5D] dark:text-blue-400">
-              {language === 'es' ? '¿Tienes un proyecto personalizado en mente?' : 'Have a custom residential project in mind?'}
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-xl">
-              {t.services.customRequest}
-            </p>
-          </div>
-          <button
-            onClick={() => openBookingWizard()}
-            className="shrink-0 px-6 py-3 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
-          >
-            {language === 'es' ? 'Consultar con Brian' : 'Inquire with Brian'}
-          </button>
-        </div>
+
 
         {/* Live Reviews Carousel Block */}
         <ReviewsTickerCard />

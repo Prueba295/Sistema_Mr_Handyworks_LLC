@@ -51,7 +51,7 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   hoursDays: 'Mon - Sat',
   hoursTime: '9:00 am - 8:00 pm',
   hoursSunday: 'Sun (Emergency only)',
-  paymentMethods: ['Zelle', 'Apple Pay', 'Venmo', 'PayPal', 'Cash', 'Cards'],
+  paymentMethods: ['Zelle', 'Venmo', 'Cash App', 'Apple Pay', 'Cards (+3.5% fee)', 'Cash', 'Check'],
   thumbtackUrl: BUSINESS_INFO.thumbtackUrl,
   licenseNumber: 'BL-IN-2024-8849',
   insurancePolicy: 'Next Insurance #NX-IN-99421',
@@ -131,7 +131,7 @@ interface AppContextType {
   removeSlotFromDate: (dateStr: string, slotStr: string) => void;
 
   bookings: Booking[];
-  addBooking: (booking: Omit<Booking, 'id' | 'createdAt'>) => Booking;
+  addBooking: (booking: Omit<Booking, 'id' | 'createdAt'> & { id?: string }) => Booking;
   updateBookingStatus: (id: string, status: BookingStatus) => void;
   deleteBooking: (id: string) => void;
 
@@ -602,8 +602,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return parseStoredValue(saved, INITIAL_BOOKINGS);
   });
 
-  const addBooking = (bookingData: Omit<Booking, 'id' | 'createdAt'>): Booking => {
-    const id = `HW-${Math.floor(1000 + Math.random() * 9000)}`;
+  const addBooking = (bookingData: Omit<Booking, 'id' | 'createdAt'> & { id?: string }): Booking => {
+    const id = bookingData.id || `HW-${Math.floor(1000 + Math.random() * 9000)}`;
     const newBooking: Booking = {
       ...bookingData,
       id,

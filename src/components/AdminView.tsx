@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { generateQuotePDF } from '../utils/pdfGenerator';
 import { 
+  validateMeaningfulText,
+  validateAdminUrl,
+  validateUSPhone,
+  validateEmail
+} from '../utils/inputSecurity';
+import { 
   Service, 
   PortfolioMedia, 
   Review, 
   Booking, 
+  BookingAttachment,
   BookingStatus,
   ServiceCategory
 } from '../types';
+import { buildOwnerWhatsAppNotificationUrl } from '../utils/liveNotifier';
 import { 
   Lock, 
   LogOut, 
@@ -42,8 +50,22 @@ import {
   MapPin,
   Clock,
   Sparkles,
-  RefreshCw
+  RefreshCw,
+  Film,
+  Paperclip,
+  ZoomIn,
+  ZoomOut,
+  RotateCw,
+  Play,
+  FileText,
+  FileSpreadsheet,
+  FolderArchive,
+  FileCode,
+  Search,
+  MessageSquare,
+  Send
 } from 'lucide-react';
+import { getFileExtension, getDetailedCategory } from '../utils/attachmentOptimizer';
 
 export const AdminView: React.FC = () => {
   const { 
@@ -88,7 +110,7 @@ export const AdminView: React.FC = () => {
 
   // Active sub-tab in Admin CMS
   const [activeTab, setActiveTab] = useState<
-    'PROFILE' | 'SERVICES' | 'PORTFOLIO' | 'CALENDAR' | 'REVIEWS' | 'BOOKINGS' | 'PAYMENTS'
+    'PROFILE' | 'SERVICES' | 'PORTFOLIO' | 'CALENDAR' | 'REVIEWS' | 'BOOKINGS'
   >('PROFILE');
 
   // Password login & security state
@@ -114,6 +136,20 @@ export const AdminView: React.FC = () => {
   // Direct Settings changes
   const [settingsNewPassword, setSettingsNewPassword] = useState('');
   const [settingsRecoveryEmail, setSettingsRecoveryEmail] = useState(recoveryEmail);
+
+  // Work Orders & Bookings filtering & media lightbox state
+  const [bookingFilterStatus, setBookingFilterStatus] = useState<'ALL' | BookingStatus>('ALL');
+  const [bookingSearchQuery, setBookingSearchQuery] = useState('');
+  const [previewAttachment, setPreviewAttachment] = useState<BookingAttachment | null>(null);
+  const [imageLoadError, setImageLoadError] = useState(false);
+  const [imageZoom, setImageZoom] = useState(1);
+  const [imageRotation, setImageRotation] = useState(0);
+
+  React.useEffect(() => {
+    setImageLoadError(false);
+    setImageZoom(1);
+    setImageRotation(0);
+  }, [previewAttachment]);
 
   // Lockout countdown timer
   React.useEffect(() => {
@@ -283,31 +319,125 @@ export const AdminView: React.FC = () => {
   };
 
   const handleSaveEditMedia = (id: string) => {
+    if (editMediaForm.url !== undefined) {
+      const urlVal = validateAdminUrl(editMediaForm.url, language === 'es' ? 'URL de imagen o vídeo' : 'Media URL');
+      if (!urlVal.isValid) {
+        showNotification(urlVal.error!);
+        return;
+      }
+    }
+    if (editMediaForm.titleEn !== undefined) {
+      const titleVal = validateMeaningfulText(editMediaForm.titleEn, 3, language === 'es' ? 'Título (Inglés)' : 'Title (EN)');
+      if (!titleVal.isValid) {
+        showNotification(titleVal.error!);
+        return;
+      }
+    }
+    if (editMediaForm.titleEs !== undefined) {
+      const titleVal = validateMeaningfulText(editMediaForm.titleEs, 3, language === 'es' ? 'Título (Español)' : 'Title (ES)');
+      if (!titleVal.isValid) {
+        showNotification(titleVal.error!);
+        return;
+      }
+    }
     updatePortfolioItem(id, editMediaForm);
     setEditingMediaId(null);
     setEditMediaForm({});
+    showNotification(language === 'es' ? 'Elemento multimedia actualizado' : 'Media item updated successfully');
   };
 
   const handleUpdateAdminEmailDirect = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!settingsRecoveryEmail || !settingsRecoveryEmail.includes('@')) {
+    const emailVal = validateEmail(settingsRecoveryEmail);
+    if (!emailVal.isValid || !settingsRecoveryEmail) {
       showNotification(language === 'es' ? 'Ingresa un correo electrónico válido' : 'Please enter a valid email address');
       return;
     }
     setRecoveryEmail(settingsRecoveryEmail);
+    showNotification(language === 'es' ? 'Correo de recuperación actualizado' : 'Recovery email updated successfully');
   };
 
   const handleSaveBusinessInfo = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1. Company Name
+    const nameVal = validateMeaningfulText(bizForm.name, 3, language === 'es' ? 'Nombre de Empresa' : 'Company Name');
+    if (!nameVal.isValid) {
+      showNotification(nameVal.error!);
+      return;
+    }
+
+    // 2. Owner Name
+    const ownerVal = validateMeaningfulText(bizForm.owner, 3, language === 'es' ? 'Nombre del Propietario' : 'Owner Name');
+    if (!ownerVal.isValid) {
+      showNotification(ownerVal.error!);
+      return;
+    }
+
+    // 3. Phone validation
+    const phoneVal = validateUSPhone(bizForm.phone);
+    if (!phoneVal.isValid) {
+      showNotification(phoneVal.error!);
+      return;
+    }
+
+    // 4. Email validation
+    const emailVal = validateEmail(bizForm.email);
+    if (!emailVal.isValid || !bizForm.email) {
+      showNotification(emailVal.error || (language === 'es' ? 'Ingresa un correo válido' : 'Please enter a valid email'));
+      return;
+    }
+
+    // 5. Location validation
+    const locVal = validateMeaningfulText(bizForm.location, 4, language === 'es' ? 'Ubicación Central' : 'Location Base');
+    if (!locVal.isValid) {
+      showNotification(locVal.error!);
+      return;
+    }
+
+    // 6. License Number validation (if provided)
+    if (bizForm.licenseNumber) {
+      const licVal = validateMeaningfulText(bizForm.licenseNumber, 3, language === 'es' ? 'Número de Licencia' : 'License Number');
+      if (!licVal.isValid) {
+        showNotification(licVal.error!);
+        return;
+      }
+    }
+
     updateBusinessInfo(bizForm);
+    showNotification(
+      language === 'es'
+        ? 'Información de negocio validada y actualizada con éxito'
+        : 'Business profile validated and saved successfully'
+    );
   };
 
   const handleCreateService = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newService.titleEn && !newService.titleEs) {
-      showNotification(language === 'es' ? 'Por favor ingrese un título' : 'Please enter a title');
+    const title = newService.titleEn || newService.titleEs;
+    const titleVal = validateMeaningfulText(title, 3, language === 'es' ? 'Título del Servicio' : 'Service Title');
+    if (!titleVal.isValid) {
+      showNotification(titleVal.error!);
       return;
     }
+
+    const desc = newService.descEn || newService.descEs;
+    if (desc) {
+      const descVal = validateMeaningfulText(desc, 6, language === 'es' ? 'Descripción del Servicio' : 'Service Description');
+      if (!descVal.isValid) {
+        showNotification(descVal.error!);
+        return;
+      }
+    }
+
+    if (newService.rateEstimate) {
+      const rateVal = validateMeaningfulText(newService.rateEstimate, 2, language === 'es' ? 'Tarifa Estimada' : 'Rate Estimate');
+      if (!rateVal.isValid) {
+        showNotification(rateVal.error!);
+        return;
+      }
+    }
+
     addService({
       ...newService,
       titleEn: newService.titleEn || newService.titleEs,
@@ -327,19 +457,62 @@ export const AdminView: React.FC = () => {
       iconName: 'Wrench',
       popular: false
     });
+    showNotification(
+      language === 'es' ? 'Servicio validado y añadido con éxito' : 'Service validated and added successfully'
+    );
   };
 
   const handleSaveEditService = (id: string) => {
+    if (editServiceForm.titleEn !== undefined) {
+      const val = validateMeaningfulText(editServiceForm.titleEn, 3, 'Title (EN)');
+      if (!val.isValid) {
+        showNotification(val.error!);
+        return;
+      }
+    }
+    if (editServiceForm.titleEs !== undefined) {
+      const val = validateMeaningfulText(editServiceForm.titleEs, 3, 'Title (ES)');
+      if (!val.isValid) {
+        showNotification(val.error!);
+        return;
+      }
+    }
+    if (editServiceForm.descEn !== undefined && editServiceForm.descEn.length > 0) {
+      const val = validateMeaningfulText(editServiceForm.descEn, 6, 'Description (EN)');
+      if (!val.isValid) {
+        showNotification(val.error!);
+        return;
+      }
+    }
+    if (editServiceForm.descEs !== undefined && editServiceForm.descEs.length > 0) {
+      const val = validateMeaningfulText(editServiceForm.descEs, 6, 'Description (ES)');
+      if (!val.isValid) {
+        showNotification(val.error!);
+        return;
+      }
+    }
     updateService(id, editServiceForm);
     setEditingServiceId(null);
+    showNotification(
+      language === 'es' ? 'Servicio actualizado correctamente' : 'Service updated successfully'
+    );
   };
 
   const handleCreateMedia = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newMedia.url) {
-      showNotification(language === 'es' ? 'Ingrese una URL de imagen' : 'Please enter an image URL');
+    const urlVal = validateAdminUrl(newMedia.url, language === 'es' ? 'URL de imagen o vídeo' : 'Media URL');
+    if (!urlVal.isValid) {
+      showNotification(urlVal.error!);
       return;
     }
+
+    const title = newMedia.titleEn || newMedia.titleEs;
+    const titleVal = validateMeaningfulText(title, 3, language === 'es' ? 'Título del Proyecto' : 'Project Title');
+    if (!titleVal.isValid) {
+      showNotification(titleVal.error!);
+      return;
+    }
+
     addPortfolioItem({
       ...newMedia,
       titleEn: newMedia.titleEn || newMedia.titleEs,
@@ -358,21 +531,39 @@ export const AdminView: React.FC = () => {
       descriptionEn: '',
       featured: true
     });
+    showNotification(
+      language === 'es' ? 'Elemento multimedia validado y añadido' : 'Media item validated and added successfully'
+    );
   };
 
   const handleCreateReview = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newReviewForm.authorName || !newReviewForm.commentEn) {
-      showNotification(language === 'es' ? 'Complete nombre y comentario' : 'Please complete name and comment');
+    const authorVal = validateMeaningfulText(newReviewForm.authorName, 3, language === 'es' ? 'Nombre del Cliente' : 'Client Name');
+    if (!authorVal.isValid) {
+      showNotification(authorVal.error!);
       return;
     }
+
+    const comment = newReviewForm.commentEn || newReviewForm.commentEs;
+    const commentVal = validateMeaningfulText(comment, 8, language === 'es' ? 'Comentario de Reseña' : 'Review Comment');
+    if (!commentVal.isValid) {
+      showNotification(commentVal.error!);
+      return;
+    }
+
+    const jobVal = validateMeaningfulText(newReviewForm.jobType, 3, language === 'es' ? 'Tipo de Trabajo' : 'Job Type');
+    if (!jobVal.isValid) {
+      showNotification(jobVal.error!);
+      return;
+    }
+
     addReview({
       authorName: newReviewForm.authorName,
       location: newReviewForm.location,
       rating: Number(newReviewForm.rating),
       commentEs: newReviewForm.commentEs || newReviewForm.commentEn,
       commentEn: newReviewForm.commentEn,
-      tags: newReviewForm.tags.split(',').map(t => t.trim()),
+      tags: newReviewForm.tags.split(',').map(t => t.trim()).filter(Boolean),
       jobType: newReviewForm.jobType,
       featured: true
     });
@@ -386,6 +577,9 @@ export const AdminView: React.FC = () => {
       jobType: 'Home Repairs',
       tags: 'Quality, Punctual, Professional'
     });
+    showNotification(
+      language === 'es' ? 'Reseña validada y publicada con éxito' : 'Review validated and published successfully'
+    );
   };
 
   const currentDayAvailability = availability.find(d => d.date === selectedDate) || {
@@ -696,8 +890,7 @@ export const AdminView: React.FC = () => {
           { id: 'PORTFOLIO', labelEs: `Fotos y Vídeos (${portfolio.length})`, labelEn: `Media & Projects (${portfolio.length})`, icon: ImageIcon },
           { id: 'CALENDAR', labelEs: 'Calendario & Horarios', labelEn: 'Calendar & Slots', icon: Calendar },
           { id: 'REVIEWS', labelEs: `Reseñas (${reviews.length})`, labelEn: `Reviews (${reviews.length})`, icon: Star },
-          { id: 'BOOKINGS', labelEs: `Solicitudes (${bookings.length})`, labelEn: `Work Orders (${bookings.length})`, icon: ClipboardList },
-          { id: 'PAYMENTS', labelEs: 'Métodos de Pago & QR', labelEn: 'Payment & QR Links', icon: QrCode },
+          { id: 'BOOKINGS', labelEs: `Solicitudes (${bookings.length})`, labelEn: `Work Orders (${bookings.length})`, icon: ClipboardList }
         ].map(tab => {
           const IconComp = tab.icon;
           const isActive = activeTab === tab.id;
@@ -1806,137 +1999,852 @@ export const AdminView: React.FC = () => {
       {/* TAB 6: INBOUND BOOKINGS & WORK ORDERS */}
       {activeTab === 'BOOKINGS' && (
         <div className="bg-white dark:bg-[#1A2332] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700/80 shadow-xs space-y-6">
-          <div className="border-b border-slate-200 dark:border-slate-700/80 pb-4">
-            <h3 className="text-lg font-black text-slate-900 dark:text-white">
-              {language === 'es' ? 'Solicitudes de Trabajo y Cotizaciones' : 'Work Orders & Inbound Bookings'}
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              {language === 'es' ? 'Revisa detalles de clientes, actualiza estado del proyecto o descarga cotizaciones en PDF.' : 'Review customer job details, update status, or download formal PDF quotes.'}
-            </p>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-700/80 pb-4">
+            <div>
+              <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <span>{language === 'es' ? 'Gestión Integral de Reservas y Órdenes de Trabajo' : 'Work Orders & Reservations Hub'}</span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-extrabold">
+                  {bookings.length}
+                </span>
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                {language === 'es' 
+                  ? 'Revisa citas de clientes, descarga cotizaciones en PDF y visualiza fotos, videos o documentos adjuntados.' 
+                  : 'Review customer appointments, download official PDF summaries, and inspect attached photos, videos or documents.'}
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-3">
-            {bookings.length > 0 ? (
-              bookings.map(b => (
+          {/* Quick Metrics KPI Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">Total</span>
+              <span className="text-xl font-black text-slate-900 dark:text-white">{bookings.length}</span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 block">Pending</span>
+              <span className="text-xl font-black text-amber-700 dark:text-amber-300">
+                {bookings.filter(b => b.status === 'PENDING').length}
+              </span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+              <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 block">Confirmed</span>
+              <span className="text-xl font-black text-emerald-700 dark:text-emerald-300">
+                {bookings.filter(b => b.status === 'CONFIRMED').length}
+              </span>
+            </div>
+            <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+              <span className="text-[11px] font-bold text-blue-700 dark:text-blue-400 block">Completed</span>
+              <span className="text-xl font-black text-blue-700 dark:text-blue-300">
+                {bookings.filter(b => b.status === 'COMPLETED').length}
+              </span>
+            </div>
+          </div>
+
+          {/* Search & Status Filters */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+            {/* Search Input */}
+            <div className="relative flex-1">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={bookingSearchQuery}
+                onChange={(e) => setBookingSearchQuery(e.target.value)}
+                placeholder={language === 'es' ? 'Buscar por cliente, #HW, teléfono, servicio...' : 'Search by client, #HW, phone, service...'}
+                className="w-full pl-9 pr-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-medium text-slate-900 dark:text-white outline-none focus:border-[#0B3C5D]"
+              />
+              {bookingSearchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setBookingSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
+            {/* Status Filter Chips */}
+            <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+              {(['ALL', 'PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED'] as const).map(st => (
+                <button
+                  key={st}
+                  type="button"
+                  onClick={() => setBookingFilterStatus(st)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    bookingFilterStatus === st
+                      ? 'bg-[#0B3C5D] text-white shadow-xs'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
+                  }`}
+                >
+                  {st}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Bookings List */}
+          <div className="space-y-4">
+            {(() => {
+              const q = bookingSearchQuery.toLowerCase().trim();
+              const filtered = bookings.filter(b => {
+                const matchesStatus = bookingFilterStatus === 'ALL' || b.status === bookingFilterStatus;
+                const matchesQuery = !q || (
+                  b.clientName.toLowerCase().includes(q) ||
+                  b.id.toLowerCase().includes(q) ||
+                  b.clientPhone.toLowerCase().includes(q) ||
+                  b.serviceType.toLowerCase().includes(q) ||
+                  (b.clientAddress && b.clientAddress.toLowerCase().includes(q))
+                );
+                return matchesStatus && matchesQuery;
+              });
+
+              if (filtered.length === 0) {
+                return (
+                  <div className="text-center p-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-xs text-slate-500">
+                    {language === 'es' ? 'No se encontraron reservas con los filtros aplicados.' : 'No reservations found matching the filters.'}
+                  </div>
+                );
+              }
+
+              return filtered.map(b => (
                 <div 
                   key={b.id}
-                  className="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+                  className="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/40 space-y-4 shadow-2xs"
                 >
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-[#0B3C5D] dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">
+                  {/* Card Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-700">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-mono text-xs font-black text-[#0B3C5D] dark:text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-lg">
                         #{b.id}
                       </span>
-                      <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">
-                        {b.clientName}
-                      </h4>
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-black ${
-                        b.status === 'CONFIRMED' ? 'bg-emerald-500/10 text-emerald-600' :
-                        b.status === 'COMPLETED' ? 'bg-blue-500/10 text-blue-600' :
-                        b.status === 'CANCELLED' ? 'bg-rose-500/10 text-rose-600' :
-                        'bg-amber-500/10 text-amber-600'
+                      <div>
+                        <h4 className="font-extrabold text-sm text-slate-900 dark:text-white leading-tight">
+                          {b.clientName}
+                        </h4>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                          {language === 'es' ? 'Registrado el:' : 'Created:'} {new Date(b.createdAt).toLocaleDateString()} {new Date(b.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Status Changer */}
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase ${
+                        b.status === 'CONFIRMED' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400' :
+                        b.status === 'COMPLETED' ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400' :
+                        b.status === 'CANCELLED' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400' :
+                        'bg-amber-500/15 text-amber-700 dark:text-amber-400'
                       }`}>
                         {b.status}
                       </span>
+                      <select
+                        value={b.status}
+                        onChange={(e) => updateBookingStatus(b.id, e.target.value as BookingStatus)}
+                        className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 cursor-pointer"
+                      >
+                        <option value="PENDING">PENDING</option>
+                        <option value="CONFIRMED">CONFIRMED</option>
+                        <option value="COMPLETED">COMPLETED</option>
+                        <option value="CANCELLED">CANCELLED</option>
+                      </select>
                     </div>
-
-                    <p className="text-xs text-slate-600 dark:text-slate-300">
-                      <strong>{b.serviceType}</strong> • {b.scheduledDate} ({b.scheduledTimeSlot}) • ZIP: {b.zipCode}
-                    </p>
-
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      {b.clientPhone} • {b.clientEmail}
-                    </p>
-
-                    {b.projectDetails && (
-                      <p className="text-xs text-slate-700 dark:text-slate-300 italic bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
-                        "{b.projectDetails}"
-                      </p>
-                    )}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2">
-                    <button
-                      onClick={() => generateQuotePDF(b, language)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B3C5D] text-white text-xs font-bold hover:bg-[#07273D] cursor-pointer"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>PDF</span>
-                    </button>
+                  {/* Card Content Grid: Left: Client & Details, Right: Attachments */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    {/* Left Column (7 cols) */}
+                    <div className="lg:col-span-7 space-y-2.5 text-xs">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
+                          {language === 'es' ? 'Servicio Solicitado:' : 'Requested Service:'}
+                        </span>
+                        <p className="font-extrabold text-slate-900 dark:text-white text-sm">
+                          {b.serviceType}
+                        </p>
+                        <p className="text-slate-600 dark:text-slate-300 text-xs mt-0.5">
+                          {b.projectDetails}
+                        </p>
+                      </div>
 
-                    <select
-                      value={b.status}
-                      onChange={(e) => updateBookingStatus(b.id, e.target.value as BookingStatus)}
-                      className="px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200"
-                    >
-                      <option value="PENDING">PENDING</option>
-                      <option value="CONFIRMED">CONFIRMED</option>
-                      <option value="COMPLETED">COMPLETED</option>
-                      <option value="CANCELLED">CANCELLED</option>
-                    </select>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-slate-200/80 dark:border-slate-700/80">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
+                            {language === 'es' ? 'Fecha y Horario:' : 'Scheduled Date & Window:'}
+                          </span>
+                          <p className="font-bold text-slate-800 dark:text-slate-200">
+                            {b.scheduledDate}
+                          </p>
+                          <p className="text-slate-500 dark:text-slate-400 text-[11px]">
+                            {b.scheduledTimeSlot}
+                          </p>
+                        </div>
+
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
+                            {language === 'es' ? 'Tarifa Referencial:' : 'Consultation Fee:'}
+                          </span>
+                          <p className="font-black text-[#0B3C5D] dark:text-blue-400 text-sm">
+                            $125.00
+                          </p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                            {language === 'es' ? 'Se abona en visita o coordinación' : 'Paid upon coordination'}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="pt-1 border-t border-slate-200/80 dark:border-slate-700/80 space-y-1">
+                        <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                          <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                          <a 
+                            href={`https://maps.google.com/?q=${encodeURIComponent((b.clientAddress || '') + ' ' + b.zipCode)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline font-semibold"
+                            title="Open Google Maps"
+                          >
+                            {b.clientAddress} (ZIP: {b.zipCode})
+                          </a>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-3 text-slate-600 dark:text-slate-400">
+                          <span className="flex items-center gap-1 font-semibold text-slate-900 dark:text-slate-200">
+                            <Phone className="w-3 h-3 text-emerald-500 shrink-0" />
+                            {b.clientPhone}
+                          </span>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            <Mail className="w-3 h-3 text-blue-500 shrink-0" />
+                            {b.clientEmail}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column (5 cols): Attached Media & Documents */}
+                    <div className="lg:col-span-5 bg-white dark:bg-slate-900/60 rounded-xl p-3.5 border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[11px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                            <Paperclip className="w-3.5 h-3.5 text-[#0B3C5D] dark:text-blue-400" />
+                            <span>
+                              {language === 'es' 
+                                ? `Archivos de ${b.clientName} (${b.attachments?.length || (b.photoUrl ? 1 : 0)})` 
+                                : `Files for ${b.clientName} (${b.attachments?.length || (b.photoUrl ? 1 : 0)})`}
+                            </span>
+                          </span>
+                          <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-[#0B3C5D] dark:text-blue-300 border border-blue-500/20">
+                            #{b.id}
+                          </span>
+                        </div>
+
+                        {b.attachments && b.attachments.length > 0 ? (
+                          <div className="grid grid-cols-2 gap-2">
+                            {b.attachments.map(att => {
+                              const attExt = getFileExtension(att.name);
+                              const attCat = getDetailedCategory(att.name, att.mimeType);
+                              return (
+                                <button
+                                  key={att.id}
+                                  type="button"
+                                  onClick={() => setPreviewAttachment(att)}
+                                  className="group text-left p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-[#0B3C5D] dark:hover:border-blue-500 transition-all cursor-pointer overflow-hidden flex flex-col justify-between"
+                                >
+                                  {attCat === 'image' || att.type === 'image' ? (
+                                    <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-700 mb-1.5 flex items-center justify-center">
+                                      <img 
+                                        src={att.dataUrl} 
+                                        alt={att.name} 
+                                        onError={(e) => {
+                                          (e.target as HTMLElement).style.display = 'none';
+                                        }}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
+                                      />
+                                      <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ZoomIn className="w-4 h-4" />
+                                      </div>
+                                    </div>
+                                  ) : attCat === 'video' || att.type === 'video' ? (
+                                    <div className="aspect-video w-full rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-1.5 group-hover:bg-amber-500/20 transition-colors">
+                                      <Play className="w-6 h-6 fill-current" />
+                                    </div>
+                                  ) : attCat === 'pdf' ? (
+                                    <div className="aspect-video w-full rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-1.5 group-hover:bg-rose-500/20 transition-colors">
+                                      <FileText className="w-6 h-6" />
+                                    </div>
+                                  ) : attCat === 'spreadsheet' ? (
+                                    <div className="aspect-video w-full rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-1.5 group-hover:bg-emerald-500/20 transition-colors">
+                                      <FileSpreadsheet className="w-6 h-6" />
+                                    </div>
+                                  ) : attCat === 'archive' ? (
+                                    <div className="aspect-video w-full rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-1.5 group-hover:bg-purple-500/20 transition-colors">
+                                      <FolderArchive className="w-6 h-6" />
+                                    </div>
+                                  ) : (
+                                    <div className="aspect-video w-full rounded-lg bg-blue-500/10 text-[#0B3C5D] dark:text-blue-400 flex items-center justify-center mb-1.5 group-hover:bg-blue-500/20 transition-colors">
+                                      <FileText className="w-6 h-6" />
+                                    </div>
+                                  )}
+                                  <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 truncate w-full" title={att.name}>
+                                    {att.name}
+                                  </p>
+                                  <p className="text-[9px] text-[#0B3C5D] dark:text-blue-400 font-bold truncate">
+                                    {b.clientName}
+                                  </p>
+                                  <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase font-semibold">
+                                    {attExt ? `${attExt} • ` : ''}{att.sizeFormatted}
+                                  </p>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        ) : b.photoUrl ? (
+                          (() => {
+                            const rawUrl = b.photoUrl!;
+                            const isPdf = rawUrl.startsWith('data:application/pdf') || /\.pdf/i.test(rawUrl);
+                            const isVid = rawUrl.startsWith('data:video/') || /\.(mp4|mov|webm|m4v)/i.test(rawUrl);
+                            const resolvedType = isPdf ? 'document' : isVid ? 'video' : 'image';
+                            const resolvedName = isPdf 
+                              ? `Document_${b.id}.pdf` 
+                              : isVid 
+                              ? `Video_${b.id}.mp4` 
+                              : `Job_Site_Photo_${b.id}.jpg`;
+                            return (
+                              <button
+                                type="button"
+                                onClick={() => setPreviewAttachment({
+                                  id: `${b.id}-site-photo`,
+                                  name: resolvedName,
+                                  type: resolvedType,
+                                  sizeFormatted: 'Site Attachment',
+                                  dataUrl: rawUrl,
+                                  createdAt: b.createdAt,
+                                  bookingId: b.id,
+                                  clientName: b.clientName,
+                                  clientPhone: b.clientPhone
+                                })}
+                                className="group text-left p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:border-[#0B3C5D] dark:hover:border-blue-500 transition-all cursor-pointer overflow-hidden"
+                              >
+                                <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-700 mb-1 flex items-center justify-center">
+                                  {isPdf ? (
+                                    <FileText className="w-6 h-6 text-rose-500" />
+                                  ) : isVid ? (
+                                    <Play className="w-6 h-6 text-amber-500" />
+                                  ) : (
+                                    <>
+                                      <img 
+                                        src={rawUrl} 
+                                        alt="Job area" 
+                                        onError={(e) => {
+                                          (e.target as HTMLElement).style.display = 'none';
+                                        }}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
+                                      />
+                                      <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <ZoomIn className="w-4 h-4" />
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                                <p className="text-[10px] text-slate-700 dark:text-slate-300 font-bold truncate">
+                                  {resolvedName}
+                                </p>
+                                <p className="text-[9px] text-[#0B3C5D] dark:text-blue-400 font-semibold">
+                                  {b.clientName}
+                                </p>
+                              </button>
+                            );
+                          })()
+                        ) : (
+                          <div className="p-4 text-center text-xs text-slate-400 dark:text-slate-500 italic">
+                            {language === 'es' ? 'Sin archivos adjuntados por el cliente.' : 'No files or media attached.'}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card Bottom Actions */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+                    <div className="flex flex-wrap items-center gap-2">
+                      {/* Generate / View PDF */}
+                      <button
+                        type="button"
+                        onClick={() => generateQuotePDF(b, language)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B3C5D] hover:bg-[#07273D] text-white text-xs font-black shadow-xs transition-colors cursor-pointer"
+                        title="Download or Print Work Order PDF"
+                      >
+                        <Download className="w-3.5 h-3.5 text-blue-200" />
+                        <span>{language === 'es' ? 'Descargar PDF Oficial' : 'Official PDF Summary'}</span>
+                      </button>
+
+                      {/* Send Dispatch to Owner's Phone */}
+                      <a
+                        href={buildOwnerWhatsAppNotificationUrl(b, businessInfo.phoneRaw)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 text-xs font-bold transition-colors cursor-pointer"
+                        title="Send full work order dispatch & files manifest to owner phone"
+                      >
+                        <Send className="w-3.5 h-3.5 text-amber-600" />
+                        <span>{language === 'es' ? 'Enviar a mi Teléfono' : 'Send to My Phone'}</span>
+                      </a>
+
+                      {/* Call Client Direct */}
+                      <a
+                        href={`tel:${b.clientPhone.replace(/\D/g, '')}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        <Phone className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>{language === 'es' ? 'Llamar al Cliente' : 'Call Client'}</span>
+                      </a>
+
+                      {/* Message Client via WhatsApp */}
+                      <a
+                        href={`https://wa.me/1${b.clientPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
+                          `Hello ${b.clientName}, this is Brian Cueva from Mr Handyworks LLC regarding your work order #${b.id} for ${b.serviceType}.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>WhatsApp</span>
+                      </a>
+                    </div>
 
                     <button
-                      onClick={() => deleteBooking(b.id)}
-                      className="p-2 text-slate-400 hover:text-rose-500 cursor-pointer"
-                      title="Eliminar cita"
+                      type="button"
+                      onClick={() => {
+                        if (window.confirm(language === 'es' ? `¿Eliminar la reserva #${b.id}?` : `Delete reservation #${b.id}?`)) {
+                          deleteBooking(b.id);
+                        }
+                      }}
+                      className="p-2 text-slate-400 hover:text-rose-500 transition-colors cursor-pointer rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30"
+                      title={language === 'es' ? 'Eliminar reserva' : 'Delete order'}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div className="text-center p-8 text-xs text-slate-500">
-                {language === 'es' ? 'No hay solicitudes de trabajo registradas.' : 'No active work orders.'}
-              </div>
-            )}
+              ));
+            })()}
           </div>
         </div>
       )}
 
-      {/* TAB 7: PAYMENT METHODS & QR */}
-      {activeTab === 'PAYMENTS' && (
-        <div className="bg-white dark:bg-[#1A2332] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700/80 shadow-xs space-y-6">
-          <div className="border-b border-slate-200 dark:border-slate-700/80 pb-4">
-            <h3 className="text-lg font-black text-slate-900 dark:text-white">
-              {language === 'es' ? 'Métodos de Pago y Códigos QR' : 'Payment Methods & QR Accounts'}
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              {language === 'es' ? 'Actualiza tu Zelle, Venmo, Cash App o PayPal para recibir anticipos y pagos.' : 'Update your Zelle, Venmo, Cash App or PayPal to receive deposits and payments.'}
-            </p>
-          </div>
+      {/* FULLY RESPONSIVE UNIVERSAL LIGHTBOX / ATTACHMENT VIEWER (ANY EXTENSION: MOBILE, TABLET, PC) */}
+      {previewAttachment && (() => {
+        const ext = getFileExtension(previewAttachment.name);
+        const cat = getDetailedCategory(previewAttachment.name, previewAttachment.mimeType);
+        const isPdf = cat === 'pdf' || previewAttachment.dataUrl.startsWith('data:application/pdf') || ext === 'pdf';
+        const isVid = cat === 'video' || previewAttachment.dataUrl.startsWith('data:video/') || ['mp4', 'mov', 'webm', 'avi', 'mkv', '3gp', 'm4v'].includes(ext);
+        const isSpreadsheet = cat === 'spreadsheet' || ['xlsx', 'xls', 'csv', 'ods', 'tsv'].includes(ext);
+        const isWord = cat === 'word' || ['doc', 'docx', 'rtf', 'odt'].includes(ext);
+        const isArchive = cat === 'archive' || ['zip', 'rar', '7z', 'tar', 'gz'].includes(ext);
+        const isText = cat === 'text' || ['txt', 'log', 'md', 'json', 'xml'].includes(ext);
+        const isImg = !isPdf && !isVid && !isSpreadsheet && !isWord && !isArchive && !isText && (
+          cat === 'image' || previewAttachment.dataUrl.startsWith('data:image/') || previewAttachment.type === 'image'
+        );
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {qrMethods.map(qr => (
-              <div 
-                key={qr.id}
-                className="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 space-y-3"
-              >
-                <div className="flex items-center justify-between">
-                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">
-                    {qr.provider}
-                  </h4>
-                  <span className="text-[10px] font-black px-2 py-0.5 rounded bg-blue-500/10 text-blue-600">
-                    {qr.displayName}
+        return (
+          <div 
+            className="fixed inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6"
+            onClick={() => setPreviewAttachment(null)}
+          >
+            <div 
+              className="relative w-full max-w-lg sm:max-w-3xl md:max-w-5xl max-h-[94vh] sm:max-h-[92vh] bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-3 sm:px-5 py-3 sm:py-3.5 border-b border-slate-800 bg-slate-900/95 shrink-0">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                  <span className={`px-2.5 py-1 rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider shrink-0 ${
+                    isImg ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                    isVid ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
+                    isPdf ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' :
+                    isSpreadsheet ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                    isWord ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' :
+                    isArchive ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
+                    isText ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' :
+                    'bg-slate-700 text-slate-300 border border-slate-600'
+                  }`}>
+                    {ext ? `${ext.toUpperCase()}` : previewAttachment.type}
                   </span>
+                  <div className="min-w-0">
+                    <h4 className="text-xs sm:text-sm font-extrabold text-white truncate max-w-[160px] sm:max-w-md md:max-w-xl" title={previewAttachment.name}>
+                      {previewAttachment.name}
+                    </h4>
+                    <p className="text-[10px] sm:text-[11px] text-slate-400 truncate">
+                      {previewAttachment.clientName ? (
+                        <span className="text-amber-400 font-bold mr-1.5">{previewAttachment.clientName}</span>
+                      ) : null}
+                      {previewAttachment.bookingId ? (
+                        <span className="text-blue-400 font-bold mr-1.5">#{previewAttachment.bookingId}</span>
+                      ) : null}
+                      <span>• {previewAttachment.sizeFormatted}</span>
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">
-                    {language === 'es' ? 'Cuenta / Identificador:' : 'Account ID / Tag:'}
-                  </label>
-                  <input 
-                    type="text"
-                    defaultValue={qr.accountInfo}
-                    onBlur={(e) => updateQRMethod(qr.id, e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-900 dark:text-white"
-                  />
+                {/* Header Action Tools */}
+                <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                  {/* Image View Controls (Zoom & Rotate) */}
+                  {isImg && !imageLoadError && (
+                    <div className="hidden sm:flex items-center gap-1 bg-slate-800/90 rounded-xl p-1 border border-slate-700/80 mr-1">
+                      <button
+                        type="button"
+                        onClick={() => setImageZoom(z => Math.max(0.5, +(z - 0.25).toFixed(2)))}
+                        className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        title="Zoom Out"
+                      >
+                        <ZoomOut className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { setImageZoom(1); setImageRotation(0); }}
+                        className="px-2 py-0.5 rounded text-[10px] font-bold text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        title="Reset View"
+                      >
+                        {Math.round(imageZoom * 100)}%
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setImageZoom(z => Math.min(3, +(z + 0.25).toFixed(2)))}
+                        className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        title="Zoom In"
+                      >
+                        <ZoomIn className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setImageRotation(r => (r + 90) % 360)}
+                        className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        title="Rotate 90°"
+                      >
+                        <RotateCw className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  <a
+                    href={previewAttachment.dataUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-blue-600 hover:text-white text-slate-200 transition-colors shadow-2xs border border-slate-700/60"
+                    title={language === 'es' ? 'Abrir en pestaña nueva' : 'Open in new tab'}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={previewAttachment.dataUrl}
+                    download={previewAttachment.name}
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition-colors shadow-2xs border border-slate-700/60"
+                    title={language === 'es' ? 'Descargar archivo' : 'Download file'}
+                  >
+                    <Download className="w-4 h-4" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewAttachment(null)}
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-rose-900/60 hover:text-rose-300 text-slate-200 transition-colors cursor-pointer border border-slate-700/60"
+                    title="Close"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-            ))}
+
+              {/* Modal Content - Scrollable & Responsive across Mobile, Tablet, PC */}
+              <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-6 flex items-center justify-center bg-slate-950/80 min-h-[300px] sm:min-h-[440px]">
+                {/* 1. IMAGE RENDERING (JPG, PNG, WEBP, GIF, SVG, BMP, HEIC/RAW FALLBACK) */}
+                {isImg && (
+                  imageLoadError ? (
+                    <div className="flex flex-col items-center justify-center p-6 text-center space-y-4 max-w-md mx-auto">
+                      <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center shadow-lg border border-amber-500/20">
+                        <ImageIcon className="w-8 h-8" />
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                          {ext ? `${ext.toUpperCase()} IMAGE` : 'IMAGE FILE'}
+                        </span>
+                        <h5 className="font-extrabold text-white text-base mt-2 break-all">
+                          {previewAttachment.name}
+                        </h5>
+                        <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                          {language === 'es' 
+                            ? 'Este formato de imagen (ej. Apple HEIC o RAW) es renderizado nativamente en el visor del sistema.'
+                            : 'This image format (e.g. Apple HEIC or camera RAW) is rendered natively in your system viewer.'}
+                        </p>
+                      </div>
+
+                      {/* Embedded object fallback attempt */}
+                      <div className="w-full max-h-48 overflow-hidden rounded-xl border border-slate-800 bg-black/40">
+                        <object data={previewAttachment.dataUrl} type={previewAttachment.mimeType || 'image/*'} className="w-full h-full min-h-[120px]">
+                          <p className="text-[11px] text-slate-500 p-3 italic">Use direct buttons below to view or download.</p>
+                        </object>
+                      </div>
+
+                      <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 w-full">
+                        <a
+                          href={previewAttachment.dataUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          <span>{language === 'es' ? 'Abrir en Visor del Sistema' : 'Open in System Viewer'}</span>
+                        </a>
+                        <a
+                          href={previewAttachment.dataUrl}
+                          download={previewAttachment.name}
+                          className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-2 border border-slate-700"
+                        >
+                          <Download className="w-4 h-4" />
+                          <span>{language === 'es' ? 'Descargar Original' : 'Download Original'}</span>
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="relative max-h-[70vh] sm:max-h-[78vh] w-full flex items-center justify-center overflow-auto p-1">
+                      <img 
+                        src={previewAttachment.dataUrl} 
+                        alt={previewAttachment.name} 
+                        style={{
+                          transform: `scale(${imageZoom}) rotate(${imageRotation}deg)`,
+                          transition: 'transform 0.15s ease-out'
+                        }}
+                        onError={() => setImageLoadError(true)}
+                        className="max-h-[68vh] sm:max-h-[74vh] max-w-full object-contain rounded-xl shadow-2xl border border-slate-800 select-none"
+                      />
+                    </div>
+                  )
+                )}
+
+                {/* 2. VIDEO RENDERING (MP4, MOV, WEBM, 3GP, MKV) */}
+                {isVid && (
+                  <div className="w-full flex flex-col items-center justify-center space-y-3 p-1 sm:p-2">
+                    <video 
+                      src={previewAttachment.dataUrl} 
+                      controls 
+                      playsInline 
+                      preload="metadata"
+                      className="max-h-[62vh] sm:max-h-[74vh] w-auto max-w-full rounded-2xl shadow-2xl border border-slate-800 bg-black"
+                    >
+                      Your browser does not support HTML5 video tag.
+                    </video>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-sm"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>{language === 'es' ? 'Pantalla Completa' : 'Full Window'}</span>
+                      </a>
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-1.5 border border-slate-700"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>{language === 'es' ? 'Descargar Video' : 'Download Video'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 3. PDF RENDERING (DIRECT EMBEDDED IFRAME ON MOBILE & DESKTOP) */}
+                {isPdf && (
+                  <div className="w-full h-full flex flex-col items-center justify-center p-1">
+                    <div className="w-full flex items-center justify-between px-3 py-2 mb-2 bg-slate-900 rounded-xl border border-slate-800 text-xs">
+                      <span className="text-slate-300 font-bold flex items-center gap-2 truncate max-w-xs sm:max-w-md">
+                        <FileText className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span className="truncate">{previewAttachment.name}</span>
+                      </span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <a
+                          href={previewAttachment.dataUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-sm"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>{language === 'es' ? 'Abrir PDF' : 'Open PDF'}</span>
+                        </a>
+                        <a
+                          href={previewAttachment.dataUrl}
+                          download={previewAttachment.name}
+                          className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-1.5 border border-slate-700"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>{language === 'es' ? 'Descargar' : 'Download'}</span>
+                        </a>
+                      </div>
+                    </div>
+                    <iframe 
+                      src={previewAttachment.dataUrl} 
+                      title={previewAttachment.name}
+                      className="w-full h-[62vh] sm:h-[72vh] rounded-xl border border-slate-800 bg-white"
+                    />
+                  </div>
+                )}
+
+                {/* 4. SPREADSHEET RENDERING (XLSX, XLS, CSV, TSV) */}
+                {isSpreadsheet && (
+                  <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div className="w-20 h-20 rounded-3xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shadow-xl">
+                      <FileSpreadsheet className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        {ext ? `${ext.toUpperCase()} SPREADSHEET` : 'EXCEL SPREADSHEET'}
+                      </span>
+                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                        {previewAttachment.name}
+                      </h5>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {previewAttachment.clientName ? `${previewAttachment.clientName} • ` : ''}
+                        {previewAttachment.sizeFormatted}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Ver / Abrir Hoja' : 'Open Spreadsheet'}</span>
+                      </a>
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-2 border border-slate-700"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Descargar Archivo' : 'Download File'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 5. WORD DOCUMENT RENDERING (DOC, DOCX, RTF) */}
+                {isWord && (
+                  <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center shadow-xl">
+                      <FileText className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        {ext ? `${ext.toUpperCase()} DOCUMENT` : 'WORD DOCUMENT'}
+                      </span>
+                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                        {previewAttachment.name}
+                      </h5>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {previewAttachment.clientName ? `${previewAttachment.clientName} • ` : ''}
+                        {previewAttachment.sizeFormatted}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Abrir Documento' : 'Open Document'}</span>
+                      </a>
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-2 border border-slate-700"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Descargar Archivo' : 'Download File'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 6. ARCHIVE RENDERING (ZIP, RAR, 7Z, TAR, GZ) */}
+                {isArchive && (
+                  <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div className="w-20 h-20 rounded-3xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center shadow-xl">
+                      <FolderArchive className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                        {ext ? `${ext.toUpperCase()} ARCHIVE` : 'COMPRESSED ARCHIVE'}
+                      </span>
+                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                        {previewAttachment.name}
+                      </h5>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {previewAttachment.clientName ? `${previewAttachment.clientName} • ` : ''}
+                        {previewAttachment.sizeFormatted}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Descargar Archivo ZIP' : 'Download Archive'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 7. TEXT & OTHER GENERIC DOCUMENTS */}
+                {(isText || (!isImg && !isVid && !isPdf && !isSpreadsheet && !isWord && !isArchive)) && (
+                  <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div className="w-20 h-20 rounded-3xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center shadow-xl">
+                      <FileCode className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                        {ext ? `${ext.toUpperCase()} FILE` : 'ATTACHED FILE'}
+                      </span>
+                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                        {previewAttachment.name}
+                      </h5>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {previewAttachment.clientName ? `${previewAttachment.clientName} • ` : ''}
+                        {previewAttachment.sizeFormatted}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Abrir Archivo' : 'Open File'}</span>
+                      </a>
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-2 border border-slate-700"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Descargar' : 'Download'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
     </div>
   );

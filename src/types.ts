@@ -27,6 +27,20 @@ export interface Service {
 
 export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED';
 
+export interface BookingAttachment {
+  id: string;
+  name: string;
+  type: 'image' | 'video' | 'document';
+  sizeFormatted: string;
+  dataUrl: string;
+  createdAt: string;
+  bookingId?: string;
+  clientName?: string;
+  clientPhone?: string;
+  fileExt?: string;
+  mimeType?: string;
+}
+
 export interface Booking {
   id: string;
   clientName: string;
@@ -41,12 +55,18 @@ export interface Booking {
   scheduledDate: string; // YYYY-MM-DD
   scheduledTimeSlot: string; // e.g. "09:00 AM - 11:30 AM"
   photoUrl?: string;
+  attachments?: BookingAttachment[];
   status: BookingStatus;
-  paymentMethod: 'ZELLE' | 'PAYPAL' | 'VENMO' | 'CASHAPP' | 'CARD' | 'CASH';
+  paymentMethod: 'ZELLE' | 'VENMO' | 'CASHAPP' | 'APPLE_PAY' | 'CARD' | 'CASH' | 'CHECK' | 'PAYPAL';
   paymentStatus: 'UNPAID' | 'DEPOSIT_PAID' | 'PAID_IN_FULL';
   depositAmount?: number;
+  paymentTokenId?: string;
+  cardBrand?: string;
+  cardLast4?: string;
   createdAt: string;
   notes?: string;
+  notificationSentToOwner?: boolean;
+  notificationSentAt?: string;
 }
 
 export interface AvailabilityDay {
@@ -91,7 +111,7 @@ export interface Review {
 
 export interface PaymentQR {
   id: string;
-  provider: 'Zelle' | 'PayPal' | 'Venmo' | 'CashApp';
+  provider: 'Zelle' | 'Venmo' | 'CashApp' | 'ApplePay' | 'PayPal';
   accountInfo: string;
   displayName: string;
   instructionsEs: string;

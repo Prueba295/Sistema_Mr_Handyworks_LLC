@@ -35,10 +35,10 @@ export const HomeView: React.FC = () => {
     {
       icon: DollarSign,
       color: 'text-amber-500 bg-amber-500/10',
-      titleEs: 'Precios Claros y Transparentes',
-      titleEn: 'Clear & Transparent Pricing',
-      descEs: 'Tarifas competitivas de mercado en South Bend con 3% de descuento al cotizar online. Sin cargos ocultos ni sorpresas.',
-      descEn: 'Competitive South Bend market pricing with a 3% direct online discount. Upfront estimates, no hidden fees.'
+      titleEs: 'Consulta Fija y Cotización Transparente',
+      titleEn: 'Fixed Consultation & Transparent Quotes',
+      descEs: 'Tarifa fija de consulta en sitio ($125). Cotización de mano de obra justa y clara según horas, tamaño y tipo de instalación.',
+      descEn: 'Fixed on-site consultation fee ($125). Fair and clear labor quote based on project hours, size, and installation scope.'
     },
     {
       icon: Clock,
@@ -53,24 +53,24 @@ export const HomeView: React.FC = () => {
   const steps = [
     {
       step: '01',
-      titleEs: 'Solicita tu Cotización',
-      titleEn: 'Request Your Estimate',
-      descEs: 'Usa nuestro cotizador online instantáneo o envía detalles de tu proyecto en 2 minutos.',
-      descEn: 'Use our instant online estimator or submit your job details with photos in 2 minutes.'
+      titleEs: 'Agenda tu Cita Online',
+      titleEn: 'Book Online in Minutes',
+      descEs: 'Elige tu servicio y franja horaria preferida en nuestro formulario interactivo.',
+      descEn: 'Select your service and preferred arrival window in our interactive booking form.'
     },
     {
       step: '02',
-      titleEs: 'Elige Fecha y Horario',
-      titleEn: 'Pick Your Schedule Slot',
-      descEs: 'Consulta la disponibilidad en tiempo real y reserva la franja que mejor te acomode.',
-      descEn: 'Check real-time calendar availability and select the open slot that fits your day.'
+      titleEs: 'Coordinación Directa',
+      titleEn: 'Direct Coordination',
+      descEs: 'Brian Cueva te contacta directamente por llamada o WhatsApp para afinar requerimientos y confirmar la cita.',
+      descEn: 'Brian Cueva reaches out directly via phone call or WhatsApp to confirm your schedule and project details.'
     },
     {
       step: '03',
-      titleEs: 'Trabajo Listo y Garantizado',
+      titleEs: 'Trabajo Impecable y Garantizado',
       titleEn: 'Job Done & Guaranteed',
-      descEs: 'Brian realiza la instalación o reparación con precisión artesanal y respaldo garantizado.',
-      descEn: 'Brian completes your installation or repair with seasoned craftsmanship and full warranty.'
+      descEs: 'Evaluación y ejecución profesional. Pago final al terminar mediante Zelle, Venmo, Cash App, Apple Pay, Tarjeta, Cash o Check.',
+      descEn: 'Expert on-site evaluation and craftsmanship. Final settlement upon completion via Zelle, Venmo, Cash App, Apple Pay, Cards, Cash, or Check.'
     }
   ];
 

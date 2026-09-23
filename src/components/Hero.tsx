@@ -64,7 +64,14 @@ export const Hero: React.FC = () => {
               <button onClick={() => openBookingWizard()} className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#0B3C5D] px-5 py-3.5 text-sm font-black text-white shadow-lg shadow-[#0B3C5D]/20 hover:bg-[#07273d]">
                 Request your estimate <ArrowRight className="h-4 w-4" />
               </button>
-              <a href={`tel:${businessInfo.phoneRaw}`} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-3 text-sm font-bold text-[var(--text)]"><Phone className="h-4 w-4 text-[var(--primary)]" /> {businessInfo.phone}</a>
+              <a 
+                href={`tel:${businessInfo.phoneRaw}`} 
+                className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-3 text-sm font-bold text-[var(--text)] hover:bg-[var(--surface)] transition-colors"
+                title={language === 'es' ? 'Llamar a Brian Cueva' : 'Call Brian Cueva'}
+              >
+                <Phone className="h-4 w-4 text-emerald-500" /> 
+                <span>{language === 'es' ? 'Llamar Ahora' : 'Call Now'}</span>
+              </a>
               <a href={businessInfo.thumbtackUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-5 py-3 text-sm font-black text-[var(--text)] hover:border-amber-500"><Star className="h-4 w-4 fill-amber-400 text-amber-500" /> Visit Thumbtack <ExternalLink className="h-4 w-4" /></a>
             </div>
           </div>

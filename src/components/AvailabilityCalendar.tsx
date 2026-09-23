@@ -12,7 +12,6 @@ import {
   ArrowRight,
   ShieldCheck
 } from 'lucide-react';
-import { ReviewsTickerCard } from './ReviewsTickerCard';
 
 export const AvailabilityCalendar: React.FC = () => {
   const { t, language, availability, openBookingWizard } = useApp();
@@ -185,8 +184,8 @@ export const AvailabilityCalendar: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
               {language === 'es'
-                ? '¿Necesitas un horario fuera de agenda? Llámanos directamente al (574) 279-9355.'
-                : 'Need an off-hours or emergency appointment? Call Brian at (574) 279-9355.'}
+                ? '¿Necesitas un horario especial fuera de agenda? Puedes consultar directamente con nuestro equipo de servicio.'
+                : 'Need an off-hours or emergency appointment? Inquire directly with our service desk.'}
             </div>
 
             <button
@@ -199,10 +198,6 @@ export const AvailabilityCalendar: React.FC = () => {
           </div>
 
         </div>
-
-        {/* Live Reviews Carousel Block */}
-        <ReviewsTickerCard />
-
       </div>
     </section>
   );

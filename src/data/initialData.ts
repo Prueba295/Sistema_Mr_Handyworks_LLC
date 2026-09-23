@@ -38,7 +38,20 @@ export const BUSINESS_INFO = {
     { id: 'fast_reply', labelEs: 'Respuesta en < 2 Horas', labelEn: 'Replies in < 2 Hours', icon: 'Clock' },
   ],
   thumbtackUrl: 'https://www.thumbtack.com/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708',
-  logoUrl: '/images/mr_handyworks_logo.jpg'
+  logoUrl: '/logo_handyworks.jpeg',
+  consultationFee: '$125',
+  depositRequired: 0,
+  depositPolicyEs: 'Tarifa fija de consulta en sitio: $125. La confirmación y detalles del servicio se coordinan directamente por llamada o WhatsApp con Brian Cueva.',
+  depositPolicyEn: 'Fixed on-site consultation fee: $125. Appointment confirmation and service details are coordinated directly via phone call or WhatsApp with Brian Cueva.',
+  paymentMethods: [
+    'Zelle',
+    'Venmo',
+    'Cash App',
+    'Apple Pay',
+    'Debit/Credit Cards (+3.5% processing fee)',
+    'Cash',
+    'Check'
+  ]
 };
 
 export const THUMBTACK_SERVICES_LIST = [
@@ -200,10 +213,10 @@ export const INITIAL_SERVICES: Service[] = [
     category: 'TV_MOUNTING',
     titleEs: 'Montaje de TV y Ocultamiento de Cables',
     titleEn: 'TV Mounting & In-Wall Cable Concealment',
-    descEs: 'Instalación profesional de televisores de 32" a 85"+ sobre paneles de yeso, chimeneas de piedra o ladrillo, con ocultamiento limpio de cables y soportes para Apple TV/consolas.',
-    descEn: 'Expert mounting for 32" to 85"+ displays over drywall, stone or brick fireplaces. Complete in-wall cable concealment and hidden Apple TV/streaming box bracket setups.',
+    descEs: 'Instalación profesional de televisores de 32" a 85"+ sobre paneles de yeso, chimeneas de piedra o ladrillo, con ocultamiento limpio de cables y soportes para Apple TV/consolas. El precio varía según las horas y el tipo o dificultad de instalación.',
+    descEn: 'Expert mounting for 32" to 85"+ displays over drywall, stone or brick fireplaces. Complete in-wall cable concealment and hidden brackets. Pricing varies based on hours and installation scope.',
     estimatedHours: '1 - 2.5 hrs',
-    rateEstimate: '$120 - $220',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and scope)',
     iconName: 'Tv',
     popular: true
   },
@@ -212,10 +225,10 @@ export const INITIAL_SERVICES: Service[] = [
     category: 'HOME_THEATER',
     titleEs: 'Cine en Casa y Sistemas de Sonido',
     titleEn: 'Home Theater & Surround Sound Setup',
-    descEs: 'Configuración acústica de barras de sonido, altavoces envolventes de pared/techo, paneles acústicos y cableado oculto para una experiencia de audio inmersiva.',
-    descEn: 'Acoustic placement of soundbars, in-wall/ceiling surround speakers, acoustic wall slat panels and clean wire routing for premium home cinema audio.',
+    descEs: 'Configuración acústica de barras de sonido, altavoces envolventes de pared/techo, paneles acústicos y cableado oculto para una experiencia de audio inmersiva. El costo se calcula según la complejidad del montaje.',
+    descEn: 'Acoustic placement of soundbars, in-wall/ceiling surround speakers, acoustic panels and clean wire routing. Final cost depends on room size and project scope.',
     estimatedHours: '2 - 4.5 hrs',
-    rateEstimate: '$180 - $340',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and scope)',
     iconName: 'Speaker',
     popular: true
   },
@@ -227,7 +240,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Parcheo de paneles de yeso, reparación de fugas menores de fontanería, reemplazo de molduras, fijación de azulejos sueltos y mantenimiento preventivo.',
     descEn: 'Drywall patching and texture matching, minor plumbing drain fixes, loose tile re-grouting, baseboard repairs, and all-around house fixes.',
     estimatedHours: '1.5 - 4 hrs',
-    rateEstimate: '$125 - $260',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and scope)',
     iconName: 'Wrench',
     popular: true
   },
@@ -239,7 +252,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Armado rápido y sólido de muebles IKEA, Wayfair, escritorios de oficina, armarios modulares, camas y máquinas de gimnasio con calibración perfecta.',
     descEn: 'Precision assembly of flat-pack furniture (IKEA, Wayfair, Amazon), office executive desks, bed frames, dressers, and home gym exercise gear.',
     estimatedHours: '1.5 - 3.5 hrs',
-    rateEstimate: '$95 - $210',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and scope)',
     iconName: 'Hammer',
     popular: true
   },
@@ -251,7 +264,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Pintura impecable de habitaciones, techos, puertas, rodapiés y paredes decorativas con bordes nítidos, preparación exhaustiva y protección de pisos.',
     descEn: 'Immaculate painting of bedrooms, living spaces, ceilings, door casings, and accent walls with razor-sharp lines and meticulous surface masking.',
     estimatedHours: '3 - 8 hrs',
-    rateEstimate: '$210 - $490',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and size)',
     iconName: 'Paintbrush',
     popular: true
   },
@@ -263,7 +276,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Instalación de puertas correderas tipo granero con herrajes industriales, ajuste de bisagras que rozan, cerraduras inteligentes y burletes térmicos.',
     descEn: 'Heavy sliding barn door hardware install, door realignment, smart deadbolt/handle installations, weatherstripping and interior casing repairs.',
     estimatedHours: '2 - 4 hrs',
-    rateEstimate: '$140 - $290',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and scope)',
     iconName: 'DoorOpen',
     popular: true
   },
@@ -275,7 +288,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Fabricación y anclaje reforzado de repisas flotantes de roble o pino con tiras LED integradas, revestimiento de paredes y molduras decorativas.',
     descEn: 'Heavy-duty wall anchoring of solid hardwood floating shelves with optional warm LED underglow, custom closet storage, and decorative finish carpentry.',
     estimatedHours: '2.5 - 5 hrs',
-    rateEstimate: '$160 - $340',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and size)',
     iconName: 'Layers',
     popular: false
   },
@@ -287,7 +300,7 @@ export const INITIAL_SERVICES: Service[] = [
     descEs: 'Reemplazo de lámparas colgantes, instalación de ventiladores de techo balanceados, espejos LED táctiles y cambio de lavabos o grifería.',
     descEn: 'Replacing old chandeliers with modern pendant lights, ceiling fan balancing, backlit LED vanity mirrors, and bathroom sink/faucet upgrades.',
     estimatedHours: '1.5 - 3.5 hrs',
-    rateEstimate: '$130 - $260',
+    rateEstimate: 'Consultation: $125 (Price varies by hours and scope)',
     iconName: 'Lightbulb',
     popular: true
   }
@@ -302,28 +315,19 @@ export const INITIAL_QR_METHODS: PaymentQR[] = [
   {
     id: 'zelle',
     provider: 'Zelle',
-    accountInfo: '(574) 279-9355 / Brian Cueva',
-    displayName: 'Zelle Direct Deposit',
-    instructionsEs: 'Envía tu depósito sin comisiones buscando nuestro número telefónico (574) 279-9355 registrado a nombre de Brian Cueva (Mr Handyworks LLC).',
-    instructionsEn: 'Send your fee-free deposit by searching our phone number (574) 279-9355 registered under Brian Cueva (Mr Handyworks LLC).',
-    isActive: true
-  },
-  {
-    id: 'paypal',
-    provider: 'PayPal',
-    accountInfo: '@mrhandyworks / paypal.me/mrhandyworks',
-    displayName: 'PayPal Business',
-    instructionsEs: 'Paga de forma protegida a través de PayPal escaneando el código QR o transfiriendo a @mrhandyworks.',
-    instructionsEn: 'Pay securely through PayPal by scanning the QR code or sending funds directly to @mrhandyworks.',
+    accountInfo: 'Mr Handyworks LLC / Business Account',
+    displayName: 'Zelle Direct Payment',
+    instructionsEs: 'Paga de manera directa y sin comisiones buscando nuestra cuenta comercial registrada a nombre de Mr Handyworks LLC.',
+    instructionsEn: 'Send direct fee-free payment by searching our business account registered under Mr Handyworks LLC.',
     isActive: true
   },
   {
     id: 'venmo',
     provider: 'Venmo',
-    accountInfo: '@Brian-Cueva-Handyworks',
+    accountInfo: '@MrHandyworks-LLC',
     displayName: 'Venmo Payments',
-    instructionsEs: 'Envía tu abono por Venmo a @Brian-Cueva-Handyworks con la referencia de tu proyecto.',
-    instructionsEn: 'Send your deposit via Venmo to @Brian-Cueva-Handyworks with your project reference ID.',
+    instructionsEs: 'Envía tu pago por Venmo a nuestra cuenta comercial @MrHandyworks-LLC.',
+    instructionsEn: 'Send payment via Venmo to verified business account @MrHandyworks-LLC.',
     isActive: true
   },
   {
@@ -331,8 +335,17 @@ export const INITIAL_QR_METHODS: PaymentQR[] = [
     provider: 'CashApp',
     accountInfo: '$MrHandyworks',
     displayName: 'CashApp $Cashtag',
-    instructionsEs: 'Envía tu depósito instantáneamente a nuestro $Cashtag: $MrHandyworks.',
-    instructionsEn: 'Send your deposit instantly using our verified $Cashtag: $MrHandyworks.',
+    instructionsEs: 'Envía tu pago instantáneamente a nuestro $Cashtag oficial: $MrHandyworks.',
+    instructionsEn: 'Send payment instantly using our verified $Cashtag: $MrHandyworks.',
+    isActive: true
+  },
+  {
+    id: 'applepay',
+    provider: 'ApplePay',
+    accountInfo: 'Mr Handyworks Apple Business Desk',
+    displayName: 'Apple Pay',
+    instructionsEs: 'Envía tu pago mediante Apple Pay a nuestra cuenta comercial de Mr Handyworks LLC.',
+    instructionsEn: 'Send payment via Apple Pay to verified Mr Handyworks LLC business account.',
     isActive: true
   }
 ];

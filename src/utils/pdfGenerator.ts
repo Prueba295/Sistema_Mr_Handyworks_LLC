@@ -147,16 +147,20 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en') => {
             <div><strong>${isEs ? 'Fecha Prevista' : 'Scheduled Date'}:</strong> ${booking.scheduledDate}</div>
             <div><strong>${isEs ? 'Horario' : 'Time Slot'}:</strong> ${booking.scheduledTimeSlot}</div>
             <div><strong>${isEs ? 'Método de Pago' : 'Payment Method'}:</strong> ${booking.paymentMethod}</div>
-            <div><strong>${isEs ? 'Estado Pago' : 'Payment Status'}:</strong> ${booking.paymentStatus}</div>
+            <div><strong>${isEs ? 'Estado en Agenda' : 'Calendar Status'}:</strong> ${
+              booking.status === 'CONFIRMED'
+                ? (isEs ? 'CONFIRMADA' : 'CONFIRMED')
+                : (isEs ? 'SOLICITADA (Coordinación vía Llamada / WhatsApp)' : 'REQUESTED (Coordination via Call / WhatsApp)')
+            }</div>
           </div>
         </div>
 
         <table>
           <thead>
             <tr>
-              <th>${isEs ? 'Descripción del Servicio' : 'Service Description'}</th>
-              <th>${isEs ? 'Tiempo Estimado' : 'Estimated Time'}</th>
-              <th style="text-align: right;">${isEs ? 'Total Estimado' : 'Estimated Total'}</th>
+              <th>${isEs ? 'Concepto del Servicio' : 'Service Item'}</th>
+              <th>${isEs ? 'Alcance / Tiempo' : 'Scope / Time'}</th>
+              <th style="text-align: right;">${isEs ? 'Tarifa Referencial' : 'Reference Fee'}</th>
             </tr>
           </thead>
           <tbody>
@@ -166,48 +170,52 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en') => {
                 <div style="font-size: 12px; color: #475569; margin-top: 4px;">
                   ${booking.projectDetails}
                 </div>
+                <div style="font-size: 11px; color: #0284c7; margin-top: 4px;">
+                  ${isEs ? '• Tarifa fija de Consulta y Diagnóstico en sitio: $125. La mano de obra final varía según horas y alcance de la instalación.' : '• Fixed On-site Consultation & Diagnostic Fee: $125. Final labor varies by hours and installation scope.'}
+                </div>
               </td>
               <td>${booking.estimatedHours}</td>
-              <td style="text-align: right; font-weight: 600;">$${booking.estimatedPrice}.00</td>
-            </tr>
-            ${booking.depositAmount ? `
-            <tr>
-              <td colspan="2" style="text-align: right; color: #059669; font-weight: bold;">
-                ${isEs ? 'Abono / Depósito Registrado' : 'Deposit Received'}:
-              </td>
-              <td style="text-align: right; color: #059669; font-weight: bold;">-$${booking.depositAmount}.00</td>
+              <td style="text-align: right; font-weight: 600;">$125.00</td>
             </tr>
             <tr class="total-row">
               <td colspan="2" style="text-align: right;">
-                ${isEs ? 'Saldo Pendiente al Completar' : 'Balance Remaining Due upon Completion'}:
+                ${isEs ? 'Tarifa Fija de Consulta en Sitio' : 'Fixed On-Site Consultation Fee'}:
               </td>
-              <td style="text-align: right; font-size: 16px; color: #0B3C5D;">
-                $${booking.estimatedPrice - booking.depositAmount}.00
-              </td>
-            </tr>
-            ` : `
-            <tr class="total-row">
-              <td colspan="2" style="text-align: right;">
-                ${isEs ? 'Total Estimado' : 'Total Estimated'}:
-              </td>
-              <td style="text-align: right; font-size: 16px; color: #0B3C5D;">
-                $${booking.estimatedPrice}.00
+              <td style="text-align: right; font-size: 15px; color: #0B3C5D; font-weight: bold;">
+                $125.00
               </td>
             </tr>
-            `}
           </tbody>
         </table>
 
+        ${booking.attachments && booking.attachments.length > 0 ? `
+          <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; font-size: 12px;">
+            <strong style="color: #0B3C5D;">${isEs ? 'Archivos Adjuntados por el Cliente (' + booking.attachments.length + '):' : 'Client Attachments (' + booking.attachments.length + '):'}</strong>
+            <ul style="margin: 6px 0 0 0; padding-left: 20px; color: #475569;">
+              ${booking.attachments.map(att => `<li>${att.name} <span style="color: #94A3B8;">(${att.type.toUpperCase()}, ${att.sizeFormatted})</span></li>`).join('')}
+            </ul>
+          </div>
+        ` : ''}
+
+        <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; font-size: 12px; color: #1E40AF;">
+          <strong>${isEs ? 'Coordinación y Confirmación:' : 'Booking Coordination & Confirmation:'}</strong>
+          ${isEs
+            ? 'La confirmación del horario y detalles técnicos se coordinan directamente mediante llamada telefónica o WhatsApp oficial de servicio.'
+            : 'Schedule confirmation and project details are coordinated directly via official service phone call or WhatsApp.'}
+        </div>
+
         <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 14px; margin-bottom: 24px; font-size: 12px;">
-          <strong>${isEs ? 'Garantía de Calidad Mr Handyworks LLC:' : 'Mr Handyworks LLC Quality Guarantee:'}</strong>
-          ${isEs 
-            ? 'Todos los trabajos son ejecutados conforme a normas de seguridad residencial y con total garantía de mano de obra. Ante cualquier duda, comuníquese directamente al (574) 279-9355.'
-            : 'All craftsmanship is executed following residential safety standards and guaranteed. If you have any questions, reach Brian directly at (574) 279-9355.'}
+          <strong>${isEs ? 'Métodos de Pago Aceptados:' : 'Accepted Payment Methods:'}</strong>
+          <div>
+            ${isEs
+              ? '• Zelle, Venmo (@Brian-Cueva-Handyworks), Cash App ($MrHandyworks), Apple Pay (Sin recargo)<br>• Tarjetas de Débito o Crédito (+3.5% de comisión por el sistema)<br>• Cash (Efectivo) o Check (Cheque) aceptados para saldo final al completar el trabajo.'
+              : '• Zelle, Venmo (@Brian-Cueva-Handyworks), Cash App ($MrHandyworks), Apple Pay (0% fee)<br>• Debit or Credit Cards (+3.5% processing fee)<br>• Cash or Check accepted for remaining balance upon project completion.'}
+          </div>
         </div>
 
         <div class="footer">
-          <div>${BUSINESS_INFO.name} • Brian Cueva</div>
-          <div>South Bend, IN • (574) 279-9355</div>
+          <div>${BUSINESS_INFO.name} • Official Work Order</div>
+          <div>South Bend, IN • Licensed &amp; Insured</div>
           <div>Page 1 of 1</div>
         </div>
       </body>
