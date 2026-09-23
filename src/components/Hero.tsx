@@ -25,7 +25,7 @@ export const Hero: React.FC = () => {
             <div className="relative flex h-full flex-col justify-between gap-10">
               <div>
                 <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-200">
-                  <ShieldCheck className="h-3.5 w-3.5" /> Licensed, insured & background checked
+                  <ShieldCheck className="h-3.5 w-3.5" /> INSURED, BONDED & BACKGROUND CHECKED
                 </div>
                 <h1 className="max-w-xl text-4xl font-black leading-[1.02] tracking-tight sm:text-5xl">
                   Reliable work for the place you call home.
@@ -38,7 +38,7 @@ export const Hero: React.FC = () => {
               </div>
               <div className="flex flex-wrap gap-2 text-xs font-bold text-white/90">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-2"><Star className="h-3.5 w-3.5 fill-amber-300 text-amber-300" /> 5.0 on Thumbtack</span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-2"><Clock3 className="h-3.5 w-3.5" /> Replies in under 2 hours</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-2"><Clock3 className="h-3.5 w-3.5" /> Typical response within 2 hours</span>
               </div>
             </div>
           </div>

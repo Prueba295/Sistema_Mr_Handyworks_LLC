@@ -58,22 +58,22 @@ export const HomeView: React.FC = () => {
   const steps = [
     {
       step: '01',
-      titleEs: '01 — Solicita tu Servicio',
-      titleEn: '01 — Request Your Service',
+      titleEs: 'Solicita tu Servicio',
+      titleEn: 'Request & Estimate',
       descEs: 'Selecciona tu servicio y la franja de horario preferida a través de nuestro formulario de reserva en línea.',
       descEn: 'Select your service and preferred appointment window through our online booking form.'
     },
     {
       step: '02',
-      titleEs: '02 — Confirmación del Proyecto',
-      titleEn: '02 — Project Confirmation',
+      titleEs: 'Confirmación del Proyecto',
+      titleEn: 'Project Confirmation',
       descEs: 'Un miembro de nuestro equipo te contactará para confirmar tu cita, detalles del proyecto, requisitos de acceso y cualquier información adicional necesaria antes del servicio.',
       descEn: 'A member of our team will contact you to confirm your appointment, project details, access requirements, and any additional information needed before service.'
     },
     {
       step: '03',
-      titleEs: '03 — Servicio y Finalización',
-      titleEn: '03 — Service & Completion',
+      titleEs: 'Servicio y Finalización',
+      titleEn: 'Service & Completion',
       descEs: 'Tu profesional asignado de Mr Handyworks completa el alcance de trabajo aprobado. El pago final vence al completarse el servicio, a menos que se establezcan términos de pago diferentes en tu presupuesto o contrato por escrito.',
       descEn: 'Your assigned Mr Handyworks professional completes the approved scope of work. Final payment is due upon completion unless different payment terms are stated in your written estimate or agreement.'
     }
@@ -216,7 +216,7 @@ export const HomeView: React.FC = () => {
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
             {language === 'es'
               ? 'Atención rápida y puntual en los siguientes condados y códigos postales:'
-              : 'Fast, prompt service across local counties and neighborhoods:'}
+              : 'Serving homeowners and businesses throughout South Bend and the Michiana area:'}
           </p>
         </div>
 
