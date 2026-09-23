@@ -150,7 +150,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en') => {
             <div><strong>${isEs ? 'Estado en Agenda' : 'Calendar Status'}:</strong> ${
               booking.status === 'CONFIRMED'
                 ? (isEs ? 'CONFIRMADA' : 'CONFIRMED')
-                : (isEs ? 'SOLICITADA (Coordinación vía Llamada / WhatsApp)' : 'REQUESTED (Coordination via Call / WhatsApp)')
+                : (isEs ? 'SOLICITADA (Coordinación vía Llamada / SMS)' : 'REQUESTED (Coordination via Call / SMS)')
             }</div>
           </div>
         </div>
@@ -200,8 +200,8 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en') => {
         <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; font-size: 12px; color: #1E40AF;">
           <strong>${isEs ? 'Coordinación y Confirmación:' : 'Booking Coordination & Confirmation:'}</strong>
           ${isEs
-            ? 'La confirmación del horario y detalles técnicos se coordinan directamente mediante llamada telefónica o WhatsApp oficial de servicio.'
-            : 'Schedule confirmation and project details are coordinated directly via official service phone call or WhatsApp.'}
+            ? 'La confirmación del horario y detalles técnicos se coordinan directamente mediante llamada telefónica o SMS oficial de servicio.'
+            : 'Schedule confirmation and project details are coordinated directly via official service phone call or SMS.'}
         </div>
 
         <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 14px; margin-bottom: 24px; font-size: 12px;">

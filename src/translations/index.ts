@@ -13,7 +13,7 @@ export const translations = {
       phone: '(574) 279-9355'
     },
     hero: {
-      tagline: 'Mr Handyworks LLC • Brian Cueva',
+      tagline: 'Mr Handyworks LLC • Home Services & Repairs',
       title: 'Reparaciones y Remodelación Profesional del Hogar',
       subtitle: 'Trabajos bien hechos a la primera. Servicio rápido, limpio y garantizado en South Bend, Mishawaka, Granger y alrededores.',
       ctaQuote: 'Solicitar Cotización Gratis',
@@ -27,9 +27,9 @@ export const translations = {
     },
     credentials: {
       title: 'Tu Profesional de Confianza',
-      subtitle: 'Brian Cueva, maestro artesano y propietario de Mr Handyworks LLC',
+      subtitle: 'Brian Cueva, Fundador y Propietario de Mr Handyworks LLC',
       bio1: 'Con años de experiencia en reparación residencial y remodelación, Brian fundó Mr Handyworks LLC para brindar un estándar superior: puntualidad rigurosa, presupuestos transparentes sin sorpresas y acabados milimétricos.',
-      bio2: 'Cada proyecto es ejecutado personalmente con herramientas profesionales, nivel láser y máxima protección para su mobiliario y pisos. Al finalizar, el área de trabajo queda siempre impecable.',
+      bio2: 'Cada proyecto gestionado por Mr Handyworks LLC es ejecutado con herramientas profesionales, nivel láser y máxima protección para su mobiliario y pisos, ya sea por el dueño, técnicos de nuestro equipo o subcontratistas calificados.',
       guaranteeTitle: 'Nuestra Garantía de Calidad:',
       guarantees: [
         'Hecho bien a la primera, sin atajos ni materiales defectuosos.',
@@ -136,12 +136,12 @@ export const translations = {
       preferredDate: 'Fecha Seleccionada',
       preferredSlot: 'Franja Horaria Preferida',
       paymentSectionTitle: 'Coordinación y Pago',
-      paymentSectionDesc: 'Tarifa fija de consulta: $125. La confirmación de la cita y la forma de pago se coordinan directamente por llamada o WhatsApp con Brian Cueva.',
+      paymentSectionDesc: 'Las consultas en sitio inician en $125. La confirmación de la cita y la forma de pago se coordinan directamente por llamada o SMS con el equipo de Mr Handyworks LLC.',
       paymentMethodsTitle: 'Métodos de Pago Aceptados:',
       payWithQR: 'Zelle, Venmo, Cash App, Apple Pay (Sin recargo)',
       payWithCard: 'Tarjeta de Débito o Crédito (+3.5% de comisión por el sistema)',
       payCashCheck: 'Efectivo (Cash) o Cheque (Check) al completar el trabajo',
-      depositAmount: 'Tarifa Fija de Consulta:',
+      depositAmount: 'Consulta en Sitio (Inicia en):',
       balanceRemaining: 'Mano de Obra en Sitio:',
       balanceNote: 'El costo final del proyecto se determina en sitio según las horas y materiales necesarios.',
       cardNumber: 'Número de Tarjeta',
@@ -152,18 +152,18 @@ export const translations = {
       submitting: 'Procesando Solicitud...',
       successTitle: '¡Solicitud Recibida con Éxito!',
       successRef: 'Código de Solicitud:',
-      successMsg: 'Hemos recibido tu solicitud de cita. Brian Cueva te contactará directamente por llamada o WhatsApp para coordinar detalles y confirmar la agenda.',
+      successMsg: 'Hemos recibido tu solicitud de cita. Un miembro de nuestro equipo te contactará directamente por llamada o SMS para coordinar detalles y confirmar la agenda.',
       downloadQuote: 'Descargar Comprobante en PDF',
       closeBtn: 'Cerrar'
     },
     qrModal: {
       title: 'Métodos de Pago Directo',
-      subtitle: 'Realiza tu pago directamente a Brian Cueva (Mr Handyworks LLC).',
+      subtitle: 'Realiza tu pago directamente a Mr Handyworks LLC.',
       scanNotice: 'Elige tu aplicación preferida:',
       copyAccount: 'Copiar Datos',
       copied: '¡Copiado al portapapeles!',
       doneConfirm: 'Listo',
-      verifiedMerchant: 'Comercio Verificado: Mr Handyworks LLC (Brian Cueva)'
+      verifiedMerchant: 'Comercio Verificado: Mr Handyworks LLC'
     },
     admin: {
       loginTitle: 'Panel de Administración Privado',
@@ -199,7 +199,7 @@ export const translations = {
       actionCancel: 'Cancelar',
       actionInvoice: 'Generar Orden / PDF',
       actionCall: 'Llamar al Cliente',
-      actionWhatsApp: 'Enviar WhatsApp',
+      actionSMS: 'Enviar SMS',
       portfolioTitle: 'Gestor del Portafolio Multimedia',
       addProjectBtn: 'Añadir Nuevo Proyecto',
       reviewsTitle: 'Moderación de Reseñas de Clientes',
@@ -232,7 +232,7 @@ export const translations = {
       phone: '(574) 279-9355'
     },
     hero: {
-      tagline: 'Mr Handyworks LLC • Brian Cueva',
+      tagline: 'Mr Handyworks LLC • Home Services & Repairs',
       title: 'Professional Home Repairs & Remodeling Services',
       subtitle: 'Done right the first time. Fast, immaculate, and guaranteed craftsmanship serving South Bend, Mishawaka, Granger, and surrounding communities.',
       ctaQuote: 'Request Free Estimate',
@@ -246,9 +246,9 @@ export const translations = {
     },
     credentials: {
       title: 'Your Trusted Home Craftsman',
-      subtitle: 'Brian Cueva, Master Craftsman & Owner of Mr Handyworks LLC',
+      subtitle: 'Brian Cueva, Owner & Founder of Mr Handyworks LLC',
       bio1: 'With years of hands-on experience in residential repairs and remodeling, Brian established Mr Handyworks LLC around a core standard: strict punctuality, transparent upfront estimates with zero surprises, and millimeter precision.',
-      bio2: 'Every project is personally handled with heavy-duty pro tools, laser leveling, and total protection of your furniture and floors. When the job is done, your space is left sparkling clean.',
+      bio2: 'Every project managed by Mr Handyworks LLC is executed with heavy-duty pro tools, laser leveling, and total protection of your furniture and floors—whether performed by the owner, a team technician, or a qualified specialist.',
       guaranteeTitle: 'Our Quality Guarantee:',
       guarantees: [
         'Done right the first time, never taking shortcuts or using inferior hardware.',
@@ -342,8 +342,8 @@ export const translations = {
       zipCode: 'Zip Code',
       zipHint: 'Servicing South Bend (46601-46637), Mishawaka (46544-46546), Granger (46530), Elkhart (46514-46517)',
       estimatedHours: 'Estimated Project Scope',
-      calcRate: 'Fixed Consultation & Diagnostic Fee:',
-      consultationNotice: 'Fixed Consultation Fee: $125. Final service labor varies based on project hours, size, and installation scope.',
+      calcRate: 'On-Site Consultation (Starts at):',
+      consultationNotice: 'On-site consultations start at $125. Estimates are based on visible conditions and agreed scope at the time of evaluation. Concealed conditions or additional work may require additional pricing and customer approval.',
       detailsLabel: 'Project description & special instructions:',
       detailsPlaceholder: 'E.g., Mount a TV over fireplace and conceal all power cables inside the wall...',
       attachPhoto: 'Attach Project Area Photos (Optional):',
@@ -355,12 +355,12 @@ export const translations = {
       preferredDate: 'Selected Date',
       preferredSlot: 'Preferred Arrival Window',
       paymentSectionTitle: 'Coordination & Payment',
-      paymentSectionDesc: 'Fixed consultation fee: $125. Appointment confirmation and payment are coordinated directly via phone call or WhatsApp with Brian Cueva.',
+      paymentSectionDesc: 'On-site consultations start at $125. Appointment confirmation and payment are coordinated directly via phone call or SMS with the Mr Handyworks team.',
       paymentMethodsTitle: 'Accepted Payment Methods:',
       payWithQR: 'Zelle, Venmo, Cash App, Apple Pay (Fee-free)',
       payWithCard: 'Debit or Credit Card (+3.5% processing fee)',
       payCashCheck: 'Cash or Check upon project completion',
-      depositAmount: 'Fixed Consultation Fee:',
+      depositAmount: 'On-Site Consultation (From):',
       balanceRemaining: 'On-Site Labor Quote:',
       balanceNote: 'Final project labor and materials are evaluated on-site and quoted before starting work.',
       cardNumber: 'Card Number',
@@ -371,18 +371,18 @@ export const translations = {
       submitting: 'Processing Request...',
       successTitle: 'Booking Request Received!',
       successRef: 'Booking Reference:',
-      successMsg: 'Brian Cueva has received your appointment request. We will contact you directly via phone call or WhatsApp to confirm your schedule and coordinate details.',
+      successMsg: 'Our team has received your appointment request. A member of our team will contact you directly via phone call or SMS to confirm your schedule and coordinate details.',
       downloadQuote: 'Download Booking Summary (PDF)',
       closeBtn: 'Close'
     },
     qrModal: {
       title: 'Direct Payment Options',
-      subtitle: 'Submit payment directly to Brian Cueva (Mr Handyworks LLC).',
+      subtitle: 'Submit payment directly to Mr Handyworks LLC.',
       scanNotice: 'Select your preferred payment method:',
       copyAccount: 'Copy Details',
       copied: 'Copied to clipboard!',
       doneConfirm: 'Done',
-      verifiedMerchant: 'Verified Merchant: Mr Handyworks LLC (Brian Cueva)'
+      verifiedMerchant: 'Verified Merchant: Mr Handyworks LLC'
     },
     admin: {
       loginTitle: 'Private Management Suite',
@@ -418,7 +418,7 @@ export const translations = {
       actionCancel: 'Cancel Booking',
       actionInvoice: 'Generate Work Order PDF',
       actionCall: 'Call Client',
-      actionWhatsApp: 'Send WhatsApp',
+      actionSMS: 'Send SMS',
       portfolioTitle: 'Media Portfolio Manager',
       addProjectBtn: 'Add New Project',
       reviewsTitle: 'Customer Review Moderation',

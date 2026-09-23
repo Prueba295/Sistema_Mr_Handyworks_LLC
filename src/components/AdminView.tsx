@@ -16,7 +16,7 @@ import {
   BookingStatus,
   ServiceCategory
 } from '../types';
-import { buildOwnerWhatsAppNotificationUrl } from '../utils/liveNotifier';
+import { buildOwnerSMSNotificationUrl } from '../utils/liveNotifier';
 import { 
   Lock, 
   LogOut, 
@@ -62,10 +62,19 @@ import {
   FolderArchive,
   FileCode,
   Search,
-  MessageSquare,
-  Send
+  Send,
+  Volume2,
+  Compass,
+  Presentation,
+  FileQuestion,
+  Loader2
 } from 'lucide-react';
-import { getFileExtension, getDetailedCategory } from '../utils/attachmentOptimizer';
+import { 
+  getFileExtension, 
+  getDetailedCategory, 
+  normalizeDataUrl, 
+  healOrConvertImageDataUrl 
+} from '../utils/attachmentOptimizer';
 
 export const AdminView: React.FC = () => {
   const { 
@@ -101,6 +110,8 @@ export const AdminView: React.FC = () => {
     resetToDefaults,
     navigateTo,
     toggleLanguage,
+    recoveryPhone,
+    setRecoveryPhone,
     recoveryEmail,
     setRecoveryEmail,
     changeAdminPassword,
@@ -121,13 +132,14 @@ export const AdminView: React.FC = () => {
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockoutRemaining, setLockoutRemaining] = useState(0);
 
-  // Recovery OTP state
+  // Recovery OTP state (Phone primary, email optional backup)
   const [isRecoveryMode, setIsRecoveryMode] = useState(false);
   const [recoveryStep, setRecoveryStep] = useState<'REQUEST' | 'VERIFY'>('REQUEST');
   const [recoveryCodeInput, setRecoveryCodeInput] = useState('');
   const [newPasswordInput, setNewPasswordInput] = useState('');
   const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
   const [recoveryError, setRecoveryError] = useState('');
+  const [lastGeneratedOtp, setLastGeneratedOtp] = useState<string | null>(null);
 
   // Editing portfolio state
   const [editingMediaId, setEditingMediaId] = useState<string | null>(null);
@@ -135,21 +147,81 @@ export const AdminView: React.FC = () => {
 
   // Direct Settings changes
   const [settingsNewPassword, setSettingsNewPassword] = useState('');
+  const [settingsRecoveryPhone, setSettingsRecoveryPhone] = useState(recoveryPhone);
   const [settingsRecoveryEmail, setSettingsRecoveryEmail] = useState(recoveryEmail);
+
+  React.useEffect(() => {
+    setSettingsRecoveryPhone(recoveryPhone);
+  }, [recoveryPhone]);
+
+  React.useEffect(() => {
+    setSettingsRecoveryEmail(recoveryEmail);
+  }, [recoveryEmail]);
 
   // Work Orders & Bookings filtering & media lightbox state
   const [bookingFilterStatus, setBookingFilterStatus] = useState<'ALL' | BookingStatus>('ALL');
   const [bookingSearchQuery, setBookingSearchQuery] = useState('');
   const [previewAttachment, setPreviewAttachment] = useState<BookingAttachment | null>(null);
   const [imageLoadError, setImageLoadError] = useState(false);
+  const [isAttemptingImageHealing, setIsAttemptingImageHealing] = useState(false);
+  const [healedImageUrl, setHealedImageUrl] = useState<string | null>(null);
+  const [decodedTextContent, setDecodedTextContent] = useState<string | null>(null);
   const [imageZoom, setImageZoom] = useState(1);
   const [imageRotation, setImageRotation] = useState(0);
 
   React.useEffect(() => {
     setImageLoadError(false);
+    setIsAttemptingImageHealing(false);
+    setHealedImageUrl(null);
+    setDecodedTextContent(null);
     setImageZoom(1);
     setImageRotation(0);
+
+    // Decode text/csv content if attachment is text or code
+    if (previewAttachment?.dataUrl) {
+      const ext = getFileExtension(previewAttachment.name);
+      const cat = getDetailedCategory(previewAttachment.name, previewAttachment.mimeType);
+      if (cat === 'text' || ['txt', 'csv', 'tsv', 'json', 'log', 'md', 'xml', 'html', 'css'].includes(ext)) {
+        try {
+          const parts = previewAttachment.dataUrl.split(',');
+          if (parts.length > 1) {
+            const rawDecoded = decodeURIComponent(escape(atob(parts[1])));
+            setDecodedTextContent(rawDecoded);
+          }
+        } catch {
+          try {
+            const parts = previewAttachment.dataUrl.split(',');
+            if (parts.length > 1) {
+              setDecodedTextContent(atob(parts[1]));
+            }
+          } catch {
+            setDecodedTextContent(null);
+          }
+        }
+      }
+    }
   }, [previewAttachment]);
+
+  const handleImageError = async () => {
+    if (!previewAttachment || isAttemptingImageHealing || healedImageUrl) {
+      setImageLoadError(true);
+      return;
+    }
+    setIsAttemptingImageHealing(true);
+    try {
+      const healed = await healOrConvertImageDataUrl(previewAttachment.dataUrl);
+      if (healed) {
+        setHealedImageUrl(healed);
+        setImageLoadError(false);
+      } else {
+        setImageLoadError(true);
+      }
+    } catch {
+      setImageLoadError(true);
+    } finally {
+      setIsAttemptingImageHealing(false);
+    }
+  };
 
   // Lockout countdown timer
   React.useEffect(() => {
@@ -268,12 +340,13 @@ export const AdminView: React.FC = () => {
 
   const handleSendRecoveryOTP = () => {
     const code = requestPasswordResetCode();
+    setLastGeneratedOtp(code);
     setRecoveryStep('VERIFY');
     setRecoveryError('');
     showNotification(
       language === 'es'
-        ? `Código enviado a ${recoveryEmail}: [ ${code} ] (Copia este código de 6 dígitos)`
-        : `Verification code sent to ${recoveryEmail}: [ ${code} ] (Copy this 6-digit code)`
+        ? `Código de 6 dígitos enviado al ${recoveryPhone || '(574) 555-0199'}: [ ${code} ]`
+        : `6-digit verification code sent to ${recoveryPhone || '(574) 555-0199'}: [ ${code} ]`
     );
   };
 
@@ -295,6 +368,7 @@ export const AdminView: React.FC = () => {
       setNewPasswordInput('');
       setConfirmPasswordInput('');
       setRecoveryError('');
+      setLastGeneratedOtp(null);
       setPasswordInput(newPasswordInput);
       showNotification(
         language === 'es'
@@ -316,6 +390,29 @@ export const AdminView: React.FC = () => {
     if (ok) {
       setSettingsNewPassword('');
     }
+  };
+
+  const handleUpdateAdminPhoneDirect = (e: React.FormEvent) => {
+    e.preventDefault();
+    const phoneVal = validateUSPhone(settingsRecoveryPhone);
+    if (!phoneVal.isValid) {
+      showNotification(phoneVal.error || (language === 'es' ? 'Ingresa un número telefónico válido' : 'Please enter a valid phone number'));
+      return;
+    }
+    setRecoveryPhone(settingsRecoveryPhone);
+  };
+
+  const handleUpdateAdminEmailDirect = (e: React.FormEvent) => {
+    e.preventDefault();
+    const clean = settingsRecoveryEmail.trim();
+    if (clean) {
+      const emailVal = validateEmail(clean);
+      if (!emailVal.isValid) {
+        showNotification(emailVal.error || (language === 'es' ? 'Ingresa un correo electrónico válido' : 'Please enter a valid email address'));
+        return;
+      }
+    }
+    setRecoveryEmail(clean);
   };
 
   const handleSaveEditMedia = (id: string) => {
@@ -344,17 +441,6 @@ export const AdminView: React.FC = () => {
     setEditingMediaId(null);
     setEditMediaForm({});
     showNotification(language === 'es' ? 'Elemento multimedia actualizado' : 'Media item updated successfully');
-  };
-
-  const handleUpdateAdminEmailDirect = (e: React.FormEvent) => {
-    e.preventDefault();
-    const emailVal = validateEmail(settingsRecoveryEmail);
-    if (!emailVal.isValid || !settingsRecoveryEmail) {
-      showNotification(language === 'es' ? 'Ingresa un correo electrónico válido' : 'Please enter a valid email address');
-      return;
-    }
-    setRecoveryEmail(settingsRecoveryEmail);
-    showNotification(language === 'es' ? 'Correo de recuperación actualizado' : 'Recovery email updated successfully');
   };
 
   const handleSaveBusinessInfo = (e: React.FormEvent) => {
@@ -702,35 +788,77 @@ export const AdminView: React.FC = () => {
               </button>
             </form>
           ) : (
-            /* OTP RECOVERY FLOW */
+            /* OTP RECOVERY FLOW - PHONE PRIMARY (6 DIGITS), EMAIL OPTIONAL BACKUP */
             <div className="space-y-4 text-left">
               {recoveryStep === 'REQUEST' ? (
                 <div className="space-y-4">
-                  <div className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-xs text-slate-700 dark:text-slate-300">
-                    <p className="font-bold mb-1">
-                      {language === 'es' ? 'Correo de Recuperación Registrado:' : 'Registered Recovery Email:'}
+                  <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-slate-700 dark:text-slate-300 space-y-2.5">
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                        <Phone className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
+                          {language === 'es' ? 'Recuperación por Teléfono (Principal)' : 'Recovery via Phone (Primary)'}
+                        </span>
+                        <span className="font-mono text-sm sm:text-base text-[#0B3C5D] dark:text-blue-300 font-extrabold">
+                          {recoveryPhone || '(574) 555-0199'}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {language === 'es'
+                        ? 'Se enviará un código de verificación de 6 dígitos directamente a tu número de teléfono móvil.'
+                        : 'A 6-digit verification code will be sent directly to your registered mobile phone number.'}
                     </p>
-                    <p className="font-mono text-xs text-[#0B3C5D] dark:text-blue-300 font-bold break-all">
-                      {recoveryEmail}
-                    </p>
-                    <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
-                      {language === 'es' 
-                        ? 'Se enviará un código numérico temporal de 6 dígitos válido por 15 minutos.' 
-                        : 'A temporary 6-digit numeric verification code valid for 15 minutes will be generated.'}
-                    </p>
+                    {recoveryEmail && (
+                      <div className="pt-2 border-t border-emerald-200/60 dark:border-emerald-800/60 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+                        <Mail className="w-3.5 h-3.5 text-slate-400" />
+                        <span>{language === 'es' ? 'Respaldo opcional:' : 'Optional backup:'} <strong className="text-slate-700 dark:text-slate-300">{recoveryEmail}</strong></span>
+                      </div>
+                    )}
                   </div>
 
                   <button
                     type="button"
                     onClick={handleSendRecoveryOTP}
-                    className="w-full py-3 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     <KeyRound className="w-4 h-4" />
-                    <span>{language === 'es' ? 'Enviar Código de Verificación' : 'Send Verification Code'}</span>
+                    <span>{language === 'es' ? 'Enviar Código de 6 Dígitos a mi Teléfono' : 'Send 6-Digit Code to My Phone'}</span>
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleConfirmReset} className="space-y-3">
+                <form onSubmit={handleConfirmReset} className="space-y-3.5">
+                  {/* Generated OTP Badge with Direct SMS Quick-Send */}
+                  {lastGeneratedOtp && (
+                    <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-center space-y-2">
+                      <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-800 dark:text-emerald-300 block">
+                        {language === 'es' ? 'Código de 6 Dígitos Generado:' : 'Generated 6-Digit Code:'}
+                      </span>
+                      <div className="text-2xl font-black font-mono tracking-[0.25em] text-emerald-700 dark:text-emerald-300 bg-white dark:bg-slate-900 py-1.5 px-4 rounded-xl border border-emerald-200 dark:border-emerald-700 inline-block shadow-2xs">
+                        {lastGeneratedOtp}
+                      </div>
+                      <div className="flex flex-wrap items-center justify-center gap-2 pt-0.5">
+                        <a
+                          href={`sms:${(recoveryPhone || '5745550199').replace(/\D/g, '')}?body=${encodeURIComponent(language === 'es' ? `Tu código de verificación de Mr Handyworks es: ${lastGeneratedOtp}` : `Your Mr Handyworks verification code is: ${lastGeneratedOtp}`)}`}
+                          className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold inline-flex items-center gap-1 shadow-2xs"
+                        >
+                          <Phone className="w-3 h-3" />
+                          <span>SMS</span>
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => setRecoveryCodeInput(lastGeneratedOtp)}
+                          className="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          <Check className="w-3 h-3" />
+                          <span>{language === 'es' ? 'Copiar al campo' : 'Auto-fill'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
                       {language === 'es' ? 'Código de Verificación (6 Dígitos):' : '6-Digit Verification Code:'}
@@ -782,11 +910,21 @@ export const AdminView: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Check className="w-4 h-4" />
                     <span>{language === 'es' ? 'Restablecer Contraseña' : 'Reset Password'}</span>
                   </button>
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={handleSendRecoveryOTP}
+                      className="text-[11px] font-bold text-[#0B3C5D] dark:text-blue-400 hover:underline cursor-pointer"
+                    >
+                      {language === 'es' ? '¿No recibiste el código? Generar otro' : 'Didn\'t get the code? Generate new'}
+                    </button>
+                  </div>
                 </form>
               )}
 
@@ -1103,67 +1241,121 @@ export const AdminView: React.FC = () => {
 
           {/* SECURITY & ADMIN CREDENTIALS SECTION */}
           <div className="pt-6 border-t-2 border-dashed border-slate-200 dark:border-slate-700/80 space-y-6">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-emerald-500" />
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
               <div>
                 <h4 className="text-base font-black text-slate-900 dark:text-white">
-                  {language === 'es' ? 'Seguridad y Credenciales de Administrador' : 'Security & Admin Credentials'}
+                  {language === 'es' ? 'Seguridad y Recuperación de Contraseña' : 'Security & Password Recovery'}
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   {language === 'es' 
-                    ? 'Gestiona el correo de recuperación para el código OTP de 6 dígitos y actualiza tu contraseña de acceso.' 
-                    : 'Manage the recovery email for 6-digit OTP reset and update your portal master password.'}
+                    ? 'La recuperación se realiza exclusivamente con tu número de teléfono (código de 6 dígitos). El correo es un respaldo 100% opcional sin obligación.' 
+                    : 'Password recovery operates primarily via your phone number (6-digit OTP). Email is 100% optional without obligation.'}
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Card 1: Recovery Email */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4">
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                    {language === 'es' ? 'Correo de Recuperación (OTP)' : 'Recovery Email (OTP)'}
-                  </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Card 1: Primary Recovery Phone (Strictly required for OTP) */}
+              <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border-2 border-emerald-500/30 dark:border-emerald-600/40 space-y-4 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                      <span className="text-xs font-black uppercase tracking-wider text-emerald-900 dark:text-emerald-300">
+                        {language === 'es' ? 'Teléfono de Recuperación' : 'Recovery Phone'}
+                      </span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-600 text-white shadow-2xs">
+                      {language === 'es' ? 'Principal' : 'Primary'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                    {language === 'es'
+                      ? 'Número donde recibirás el código de 6 dígitos para restablecer tu contraseña en caso de olvido.'
+                      : 'Phone number where you will receive the 6-digit OTP code to reset your password.'}
+                  </p>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {language === 'es'
-                    ? 'A este correo se enviará el código numérico de 6 dígitos en caso de olvidar la contraseña.'
-                    : 'A 6-digit verification code will be sent to this email if you ever forget your password.'}
-                </p>
-                <form onSubmit={handleUpdateAdminEmailDirect} className="space-y-3">
+                <form onSubmit={handleUpdateAdminPhoneDirect} className="space-y-3 pt-2">
                   <input
-                    type="email"
+                    type="tel"
                     required
-                    value={settingsRecoveryEmail}
-                    onChange={(e) => setSettingsRecoveryEmail(e.target.value)}
-                    placeholder="brian@mr-handyworks-llc.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white"
+                    value={settingsRecoveryPhone}
+                    onChange={(e) => setSettingsRecoveryPhone(e.target.value)}
+                    placeholder="(574) 555-0199"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-300 dark:border-emerald-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white font-mono"
                   />
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Save className="w-3.5 h-3.5" />
-                    <span>{language === 'es' ? 'Actualizar Correo de Recuperación' : 'Update Recovery Email'}</span>
+                    <span>{language === 'es' ? 'Actualizar Teléfono Principal' : 'Update Recovery Phone'}</span>
                   </button>
                 </form>
               </div>
 
-              {/* Card 2: Change Password */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4">
-                <div className="flex items-center gap-2">
-                  <Lock className="w-4 h-4 text-amber-500" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                    {language === 'es' ? 'Cambiar Contraseña de Acceso' : 'Change Portal Password'}
-                  </span>
+              {/* Card 2: Optional Backup Email (Strictly optional, no obligation) */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-blue-500 dark:text-blue-400" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        {language === 'es' ? 'Correo de Respaldo' : 'Backup Email'}
+                      </span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                      {language === 'es' ? 'Opcional' : 'Optional'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {language === 'es'
+                      ? 'Refuerzo opcional sin obligación. Puedes dejarlo en blanco si solo deseas usar tu teléfono.'
+                      : 'Optional backup. You can leave this blank without obligation if you only want to use your phone.'}
+                  </p>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {language === 'es'
-                    ? 'Actualiza tu contraseña maestra (mínimo 6 caracteres). La clave se actualizará de inmediato.'
-                    : 'Update your master admin password (minimum 6 characters). The change takes effect immediately.'}
-                </p>
-                <form onSubmit={handleUpdateAdminPasswordDirect} className="space-y-3">
+                <form onSubmit={handleUpdateAdminEmailDirect} className="space-y-3 pt-2">
+                  <div>
+                    <input
+                      type="email"
+                      value={settingsRecoveryEmail}
+                      onChange={(e) => setSettingsRecoveryEmail(e.target.value)}
+                      placeholder={language === 'es' ? 'brian@mr-handyworks-llc.com (Opcional)' : 'Optional backup email'}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white"
+                    />
+                    <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500 italic">
+                      {language === 'es' ? '* Campo voluntario sin obligación de llenado' : '* Optional field without obligation to fill'}
+                    </p>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <Save className="w-3.5 h-3.5" />
+                    <span>{language === 'es' ? 'Guardar Correo Opcional' : 'Save Optional Email'}</span>
+                  </button>
+                </form>
+              </div>
+
+              {/* Card 3: Change Portal Password */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-amber-500" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                      {language === 'es' ? 'Cambiar Contraseña' : 'Change Password'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {language === 'es'
+                      ? 'Actualiza tu contraseña maestra (mínimo 6 caracteres). La nueva clave tendrá efecto inmediato.'
+                      : 'Update your master password (minimum 6 characters). The change takes effect immediately.'}
+                  </p>
+                </div>
+                <form onSubmit={handleUpdateAdminPasswordDirect} className="space-y-3 pt-2">
                   <input
                     type="password"
                     required
@@ -1175,7 +1367,7 @@ export const AdminView: React.FC = () => {
                   />
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-black text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Check className="w-3.5 h-3.5" />
                     <span>{language === 'es' ? 'Actualizar Contraseña' : 'Update Password'}</span>
@@ -2252,13 +2444,19 @@ export const AdminView: React.FC = () => {
                                   {attCat === 'image' || att.type === 'image' ? (
                                     <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-700 mb-1.5 flex items-center justify-center">
                                       <img 
-                                        src={att.dataUrl} 
+                                        src={normalizeDataUrl(att.dataUrl)} 
                                         alt={att.name} 
                                         onError={(e) => {
                                           (e.target as HTMLElement).style.display = 'none';
+                                          const fallback = (e.target as HTMLElement).nextElementSibling;
+                                          if (fallback) (fallback as HTMLElement).classList.remove('hidden');
                                         }}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
                                       />
+                                      <div className="hidden absolute inset-0 bg-slate-800 flex flex-col items-center justify-center text-amber-400 p-1 text-center">
+                                        <ImageIcon className="w-5 h-5 mb-0.5" />
+                                        <span className="text-[8px] font-bold uppercase">{attExt || 'IMG'}</span>
+                                      </div>
                                       <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ZoomIn className="w-4 h-4" />
                                       </div>
@@ -2267,9 +2465,17 @@ export const AdminView: React.FC = () => {
                                     <div className="aspect-video w-full rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-1.5 group-hover:bg-amber-500/20 transition-colors">
                                       <Play className="w-6 h-6 fill-current" />
                                     </div>
+                                  ) : attCat === 'audio' ? (
+                                    <div className="aspect-video w-full rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-1.5 group-hover:bg-purple-500/20 transition-colors">
+                                      <Volume2 className="w-6 h-6" />
+                                    </div>
                                   ) : attCat === 'pdf' ? (
                                     <div className="aspect-video w-full rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-1.5 group-hover:bg-rose-500/20 transition-colors">
                                       <FileText className="w-6 h-6" />
+                                    </div>
+                                  ) : attCat === 'cad' ? (
+                                    <div className="aspect-video w-full rounded-lg bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-1.5 group-hover:bg-cyan-500/20 transition-colors">
+                                      <Compass className="w-6 h-6" />
                                     </div>
                                   ) : attCat === 'spreadsheet' ? (
                                     <div className="aspect-video w-full rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-1.5 group-hover:bg-emerald-500/20 transition-colors">
@@ -2299,14 +2505,17 @@ export const AdminView: React.FC = () => {
                           </div>
                         ) : b.photoUrl ? (
                           (() => {
-                            const rawUrl = b.photoUrl!;
+                            const rawUrl = normalizeDataUrl(b.photoUrl!);
                             const isPdf = rawUrl.startsWith('data:application/pdf') || /\.pdf/i.test(rawUrl);
                             const isVid = rawUrl.startsWith('data:video/') || /\.(mp4|mov|webm|m4v)/i.test(rawUrl);
-                            const resolvedType = isPdf ? 'document' : isVid ? 'video' : 'image';
+                            const isAudio = rawUrl.startsWith('data:audio/') || /\.(mp3|wav|m4a|ogg|aac)/i.test(rawUrl);
+                            const resolvedType = isPdf ? 'document' : isVid ? 'video' : isAudio ? 'document' : 'image';
                             const resolvedName = isPdf 
                               ? `Document_${b.id}.pdf` 
                               : isVid 
                               ? `Video_${b.id}.mp4` 
+                              : isAudio
+                              ? `Audio_${b.id}.mp3`
                               : `Job_Site_Photo_${b.id}.jpg`;
                             return (
                               <button
@@ -2329,6 +2538,8 @@ export const AdminView: React.FC = () => {
                                     <FileText className="w-6 h-6 text-rose-500" />
                                   ) : isVid ? (
                                     <Play className="w-6 h-6 text-amber-500" />
+                                  ) : isAudio ? (
+                                    <Volume2 className="w-6 h-6 text-purple-500" />
                                   ) : (
                                     <>
                                       <img 
@@ -2336,9 +2547,15 @@ export const AdminView: React.FC = () => {
                                         alt="Job area" 
                                         onError={(e) => {
                                           (e.target as HTMLElement).style.display = 'none';
+                                          const fallback = (e.target as HTMLElement).nextElementSibling;
+                                          if (fallback) (fallback as HTMLElement).classList.remove('hidden');
                                         }}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
                                       />
+                                      <div className="hidden absolute inset-0 bg-slate-800 flex flex-col items-center justify-center text-amber-400 p-1 text-center">
+                                        <ImageIcon className="w-5 h-5 mb-0.5" />
+                                        <span className="text-[8px] font-bold uppercase">JPG PHOTO</span>
+                                      </div>
                                       <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
                                         <ZoomIn className="w-4 h-4" />
                                       </div>
@@ -2377,13 +2594,11 @@ export const AdminView: React.FC = () => {
                         <span>{language === 'es' ? 'Descargar PDF Oficial' : 'Official PDF Summary'}</span>
                       </button>
 
-                      {/* Send Dispatch to Owner's Phone */}
+                      {/* Send Dispatch by SMS to Owner's Phone */}
                       <a
-                        href={buildOwnerWhatsAppNotificationUrl(b, businessInfo.phoneRaw)}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={buildOwnerSMSNotificationUrl(b, businessInfo.phoneRaw)}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 dark:text-amber-300 text-xs font-bold transition-colors cursor-pointer"
-                        title="Send full work order dispatch & files manifest to owner phone"
+                        title="Send full work order dispatch & files manifest by SMS"
                       >
                         <Send className="w-3.5 h-3.5 text-amber-600" />
                         <span>{language === 'es' ? 'Enviar a mi Teléfono' : 'Send to My Phone'}</span>
@@ -2398,17 +2613,15 @@ export const AdminView: React.FC = () => {
                         <span>{language === 'es' ? 'Llamar al Cliente' : 'Call Client'}</span>
                       </a>
 
-                      {/* Message Client via WhatsApp */}
+                      {/* Message Client via SMS */}
                       <a
-                        href={`https://wa.me/1${b.clientPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
+                        href={`sms:${b.clientPhone.replace(/\D/g, '')}?body=${encodeURIComponent(
                           `Hello ${b.clientName}, this is Brian Cueva from Mr Handyworks LLC regarding your work order #${b.id} for ${b.serviceType}.`
                         )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-bold transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-xs font-bold transition-colors cursor-pointer"
                       >
-                        <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>WhatsApp</span>
+                        <Send className="w-3.5 h-3.5 text-blue-600" />
+                        <span>SMS</span>
                       </a>
                     </div>
 
@@ -2438,32 +2651,39 @@ export const AdminView: React.FC = () => {
         const cat = getDetailedCategory(previewAttachment.name, previewAttachment.mimeType);
         const isPdf = cat === 'pdf' || previewAttachment.dataUrl.startsWith('data:application/pdf') || ext === 'pdf';
         const isVid = cat === 'video' || previewAttachment.dataUrl.startsWith('data:video/') || ['mp4', 'mov', 'webm', 'avi', 'mkv', '3gp', 'm4v'].includes(ext);
+        const isAudio = cat === 'audio' || previewAttachment.dataUrl.startsWith('data:audio/') || ['mp3', 'wav', 'm4a', 'ogg', 'aac', 'flac', 'opus'].includes(ext);
+        const isCad = cat === 'cad' || ['dwg', 'dxf', 'cad', 'rvt', 'skp', 'ifc', 'step', 'stp'].includes(ext);
         const isSpreadsheet = cat === 'spreadsheet' || ['xlsx', 'xls', 'csv', 'ods', 'tsv'].includes(ext);
-        const isWord = cat === 'word' || ['doc', 'docx', 'rtf', 'odt'].includes(ext);
+        const isWord = cat === 'word' || ['doc', 'docx', 'rtf', 'odt', 'pages'].includes(ext);
+        const isPresentation = cat === 'presentation' || ['ppt', 'pptx', 'odp', 'key'].includes(ext);
         const isArchive = cat === 'archive' || ['zip', 'rar', '7z', 'tar', 'gz'].includes(ext);
         const isText = cat === 'text' || ['txt', 'log', 'md', 'json', 'xml'].includes(ext);
-        const isImg = !isPdf && !isVid && !isSpreadsheet && !isWord && !isArchive && !isText && (
+        const isImg = !isPdf && !isVid && !isAudio && !isCad && !isSpreadsheet && !isWord && !isPresentation && !isArchive && !isText && (
           cat === 'image' || previewAttachment.dataUrl.startsWith('data:image/') || previewAttachment.type === 'image'
         );
+        const activeImageUrl = healedImageUrl || normalizeDataUrl(previewAttachment.dataUrl, previewAttachment.name);
 
         return (
           <div 
-            className="fixed inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6"
+            className="fixed inset-0 z-50 bg-slate-200/95 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 md:p-6"
             onClick={() => setPreviewAttachment(null)}
           >
             <div 
-              className="relative w-full max-w-lg sm:max-w-3xl md:max-w-5xl max-h-[94vh] sm:max-h-[92vh] bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200"
+              className="relative w-full max-w-lg sm:max-w-3xl md:max-w-5xl max-h-[94vh] sm:max-h-[92vh] bg-white border border-slate-300 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-200"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-3 sm:px-5 py-3 sm:py-3.5 border-b border-slate-800 bg-slate-900/95 shrink-0">
+              <div className="flex items-center justify-between px-3 sm:px-5 py-3 sm:py-3.5 border-b border-slate-200 bg-white shrink-0">
                 <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
                   <span className={`px-2.5 py-1 rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider shrink-0 ${
                     isImg ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
                     isVid ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
+                    isAudio ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
                     isPdf ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' :
+                    isCad ? 'bg-sky-500/20 text-sky-400 border border-sky-500/30' :
                     isSpreadsheet ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
                     isWord ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' :
+                    isPresentation ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' :
                     isArchive ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
                     isText ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30' :
                     'bg-slate-700 text-slate-300 border border-slate-600'
@@ -2471,15 +2691,15 @@ export const AdminView: React.FC = () => {
                     {ext ? `${ext.toUpperCase()}` : previewAttachment.type}
                   </span>
                   <div className="min-w-0">
-                    <h4 className="text-xs sm:text-sm font-extrabold text-white truncate max-w-[160px] sm:max-w-md md:max-w-xl" title={previewAttachment.name}>
+                    <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 truncate max-w-[160px] sm:max-w-md md:max-w-xl" title={previewAttachment.name}>
                       {previewAttachment.name}
                     </h4>
-                    <p className="text-[10px] sm:text-[11px] text-slate-400 truncate">
+                    <p className="text-[10px] sm:text-[11px] text-slate-500 truncate">
                       {previewAttachment.clientName ? (
-                        <span className="text-amber-400 font-bold mr-1.5">{previewAttachment.clientName}</span>
+                        <span className="text-amber-700 font-bold mr-1.5">{previewAttachment.clientName}</span>
                       ) : null}
                       {previewAttachment.bookingId ? (
-                        <span className="text-blue-400 font-bold mr-1.5">#{previewAttachment.bookingId}</span>
+                        <span className="text-blue-700 font-bold mr-1.5">#{previewAttachment.bookingId}</span>
                       ) : null}
                       <span>• {previewAttachment.sizeFormatted}</span>
                     </p>
@@ -2489,12 +2709,12 @@ export const AdminView: React.FC = () => {
                 {/* Header Action Tools */}
                 <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                   {/* Image View Controls (Zoom & Rotate) */}
-                  {isImg && !imageLoadError && (
-                    <div className="hidden sm:flex items-center gap-1 bg-slate-800/90 rounded-xl p-1 border border-slate-700/80 mr-1">
+                  {isImg && !imageLoadError && !isAttemptingImageHealing && (
+                    <div className="hidden sm:flex items-center gap-1 bg-slate-100 rounded-xl p-1 border border-slate-300 mr-1">
                       <button
                         type="button"
                         onClick={() => setImageZoom(z => Math.max(0.5, +(z - 0.25).toFixed(2)))}
-                        className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors cursor-pointer"
                         title="Zoom Out"
                       >
                         <ZoomOut className="w-3.5 h-3.5" />
@@ -2502,7 +2722,7 @@ export const AdminView: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => { setImageZoom(1); setImageRotation(0); }}
-                        className="px-2 py-0.5 rounded text-[10px] font-bold text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        className="px-2 py-0.5 rounded text-[10px] font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors cursor-pointer"
                         title="Reset View"
                       >
                         {Math.round(imageZoom * 100)}%
@@ -2510,7 +2730,7 @@ export const AdminView: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setImageZoom(z => Math.min(3, +(z + 0.25).toFixed(2)))}
-                        className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors cursor-pointer"
                         title="Zoom In"
                       >
                         <ZoomIn className="w-3.5 h-3.5" />
@@ -2518,7 +2738,7 @@ export const AdminView: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setImageRotation(r => (r + 90) % 360)}
-                        className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
+                        className="p-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors cursor-pointer"
                         title="Rotate 90°"
                       >
                         <RotateCw className="w-3.5 h-3.5" />
@@ -2530,7 +2750,7 @@ export const AdminView: React.FC = () => {
                     href={previewAttachment.dataUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-blue-600 hover:text-white text-slate-200 transition-colors shadow-2xs border border-slate-700/60"
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 transition-colors shadow-2xs border border-slate-300"
                     title={language === 'es' ? 'Abrir en pestaña nueva' : 'Open in new tab'}
                   >
                     <ExternalLink className="w-4 h-4" />
@@ -2538,7 +2758,7 @@ export const AdminView: React.FC = () => {
                   <a
                     href={previewAttachment.dataUrl}
                     download={previewAttachment.name}
-                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition-colors shadow-2xs border border-slate-700/60"
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-700 transition-colors shadow-2xs border border-slate-300"
                     title={language === 'es' ? 'Descargar archivo' : 'Download file'}
                   >
                     <Download className="w-4 h-4" />
@@ -2546,7 +2766,7 @@ export const AdminView: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setPreviewAttachment(null)}
-                    className="p-2 sm:p-2.5 rounded-xl bg-slate-800 hover:bg-rose-900/60 hover:text-rose-300 text-slate-200 transition-colors cursor-pointer border border-slate-700/60"
+                    className="p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-rose-100 hover:text-rose-700 text-slate-700 transition-colors cursor-pointer border border-slate-300"
                     title="Close"
                   >
                     <X className="w-4 h-4" />
@@ -2555,10 +2775,17 @@ export const AdminView: React.FC = () => {
               </div>
 
               {/* Modal Content - Scrollable & Responsive across Mobile, Tablet, PC */}
-              <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-6 flex items-center justify-center bg-slate-950/80 min-h-[300px] sm:min-h-[440px]">
+              <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-6 flex items-center justify-center bg-slate-100 min-h-[300px] sm:min-h-[440px]">
                 {/* 1. IMAGE RENDERING (JPG, PNG, WEBP, GIF, SVG, BMP, HEIC/RAW FALLBACK) */}
                 {isImg && (
-                  imageLoadError ? (
+                  isAttemptingImageHealing ? (
+                    <div className="flex flex-col items-center justify-center p-8 space-y-3 text-center">
+                      <Loader2 className="w-10 h-10 animate-spin text-blue-400" />
+                      <span className="text-xs font-bold text-slate-300">
+                        {language === 'es' ? 'Optimizando y decodificando imagen...' : 'Optimizing and decoding image...'}
+                      </span>
+                    </div>
+                  ) : imageLoadError ? (
                     <div className="flex flex-col items-center justify-center p-6 text-center space-y-4 max-w-md mx-auto">
                       <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center shadow-lg border border-amber-500/20">
                         <ImageIcon className="w-8 h-8" />
@@ -2571,22 +2798,19 @@ export const AdminView: React.FC = () => {
                           {previewAttachment.name}
                         </h5>
                         <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                          {language === 'es' 
-                            ? 'Este formato de imagen (ej. Apple HEIC o RAW) es renderizado nativamente en el visor del sistema.'
-                            : 'This image format (e.g. Apple HEIC or camera RAW) is rendered natively in your system viewer.'}
+                          {previewAttachment.dataUrl.startsWith('blob:')
+                            ? (language === 'es' 
+                                ? 'Esta imagen fue subida en una sesión anterior del navegador. Los enlaces temporales caducan al cerrar la pestaña; puedes abrirla en el visor o descargarla.'
+                                : 'This image was uploaded in an earlier session where temporary browser blob links expired. You can view or download it.')
+                            : (language === 'es' 
+                                ? 'Este formato de imagen es visualizado directamente en el visor de tu sistema.'
+                                : 'This image format can be viewed directly in your system viewer.')}
                         </p>
-                      </div>
-
-                      {/* Embedded object fallback attempt */}
-                      <div className="w-full max-h-48 overflow-hidden rounded-xl border border-slate-800 bg-black/40">
-                        <object data={previewAttachment.dataUrl} type={previewAttachment.mimeType || 'image/*'} className="w-full h-full min-h-[120px]">
-                          <p className="text-[11px] text-slate-500 p-3 italic">Use direct buttons below to view or download.</p>
-                        </object>
                       </div>
 
                       <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 w-full">
                         <a
-                          href={previewAttachment.dataUrl}
+                          href={activeImageUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
@@ -2595,7 +2819,7 @@ export const AdminView: React.FC = () => {
                           <span>{language === 'es' ? 'Abrir en Visor del Sistema' : 'Open in System Viewer'}</span>
                         </a>
                         <a
-                          href={previewAttachment.dataUrl}
+                          href={activeImageUrl}
                           download={previewAttachment.name}
                           className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs inline-flex items-center gap-2 border border-slate-700"
                         >
@@ -2607,14 +2831,14 @@ export const AdminView: React.FC = () => {
                   ) : (
                     <div className="relative max-h-[70vh] sm:max-h-[78vh] w-full flex items-center justify-center overflow-auto p-1">
                       <img 
-                        src={previewAttachment.dataUrl} 
+                        src={activeImageUrl} 
                         alt={previewAttachment.name} 
                         style={{
                           transform: `scale(${imageZoom}) rotate(${imageRotation}deg)`,
                           transition: 'transform 0.15s ease-out'
                         }}
-                        onError={() => setImageLoadError(true)}
-                        className="max-h-[68vh] sm:max-h-[74vh] max-w-full object-contain rounded-xl shadow-2xl border border-slate-800 select-none"
+                        onError={handleImageError}
+                        className="max-h-[68vh] sm:max-h-[74vh] max-w-full object-contain rounded-xl shadow-lg border border-slate-300 select-none"
                       />
                     </div>
                   )
@@ -2654,7 +2878,77 @@ export const AdminView: React.FC = () => {
                   </div>
                 )}
 
-                {/* 3. PDF RENDERING (DIRECT EMBEDDED IFRAME ON MOBILE & DESKTOP) */}
+                {/* 3. AUDIO RENDERING (MP3, WAV, M4A, OGG, AAC) */}
+                {isAudio && (
+                  <div className="w-full max-w-lg flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div className="w-20 h-20 rounded-3xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center shadow-xl">
+                      <Volume2 className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        {ext ? `${ext.toUpperCase()} AUDIO` : 'AUDIO RECORDING'}
+                      </span>
+                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                        {previewAttachment.name}
+                      </h5>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {previewAttachment.clientName ? `${previewAttachment.clientName} • ` : ''}
+                        {previewAttachment.sizeFormatted}
+                      </p>
+                    </div>
+                    <audio controls src={previewAttachment.dataUrl} className="w-full max-w-md mt-2">
+                      Your browser does not support audio element.
+                    </audio>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Descargar Audio' : 'Download Audio'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 4. CAD / BLUEPRINTS / ARCHITECTURAL PLANS (DWG, DXF, SKP, RVT) */}
+                {isCad && (
+                  <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div className="w-20 h-20 rounded-3xl bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center justify-center shadow-xl">
+                      <Compass className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                        {ext ? `${ext.toUpperCase()} CAD / PLANO` : 'CAD / BLUEPRINT'}
+                      </span>
+                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                        {previewAttachment.name}
+                      </h5>
+                      <p className="text-xs text-slate-400 mt-1">
+                        {previewAttachment.clientName ? `${previewAttachment.clientName} • ` : ''}
+                        {previewAttachment.sizeFormatted}
+                      </p>
+                    </div>
+                    <p className="text-xs text-slate-400 max-w-md leading-relaxed">
+                      {language === 'es'
+                        ? 'Plano o modelo CAD de construcción/reparación. Descarga el archivo para abrirlo con AutoCAD, SketchUp o visualizador CAD.'
+                        : 'Construction/repair CAD blueprint or model. Download file to open with AutoCAD, SketchUp or CAD viewer.'}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      <a
+                        href={previewAttachment.dataUrl}
+                        download={previewAttachment.name}
+                        className="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs inline-flex items-center gap-2 shadow-lg"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>{language === 'es' ? 'Descargar Plano CAD' : 'Download CAD File'}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 5. PDF RENDERING (DIRECT EMBEDDED IFRAME ON MOBILE & DESKTOP) */}
                 {isPdf && (
                   <div className="w-full h-full flex flex-col items-center justify-center p-1">
                     <div className="w-full flex items-center justify-between px-3 py-2 mb-2 bg-slate-900 rounded-xl border border-slate-800 text-xs">
@@ -2690,7 +2984,7 @@ export const AdminView: React.FC = () => {
                   </div>
                 )}
 
-                {/* 4. SPREADSHEET RENDERING (XLSX, XLS, CSV, TSV) */}
+                {/* 6. SPREADSHEET RENDERING (XLSX, XLS, CSV, TSV) */}
                 {isSpreadsheet && (
                   <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
                     <div className="w-20 h-20 rounded-3xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shadow-xl">
@@ -2730,7 +3024,7 @@ export const AdminView: React.FC = () => {
                   </div>
                 )}
 
-                {/* 5. WORD DOCUMENT RENDERING (DOC, DOCX, RTF) */}
+                {/* 7. WORD & DOCUMENT RENDERING (DOC, DOCX, RTF, PAGES) */}
                 {isWord && (
                   <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
                     <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center shadow-xl">
@@ -2770,7 +3064,7 @@ export const AdminView: React.FC = () => {
                   </div>
                 )}
 
-                {/* 6. ARCHIVE RENDERING (ZIP, RAR, 7Z, TAR, GZ) */}
+                {/* 8. ARCHIVE RENDERING (ZIP, RAR, 7Z, TAR, GZ) */}
                 {isArchive && (
                   <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
                     <div className="w-20 h-20 rounded-3xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center shadow-xl">
@@ -2801,17 +3095,17 @@ export const AdminView: React.FC = () => {
                   </div>
                 )}
 
-                {/* 7. TEXT & OTHER GENERIC DOCUMENTS */}
-                {(isText || (!isImg && !isVid && !isPdf && !isSpreadsheet && !isWord && !isArchive)) && (
-                  <div className="w-full max-w-xl flex flex-col items-center justify-center p-6 text-center space-y-4">
-                    <div className="w-20 h-20 rounded-3xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center shadow-xl">
-                      <FileCode className="w-10 h-10" />
+                {/* 9. TEXT & OTHER GENERIC DOCUMENTS */}
+                {(isText || (!isImg && !isVid && !isAudio && !isCad && !isPdf && !isSpreadsheet && !isWord && !isPresentation && !isArchive)) && (
+                  <div className="w-full max-w-2xl flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-4">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center shadow-xl">
+                      <FileCode className="w-8 h-8 sm:w-10 sm:h-10" />
                     </div>
                     <div>
                       <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                         {ext ? `${ext.toUpperCase()} FILE` : 'ATTACHED FILE'}
                       </span>
-                      <h5 className="font-extrabold text-white text-lg mt-2 break-all">
+                      <h5 className="font-extrabold text-white text-base sm:text-lg mt-2 break-all">
                         {previewAttachment.name}
                       </h5>
                       <p className="text-xs text-slate-400 mt-1">
@@ -2819,7 +3113,15 @@ export const AdminView: React.FC = () => {
                         {previewAttachment.sizeFormatted}
                       </p>
                     </div>
-                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+
+                    {decodedTextContent && (
+                      <div className="w-full text-left max-h-48 overflow-auto rounded-xl bg-slate-900 border border-slate-700 p-3 font-mono text-[11px] text-slate-300 whitespace-pre-wrap select-text">
+                        {decodedTextContent.slice(0, 3000)}
+                        {decodedTextContent.length > 3000 ? '\n\n... [Visualización limitada a primeros 3,000 caracteres]' : ''}
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
                       <a
                         href={previewAttachment.dataUrl}
                         target="_blank"

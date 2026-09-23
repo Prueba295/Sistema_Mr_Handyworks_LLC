@@ -10,13 +10,13 @@ export const ReviewsTickerCard: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-switch every 8 seconds
+  // Auto-switch every 10 seconds
   useEffect(() => {
     if (isPaused || activeReviews.length <= 1) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % activeReviews.length);
-    }, 8000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [isPaused, activeReviews.length]);
@@ -41,11 +41,11 @@ export const ReviewsTickerCard: React.FC = () => {
     >
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-slate-50 dark:from-[#1A2332] dark:to-[#111827] border border-slate-200 dark:border-slate-700/80 shadow-lg p-6 sm:p-8 transition-all">
         
-        {/* Subtle top 8-second progress indicator bar */}
+        {/* Subtle top 10-second progress indicator bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-slate-100 dark:bg-slate-800 overflow-hidden">
           <div 
             key={currentIndex}
-            className={`h-full bg-[#0B3C5D] dark:bg-blue-500 ${!isPaused ? 'animate-[reviewProgress_8s_linear]' : ''}`}
+            className={`h-full bg-[#0B3C5D] dark:bg-blue-500 ${!isPaused ? 'animate-[reviewProgress_10s_linear]' : ''}`}
             style={{ width: isPaused ? '100%' : undefined }}
           />
         </div>

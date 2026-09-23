@@ -176,8 +176,8 @@ export const ReviewsSection: React.FC = () => {
           <div className="lg:col-span-3 text-center lg:text-right flex flex-col gap-2.5">
             <p className="text-xs text-slate-500 dark:text-slate-400">
               {language === 'es' 
-                ? '¿Brian realizó un trabajo en tu hogar? Tu testimonio es muy valioso:' 
-                : 'Did Brian work on your home? We value your review:'}
+                ? '¿Mr Handyworks LLC realizó un trabajo en tu hogar? Tu testimonio es muy valioso:' 
+                : 'Did Mr Handyworks LLC work on your home? We value your review:'}
             </p>
             <a
               href={BUSINESS_INFO.thumbtackUrl}
@@ -417,7 +417,11 @@ export const ReviewsSection: React.FC = () => {
                   rows={4}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  placeholder="Cuéntanos sobre la puntualidad, calidad del trabajo y tu experiencia con Brian..."
+                  placeholder={
+                    language === 'es'
+                      ? 'Cuéntanos sobre la puntualidad, calidad del trabajo y tu experiencia con Mr Handyworks LLC...'
+                      : 'Tell us about punctuality, workmanship quality, and your experience with Mr Handyworks LLC...'
+                  }
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-[#0B3C5D]"
                 />
               </div>

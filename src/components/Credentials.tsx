@@ -50,11 +50,14 @@ export const Credentials: React.FC = () => {
                   />
                 </div>
                 <div>
+                  <span className="text-[11px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 block mb-0.5">
+                    {language === 'es' ? 'Conoce al Fundador • Meet the Owner' : 'Meet the Owner'}
+                  </span>
                   <h3 className="font-black text-xl text-[#0B3C5D] dark:text-white">
                     Brian Cueva
                   </h3>
                   <p className="text-sm font-bold text-slate-600 dark:text-blue-300">
-                    {language === 'es' ? 'Maestro Artesano y Fundador' : 'Master Craftsman & Owner'}
+                    Owner, Mr Handyworks LLC
                   </p>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     South Bend, Indiana • {BUSINESS_INFO.phone}
@@ -89,7 +92,7 @@ export const Credentials: React.FC = () => {
                   onClick={() => openBookingWizard()}
                   className="px-5 py-2.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-bold text-sm shadow-sm transition-colors cursor-pointer"
                 >
-                  {language === 'es' ? 'Trabajar con Brian' : 'Work with Brian'}
+                  {language === 'es' ? 'Solicitar Servicio' : 'Request Service'}
                 </button>
                 <a
                   href={BUSINESS_INFO.thumbtackUrl}

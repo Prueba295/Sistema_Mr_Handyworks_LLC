@@ -19,7 +19,6 @@ import {
   playNotificationChime, 
   triggerDesktopNotification, 
   dispatchBookingWebhook, 
-  buildOwnerWhatsAppNotificationUrl, 
   buildOwnerSMSNotificationUrl 
 } from '../utils/liveNotifier';
 import confetti from 'canvas-confetti';
@@ -41,7 +40,6 @@ import {
   Compass,
   Briefcase,
   User,
-  MessageSquare,
   Search,
   RefreshCw,
   AlertCircle,
@@ -1035,7 +1033,7 @@ export const BookingWizardModal: React.FC = () => {
                     <strong className="font-bold text-slate-900 dark:text-white block">
                       Privacy &amp; Direct Communication Guarantee:
                     </strong>
-                    Your information is protected and never shared with third parties. No payment is charged online. Direct phone and WhatsApp communication buttons become available once your appointment request is submitted.
+                    Your information is protected and never shared with third parties. No payment is charged online. Direct phone and SMS communication buttons become available once your appointment request is submitted.
                   </div>
                 </div>
               </div>
@@ -1200,7 +1198,7 @@ export const BookingWizardModal: React.FC = () => {
                     <span className="text-lg font-black text-[#0B3C5D] dark:text-blue-300 shrink-0">$125.00</span>
                   </div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 leading-relaxed border-t border-slate-200 dark:border-slate-700">
-                    * Final project labor will be evaluated on-site according to work hours and installation requirements. Confirmation and payment details will be coordinated directly via call or WhatsApp. No online charge is processed today.
+                    * Final project labor will be evaluated on-site according to work hours and installation requirements. Confirmation and payment details will be coordinated directly via call or SMS. No online charge is processed today.
                   </div>
                 </div>
               </div>
@@ -1286,8 +1284,8 @@ export const BookingWizardModal: React.FC = () => {
 
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug">
                     {language === 'es' 
-                      ? 'El pago se realiza directamente con Brian al coordinar la cita o al finalizar el servicio:' 
-                      : 'Payment is coordinated directly with Brian upon schedule confirmation or service completion:'}
+                      ? 'El pago se coordina directamente con nuestro equipo al confirmar la cita o al finalizar el servicio:' 
+                      : 'Payment is coordinated directly with our team upon schedule confirmation or service completion:'}
                   </p>
 
                   <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 pt-1">
@@ -1338,7 +1336,7 @@ export const BookingWizardModal: React.FC = () => {
                         <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                       </span>
                       <span className="text-xs font-black text-amber-950 dark:text-amber-200 uppercase tracking-wider">
-                        {language === 'es' ? 'Notificación en Vivo al Dueño' : 'Live Notification to Owner'}
+                        {language === 'es' ? 'Notificación en Vivo al Equipo' : 'Live Dispatch Notification'}
                       </span>
                     </div>
                     <span className="text-[11px] font-mono font-bold text-amber-900 dark:text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-md">
@@ -1348,27 +1346,17 @@ export const BookingWizardModal: React.FC = () => {
 
                   <p className="text-xs text-slate-700 dark:text-slate-200 leading-snug">
                     {language === 'es'
-                      ? `La orden #${createdBooking.id} de ${createdBooking.clientName} con ${createdBooking.attachments?.length || 0} archivo(s) adjunto(s) está lista para ser notificada al teléfono de Brian Cueva.`
-                      : `Booking #${createdBooking.id} for ${createdBooking.clientName} with ${createdBooking.attachments?.length || 0} client attachment(s) is ready for instant delivery to owner Brian Cueva.`}
+                      ? `La orden #${createdBooking.id} de ${createdBooking.clientName} con ${createdBooking.attachments?.length || 0} archivo(s) adjunto(s) está lista para ser notificada al equipo de servicio de Mr Handyworks LLC.`
+                      : `Booking #${createdBooking.id} for ${createdBooking.clientName} with ${createdBooking.attachments?.length || 0} client attachment(s) is ready for instant delivery to Mr Handyworks LLC service desk.`}
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                    <a
-                      href={buildOwnerWhatsAppNotificationUrl(createdBooking, BUSINESS_INFO.phoneRaw)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-xs transition-colors cursor-pointer"
-                    >
-                      <MessageSquare className="w-3.5 h-3.5" />
-                      <span>{language === 'es' ? 'Enviar a WhatsApp de Brian' : 'Send to Brian (WhatsApp)'}</span>
-                    </a>
-
+                  <div className="grid grid-cols-1 gap-2 pt-1">
                     <a
                       href={buildOwnerSMSNotificationUrl(createdBooking, BUSINESS_INFO.phoneRaw)}
                       className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs shadow-xs transition-colors cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
-                      <span>{language === 'es' ? 'Enviar a SMS de Brian' : 'Send to Brian (SMS)'}</span>
+                      <span>{language === 'es' ? 'Enviar a SMS de Servicio' : 'Send via SMS'}</span>
                     </a>
                   </div>
                 </div>
@@ -1388,46 +1376,6 @@ export const BookingWizardModal: React.FC = () => {
                       <Phone className="w-4 h-4 text-emerald-400" />
                       <span>{language === 'es' ? 'Llamar a Servicio al Cliente' : 'Call Service Desk (Direct)'}</span>
                     </a>
-
-                    {/* WhatsApp Connection */}
-                    {(() => {
-                      const hour = new Date().getHours();
-                      let greeting = 'Hello!';
-                      if (hour >= 5 && hour < 12) {
-                        greeting = 'Good morning!';
-                      } else if (hour >= 12 && hour < 18) {
-                        greeting = 'Good afternoon!';
-                      } else {
-                        greeting = 'Good evening!';
-                      }
-
-                      const attNote = createdBooking.attachments && createdBooking.attachments.length > 0
-                        ? `\n- Attachments: ${createdBooking.attachments.length} file(s) attached`
-                        : '';
-
-                      const plainText = `${greeting} I have submitted an appointment request on Mr Handyworks LLC:
-
-- Booking Reference: #${createdBooking.id}
-- Service: ${createdBooking.serviceType}
-- Requested Slot: ${createdBooking.scheduledDate} (${createdBooking.scheduledTimeSlot})
-- Client: ${createdBooking.clientName}
-- Address: ${createdBooking.clientAddress}
-- Consultation Fee: $125.00 (Referential - paid upon service coordination)${attNote}
-
-Please confirm my reservation. Thank you!`;
-
-                      return (
-                        <a
-                          href={`https://wa.me/${BUSINESS_INFO.phoneRaw}?text=${encodeURIComponent(plainText)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md transition-colors cursor-pointer"
-                        >
-                          <MessageSquare className="w-4 h-4" />
-                          <span>{language === 'es' ? 'WhatsApp Directo' : 'WhatsApp Desk'}</span>
-                        </a>
-                      );
-                    })()}
 
                     {/* Direct SMS Option */}
                     {(() => {

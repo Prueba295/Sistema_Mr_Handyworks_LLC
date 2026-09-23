@@ -8,69 +8,74 @@ import {
   UserCheck, 
   ArrowRight, 
   Sparkles, 
-  MapPin
+  MapPin,
+  AlertCircle,
+  CreditCard,
+  CheckCircle2,
+  FileText,
+  Award
 } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/initialData';
 
 export const HomeView: React.FC = () => {
-  const { language, openBookingWizard } = useApp();
+  const { language, openBookingWizard, navigateTo } = useApp();
 
   const trustPillars = [
     {
       icon: ShieldCheck,
       color: 'text-emerald-500 bg-emerald-500/10',
-      titleEs: 'Garantía de Satisfacción 100%',
-      titleEn: '100% Satisfaction Guarantee',
-      descEs: 'Brian se asegura de que cada detalle quede perfecto. Si algo no está a tu entera satisfacción, se corrige sin costo adicional.',
-      descEn: 'Brian ensures every detail is spot-on. If something isn’t to your complete satisfaction, we fix it promptly at no extra charge.'
+      titleEs: 'Garantía de Mano de Obra de 30 Días',
+      titleEn: '30-Day Workmanship Guarantee',
+      descEs: 'Mr Handyworks LLC respalda nuestra mano de obra durante 30 días posteriores a la finalización del proyecto. Si surge un problema derivado de nuestra mano de obra, contáctanos y evaluaremos el problema realizando las correcciones pertinentes sin cargo adicional de mano de obra. Esta garantía no cubre defectos de productos o materiales, desgaste normal, mal uso, condiciones preexistentes u ocultas, materiales suministrados por el cliente, ni trabajos modificados o realizados por terceros.',
+      descEn: 'Mr Handyworks LLC backs our workmanship for 30 days following project completion. If an issue results from our workmanship, contact us and we’ll evaluate the issue and make appropriate corrections at no additional labor charge. This guarantee does not cover product or material defects, normal wear, misuse, pre-existing or concealed conditions, customer-supplied materials, or work altered or performed by others.'
     },
     {
       icon: UserCheck,
       color: 'text-blue-500 bg-blue-500/10',
-      titleEs: 'Trato Directo con el Propietario',
-      titleEn: 'Direct Work with the Owner',
-      descEs: 'Sin intermediarios ni personal no calificado. Brian Cueva atiende, cotiza y ejecuta tu proyecto con responsabilidad total.',
-      descEn: 'No confusing handoffs or unknown subcontractors. Brian Cueva personally quotes and completes your home project with care.'
+      titleEs: 'Equipo de Servicio Profesional',
+      titleEn: 'Professional Service Team',
+      descEs: 'Tu proyecto puede ser realizado por el propietario, un miembro del equipo de Mr Handyworks o un subcontratista calificado según el alcance, la agenda y los requerimientos del trabajo. Mr Handyworks LLC se mantiene como tu punto principal de contacto.',
+      descEn: 'Your project may be performed by the owner, a Mr Handyworks team member, or a qualified subcontractor depending on project scope, scheduling, and trade requirements. Mr Handyworks LLC remains your primary point of contact.'
     },
     {
       icon: DollarSign,
       color: 'text-amber-500 bg-amber-500/10',
-      titleEs: 'Consulta Fija y Cotización Transparente',
-      titleEn: 'Fixed Consultation & Transparent Quotes',
-      descEs: 'Tarifa fija de consulta en sitio ($125). Cotización de mano de obra justa y clara según horas, tamaño y tipo de instalación.',
-      descEn: 'Fixed on-site consultation fee ($125). Fair and clear labor quote based on project hours, size, and installation scope.'
+      titleEs: 'Estimados y Precios Claros',
+      titleEn: 'Clear Estimates & Pricing',
+      descEs: 'Las consultas en sitio inician en $125. Los estimados se basan en las condiciones visibles y el alcance acordado al momento de la evaluación. Condiciones ocultas, trabajos adicionales, cambios de materiales o ajustes de alcance pueden requerir precios adicionales y aprobación del cliente.',
+      descEn: 'On-site consultations start at $125. Estimates are based on the visible conditions and agreed scope at the time of evaluation. Concealed conditions, additional work, material changes, or changes in scope may require additional pricing and customer approval.'
     },
     {
       icon: Clock,
       color: 'text-indigo-500 bg-indigo-500/10',
-      titleEs: 'Puntualidad y Eficiencia',
-      titleEn: 'Punctuality & Clean Finish',
-      descEs: 'Llegada en el horario acordado, trabajo limpio con protección de pisos y muebles, y retiro de todos los residuos de obra.',
-      descEn: 'On-time arrival, floor and furniture protection throughout the project, and thorough clean-up before leaving.'
+      titleEs: 'Llegada Programada y Limpieza Profesional',
+      titleEn: 'Scheduled Arrival & Professional Clean-Up',
+      descEs: 'Brindamos una ventana de llegada estimada y comunicamos demoras significativas siempre que sea posible. Se toman precauciones razonables para proteger el área de trabajo, seguidas de una limpieza general del sitio al concluir el trabajo.',
+      descEn: 'We provide an estimated arrival window and communicate significant delays whenever possible. Reasonable precautions are taken to protect the work area, followed by general job-site clean-up upon completion.'
     }
   ];
 
   const steps = [
     {
       step: '01',
-      titleEs: 'Agenda tu Cita Online',
-      titleEn: 'Book Online in Minutes',
-      descEs: 'Elige tu servicio y franja horaria preferida en nuestro formulario interactivo.',
-      descEn: 'Select your service and preferred arrival window in our interactive booking form.'
+      titleEs: '01 — Solicita tu Servicio',
+      titleEn: '01 — Request Your Service',
+      descEs: 'Selecciona tu servicio y la franja de horario preferida a través de nuestro formulario de reserva en línea.',
+      descEn: 'Select your service and preferred appointment window through our online booking form.'
     },
     {
       step: '02',
-      titleEs: 'Coordinación Directa',
-      titleEn: 'Direct Coordination',
-      descEs: 'Brian Cueva te contacta directamente por llamada o WhatsApp para afinar requerimientos y confirmar la cita.',
-      descEn: 'Brian Cueva reaches out directly via phone call or WhatsApp to confirm your schedule and project details.'
+      titleEs: '02 — Confirmación del Proyecto',
+      titleEn: '02 — Project Confirmation',
+      descEs: 'Un miembro de nuestro equipo te contactará para confirmar tu cita, detalles del proyecto, requisitos de acceso y cualquier información adicional necesaria antes del servicio.',
+      descEn: 'A member of our team will contact you to confirm your appointment, project details, access requirements, and any additional information needed before service.'
     },
     {
       step: '03',
-      titleEs: 'Trabajo Impecable y Garantizado',
-      titleEn: 'Job Done & Guaranteed',
-      descEs: 'Evaluación y ejecución profesional. Pago final al terminar mediante Zelle, Venmo, Cash App, Apple Pay, Tarjeta, Cash o Check.',
-      descEn: 'Expert on-site evaluation and craftsmanship. Final settlement upon completion via Zelle, Venmo, Cash App, Apple Pay, Cards, Cash, or Check.'
+      titleEs: '03 — Servicio y Finalización',
+      titleEn: '03 — Service & Completion',
+      descEs: 'Tu profesional asignado de Mr Handyworks completa el alcance de trabajo aprobado. El pago final vence al completarse el servicio, a menos que se establezcan términos de pago diferentes en tu presupuesto o contrato por escrito.',
+      descEn: 'Your assigned Mr Handyworks professional completes the approved scope of work. Final payment is due upon completion unless different payment terms are stated in your written estimate or agreement.'
     }
   ];
 
@@ -79,7 +84,7 @@ export const HomeView: React.FC = () => {
       {/* 1. Hero Section */}
       <Hero />
 
-      {/* 2. Trust Pillars (Por qué elegir a Mr Handyworks) */}
+      {/* 2. Trust Pillars (Why Homeowners Choose Mr Handyworks) */}
       <section className="max-w-6xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-[#0B3C5D] dark:text-blue-300 text-xs font-black uppercase tracking-wider mb-2">
@@ -87,12 +92,12 @@ export const HomeView: React.FC = () => {
             <span>{language === 'es' ? 'Compromiso de Confianza' : 'The Mr Handyworks Standard'}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            {language === 'es' ? '¿Por qué los propietarios eligen a Brian Cueva?' : 'Why Homeowners Choose Brian Cueva'}
+            {language === 'es' ? '¿Por qué los propietarios eligen a Mr Handyworks?' : 'Why Homeowners Choose Mr Handyworks'}
           </h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 font-medium">
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 font-medium max-w-xl mx-auto">
             {language === 'es'
-              ? 'Calidad profesional con la tranquilidad de trabajar con un especialista licenciado y verificado.'
-              : 'Professional precision backed by licensed, background-checked craftsmanship you can rely on.'}
+              ? 'Servicio profesional, comunicación clara y mano de obra de calidad de un equipo local en el que puedes confiar.'
+              : 'Professional service, clear communication, and quality workmanship from a local team you can rely on.'}
           </p>
         </div>
 
@@ -108,7 +113,7 @@ export const HomeView: React.FC = () => {
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 ${p.color}`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-black text-base text-slate-900 dark:text-white mb-2">
+                  <h3 className="font-black text-base text-slate-900 dark:text-white mb-2 leading-snug">
                     {language === 'es' ? p.titleEs : p.titleEn}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -121,7 +126,7 @@ export const HomeView: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. How It Works (Cómo Funciona en 3 Pasos) */}
+      {/* 3. Simple 3-Step Workflow */}
       <section className="max-w-6xl mx-auto p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 to-[#0B3C5D] text-white shadow-xl">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-black uppercase tracking-widest text-emerald-400">
@@ -145,7 +150,7 @@ export const HomeView: React.FC = () => {
                 <h3 className="font-extrabold text-lg text-white mb-2">
                   {language === 'es' ? st.titleEs : st.titleEn}
                 </h3>
-                <p className="text-xs sm:text-sm text-blue-100/80 leading-relaxed">
+                <p className="text-xs sm:text-sm text-blue-100/85 leading-relaxed">
                   {language === 'es' ? st.descEs : st.descEn}
                 </p>
               </div>
@@ -153,19 +158,52 @@ export const HomeView: React.FC = () => {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        {/* Accepted Payments Callout inside Step 3 flow */}
+        <div className="mt-8 p-4 rounded-2xl bg-white/10 border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-blue-100">
+          <div className="flex items-center gap-2.5">
+            <CreditCard className="w-5 h-5 text-amber-300 shrink-0" />
+            <div>
+              <span className="font-black text-white block">
+                {language === 'es' ? 'Métodos de Pago Aceptados:' : 'Accepted Payments:'}
+              </span>
+              <span>
+                {language === 'es'
+                  ? 'Apple Pay, Cash App, Venmo, tarjetas de crédito/débito, efectivo y cheques. Aplica una comisión de procesamiento del 3.5% a pagos con tarjeta.'
+                  : 'Apple Pay, Cash App, Venmo, credit/debit cards, cash, and checks. A 3.5% processing fee applies to card payments.'}
+              </span>
+            </div>
+          </div>
           <button
             onClick={() => openBookingWizard()}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-[#0B3C5D] font-black text-xs sm:text-sm shadow-lg hover:bg-slate-100 transition-all cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#0B3C5D] font-black text-xs sm:text-sm shadow-md hover:bg-slate-100 transition-all shrink-0 cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-[#0B3C5D]" />
-            <span>{language === 'es' ? 'Comenzar mi Solicitud' : 'Start My Project'}</span>
+            <span>{language === 'es' ? 'Solicitar Servicio' : 'Request Service'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </section>
 
-      {/* 4. Service Area Map / Coverage */}
+      {/* 4. Estimates & Project Conditions Disclaimer (Point 11) */}
+      <section className="max-w-6xl mx-auto p-5 sm:p-6 rounded-2xl bg-amber-500/10 dark:bg-amber-500/5 border border-amber-500/30 text-slate-800 dark:text-slate-200">
+        <div className="flex items-start gap-3.5">
+          <div className="p-2 rounded-xl bg-amber-500/20 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5">
+            <FileText className="w-5 h-5" />
+          </div>
+          <div className="space-y-1.5 text-xs sm:text-sm">
+            <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-wide text-xs">
+              {language === 'es' ? 'Estimados y Condiciones del Proyecto' : 'Estimates & Project Conditions'}
+            </h4>
+            <p className="leading-relaxed text-slate-700 dark:text-slate-300">
+              {language === 'es'
+                ? 'Los estimados se basan en la información y las condiciones visibles disponibles al momento de la cotización. Daños ocultos, áreas inaccesibles, condiciones imprevistas del lugar, cambios solicitados por el cliente o trabajos adicionales fuera del alcance original pueden afectar el precio, los materiales y el cronograma. Cualquier trabajo adicional será consultado con el cliente antes de proceder.'
+                : 'Estimates are based on information and visible conditions available at the time of quoting. Concealed damage, inaccessible areas, unforeseen site conditions, customer-requested changes, or additional work outside the original scope may affect pricing, materials, and scheduling. Additional work will be discussed with the customer before proceeding.'}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Service Area Map / Coverage */}
       <section className="max-w-6xl mx-auto p-6 sm:p-8 rounded-3xl bg-slate-100 dark:bg-[#1A2332] border border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center lg:text-left">
           <div className="inline-flex items-center gap-1.5 text-xs font-black text-blue-600 dark:text-blue-400 uppercase">

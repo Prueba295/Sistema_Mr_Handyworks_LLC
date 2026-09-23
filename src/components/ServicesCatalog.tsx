@@ -117,12 +117,12 @@ export const ServicesCatalog: React.FC = () => {
             </div>
             <div className="text-xs text-slate-700 dark:text-slate-300">
               <span className="font-extrabold text-[#0B3C5D] dark:text-blue-300 block text-sm sm:text-base">
-                {language === 'es' ? 'Tarifa Fija de Consulta en Sitio: $125' : 'Fixed On-Site Diagnostic & Consultation: $125'}
+                {language === 'es' ? 'Consultas en Sitio inician en $125' : 'On-Site Consultations start at $125'}
               </span>
               <span className="mt-0.5 block text-slate-600 dark:text-slate-400">
                 {language === 'es'
-                  ? 'Mano de obra y materiales presupuestados en sitio según horas y tipo de instalación. Reserva coordinada directamente por llamada o WhatsApp con Brian Cueva.'
-                  : 'Labor and materials quoted on-site based on project hours, size, and scope. Booking coordinated directly via phone call or WhatsApp with Brian Cueva.'}
+                  ? 'Los estimados se basan en condiciones visibles y alcance acordado. Coordinación directa con el equipo de Mr Handyworks LLC.'
+                  : 'Estimates are based on visible conditions and agreed scope. Direct coordination with the Mr Handyworks LLC team.'}
               </span>
             </div>
           </div>

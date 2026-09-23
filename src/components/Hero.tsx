@@ -31,7 +31,9 @@ export const Hero: React.FC = () => {
                   Reliable work for the place you call home.
                 </h1>
                 <p className="mt-5 max-w-lg text-base leading-relaxed text-blue-50/85 sm:text-lg">
-                  Brian Cueva delivers clean repairs, installations and finish work across South Bend and Michiana with clear pricing and direct communication.
+                  {language === 'es'
+                    ? 'Mr Handyworks LLC brinda servicios profesionales de reparación, instalación, mantenimiento y mejoras en South Bend y toda el área de Michiana, con precios claros y comunicación directa.'
+                    : 'Mr Handyworks LLC provides professional repairs, installations, maintenance, and improvement services throughout South Bend and the Michiana area, with clear pricing and direct communication.'}
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 text-xs font-bold text-white/90">
@@ -46,8 +48,8 @@ export const Hero: React.FC = () => {
               <div className="flex items-center gap-3">
                 <img src="/logo_handyworks.jpeg" alt="Mr Handyworks LLC" className="h-14 w-14 rounded-2xl border-2 border-[#0B3C5D] bg-white object-cover" />
                 <div>
-                  <div className="text-xs font-black uppercase tracking-[0.16em] text-[var(--text-muted)]">Mr Handyworks LLC</div>
-                  <div className="mt-1 text-xl font-black text-[var(--text)]">Brian Cueva, owner</div>
+                  <div className="text-xs font-black uppercase tracking-[0.16em] text-[var(--text-muted)]">MR HANDYWORKS LLC</div>
+                  <div className="mt-1 text-lg sm:text-xl font-black text-[var(--text)]">Local Contractor & Service Team</div>
                 </div>
               </div>
               <div className="mt-7 grid grid-cols-2 gap-3">
@@ -67,7 +69,7 @@ export const Hero: React.FC = () => {
               <a 
                 href={`tel:${businessInfo.phoneRaw}`} 
                 className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-3 text-sm font-bold text-[var(--text)] hover:bg-[var(--surface)] transition-colors"
-                title={language === 'es' ? 'Llamar a Brian Cueva' : 'Call Brian Cueva'}
+                title={language === 'es' ? 'Llamar a Mr Handyworks LLC' : 'Call Mr Handyworks LLC'}
               >
                 <Phone className="h-4 w-4 text-emerald-500" /> 
                 <span>{language === 'es' ? 'Llamar Ahora' : 'Call Now'}</span>

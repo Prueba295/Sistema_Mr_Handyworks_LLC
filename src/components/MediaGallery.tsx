@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { PortfolioMedia } from '../types';
 import { 
@@ -6,6 +6,8 @@ import {
   Sparkles, 
   SlidersHorizontal, 
   Maximize2, 
+  ZoomIn,
+  ZoomOut,
   X, 
   ChevronRight, 
   ChevronLeft,
@@ -26,6 +28,61 @@ export const MediaGallery: React.FC = () => {
   const { t, language, portfolio, lightboxMedia, setLightboxMedia } = useApp();
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
   const [visibleCount, setVisibleCount] = useState<number>(18);
+  const [lightboxZoom, setLightboxZoom] = useState<number>(1);
+  const [lightboxPan, setLightboxPan] = useState({ x: 0, y: 0 });
+  const panStartRef = useRef<{ pointerId: number; x: number; y: number; panX: number; panY: number } | null>(null);
+  const imageAreaRef = useRef<HTMLDivElement>(null);
+  const lightboxImageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    setLightboxZoom(1);
+    setLightboxPan({ x: 0, y: 0 });
+    panStartRef.current = null;
+  }, [lightboxMedia?.id]);
+
+  const handleImagePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (lightboxZoom <= 1) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    panStartRef.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      panX: lightboxPan.x,
+      panY: lightboxPan.y
+    };
+  };
+
+  const handleImagePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const start = panStartRef.current;
+    const area = imageAreaRef.current;
+    const image = lightboxImageRef.current;
+    if (!start || start.pointerId !== event.pointerId || !area || !image) return;
+
+    const maxX = Math.max(0, (image.offsetWidth * lightboxZoom - area.clientWidth) / 2);
+    const maxY = Math.max(0, (image.offsetHeight * lightboxZoom - area.clientHeight) / 2);
+    const nextX = start.panX + event.clientX - start.x;
+    const nextY = start.panY + event.clientY - start.y;
+
+    setLightboxPan({
+      x: Math.max(-maxX, Math.min(maxX, nextX)),
+      y: Math.max(-maxY, Math.min(maxY, nextY))
+    });
+  };
+
+  const changeLightboxZoom = (delta: number) => {
+    setLightboxZoom(current => {
+      const nextZoom = Math.max(1, Math.min(1.3, +(current + delta).toFixed(2)));
+      setLightboxPan({ x: 0, y: 0 });
+      return nextZoom;
+    });
+  };
+
+  const handleImagePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (panStartRef.current?.pointerId === event.pointerId) {
+      panStartRef.current = null;
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
   
   // Before / After Slider state (0 to 100 percentage)
   const [sliderPosition, setSliderPosition] = useState<number>(50);
@@ -111,8 +168,8 @@ export const MediaGallery: React.FC = () => {
           </h2>
           <p className="mt-3 text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium">
             {language === 'es'
-              ? `Explora más de ${portfolio.length} trabajos reales realizados por Brian Cueva en South Bend, Mishawaka y alrededores.`
-              : `Explore ${portfolio.length}+ authentic job photos completed by Brian Cueva in South Bend, Mishawaka, and surrounding areas.`}
+              ? `Explora más de ${portfolio.length} trabajos reales realizados por el equipo de Mr Handyworks LLC en South Bend, Mishawaka y alrededores.`
+              : `Explore ${portfolio.length}+ authentic job photos completed by the Mr Handyworks LLC team in South Bend, Mishawaka, and surrounding areas.`}
           </p>
         </div>
 
@@ -228,16 +285,15 @@ export const MediaGallery: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 sm:gap-6">
           {displayedPortfolio.map((item, idx) => {
             const title = language === 'es' ? item.titleEs : item.titleEn;
-            const desc = language === 'es' ? item.descriptionEs : item.descriptionEn;
 
             return (
               <div 
                 key={item.id}
                 onClick={() => setLightboxMedia(item)}
-                className="group relative rounded-2xl overflow-hidden bg-white dark:bg-slate-800/90 border border-slate-200/90 dark:border-slate-700/80 shadow-xs hover:shadow-xl hover:border-blue-500/50 transition-all cursor-pointer flex flex-col"
+                className="group relative rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-blue-500/50 transition-all cursor-pointer flex flex-col"
               >
                 {/* Media Image Thumbnail */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-900">
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
                   <img 
                     src={item.url} 
                     alt={title} 
@@ -262,21 +318,13 @@ export const MediaGallery: React.FC = () => {
                 </div>
 
                 {/* Content Card */}
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex flex-wrap gap-1.5 mb-2">
-                      {item.tags.slice(0, 3).map((tag, i) => (
-                        <span key={i} className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/70 text-slate-600 dark:text-slate-300">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h4 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white group-hover:text-[#0B3C5D] dark:group-hover:text-blue-400 transition-colors line-clamp-1">
-                      {title}
-                    </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
-                      {desc}
-                    </p>
+                <div className="p-4 flex flex-1 flex-col justify-between bg-white">
+                  <div className="flex flex-wrap gap-1.5">
+                    {item.tags.slice(0, 3).map((tag, i) => (
+                      <span key={i} className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
 
                   <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/80 flex items-center justify-between text-xs text-[#0B3C5D] dark:text-blue-400 font-semibold">
@@ -315,13 +363,13 @@ export const MediaGallery: React.FC = () => {
       {/* Fullscreen HD Lightbox Modal with Next / Prev Navigation */}
       {lightboxMedia && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-50 bg-slate-200/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
           onClick={() => setLightboxMedia(null)}
         >
           {/* Previous Button */}
           <button
             onClick={handlePrevMedia}
-            className="absolute left-2 sm:left-4 z-20 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+            className="absolute left-2 sm:left-4 z-20 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 shadow-md transition-colors cursor-pointer"
             aria-label="Previous image"
             title="Previous image"
           >
@@ -331,7 +379,7 @@ export const MediaGallery: React.FC = () => {
           {/* Next Button */}
           <button
             onClick={handleNextMedia}
-            className="absolute right-2 sm:right-4 z-20 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+            className="absolute right-2 sm:right-4 z-20 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 shadow-md transition-colors cursor-pointer"
             aria-label="Next image"
             title="Next image"
           >
@@ -339,7 +387,7 @@ export const MediaGallery: React.FC = () => {
           </button>
 
           <div 
-            className="relative max-w-4xl w-full max-h-[92vh] flex flex-col bg-slate-900 text-white rounded-2xl overflow-hidden shadow-2xl border border-slate-800"
+            className="relative max-w-4xl w-full max-h-[92vh] flex flex-col bg-white text-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-300"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
@@ -347,44 +395,73 @@ export const MediaGallery: React.FC = () => {
               onClick={() => setLightboxMedia(null)}
               aria-label="Close project preview"
               title="Close project preview"
-              className="absolute right-3 top-3 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black/95 cursor-pointer"
+              className="absolute right-3 top-3 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white border border-slate-300 text-slate-700 shadow-md transition-colors hover:bg-slate-100 cursor-pointer"
             >
               <X className="h-5 w-5" />
             </button>
 
             {/* High Res Image */}
-            <div className="relative flex-1 min-h-[300px] max-h-[65vh] bg-black flex items-center justify-center overflow-hidden">
+            <div
+              ref={imageAreaRef}
+              className={`relative flex-1 min-h-[300px] max-h-[65vh] bg-white flex items-center justify-center overflow-hidden p-3 sm:p-5 ${lightboxZoom > 1 ? 'cursor-grab touch-none' : ''} ${panStartRef.current ? 'cursor-grabbing' : ''}`}
+              onPointerDown={handleImagePointerDown}
+              onPointerMove={handleImagePointerMove}
+              onPointerUp={handleImagePointerUp}
+              onPointerCancel={handleImagePointerUp}
+            >
               <img 
+                ref={lightboxImageRef}
                 src={lightboxMedia.url} 
                 alt={language === 'es' ? lightboxMedia.titleEs : lightboxMedia.titleEn}
-                className="max-h-full max-w-full object-contain"
+                className="max-h-full max-w-full object-contain transition-transform duration-200"
+                draggable={false}
+                style={{ transform: `translate(${lightboxPan.x}px, ${lightboxPan.y}px) scale(${lightboxZoom})` }}
               />
+
+              <div
+                className="absolute right-4 top-1/2 z-20 flex -translate-y-1/2 flex-col items-center gap-1 rounded-xl border border-slate-300 bg-white/95 p-1 shadow-lg"
+                onPointerDown={event => event.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => changeLightboxZoom(0.1)}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 hover:text-[#0B3C5D] transition-colors cursor-pointer"
+                  aria-label="Zoom in up to 130 percent"
+                  title="Zoom in (max 130%)"
+                >
+                  <ZoomIn className="h-4 w-4" />
+                </button>
+                <span className="px-1 text-[10px] font-black text-slate-600">{Math.round(lightboxZoom * 100)}%</span>
+                <button
+                  type="button"
+                  onClick={() => changeLightboxZoom(-0.1)}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 hover:text-[#0B3C5D] transition-colors cursor-pointer"
+                  aria-label="Zoom out"
+                  title="Zoom out"
+                >
+                  <ZoomOut className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
             {/* Info Footer */}
-            <div className="p-4 sm:p-6 bg-slate-900 border-t border-slate-800 space-y-2">
+            <div className="p-4 sm:p-6 bg-white border-t border-slate-200 space-y-2">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <span className="text-xs uppercase font-extrabold px-2.5 py-0.5 rounded bg-blue-600 text-white">
                     {lightboxMedia.category}
                   </span>
-                  <span className="text-xs text-slate-400">Mr Handyworks LLC • Brian Cueva</span>
+                  <span className="text-xs text-slate-500">South Bend, IN</span>
                 </div>
                 {currentLightboxIndex >= 0 && (
-                  <span className="text-xs text-slate-400 font-mono">
+                  <span className="text-xs text-slate-500 font-mono">
                     {currentLightboxIndex + 1} / {filteredPortfolio.length}
                   </span>
                 )}
               </div>
-              <h3 className="text-lg sm:text-xl font-extrabold text-white">
-                {language === 'es' ? lightboxMedia.titleEs : lightboxMedia.titleEn}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300">
-                {language === 'es' ? lightboxMedia.descriptionEs : lightboxMedia.descriptionEn}
-              </p>
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {lightboxMedia.tags.map((tag, i) => (
-                  <span key={i} className="text-[11px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
+                  <span key={i} className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">
                     #{tag}
                   </span>
                 ))}

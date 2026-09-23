@@ -89,7 +89,7 @@ export const Header: React.FC = () => {
               <div className="text-xs font-black tracking-tight text-[#0B3C5D] dark:text-white uppercase leading-none">
                 MR HANDYWORKS
               </div>
-              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Brian Cueva</div>
+              <div className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Home Services & Repairs</div>
             </div>
           </div>
 
@@ -248,7 +248,7 @@ export const Header: React.FC = () => {
                   </span>
                 </div>
                 <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 leading-none mt-0.5">
-                  Brian Cueva
+                  Home Services & Repairs
                 </p>
               </div>
             </div>

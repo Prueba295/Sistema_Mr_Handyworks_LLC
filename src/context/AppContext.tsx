@@ -29,6 +29,13 @@ import {
   subscribeToSync,
   writeSyncedValue,
 } from '../utils/realtimeSync';
+import { supabase } from '../lib/supabase';
+import {
+  createCloudBooking,
+  deleteCloudBooking,
+  loadCloudBookings,
+  updateCloudBooking
+} from '../utils/cloudBookings';
 
 interface BookingWizardPreload {
   serviceId?: string;
@@ -141,6 +148,8 @@ interface AppContextType {
   adminUser: AdminUser;
   adminLogin: (password: string, code2fa?: string) => Promise<boolean>;
   adminLogout: () => void;
+  recoveryPhone: string;
+  setRecoveryPhone: (phone: string) => void;
   recoveryEmail: string;
   setRecoveryEmail: (email: string) => void;
   changeAdminPassword: (newPwd: string) => boolean;
@@ -614,6 +623,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       writeSyncedValue('mr_handyworks_bookings', JSON.stringify(next));
       return next;
     });
+    void createCloudBooking(newBooking).catch(() => {
+      showNotification(language === 'es' ? 'La reserva quedó local; no se pudo conectar con Supabase' : 'Booking saved locally; Supabase connection failed');
+    });
 
     // Also update availability slot
     if (bookingData.scheduledDate && bookingData.scheduledTimeSlot) {
@@ -638,7 +650,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const updateBookingStatus = (id: string, status: BookingStatus) => {
     setBookings(prev => {
-      const next = prev.map(b => b.id === id ? { ...b, status } : b);
+      const next = prev.map(b => {
+        if (b.id !== id) return b;
+        const updatedBooking = { ...b, status };
+        void updateCloudBooking(updatedBooking);
+        return updatedBooking;
+      });
       writeSyncedValue('mr_handyworks_bookings', JSON.stringify(next));
       return next;
     });
@@ -651,6 +668,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       writeSyncedValue('mr_handyworks_bookings', JSON.stringify(next));
       return next;
     });
+    void deleteCloudBooking(id);
     showNotification(language === 'es' ? 'Cita eliminada' : 'Booking removed');
   };
 
@@ -674,6 +692,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return readSyncedValue('mr_handyworks_admin_pwd') || 'brian2026';
   });
 
+  const [recoveryPhone, setRecoveryPhoneState] = useState<string>(() => {
+    return readSyncedValue('mr_handyworks_admin_phone') || BUSINESS_INFO.phone || '(574) 555-0199';
+  });
+
+  const setRecoveryPhone = (phone: string) => {
+    const clean = phone.trim();
+    setRecoveryPhoneState(clean);
+    writeSyncedValue('mr_handyworks_admin_phone', clean);
+    showNotification(language === 'es' ? 'Teléfono de recuperación guardado' : 'Recovery phone number saved');
+  };
+
   const [recoveryEmail, setRecoveryEmailState] = useState<string>(() => {
     return readSyncedValue('mr_handyworks_admin_email') || 'brian@mr-handyworks-llc.com';
   });
@@ -682,7 +711,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const clean = email.trim();
     setRecoveryEmailState(clean);
     writeSyncedValue('mr_handyworks_admin_email', clean);
-    showNotification(language === 'es' ? 'Correo de recuperación guardado' : 'Recovery email saved');
+    showNotification(language === 'es' ? 'Correo opcional guardado' : 'Optional backup email saved');
   };
 
   const changeAdminPassword = (newPwd: string): boolean => {
@@ -736,6 +765,66 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   useEffect(() => {
+    if (!supabase) return;
+
+    let active = true;
+    const applySession = (email?: string) => {
+      if (!active) return;
+      const isAuthenticated = Boolean(email);
+      const nextUser: AdminUser = {
+        isAuthenticated,
+        email: email || '',
+        twoFactorActive: isAuthenticated,
+        lastLogin: isAuthenticated ? new Date().toLocaleTimeString() : undefined
+      };
+      setAdminUser(nextUser);
+      if (isAuthenticated) sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(nextUser));
+      else sessionStorage.removeItem('mr_handyworks_admin');
+    };
+
+    void supabase.auth.getSession().then(({ data }) => applySession(data.session?.user.email));
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      applySession(session?.user.email);
+    });
+
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!supabase || !adminUser.isAuthenticated) return;
+    const client = supabase;
+
+    let active = true;
+    void loadCloudBookings()
+      .then(remoteBookings => {
+        if (active && remoteBookings.length > 0) setBookings(remoteBookings);
+      })
+      .catch(() => undefined);
+
+    const cloudBookingsChannel = client
+      .channel('mr-handyworks-booking-requests')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'booking_requests' }, payload => {
+        const row = payload.new as { payload?: Booking };
+        const remoteBooking = row.payload;
+        if (payload.eventType === 'DELETE') {
+          const deletedId = (payload.old as { id?: string }).id;
+          if (deletedId) setBookings(prev => prev.filter(booking => booking.id !== deletedId));
+        } else if (remoteBooking) {
+          setBookings(prev => [remoteBooking, ...prev.filter(booking => booking.id !== remoteBooking.id)]);
+        }
+      })
+      .subscribe();
+
+    return () => {
+      active = false;
+      void client.removeChannel(cloudBookingsChannel);
+    };
+  }, [adminUser.isAuthenticated]);
+
+  useEffect(() => {
     const syncAdminSession = (event: StorageEvent) => {
       if (event.key !== 'mr_handyworks_admin') return;
       if (!event.newValue) {
@@ -751,6 +840,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const adminLogin = async (password: string): Promise<boolean> => {
     const cleanPassword = password.trim();
+
+    if (supabase) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: recoveryEmail,
+        password: cleanPassword
+      });
+      if (error || !data.user) return false;
+      const user: AdminUser = {
+        isAuthenticated: true,
+        email: data.user.email || recoveryEmail,
+        twoFactorActive: true,
+        lastLogin: new Date().toLocaleTimeString()
+      };
+      setAdminUser(user);
+      sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
+      writeSyncedValue('mr_handyworks_biz_info', JSON.stringify(businessInfo));
+      writeSyncedValue('mr_handyworks_services', JSON.stringify(services));
+      writeSyncedValue('mr_handyworks_portfolio', JSON.stringify(portfolio));
+      writeSyncedValue('mr_handyworks_reviews', JSON.stringify(reviews));
+      writeSyncedValue('mr_handyworks_availability', JSON.stringify(availability));
+      writeSyncedValue('mr_handyworks_qr', JSON.stringify(qrMethods));
+      showNotification(language === 'es' ? 'Sesión iniciada con Supabase' : 'Signed in with Supabase');
+      return true;
+    }
+
     const lockoutKey = 'mr_handyworks_admin_lockout';
     const attemptKey = 'mr_handyworks_admin_attempts';
 
@@ -799,6 +913,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const guest: AdminUser = { isAuthenticated: false, email: '', twoFactorActive: true };
     setAdminUser(guest);
     sessionStorage.removeItem('mr_handyworks_admin');
+    if (supabase) void supabase.auth.signOut();
     removeSyncedValue('mr_handyworks_admin');
     setIsAdminModalOpen(false);
     setLanguageState('en');
@@ -902,6 +1017,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         adminUser,
         adminLogin,
         adminLogout,
+        recoveryPhone,
+        setRecoveryPhone,
         recoveryEmail,
         setRecoveryEmail,
         changeAdminPassword,

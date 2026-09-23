@@ -251,11 +251,11 @@ export const EstimateCalculatorSection: React.FC = () => {
               <AlertCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
               <div className="text-xs text-slate-700 dark:text-slate-300">
                 <strong className="text-slate-900 dark:text-white block font-black mb-1">
-                  {language === 'es' ? 'Política de Agendamiento y Consulta Fija ($125):' : 'Booking & Fixed Consultation Policy ($125):'}
+                  {language === 'es' ? 'Política de Estimados y Consultas en Sitio:' : 'Estimates & On-Site Consultation Policy:'}
                 </strong>
                 {language === 'es'
-                  ? 'La tarifa de consulta y evaluación en sitio es fija de $125 dólares. No se cobra nada online al solicitar. La confirmación y detalles de la reserva se coordinan directamente por llamada o WhatsApp con Brian Cueva.'
-                  : 'On-site consultation & diagnostic fee is fixed at $125. No online charge is processed upon request. Appointment confirmation and details are coordinated directly via phone call or WhatsApp with Brian Cueva.'}
+                  ? 'Las consultas en sitio inician en $125. Los estimados se basan en las condiciones visibles y el alcance acordado al momento de la evaluación. La confirmación y detalles se coordinan directamente con el equipo de Mr Handyworks LLC.'
+                  : 'On-site consultations start at $125. Estimates are based on visible conditions and agreed scope at evaluation. Confirmation and details are coordinated directly with the Mr Handyworks LLC team.'}
               </div>
             </div>
 
@@ -272,7 +272,7 @@ export const EstimateCalculatorSection: React.FC = () => {
               </div>
 
               <div className="text-xs uppercase tracking-wider font-extrabold text-slate-500 dark:text-slate-400">
-                {language === 'es' ? 'Tarifa Fija de Consulta en Sitio:' : 'Fixed On-Site Diagnostic & Consultation:'}
+                {language === 'es' ? 'Consulta en Sitio (Inicia en):' : 'On-Site Diagnostic & Consultation (Starts at):'}
               </div>
               
               <div className="mt-2 text-4xl sm:text-5xl font-black text-[#0B3C5D] dark:text-white tracking-tight">
@@ -281,8 +281,8 @@ export const EstimateCalculatorSection: React.FC = () => {
 
               <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
                 {language === 'es'
-                  ? 'Incluye visita técnica en tu domicilio por Brian Cueva, inspección con instrumental profesional y propuesta formal adaptada a tus necesidades.'
-                  : 'Includes on-site visit by owner Brian Cueva, precision diagnostics, and tailored scope review for your home.'}
+                  ? 'Incluye visita técnica en tu domicilio por un profesional de Mr Handyworks LLC, inspección con instrumental técnico y propuesta formal adaptada a tus necesidades.'
+                  : 'Includes on-site visit by a Mr Handyworks LLC professional, precision diagnostics, and tailored scope review for your home.'}
               </p>
             </div>
 
@@ -293,13 +293,13 @@ export const EstimateCalculatorSection: React.FC = () => {
                   {language === 'es' ? 'Confirmación de Agenda:' : 'Booking Confirmation:'}
                 </span>
                 <span className="text-xs font-black text-[#0B3C5D] dark:text-blue-400">
-                  {language === 'es' ? 'Llamada o WhatsApp' : 'Call or WhatsApp'}
+                  {language === 'es' ? 'Llamada o SMS' : 'Call or SMS'}
                 </span>
               </div>
               <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                 <span>{language === 'es' ? 'Canal de Coordinación:' : 'Coordination Channel:'}</span>
                 <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                  {language === 'es' ? 'Línea Directa / WhatsApp' : 'Direct Call / WhatsApp'}
+                  {language === 'es' ? 'Línea Directa / SMS' : 'Direct Call / SMS'}
                 </span>
               </div>
               <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
@@ -362,7 +362,7 @@ export const EstimateCalculatorSection: React.FC = () => {
               className="w-full py-3.5 px-6 rounded-xl font-black text-sm sm:text-base text-white bg-[#0B3C5D] hover:bg-[#07273D] active:bg-[#051A29] shadow-md shadow-[#0B3C5D]/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-blue-200" />
-              <span>{language === 'es' ? 'Agendar Consulta Fija ($125)' : 'Book Fixed Consultation ($125)'}</span>
+              <span>{language === 'es' ? 'Solicitar Consulta en Sitio' : 'Request On-Site Consultation'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -370,8 +370,8 @@ export const EstimateCalculatorSection: React.FC = () => {
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>
                 {language === 'es'
-                  ? 'Coordinación directa vía llamada o WhatsApp con Brian Cueva'
-                  : 'Direct coordination via phone call or WhatsApp with Brian Cueva'}
+                  ? 'Coordinación directa vía llamada o SMS con Mr Handyworks LLC'
+                  : 'Direct communication via phone call or SMS with Mr Handyworks LLC'}
               </span>
             </div>
 

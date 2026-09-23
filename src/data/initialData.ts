@@ -39,10 +39,10 @@ export const BUSINESS_INFO = {
   ],
   thumbtackUrl: 'https://www.thumbtack.com/in/south-bend/handyman/mr-handyworks-llc/service/557892581429960708',
   logoUrl: '/logo_handyworks.jpeg',
-  consultationFee: '$125',
+  consultationFee: 'Starts at $125',
   depositRequired: 0,
-  depositPolicyEs: 'Tarifa fija de consulta en sitio: $125. La confirmación y detalles del servicio se coordinan directamente por llamada o WhatsApp con Brian Cueva.',
-  depositPolicyEn: 'Fixed on-site consultation fee: $125. Appointment confirmation and service details are coordinated directly via phone call or WhatsApp with Brian Cueva.',
+  depositPolicyEs: 'Las consultas en sitio inician en $125. Los estimados se basan en las condiciones visibles y el alcance acordado al momento de la evaluación. Condiciones ocultas, trabajos adicionales o cambios de alcance pueden requerir precios adicionales y aprobación del cliente.',
+  depositPolicyEn: 'On-site consultations start at $125. Estimates are based on the visible conditions and agreed scope at the time of evaluation. Concealed conditions, additional work, material changes, or changes in scope may require additional pricing and customer approval.',
   paymentMethods: [
     'Zelle',
     'Venmo',

@@ -298,7 +298,7 @@ export const AdminModal: React.FC = () => {
 
                         {/* Actions */}
                         <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 dark:border-slate-700">
-                          {/* Call / WhatsApp */}
+                          {/* Call Client */}
                           <a
                             href={`tel:${b.clientPhone}`}
                             className="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-[#0B3C5D] hover:text-white transition-colors"

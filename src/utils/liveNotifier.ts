@@ -26,7 +26,7 @@ export interface LiveNotificationPayload {
 }
 
 /**
- * Format complete, unambiguous dispatch text for owner's phone (SMS / WhatsApp)
+ * Format complete, unambiguous dispatch text for owner's phone via SMS
  * Prevents any mix-ups between customers or attached files.
  */
 export function formatOwnerDispatchMessage(booking: Booking): string {
@@ -53,15 +53,6 @@ ${attachmentsList}
 "${booking.projectDetails || 'No additional notes'}"
 ----------------------------------------
 👉 ADMIN PORTAL: https://mr-handyworks-llc.com/#admin`;
-}
-
-/**
- * Build WhatsApp link directly addressed to owner Brian Cueva (15742799355)
- */
-export function buildOwnerWhatsAppNotificationUrl(booking: Booking, ownerPhoneRaw: string = '15742799355'): string {
-  const cleanPhone = ownerPhoneRaw.replace(/\D/g, '');
-  const message = formatOwnerDispatchMessage(booking);
-  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
 
 /**
@@ -150,8 +141,8 @@ export function triggerDesktopNotification(booking: Booking): void {
 }
 
 /**
- * Dispatch webhook payload for real-time external SMS / WhatsApp API gateways
- * (e.g., Twilio, WhatsApp Cloud API, Make, Zapier, n8n)
+ * Dispatch webhook payload for real-time external SMS API gateways
+ * (e.g., Twilio, Make, Zapier, n8n)
  */
 export async function dispatchBookingWebhook(
   booking: Booking, 
