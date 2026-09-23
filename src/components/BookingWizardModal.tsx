@@ -1328,8 +1328,8 @@ export const BookingWizardModal: React.FC = () => {
                 </div>
 
                 {/* Real-time Dispatch to Owner's Phone: Brian Cueva (574) 279-9355 */}
-                <div className="max-w-md mx-auto p-4 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-left space-y-2.5">
-                  <div className="flex items-center justify-between">
+                <div className="max-w-xl mx-auto p-4 sm:p-5 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-left space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className="relative flex h-3 w-3">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -1362,16 +1362,16 @@ export const BookingWizardModal: React.FC = () => {
                 </div>
 
                 {/* Direct Action CTAs (Prioritizing Phone Call & Direct Messaging over Email) */}
-                <div className="max-w-md mx-auto space-y-2 pt-1">
+                <div className="max-w-xl mx-auto space-y-2.5 pt-2">
                   <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                     {language === 'es' ? 'Acciones inmediatas para confirmar tu cita:' : 'Instant Actions to Confirm Your Service:'}
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 gap-2.5">
                     {/* Primary CTA: Call Service Desk */}
                     <a
                       href={`tel:${BUSINESS_INFO.phoneRaw}`}
-                      className="col-span-1 sm:col-span-2 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-sm shadow-md transition-all cursor-pointer"
+                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-sm shadow-md transition-all cursor-pointer"
                     >
                       <Phone className="w-4 h-4 text-emerald-400" />
                       <span>{language === 'es' ? 'Llamar a Servicio al Cliente' : 'Call Service Desk (Direct)'}</span>
@@ -1386,7 +1386,7 @@ export const BookingWizardModal: React.FC = () => {
                       return (
                         <a
                           href={`sms:${BUSINESS_INFO.phoneRaw}?body=${encodeURIComponent(smsText)}`}
-                          className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs shadow-md transition-colors cursor-pointer"
+                          className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-md transition-colors cursor-pointer"
                         >
                           <Send className="w-4 h-4" />
                           <span>{language === 'es' ? 'Enviar SMS Directo' : 'Send Direct SMS'}</span>
