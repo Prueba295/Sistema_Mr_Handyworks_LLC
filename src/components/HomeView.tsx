@@ -41,9 +41,9 @@ export const HomeView: React.FC = () => {
       icon: DollarSign,
       color: 'text-amber-500 bg-amber-500/10',
       titleEs: 'Estimados y Precios Claros',
-      titleEn: 'Clear Estimates & Pricing',
+      titleEn: 'On-Site Consultations',
       descEs: 'Las consultas en sitio inician en $125. Los estimados se basan en las condiciones visibles y el alcance acordado al momento de la evaluación. Condiciones ocultas, trabajos adicionales, cambios de materiales o ajustes de alcance pueden requerir precios adicionales y aprobación del cliente.',
-      descEn: 'On-site consultations start at $125. Estimates are based on the visible conditions and agreed scope at the time of evaluation. Concealed conditions, additional work, material changes, or changes in scope may require additional pricing and customer approval.'
+      descEn: 'Consultations start at $125. We’ll come out, take a look at your project, discuss what needs to be done, and go over the next steps with you.'
     },
     {
       icon: Clock,
