@@ -559,15 +559,11 @@ export const BookingWizardModal: React.FC = () => {
                     <span>Need a Quote?</span>
                   </div>
                   <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-                    Select the service you need and provide as much information as possible, including photos, measurements, and project details. We’ll review your request and provide a quote when enough information is available.
-                  </p>
-                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-                    Some projects may require an on-site consultation before final pricing can be provided.
+                    Tell us what you need, including measurements, project details, and photos. We’ll review your request and provide a quote.
                   </p>
                   <div className="pt-2 border-t border-blue-500/20">
-                    <div className="text-xs font-black text-[#0B3C5D] dark:text-blue-300">On-Site Consultation — Starting at $125</div>
                     <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
-                      Some projects require an in-person assessment before we can provide accurate pricing. Consultation fees start at $125 and may vary depending on location and project complexity.
+                      On-site consultations, when required, start at $125 and may vary by location and project complexity.
                     </p>
                   </div>
                 </div>

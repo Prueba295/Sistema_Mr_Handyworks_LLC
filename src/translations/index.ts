@@ -343,7 +343,7 @@ export const translations = {
       zipHint: 'Servicing South Bend (46601-46637), Mishawaka (46544-46546), Granger (46530), Elkhart (46514-46517)',
       estimatedHours: 'Estimated Project Scope',
       calcRate: 'On-Site Consultation - Starting at $125',
-      consultationNotice: 'Some projects require an in-person assessment before we can provide accurate pricing. Consultation fees start at $125 and may vary depending on location and project complexity.',
+      consultationNotice: 'On-site consultations, when required, start at $125 and may vary by location and project complexity.',
       detailsLabel: 'Tell Us About Your Project',
       detailsPlaceholder: 'E.g., Mount a TV over fireplace and conceal all power cables inside the wall...',
       attachPhoto: 'Upload Photos',
