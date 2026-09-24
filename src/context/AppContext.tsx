@@ -75,10 +75,10 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
 };
 
 const LANGUAGE_STORAGE_KEY = 'mr_handyworks_lang_v2';
-const DEFAULT_ADMIN_EMAIL = 'admin@private.local';
+const DEFAULT_ADMIN_EMAIL = 'Mrhandyworks25@gmail.com';
 const DEFAULT_ADMIN_PASSWORD = 'MrHandyworks2026!';
 const LEGACY_ADMIN_PASSWORDS = ['demo-admin-password', 'legacy-admin-password'];
-const LEGACY_ADMIN_EMAILS = ['demo-admin@private.local', 'legacy-admin@private.local'];
+const LEGACY_ADMIN_EMAILS = ['admin@private.local', 'demo-admin@private.local', 'legacy-admin@private.local'];
 
 const parseStoredValue = <T,>(value: string | null, fallback: T): T => {
   if (!value) return fallback;
@@ -827,16 +827,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     let active = true;
     const applySession = (email?: string) => {
       if (!active) return;
-      const isAuthenticated = Boolean(email);
-      const nextUser: AdminUser = {
-        isAuthenticated,
-        email: email || '',
-        twoFactorActive: isAuthenticated,
-        lastLogin: isAuthenticated ? new Date().toLocaleTimeString() : undefined
-      };
-      setAdminUser(nextUser);
-      if (isAuthenticated) sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(nextUser));
-      else sessionStorage.removeItem('mr_handyworks_admin');
+      if (email) {
+        const nextUser: AdminUser = {
+          isAuthenticated: true,
+          email,
+          twoFactorActive: true,
+          lastLogin: new Date().toLocaleTimeString()
+        };
+        setAdminUser(nextUser);
+        sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(nextUser));
+      }
     };
 
     void supabase.auth.getSession().then(({ data }) => applySession(data.session?.user.email));
@@ -902,7 +902,42 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return false;
     }
 
-    // 1. Primary Master Password Check (Works universally in dev & prod on Vercel)
+    const emailToUse = (recoveryEmail && !LEGACY_ADMIN_EMAILS.includes(recoveryEmail.toLowerCase()))
+      ? recoveryEmail.trim()
+      : 'Mrhandyworks25@gmail.com';
+
+    const lockoutKey = 'mr_handyworks_admin_lockout';
+    const attemptKey = 'mr_handyworks_admin_attempts';
+
+    // 1. Authenticate with Supabase Auth using the user's Supabase account
+    if (supabase) {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: emailToUse,
+          password: cleanPassword
+        });
+        if (!error && data?.user) {
+          sessionStorage.removeItem(attemptKey);
+          sessionStorage.removeItem(lockoutKey);
+          const user: AdminUser = {
+            isAuthenticated: true,
+            email: data.user.email || emailToUse,
+            twoFactorActive: true,
+            lastLogin: new Date().toLocaleTimeString()
+          };
+          setAdminUser(user);
+          sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
+          writeSyncedValue('mr_handyworks_admin', JSON.stringify(user));
+          writeSyncedValue('mr_handyworks_admin_email', emailToUse);
+          showNotification(language === 'es' ? 'Sesión de administrador iniciada de forma segura.' : 'Secure admin session started.');
+          return true;
+        }
+      } catch (err) {
+        console.warn('Supabase auth attempt:', err);
+      }
+    }
+
+    // 2. Primary Master Password Check (Works universally in dev & prod on Vercel)
     const isMasterMatch = 
       (adminPassword && cleanPassword === adminPassword) ||
       cleanPassword === DEFAULT_ADMIN_PASSWORD ||
@@ -914,22 +949,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       sessionStorage.removeItem(lockoutKey);
       const user: AdminUser = {
         isAuthenticated: true,
-        email: recoveryEmail || 'admin@mr-handyworks-llc.com',
+        email: emailToUse,
         twoFactorActive: true,
         lastLogin: new Date().toLocaleTimeString()
       };
       setAdminUser(user);
       sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
       writeSyncedValue('mr_handyworks_admin', JSON.stringify(user));
-
-      // Attempt silent Supabase auth sync if available
-      if (supabase && recoveryEmail) {
-        supabase.auth.signInWithPassword({
-          email: recoveryEmail,
-          password: cleanPassword
-        }).catch(() => undefined);
-      }
-
+      writeSyncedValue('mr_handyworks_admin_email', emailToUse);
       showNotification(language === 'es' ? 'Sesión de administrador iniciada de forma segura.' : 'Secure admin session started.');
       return true;
     }
@@ -940,33 +967,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     if (lockoutUntil > now) {
       return false;
-    }
-
-    // 2. Alternative: Supabase Auth Direct Check (if admin has a registered user in Supabase)
-    if (supabase && recoveryEmail) {
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: recoveryEmail,
-          password: cleanPassword
-        });
-        if (!error && data?.user) {
-          sessionStorage.removeItem(attemptKey);
-          sessionStorage.removeItem(lockoutKey);
-          const user: AdminUser = {
-            isAuthenticated: true,
-            email: data.user.email || recoveryEmail,
-            twoFactorActive: true,
-            lastLogin: new Date().toLocaleTimeString()
-          };
-          setAdminUser(user);
-          sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
-          writeSyncedValue('mr_handyworks_admin', JSON.stringify(user));
-          showNotification(language === 'es' ? 'Sesión de administrador iniciada de forma segura.' : 'Secure admin session started.');
-          return true;
-        }
-      } catch {
-        // Fallback to failed attempt tracking
-      }
     }
 
     // Failed attempt handling

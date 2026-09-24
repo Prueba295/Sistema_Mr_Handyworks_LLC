@@ -133,6 +133,7 @@ export const AdminView: React.FC = () => {
   const [honeypot, setHoneypot] = useState('');
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockoutRemaining, setLockoutRemaining] = useState(0);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Email recovery state
   const [isRecoveryMode, setIsRecoveryMode] = useState(false);
@@ -292,42 +293,48 @@ export const AdminView: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoggingIn) return;
     if (honeypot) {
       setLoginError(language === 'es' ? 'Acceso bloqueado por seguridad.' : 'Access blocked for security.');
       return;
     }
 
-    const ok = await adminLogin(passwordInput);
-    if (ok) {
-      setPasswordInput('');
-      setLoginError('');
-      setFailedAttempts(0);
-      setLockoutRemaining(0);
-    } else {
-      if (lockoutRemaining > 0) {
-        setLoginError(
-          language === 'es'
-            ? `Acceso temporalmente bloqueado. Espera ${lockoutRemaining} segundos o ingresa la contraseña maestra correcta.`
-            : `Temporarily locked for security. Please wait ${lockoutRemaining} seconds or enter valid master password.`
-        );
-        return;
-      }
-      const next = failedAttempts + 1;
-      setFailedAttempts(next);
-      if (next >= 5) {
-        setLockoutRemaining(30);
-        setLoginError(
-          language === 'es'
-            ? 'Demasiados intentos fallidos. Bloqueado temporalmente por 30 segundos.'
-            : 'Too many failed attempts. Temporarily locked for 30 seconds.'
-        );
+    try {
+      setIsLoggingIn(true);
+      const ok = await adminLogin(passwordInput);
+      if (ok) {
+        setPasswordInput('');
+        setLoginError('');
+        setFailedAttempts(0);
+        setLockoutRemaining(0);
       } else {
-        setLoginError(
-          language === 'es'
-            ? `Contraseña incorrecta. Intento ${next}/5.`
-            : `Incorrect password. Attempt ${next}/5.`
-        );
+        if (lockoutRemaining > 0) {
+          setLoginError(
+            language === 'es'
+              ? `Acceso temporalmente bloqueado. Espera ${lockoutRemaining} segundos o ingresa la contraseña maestra correcta.`
+              : `Temporarily locked for security. Please wait ${lockoutRemaining} seconds or enter valid master password.`
+          );
+          return;
+        }
+        const next = failedAttempts + 1;
+        setFailedAttempts(next);
+        if (next >= 5) {
+          setLockoutRemaining(30);
+          setLoginError(
+            language === 'es'
+              ? 'Demasiados intentos fallidos. Bloqueado temporalmente por 30 segundos.'
+              : 'Too many failed attempts. Temporarily locked for 30 seconds.'
+          );
+        } else {
+          setLoginError(
+            language === 'es'
+              ? `Contraseña incorrecta. Intento ${next}/5.`
+              : `Incorrect password. Attempt ${next}/5.`
+          );
+        }
       }
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -725,10 +732,20 @@ export const AdminView: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                disabled={isLoggingIn}
+                className="w-full py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-75"
               >
-                <Lock className="w-4 h-4" />
-                <span>{language === 'es' ? 'Iniciar Sesión Segura' : 'Sign In Securely'}</span>
+                {isLoggingIn ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>{language === 'es' ? 'Verificando acceso...' : 'Verifying access...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-4 h-4" />
+                    <span>{language === 'es' ? 'Iniciar Sesión Segura' : 'Sign In Securely'}</span>
+                  </>
+                )}
               </button>
             </form>
           ) : (
