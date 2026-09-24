@@ -553,7 +553,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [availability, setAvailability] = useState<AvailabilityDay[]>(() => {
     const saved = readSyncedValue('mr_handyworks_availability');
     const current = parseStoredValue(saved, INITIAL_AVAILABILITY);
-    const scheduleVersionKey = 'mr_handyworks_schedule_v3';
+    const scheduleVersionKey = 'mr_handyworks_schedule_v4';
     if (!readSyncedValue(scheduleVersionKey)) {
       const standardized = current.map(day => day.isBlocked
         ? { ...day, slots: [] }
