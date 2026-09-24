@@ -485,8 +485,15 @@ export const AdminModal: React.FC = () => {
               {activeTab === 'QR_SETTINGS' && (
                 <div className="space-y-4">
                   <h4 className="font-extrabold text-base text-slate-900 dark:text-white">
-                    {language === 'es' ? 'Configuración de Cuentas de Cobro QR' : 'QR Merchant Account Settings'}
+                    {language === 'es' ? 'Configuración de Métodos de Cobro' : 'Payment Methods Configuration'}
                   </h4>
+
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-300">
+                    <strong>{language === 'es' ? '⚠️ Regla de Seguridad Antifraude:' : '⚠️ Anti-Fraud Security Rule:'}</strong>{' '}
+                    {language === 'es'
+                      ? 'No configure nombres de usuario ni @handles en Zelle, Venmo ni Cash App para evitar que los clientes envíen dinero a cuentas similares fraudulentas. Utilice siempre el número telefónico oficial registrado.'
+                      : 'Do not use usernames or @handles for Zelle, Venmo, or Cash App to prevent clients from sending money to duplicate similar accounts. Always use the registered official phone number.'}
+                  </div>
 
                   <div className="space-y-4">
                     {qrMethods.map(method => (

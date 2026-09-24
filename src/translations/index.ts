@@ -158,12 +158,12 @@ export const translations = {
     },
     qrModal: {
       title: 'Métodos de Pago Directo',
-      subtitle: 'Realiza tu pago directamente a Mr Handyworks LLC.',
-      scanNotice: 'Elige tu aplicación preferida:',
-      copyAccount: 'Copiar Datos',
-      copied: '¡Copiado al portapapeles!',
-      doneConfirm: 'Listo',
-      verifiedMerchant: 'Comercio Verificado: Mr Handyworks LLC'
+      subtitle: 'Pago seguro al número verificado de Mr Handyworks LLC.',
+      scanNotice: 'Selecciona tu plataforma y envía únicamente al número telefónico oficial registrado (sin nombres ni handles):',
+      copyAccount: 'Copiar Teléfono Oficial',
+      copied: '¡Número copiado al portapapeles!',
+      doneConfirm: 'Entendido y Cerrar',
+      verifiedMerchant: 'Línea Comercial Oficial: (574) 279-9355'
     },
     admin: {
       loginTitle: 'Panel de Administración Privado',
@@ -377,12 +377,12 @@ export const translations = {
     },
     qrModal: {
       title: 'Direct Payment Options',
-      subtitle: 'Submit payment directly to Mr Handyworks LLC.',
-      scanNotice: 'Select your preferred payment method:',
-      copyAccount: 'Copy Details',
-      copied: 'Copied to clipboard!',
-      doneConfirm: 'Done',
-      verifiedMerchant: 'Verified Merchant: Mr Handyworks LLC'
+      subtitle: 'Secure payment to verified Mr Handyworks LLC phone.',
+      scanNotice: 'Select your preferred method and send strictly to the official registered phone number (no names or handles):',
+      copyAccount: 'Copy Official Phone',
+      copied: 'Phone copied to clipboard!',
+      doneConfirm: 'Understood & Close',
+      verifiedMerchant: 'Official Business Line: (574) 279-9355'
     },
     admin: {
       loginTitle: 'Private Management Suite',

@@ -315,37 +315,37 @@ export const INITIAL_QR_METHODS: PaymentQR[] = [
   {
     id: 'zelle',
     provider: 'Zelle',
-    accountInfo: 'Mr Handyworks LLC / Business Account',
-    displayName: 'Zelle Direct Payment',
-    instructionsEs: 'Paga de manera directa y sin comisiones buscando nuestra cuenta comercial registrada a nombre de Mr Handyworks LLC.',
-    instructionsEn: 'Send direct fee-free payment by searching our business account registered under Mr Handyworks LLC.',
+    accountInfo: '(574) 279-9355',
+    displayName: 'Zelle (574) 279-9355',
+    instructionsEs: 'Envía tu pago por Zelle usando exclusivamente el número de teléfono registrado: (574) 279-9355. Por seguridad, NUNCA busques por nombre o empresa para evitar confusiones con cuentas similares.',
+    instructionsEn: 'Send your Zelle payment strictly using our registered phone number: (574) 279-9355. For your security, NEVER search by name or business to prevent sending to similar duplicate accounts.',
     isActive: true
   },
   {
     id: 'venmo',
     provider: 'Venmo',
-    accountInfo: '@MrHandyworks-LLC',
-    displayName: 'Venmo Payments',
-    instructionsEs: 'Envía tu pago por Venmo a nuestra cuenta comercial @MrHandyworks-LLC.',
-    instructionsEn: 'Send payment via Venmo to verified business account @MrHandyworks-LLC.',
+    accountInfo: '(574) 279-9355',
+    displayName: 'Venmo (574) 279-9355',
+    instructionsEs: 'Envía tu pago en Venmo buscando únicamente el número de teléfono oficial: (574) 279-9355. No busques por nombres o @handles para evitar transferencias a cuentas homónimas erróneas.',
+    instructionsEn: 'Send your Venmo payment using strictly the official phone number: (574) 279-9355. Do not search by names or @handles to avoid accidental transfers to similar accounts.',
     isActive: true
   },
   {
     id: 'cashapp',
     provider: 'CashApp',
-    accountInfo: '$MrHandyworks',
-    displayName: 'CashApp $Cashtag',
-    instructionsEs: 'Envía tu pago instantáneamente a nuestro $Cashtag oficial: $MrHandyworks.',
-    instructionsEn: 'Send payment instantly using our verified $Cashtag: $MrHandyworks.',
+    accountInfo: '(574) 279-9355',
+    displayName: 'Cash App (574) 279-9355',
+    instructionsEs: 'Paga en Cash App enviando directamente al número de teléfono verificado: (574) 279-9355. No busques por $Cashtag o nombres para garantizar que el pago llegue a nuestra cuenta oficial.',
+    instructionsEn: 'Pay on Cash App directly to our verified phone number: (574) 279-9355. Do not search by names or $Cashtags to guarantee funds reach our verified business account.',
     isActive: true
   },
   {
     id: 'applepay',
     provider: 'ApplePay',
-    accountInfo: 'Mr Handyworks Apple Business Desk',
-    displayName: 'Apple Pay',
-    instructionsEs: 'Envía tu pago mediante Apple Pay a nuestra cuenta comercial de Mr Handyworks LLC.',
-    instructionsEn: 'Send payment via Apple Pay to verified Mr Handyworks LLC business account.',
+    accountInfo: '(574) 279-9355',
+    displayName: 'Apple Pay (574) 279-9355',
+    instructionsEs: 'Envía tu pago mediante Apple Pay / Apple Cash directamente al número de teléfono verificado: (574) 279-9355.',
+    instructionsEn: 'Send Apple Pay / Apple Cash payment directly to our verified phone number: (574) 279-9355.',
     isActive: true
   }
 ];

@@ -786,7 +786,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
                   <ul>
                     <li>${isEs ? `Se requiere un depósito del 50% (${depositFormatted}) o tarifa de consulta ($125) para agendar e iniciar el trabajo.` : `A 50% deposit of ${depositFormatted} (or on-site consultation fee) is required to schedule and begin the work.`}</li>
                     <li>${isEs ? `El saldo restante (${depositFormatted}) se cancela inmediatamente al completar el trabajo y verificación.` : `The remaining balance of ${depositFormatted} is due immediately upon completion.`}</li>
-                    <li>${isEs ? 'Pagos aceptados: Zelle, Venmo, Cash App, Apple Pay, Efectivo y Tarjetas de crédito/débito (+3.5% comisión del procesador).' : 'Accepted payments: Venmo, Cash App, Apple Pay, cash, check, and credit/debit card. Card payments include a 3.5% processing fee.'}</li>
+                    <li>${isEs ? 'Pagos aceptados: Zelle, Venmo, Cash App y Apple Pay enviados únicamente al teléfono oficial (574) 279-9355 (no buscar por nombres para evitar cuentas duplicadas), Efectivo y Tarjetas (+3.5%).' : 'Accepted payments: Zelle, Venmo, Cash App, and Apple Pay sent strictly to official phone (574) 279-9355 (do not search by names to prevent duplicate accounts), cash, and cards (+3.5%).'}</li>
                     <li>${isEs ? 'Esta propuesta tiene una validez de 14 días a partir de la fecha de emisión.' : 'This proposal is valid for 14 days from the date shown.'}</li>
                     <li>${isEs ? 'La ejecución y horarios están sujetos a condiciones climáticas y de seguridad en el sitio.' : 'Work and scheduling are subject to safe weather and site conditions.'}</li>
                   </ul>

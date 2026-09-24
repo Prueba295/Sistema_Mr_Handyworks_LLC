@@ -710,7 +710,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // 11. Payment QR Methods
   const [qrMethods, setQrMethods] = useState<PaymentQR[]>(() => {
     const saved = readSyncedValue('mr_handyworks_qr');
-    return parseStoredValue(saved, INITIAL_QR_METHODS);
+    const parsed = parseStoredValue(saved, INITIAL_QR_METHODS);
+    // Auto-migrate if stored methods contain outdated handles, names, or non-phone identifiers
+    const hasOldHandles = parsed.some(
+      (m: PaymentQR) => 
+        !m.accountInfo ||
+        m.accountInfo.includes('@') || 
+        m.accountInfo.includes('$') || 
+        m.accountInfo.toLowerCase().includes('mr handyworks') ||
+        m.accountInfo.toLowerCase().includes('desk') ||
+        m.accountInfo.toLowerCase().includes('account')
+    );
+    if (hasOldHandles) {
+      writeSyncedValue('mr_handyworks_qr', JSON.stringify(INITIAL_QR_METHODS));
+      return INITIAL_QR_METHODS;
+    }
+    return parsed;
   });
 
   const updateQRMethod = (id: string, accountInfo: string) => {
