@@ -70,8 +70,8 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   insurancePolicy: 'Next Insurance #NX-IN-99421',
   insuranceCoverage: '$1,000,000 Next Insurance Liability',
   yearsExperience: 8,
-  bioEs: 'Brian Cueva es el fundador y maestro artesano detrás de Mr Handyworks LLC en South Bend, IN. Con más de 8 años de experiencia directa y una calificación perfecta de 5.0 en Thumbtack (Top Pro), Brian se especializa en montaje de TV, instalaciones residenciales, pintura, plomería menor y reparaciones generales con garantía de satisfacción del 100%.',
-  bioEn: 'Brian Cueva is the owner and master craftsman behind Mr Handyworks LLC in South Bend, IN. With over 8 years of hands-on experience and a 5.0 perfect rating on Thumbtack (Top Pro), Brian specializes in precision TV mounting, home repairs, painting, fixture installations, and custom handyman solutions with a 100% satisfaction guarantee.'
+  bioEs: 'Nuestro equipo de servicio de Mr Handyworks LLC combina experiencia práctica, atención cuidadosa y soluciones confiables para reparaciones, instalaciones y remodelaciones residenciales en South Bend, IN.',
+  bioEn: 'The Mr Handyworks LLC service team combines hands-on experience, careful attention to detail, and dependable workmanship for residential repairs, installations, and remodels across South Bend, IN.'
 };
 
 const LANGUAGE_STORAGE_KEY = 'mr_handyworks_lang_v2';
@@ -744,9 +744,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [recoveryEmail, setRecoveryEmailState] = useState<string>(() => {
     const saved = readSyncedValue('mr_handyworks_admin_email');
-    return saved && saved.toLowerCase() !== 'brian@mr-handyworks-llc.com'
-      ? saved
-      : 'Mrhandyworks25@gmail.com';
+    const defaultEmail = 'admin@private.local';
+    return saved && saved.trim() ? saved : defaultEmail;
   });
 
   const setRecoveryEmail = (email: string) => {
@@ -788,7 +787,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [adminUser, setAdminUser] = useState<AdminUser>(() => {
     const session = sessionStorage.getItem('mr_handyworks_admin');
-    return session ? JSON.parse(session) : { isAuthenticated: false, email: 'brian@mrhandyworks.com', twoFactorActive: true };
+    return session ? JSON.parse(session) : { isAuthenticated: false, email: 'admin@private.local', twoFactorActive: true };
   });
 
   useEffect(() => {
@@ -921,7 +920,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setAdminUser(user);
       sessionStorage.setItem('mr_handyworks_admin', JSON.stringify(user));
       writeSyncedValue('mr_handyworks_admin', JSON.stringify(user));
-      showNotification(language === 'es' ? 'Bienvenido Brian Cueva (Sesión Segura)' : 'Welcome Brian Cueva (Secure Session)');
+      showNotification(language === 'es' ? 'Sesión de administrador iniciada de forma segura.' : 'Secure admin session started.');
       return true;
     }
 

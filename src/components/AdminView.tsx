@@ -643,7 +643,7 @@ export const AdminView: React.FC = () => {
                 : (language === 'es' ? 'Panel de Administración' : 'Admin CMS Portal')}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Mr Handyworks LLC • Brian Cueva
+              Mr Handyworks LLC • Private Operations Portal
             </p>
           </div>
 
@@ -745,8 +745,8 @@ export const AdminView: React.FC = () => {
                 </div>
                 <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                   {language === 'es'
-                    ? `Enviaremos un enlace seguro a ${recoveryEmail}. El enlace te permitirá restablecer la contraseña directamente en Supabase.`
-                    : `A secure link will be sent to ${recoveryEmail}. The link will let you reset the password through Supabase.`}
+                    ? 'Enviaremos un enlace seguro a la dirección de recuperación registrada. El enlace te permitirá restablecer la contraseña directamente en Supabase.'
+                    : 'A secure link will be sent to the registered recovery address. The link will let you reset the password through Supabase.'}
                 </p>
               </div>
 
@@ -802,7 +802,7 @@ export const AdminView: React.FC = () => {
       <div className="bg-white dark:bg-[#1A2332] rounded-3xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-[#0B3C5D] text-white flex items-center justify-center font-black text-xl shadow-md">
-            BC
+            MH
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -814,7 +814,7 @@ export const AdminView: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Mr Handyworks LLC • Brian Cueva ({adminUser.email})
+              Mr Handyworks LLC • Private Admin Session
             </p>
           </div>
         </div>
@@ -1043,7 +1043,7 @@ export const AdminView: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                  {language === 'es' ? 'Biografía de Brian Cueva (Español):' : 'Brian Cueva Bio (Spanish):'}
+                  {language === 'es' ? 'Biografía de la empresa (Español):' : 'Company Bio (Spanish):'}
                 </label>
                 <textarea 
                   rows={4}
@@ -1055,7 +1055,7 @@ export const AdminView: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                  {language === 'es' ? 'Biografía de Brian Cueva (Inglés):' : 'Brian Cueva Bio (English):'}
+                  {language === 'es' ? 'Biografía de la empresa (Inglés):' : 'Company Bio (English):'}
                 </label>
                 <textarea 
                   rows={4}
@@ -1121,7 +1121,7 @@ export const AdminView: React.FC = () => {
                       type="email"
                       value={settingsRecoveryEmail}
                       onChange={(e) => setSettingsRecoveryEmail(e.target.value)}
-                      placeholder="Mrhandyworks25@gmail.com"
+                      placeholder="admin@private.local"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white"
                     />
                     <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500 italic">
@@ -1904,8 +1904,8 @@ export const AdminView: React.FC = () => {
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   {language === 'es'
-                    ? '80 reseñas (5.0 ⭐) y 125 fotos HD sincronizadas con el perfil oficial de Brian Cueva.'
-                    : '80 reviews (5.0 ⭐) and 125 HD photos synchronized with Brian Cueva\'s official profile.'}
+                    ? '80 reseñas (5.0 ⭐) y 125 fotos HD sincronizadas con el perfil oficial de la empresa.'
+                    : '80 reviews (5.0 ⭐) and 125 HD photos synchronized with the company\'s official profile.'}
                 </p>
               </div>
             </div>
@@ -2483,7 +2483,7 @@ export const AdminView: React.FC = () => {
                       {/* Message Client via SMS */}
                       <a
                         href={`sms:${b.clientPhone.replace(/\D/g, '')}?body=${encodeURIComponent(
-                          `Hello ${b.clientName}, this is Brian Cueva from Mr Handyworks LLC regarding your work order #${b.id} for ${b.serviceType}.`
+                          `Hello ${b.clientName}, this is the Mr Handyworks LLC service team regarding your work order #${b.id} for ${b.serviceType}.`
                         )}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-xs font-bold transition-colors cursor-pointer"
                       >

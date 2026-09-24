@@ -49,21 +49,24 @@ const simulatedAttachments: BookingAttachment[] = [
     name: 'foto_chimenea_area.jpg',
     type: 'image',
     sizeFormatted: '1.8 MB',
-    dataUrl: 'https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/ORD-98214/att-1-foto_chimenea_area.jpg'
+    dataUrl: 'https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/ORD-98214/att-1-foto_chimenea_area.jpg',
+    createdAt: new Date().toISOString()
   },
   {
     id: 'att-2',
     name: 'plano_electrico_sala.pdf',
     type: 'document',
     sizeFormatted: '450 KB',
-    dataUrl: 'https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/ORD-98214/att-2-plano_electrico_sala.pdf'
+    dataUrl: 'https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/ORD-98214/att-2-plano_electrico_sala.pdf',
+    createdAt: new Date().toISOString()
   },
   {
     id: 'att-3',
     name: 'video_vista_pared.mp4',
     type: 'video',
     sizeFormatted: '14.2 MB',
-    dataUrl: 'https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/ORD-98214/att-3-video_vista_pared.mp4'
+    dataUrl: 'https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/ORD-98214/att-3-video_vista_pared.mp4',
+    createdAt: new Date().toISOString()
   }
 ];
 

@@ -67,7 +67,7 @@ export const AdminModal: React.FC = () => {
     if (success) {
       setPasswordInput('');
       setLoginError('');
-      showNotification(language === 'es' ? 'Bienvenido, Brian. Sesión activa.' : 'Welcome Brian. Admin session active.');
+      showNotification(language === 'es' ? 'Sesión activa.' : 'Admin session active.');
     } else {
       setLoginError(language === 'es' ? 'Contraseña incorrecta.' : 'Incorrect password.');
     }
@@ -93,7 +93,7 @@ export const AdminModal: React.FC = () => {
                 {t.admin.loginTitle}
               </h3>
               <p className="text-xs text-amber-200">
-                {adminUser.isAuthenticated ? `Brian Cueva (${adminUser.email})` : 'Mr Handyworks LLC Private Portal'}
+                {adminUser.isAuthenticated ? 'Private admin session' : 'Private operations portal'}
               </p>
             </div>
           </div>

@@ -36,7 +36,7 @@ export const Credentials: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
-          {/* Left Column: Brian Cueva's Profile & Personal Philosophy */}
+          {/* Left Column: Service Team Profile & Philosophy */}
           <div className="lg:col-span-6 space-y-6">
             
             {/* Story Card */}
@@ -45,19 +45,19 @@ export const Credentials: React.FC = () => {
                 <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#0B3C5D] shadow-sm bg-white shrink-0">
                   <img 
                     src="/logo_handyworks.jpeg"
-                    alt="Brian Cueva - Mr Handyworks LLC" 
+                    alt="Mr Handyworks LLC service team" 
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
                   <span className="text-[11px] font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 block mb-0.5">
-                    {language === 'es' ? 'Conoce al Fundador • Meet the Owner' : 'Meet the Owner'}
+                    {language === 'es' ? 'Equipo de servicio confiable' : 'Trusted Service Team'}
                   </span>
                   <h3 className="font-black text-xl text-[#0B3C5D] dark:text-white">
-                    Brian Cueva
+                    Mr Handyworks LLC
                   </h3>
                   <p className="text-sm font-bold text-slate-600 dark:text-blue-300">
-                    Owner, Mr Handyworks LLC
+                    {language === 'es' ? 'Atención residencial profesional' : 'Professional home service care'}
                   </p>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     South Bend, Indiana • {BUSINESS_INFO.phone}

@@ -2,7 +2,7 @@ import { Booking, BookingAttachment } from '../types';
 
 /**
  * MR HANDYWORKS LLC - LIVE REAL-TIME NOTIFICATION DISPATCHER
- * Directly connects customer bookings to owner Brian Cueva's phone: (574) 279-9355
+ * Directly connects customer bookings to the verified service team phone: (574) 279-9355
  */
 
 export interface LiveNotificationPayload {
@@ -79,7 +79,7 @@ https://mr-handyworks-llc.com/#admin`;
 }
 
 /**
- * Build SMS link directly addressed to owner Brian Cueva
+ * Build SMS link directly addressed to the service team
  * Automatically adapts separator for iOS (&body=) vs Android/Desktop (?body=)
  */
 export function buildOwnerSMSNotificationUrl(booking: Booking, ownerPhoneRaw: string = '15742799355'): string {
@@ -93,6 +93,34 @@ export function buildOwnerSMSNotificationUrl(booking: Booking, ownerPhoneRaw: st
   );
   
   return isIOS ? `sms:${cleanPhone}&body=${encoded}` : `sms:${cleanPhone}?body=${encoded}`;
+}
+
+/**
+ * Trigger the owner SMS dispatch immediately after booking confirmation to avoid
+ * popup-blocking and to work on both mobile and desktop browsers when a default
+ * SMS client is installed.
+ */
+export function triggerOwnerSMSDispatch(booking: Booking, ownerPhoneRaw: string = '15742799355'): string {
+  const smsUrl = buildOwnerSMSNotificationUrl(booking, ownerPhoneRaw);
+  const runtimeWindow = typeof window !== 'undefined'
+    ? window
+    : (typeof globalThis !== 'undefined' ? (globalThis as any) : undefined);
+
+  if (!runtimeWindow || !runtimeWindow.location) {
+    return smsUrl;
+  }
+
+  try {
+    runtimeWindow.location.href = smsUrl;
+  } catch {
+    try {
+      runtimeWindow.open?.(smsUrl, '_self');
+    } catch {
+      // Graceful fallback when the browser blocks the SMS scheme.
+    }
+  }
+
+  return smsUrl;
 }
 
 /**

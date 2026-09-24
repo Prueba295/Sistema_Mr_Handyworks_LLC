@@ -4,7 +4,7 @@ import { REAL_THUMBTACK_REVIEWS } from './realReviews';
 
 export const BUSINESS_INFO = {
   name: 'Mr Handyworks LLC',
-  owner: 'Brian Cueva',
+  owner: 'Mr Handyworks LLC',
   phone: '(574) 279-9355',
   phoneRaw: '15742799355',
   email: 'contact@mrhandyworks.com',

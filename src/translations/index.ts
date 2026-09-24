@@ -26,10 +26,10 @@ export const translations = {
       statsRating: '5.0 Calificación Perfecta en Thumbtack'
     },
     credentials: {
-      title: 'Tu Profesional de Confianza',
-      subtitle: 'Brian Cueva, Fundador y Propietario de Mr Handyworks LLC',
-      bio1: 'Con años de experiencia en reparación residencial y remodelación, Brian fundó Mr Handyworks LLC para brindar un estándar superior: puntualidad rigurosa, presupuestos transparentes sin sorpresas y acabados milimétricos.',
-      bio2: 'Cada proyecto gestionado por Mr Handyworks LLC es ejecutado con herramientas profesionales, nivel láser y máxima protección para su mobiliario y pisos, ya sea por el dueño, técnicos de nuestro equipo o subcontratistas calificados.',
+      title: 'Tu Equipo de Servicio de Confianza',
+      subtitle: 'Atención profesional en reparaciones e instalaciones de Mr Handyworks LLC',
+      bio1: 'Con años de experiencia en reparación residencial y remodelación, nuestro equipo ofrece un estándar superior: puntualidad rigurosa, presupuestos transparentes y acabados meticulosos.',
+      bio2: 'Cada proyecto gestionado por Mr Handyworks LLC se ejecuta con herramientas profesionales, nivel láser y máxima protección para su hogar y sus espacios de trabajo.',
       guaranteeTitle: 'Nuestra Garantía de Calidad:',
       guarantees: [
         'Hecho bien a la primera, sin atajos ni materiales defectuosos.',
@@ -167,7 +167,7 @@ export const translations = {
     },
     admin: {
       loginTitle: 'Panel de Administración Privado',
-      loginSubtitle: 'Acceso reservado exclusivamente para Brian Cueva (Mr Handyworks LLC)',
+      loginSubtitle: 'Acceso reservado al área privada de operaciones',
       emailLabel: 'Correo Electrónico de Administrador',
       passwordLabel: 'Contraseña Maestra',
       twoFactorPrompt: 'Código 2FA / TOTP (Google Authenticator)',
@@ -213,7 +213,7 @@ export const translations = {
       servicesHeading: 'Servicios Populares',
       contactHeading: 'Contacto Directo',
       hoursHeading: 'Horario de Atención',
-      ownerName: 'Propietario: Brian Cueva',
+      ownerName: 'Área privada de operaciones',
       allRights: 'Todos los derechos reservados. Registrado y Asegurado en el Estado de Indiana.',
       privacy: 'Aviso de Privacidad y Términos de Servicio'
     }
@@ -245,10 +245,10 @@ export const translations = {
       statsRating: '5.0 Flawless Rating on Thumbtack'
     },
     credentials: {
-      title: 'Your Trusted Home Craftsman',
-      subtitle: 'Brian Cueva, Owner & Founder of Mr Handyworks LLC',
-      bio1: 'With years of hands-on experience in residential repairs and remodeling, Brian established Mr Handyworks LLC around a core standard: strict punctuality, transparent upfront estimates with zero surprises, and millimeter precision.',
-      bio2: 'Every project managed by Mr Handyworks LLC is executed with heavy-duty pro tools, laser leveling, and total protection of your furniture and floors—whether performed by the owner, a team technician, or a qualified specialist.',
+      title: 'Your Trusted Home Service Team',
+      subtitle: 'Professional repair and installation care from Mr Handyworks LLC',
+      bio1: 'With years of hands-on experience in residential repairs and remodeling, our team delivers a higher standard of punctuality, transparent estimates, and careful workmanship.',
+      bio2: 'Every project managed by Mr Handyworks LLC is executed with pro-grade tools, laser leveling, and careful protection of your home and work areas from start to finish.',
       guaranteeTitle: 'Our Quality Guarantee:',
       guarantees: [
         'Done right the first time, never taking shortcuts or using inferior hardware.',
@@ -386,7 +386,7 @@ export const translations = {
     },
     admin: {
       loginTitle: 'Private Management Suite',
-      loginSubtitle: 'Restricted access for Brian Cueva (Mr Handyworks LLC)',
+      loginSubtitle: 'Restricted access to the private operations area',
       emailLabel: 'Administrator Email',
       passwordLabel: 'Master Password',
       twoFactorPrompt: '2FA / TOTP Security Code',
@@ -432,7 +432,7 @@ export const translations = {
       servicesHeading: 'Popular Services',
       contactHeading: 'Direct Contact',
       hoursHeading: 'Business Hours',
-      ownerName: 'Owner: Brian Cueva',
+      ownerName: 'Private operations area',
       allRights: 'All rights reserved. Registered & Insured in the State of Indiana.',
       privacy: 'Privacy Notice & Terms of Service'
     }

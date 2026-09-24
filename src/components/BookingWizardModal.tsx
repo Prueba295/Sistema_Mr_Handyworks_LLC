@@ -20,7 +20,8 @@ import {
   triggerDesktopNotification, 
   dispatchBookingWebhook, 
   buildOwnerSMSNotificationUrl,
-  buildOwnerWhatsAppNotificationUrl
+  buildOwnerWhatsAppNotificationUrl,
+  triggerOwnerSMSDispatch
 } from '../utils/liveNotifier';
 import confetti from 'canvas-confetti';
 import { 
@@ -364,23 +365,17 @@ export const BookingWizardModal: React.FC = () => {
     triggerDesktopNotification(newBooking);
     dispatchBookingWebhook(newBooking).catch(() => {});
 
-    // Automatically trigger official PDF generation immediately upon confirmation
+    // Automatically trigger the PDF and SMS dispatch immediately after confirmation
+    // so browsers do not block the pop-ups and the owner receives the booking data
+    // in the same user interaction that created the booking.
     try {
-      setTimeout(() => {
-        generateQuotePDF(newBooking, language);
-      }, 400);
+      generateQuotePDF(newBooking, language);
     } catch {
       // safe fallback
     }
 
-    // Automatically prompt SMS application on mobile devices with all details filled
     try {
-      const smsUrl = buildOwnerSMSNotificationUrl(newBooking, BUSINESS_INFO.phoneRaw);
-      if (typeof window !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        setTimeout(() => {
-          window.location.href = smsUrl;
-        }, 700);
-      }
+      triggerOwnerSMSDispatch(newBooking, BUSINESS_INFO.phoneRaw);
     } catch {
       // safe fallback
     }
@@ -1341,7 +1336,7 @@ export const BookingWizardModal: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Real-time Dispatch to Owner's Phone: Brian Cueva (574) 279-9355 */}
+                {/* Real-time dispatch to the verified service team phone: (574) 279-9355 */}
                 <div className="max-w-xl mx-auto p-4 sm:p-5 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-left space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -1385,8 +1380,8 @@ export const BookingWizardModal: React.FC = () => {
 
                   <div className="text-[11px] text-slate-600 dark:text-slate-300 pt-1 border-t border-amber-500/20 leading-relaxed">
                     {language === 'es'
-                      ? '📸 Tus fotos y documentos adjuntos están guardados de forma segura en el sistema con el código de orden #' + createdBooking.id + '. Al presionar el botón de envío, el técnico Brian Cueva recibe el informe con todos los datos.'
-                      : '📸 Your photos and uploaded documents are securely saved under order #' + createdBooking.id + '. Technician Brian Cueva will receive the complete work order summary.'}
+                      ? '📸 Tus fotos y documentos adjuntos están guardados de forma segura en el sistema con el código de orden #' + createdBooking.id + '. Al presionar el botón de envío, el equipo de servicio recibe el informe con todos los datos.'
+                      : '📸 Your photos and uploaded documents are securely saved under order #' + createdBooking.id + '. The service team will receive the complete work order summary.'}
                   </div>
                 </div>
 

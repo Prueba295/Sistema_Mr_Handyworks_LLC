@@ -151,8 +151,8 @@ export const QRModal: React.FC = () => {
                 {language === 'es' ? '⚠️ NO BUSQUES POR NOMBRE O USUARIO' : '⚠️ DO NOT SEARCH BY NAME OR USERNAME'}
               </span>
               {language === 'es' 
-                ? 'Existen muchas cuentas con nombres similares en Zelle, Venmo y Cash App. Para evitar enviar tu dinero a cuentas erróneas o duplicadas, envía ÚNICAMENTE al número de teléfono oficial registrado (574) 279-9355 o coordina directamente con Brian Cueva.'
-                : 'There are many accounts with similar names across Zelle, Venmo, and Cash App. To avoid sending money to wrong or duplicate accounts, pay STRICTLY using our verified official phone number (574) 279-9355 or coordinate directly with Brian Cueva.'}
+                ? 'Existen muchas cuentas con nombres similares en Zelle, Venmo y Cash App. Para evitar enviar tu dinero a cuentas erróneas o duplicadas, usa únicamente el número de teléfono oficial registrado (574) 279-9355 y confirma la cuenta autorizada antes de enviar el pago.'
+                : 'There are many accounts with similar names across Zelle, Venmo, and Cash App. To avoid sending money to wrong or duplicate accounts, use only the verified official phone number (574) 279-9355 and confirm the authorized account before sending payment.'}
             </div>
           </div>
 
@@ -169,7 +169,7 @@ export const QRModal: React.FC = () => {
                 {currentProvider.accountInfo}
               </div>
               <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
-                ✓ {language === 'es' ? 'Verificado a nombre de Brian Cueva / Mr Handyworks LLC' : 'Verified to Brian Cueva / Mr Handyworks LLC'}
+                ✓ {language === 'es' ? 'Cuenta autorizada de Mr Handyworks LLC' : 'Authorized Mr Handyworks LLC account'}
               </div>
             </div>
 
