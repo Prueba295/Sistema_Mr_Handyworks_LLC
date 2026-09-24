@@ -85,6 +85,12 @@ const parseStoredValue = <T,>(value: string | null, fallback: T): T => {
   }
 };
 
+const normalizeAvailability = (days: AvailabilityDay[]): AvailabilityDay[] => days.map(day => (
+  day.isBlocked
+    ? { ...day, slots: [] }
+    : { ...day, slots: [...STANDARD_TIME_SLOTS] }
+));
+
 const getPageFromHash = (): NavigationPage => {
   if (typeof window === 'undefined') return 'home';
   const raw = window.location.hash.replace('#/', '').replace('#', '').trim().toLowerCase();
@@ -360,7 +366,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             break;
           }
           try {
-            setAvailability(JSON.parse(event.value));
+            setAvailability(normalizeAvailability(JSON.parse(event.value) as AvailabilityDay[]));
           } catch {
             break;
           }
@@ -552,12 +558,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // 9. Availability State & Actions
   const [availability, setAvailability] = useState<AvailabilityDay[]>(() => {
     const saved = readSyncedValue('mr_handyworks_availability');
-    const current = parseStoredValue(saved, INITIAL_AVAILABILITY);
+    const current = normalizeAvailability(parseStoredValue(saved, INITIAL_AVAILABILITY));
     const scheduleVersionKey = 'mr_handyworks_schedule_v4';
     if (!readSyncedValue(scheduleVersionKey)) {
-      const standardized = current.map(day => day.isBlocked
-        ? { ...day, slots: [] }
-        : { ...day, slots: [...STANDARD_TIME_SLOTS] });
+      const standardized = normalizeAvailability(current);
       writeSyncedValue('mr_handyworks_availability', JSON.stringify(standardized));
       writeSyncedValue(scheduleVersionKey, 'true');
       return standardized;
