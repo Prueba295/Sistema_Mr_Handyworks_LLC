@@ -113,13 +113,10 @@ export const AdminView: React.FC = () => {
     resetToDefaults,
     navigateTo,
     toggleLanguage,
-    recoveryPhone,
-    setRecoveryPhone,
     recoveryEmail,
     setRecoveryEmail,
     changeAdminPassword,
-    requestPasswordResetCode,
-    resetPasswordWithCode,
+    requestPasswordResetEmail,
     alertSettings,
     updateAlertSettings
   } = useApp();
@@ -137,14 +134,9 @@ export const AdminView: React.FC = () => {
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [lockoutRemaining, setLockoutRemaining] = useState(0);
 
-  // Recovery OTP state (Phone primary, email optional backup)
+  // Email recovery state
   const [isRecoveryMode, setIsRecoveryMode] = useState(false);
-  const [recoveryStep, setRecoveryStep] = useState<'REQUEST' | 'VERIFY'>('REQUEST');
-  const [recoveryCodeInput, setRecoveryCodeInput] = useState('');
-  const [newPasswordInput, setNewPasswordInput] = useState('');
-  const [confirmPasswordInput, setConfirmPasswordInput] = useState('');
   const [recoveryError, setRecoveryError] = useState('');
-  const [lastGeneratedOtp, setLastGeneratedOtp] = useState<string | null>(null);
 
   // Editing portfolio state
   const [editingMediaId, setEditingMediaId] = useState<string | null>(null);
@@ -152,12 +144,7 @@ export const AdminView: React.FC = () => {
 
   // Direct Settings changes
   const [settingsNewPassword, setSettingsNewPassword] = useState('');
-  const [settingsRecoveryPhone, setSettingsRecoveryPhone] = useState(recoveryPhone);
   const [settingsRecoveryEmail, setSettingsRecoveryEmail] = useState(recoveryEmail);
-
-  React.useEffect(() => {
-    setSettingsRecoveryPhone(recoveryPhone);
-  }, [recoveryPhone]);
 
   React.useEffect(() => {
     setSettingsRecoveryEmail(recoveryEmail);
@@ -343,46 +330,10 @@ export const AdminView: React.FC = () => {
     }
   };
 
-  const handleSendRecoveryOTP = () => {
-    const code = requestPasswordResetCode();
-    setLastGeneratedOtp(code);
-    setRecoveryStep('VERIFY');
+  const handleSendRecoveryEmail = async () => {
     setRecoveryError('');
-    showNotification(
-      language === 'es'
-        ? `Código de 6 dígitos enviado al ${recoveryPhone || '(574) 555-0199'}: [ ${code} ]`
-        : `6-digit verification code sent to ${recoveryPhone || '(574) 555-0199'}: [ ${code} ]`
-    );
-  };
-
-  const handleConfirmReset = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newPasswordInput.length < 6) {
-      setRecoveryError(language === 'es' ? 'La nueva contraseña debe tener mínimo 6 caracteres' : 'Password must be at least 6 characters');
-      return;
-    }
-    if (newPasswordInput !== confirmPasswordInput) {
-      setRecoveryError(language === 'es' ? 'Las contraseñas no coinciden' : 'Passwords do not match');
-      return;
-    }
-    const success = resetPasswordWithCode(recoveryCodeInput, newPasswordInput);
-    if (success) {
-      setIsRecoveryMode(false);
-      setRecoveryStep('REQUEST');
-      setRecoveryCodeInput('');
-      setNewPasswordInput('');
-      setConfirmPasswordInput('');
-      setRecoveryError('');
-      setLastGeneratedOtp(null);
-      setPasswordInput(newPasswordInput);
-      showNotification(
-        language === 'es'
-          ? '¡Contraseña restablecida con éxito! Ya puedes iniciar sesión.'
-          : 'Password reset successfully! You can now sign in.'
-      );
-    } else {
-      setRecoveryError(language === 'es' ? 'Código de verificación incorrecto o expirado' : 'Invalid or expired verification code');
-    }
+    const success = await requestPasswordResetEmail();
+    if (success) setIsRecoveryMode(false);
   };
 
   const handleUpdateAdminPasswordDirect = (e: React.FormEvent) => {
@@ -395,16 +346,6 @@ export const AdminView: React.FC = () => {
     if (ok) {
       setSettingsNewPassword('');
     }
-  };
-
-  const handleUpdateAdminPhoneDirect = (e: React.FormEvent) => {
-    e.preventDefault();
-    const phoneVal = validateUSPhone(settingsRecoveryPhone);
-    if (!phoneVal.isValid) {
-      showNotification(phoneVal.error || (language === 'es' ? 'Ingresa un número telefónico válido' : 'Please enter a valid phone number'));
-      return;
-    }
-    setRecoveryPhone(settingsRecoveryPhone);
   };
 
   const handleUpdateAdminEmailDirect = (e: React.FormEvent) => {
@@ -766,7 +707,6 @@ export const AdminView: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setIsRecoveryMode(true);
-                      setRecoveryStep('REQUEST');
                       setLoginError('');
                     }}
                     className="font-bold text-[#0B3C5D] dark:text-blue-400 hover:underline cursor-pointer"
@@ -793,145 +733,37 @@ export const AdminView: React.FC = () => {
               </button>
             </form>
           ) : (
-            /* OTP RECOVERY FLOW - PHONE PRIMARY (6 DIGITS), EMAIL OPTIONAL BACKUP */
             <div className="space-y-4 text-left">
-              {recoveryStep === 'REQUEST' ? (
-                <div className="space-y-4">
-                  <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-slate-700 dark:text-slate-300 space-y-2.5">
-                    <div className="flex items-center gap-2">
-                      <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-                        <Phone className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
-                          {language === 'es' ? 'Recuperación por Teléfono (Principal)' : 'Recovery via Phone (Primary)'}
-                        </span>
-                        <span className="font-mono text-sm sm:text-base text-[#0B3C5D] dark:text-blue-300 font-extrabold">
-                          {recoveryPhone || '(574) 555-0199'}
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {language === 'es'
-                        ? 'Se enviará un código de verificación de 6 dígitos directamente a tu número de teléfono móvil.'
-                        : 'A 6-digit verification code will be sent directly to your registered mobile phone number.'}
-                    </p>
-                    {recoveryEmail && (
-                      <div className="pt-2 border-t border-emerald-200/60 dark:border-emerald-800/60 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-                        <Mail className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{language === 'es' ? 'Respaldo opcional:' : 'Optional backup:'} <strong className="text-slate-700 dark:text-slate-300">{recoveryEmail}</strong></span>
-                      </div>
-                    )}
+              <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-xs text-slate-700 dark:text-slate-300 space-y-2.5">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-600 dark:text-blue-400">
+                    <Mail className="w-4 h-4" />
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={handleSendRecoveryOTP}
-                    className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <KeyRound className="w-4 h-4" />
-                    <span>{language === 'es' ? 'Enviar Código de 6 Dígitos a mi Teléfono' : 'Send 6-Digit Code to My Phone'}</span>
-                  </button>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 dark:text-blue-400">
+                    {language === 'es' ? 'Recuperación por correo' : 'Email password recovery'}
+                  </span>
                 </div>
-              ) : (
-                <form onSubmit={handleConfirmReset} className="space-y-3.5">
-                  {/* Generated OTP Badge with Direct SMS Quick-Send */}
-                  {lastGeneratedOtp && (
-                    <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-center space-y-2">
-                      <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-800 dark:text-emerald-300 block">
-                        {language === 'es' ? 'Código de 6 Dígitos Generado:' : 'Generated 6-Digit Code:'}
-                      </span>
-                      <div className="text-2xl font-black font-mono tracking-[0.25em] text-emerald-700 dark:text-emerald-300 bg-white dark:bg-slate-900 py-1.5 px-4 rounded-xl border border-emerald-200 dark:border-emerald-700 inline-block shadow-2xs">
-                        {lastGeneratedOtp}
-                      </div>
-                      <div className="flex flex-wrap items-center justify-center gap-2 pt-0.5">
-                        <a
-                          href={`sms:${(recoveryPhone || '5745550199').replace(/\D/g, '')}?body=${encodeURIComponent(language === 'es' ? `Tu código de verificación de Mr Handyworks es: ${lastGeneratedOtp}` : `Your Mr Handyworks verification code is: ${lastGeneratedOtp}`)}`}
-                          className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold inline-flex items-center gap-1 shadow-2xs"
-                        >
-                          <Phone className="w-3 h-3" />
-                          <span>SMS</span>
-                        </a>
-                        <button
-                          type="button"
-                          onClick={() => setRecoveryCodeInput(lastGeneratedOtp)}
-                          className="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-[11px] font-bold inline-flex items-center gap-1 cursor-pointer"
-                        >
-                          <Check className="w-3 h-3" />
-                          <span>{language === 'es' ? 'Copiar al campo' : 'Auto-fill'}</span>
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {language === 'es'
+                    ? `Enviaremos un enlace seguro a ${recoveryEmail}. El enlace te permitirá restablecer la contraseña directamente en Supabase.`
+                    : `A secure link will be sent to ${recoveryEmail}. The link will let you reset the password through Supabase.`}
+                </p>
+              </div>
 
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      {language === 'es' ? 'Código de Verificación (6 Dígitos):' : '6-Digit Verification Code:'}
-                    </label>
-                    <input 
-                      type="text"
-                      required
-                      maxLength={6}
-                      value={recoveryCodeInput}
-                      onChange={(e) => setRecoveryCodeInput(e.target.value.replace(/\D/g, ''))}
-                      placeholder="e.g. 583920"
-                      className="w-full tracking-widest text-center font-mono font-black text-lg px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      {language === 'es' ? 'Nueva Contraseña (mín. 6 caracteres):' : 'New Password (min 6 chars):'}
-                    </label>
-                    <input 
-                      type="password"
-                      required
-                      value={newPasswordInput}
-                      onChange={(e) => setNewPasswordInput(e.target.value)}
-                      placeholder="Nueva contraseña"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      {language === 'es' ? 'Confirmar Nueva Contraseña:' : 'Confirm New Password:'}
-                    </label>
-                    <input 
-                      type="password"
-                      required
-                      value={confirmPasswordInput}
-                      onChange={(e) => setConfirmPasswordInput(e.target.value)}
-                      placeholder="Repite la contraseña"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white"
-                    />
-                  </div>
-
-                  {recoveryError && (
-                    <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-semibold">
-                      {recoveryError}
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <Check className="w-4 h-4" />
-                    <span>{language === 'es' ? 'Restablecer Contraseña' : 'Reset Password'}</span>
-                  </button>
-
-                  <div className="text-center">
-                    <button
-                      type="button"
-                      onClick={handleSendRecoveryOTP}
-                      className="text-[11px] font-bold text-[#0B3C5D] dark:text-blue-400 hover:underline cursor-pointer"
-                    >
-                      {language === 'es' ? '¿No recibiste el código? Generar otro' : 'Didn\'t get the code? Generate new'}
-                    </button>
-                  </div>
-                </form>
+              {recoveryError && (
+                <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-semibold">
+                  {recoveryError}
+                </div>
               )}
+
+              <button
+                type="button"
+                onClick={handleSendRecoveryEmail}
+                className="w-full py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Mail className="w-4 h-4" />
+                <span>{language === 'es' ? 'Enviar enlace de recuperación' : 'Send recovery link'}</span>
+              </button>
 
               <div className="text-center pt-2">
                 <button
@@ -1256,71 +1088,31 @@ export const AdminView: React.FC = () => {
                   {language === 'es' ? 'Seguridad y Recuperación de Contraseña' : 'Security & Password Recovery'}
                 </h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {language === 'es' 
-                    ? 'La recuperación se realiza exclusivamente con tu número de teléfono (código de 6 dígitos). El correo es un respaldo 100% opcional sin obligación.' 
-                    : 'Password recovery operates primarily via your phone number (6-digit OTP). Email is 100% optional without obligation.'}
+                  {language === 'es'
+                    ? 'La recuperación se realiza exclusivamente mediante un enlace seguro enviado al correo del administrador.'
+                    : 'Password recovery uses a secure link sent exclusively to the administrator email.'}
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Card 1: Primary Recovery Phone (Strictly required for OTP) */}
-              <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border-2 border-emerald-500/30 dark:border-emerald-600/40 space-y-4 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      <span className="text-xs font-black uppercase tracking-wider text-emerald-900 dark:text-emerald-300">
-                        {language === 'es' ? 'Teléfono de Recuperación' : 'Recovery Phone'}
-                      </span>
-                    </div>
-                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-600 text-white shadow-2xs">
-                      {language === 'es' ? 'Principal' : 'Primary'}
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {language === 'es'
-                      ? 'Número donde recibirás el código de 6 dígitos para restablecer tu contraseña en caso de olvido.'
-                      : 'Phone number where you will receive the 6-digit OTP code to reset your password.'}
-                  </p>
-                </div>
-                <form onSubmit={handleUpdateAdminPhoneDirect} className="space-y-3 pt-2">
-                  <input
-                    type="tel"
-                    required
-                    value={settingsRecoveryPhone}
-                    onChange={(e) => setSettingsRecoveryPhone(e.target.value)}
-                    placeholder="(574) 555-0199"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-300 dark:border-emerald-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white font-mono"
-                  />
-                  <button
-                    type="submit"
-                    className="w-full px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <Save className="w-3.5 h-3.5" />
-                    <span>{language === 'es' ? 'Actualizar Teléfono Principal' : 'Update Recovery Phone'}</span>
-                  </button>
-                </form>
-              </div>
-
-              {/* Card 2: Optional Backup Email (Strictly optional, no obligation) */}
-              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4 flex flex-col justify-between">
+            <div className="max-w-xl">
+              <div className="p-5 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border-2 border-blue-500/30 dark:border-blue-600/40 space-y-4 flex flex-col justify-between">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Mail className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        {language === 'es' ? 'Correo de Respaldo' : 'Backup Email'}
+                      <span className="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-blue-300">
+                        {language === 'es' ? 'Correo de Recuperación' : 'Recovery Email'}
                       </span>
                     </div>
-                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
-                      {language === 'es' ? 'Opcional' : 'Optional'}
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-blue-600 text-white shadow-2xs">
+                      {language === 'es' ? 'Principal' : 'Primary'}
                     </span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                     {language === 'es'
-                      ? 'Refuerzo opcional sin obligación. Puedes dejarlo en blanco si solo deseas usar tu teléfono.'
-                      : 'Optional backup. You can leave this blank without obligation if you only want to use your phone.'}
+                      ? 'Este es el correo usado para iniciar sesión y recibir enlaces seguros de recuperación.'
+                      : 'This email is used for sign-in and secure password recovery links.'}
                   </p>
                 </div>
                 <form onSubmit={handleUpdateAdminEmailDirect} className="space-y-3 pt-2">
@@ -1333,7 +1125,7 @@ export const AdminView: React.FC = () => {
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white"
                     />
                     <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500 italic">
-                      {language === 'es' ? '* Campo voluntario sin obligación de llenado' : '* Optional field without obligation to fill'}
+                      {language === 'es' ? '* Debe coincidir con el usuario de Supabase' : '* Must match the Supabase user'}
                     </p>
                   </div>
                   <button
@@ -1341,7 +1133,7 @@ export const AdminView: React.FC = () => {
                     className="w-full px-4 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Save className="w-3.5 h-3.5" />
-                    <span>{language === 'es' ? 'Guardar Correo Opcional' : 'Save Optional Email'}</span>
+                    <span>{language === 'es' ? 'Guardar correo de recuperación' : 'Save recovery email'}</span>
                   </button>
                 </form>
               </div>

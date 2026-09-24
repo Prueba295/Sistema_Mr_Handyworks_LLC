@@ -154,13 +154,10 @@ interface AppContextType {
   adminUser: AdminUser;
   adminLogin: (password: string, code2fa?: string) => Promise<boolean>;
   adminLogout: () => void;
-  recoveryPhone: string;
-  setRecoveryPhone: (phone: string) => void;
   recoveryEmail: string;
   setRecoveryEmail: (email: string) => void;
   changeAdminPassword: (newPwd: string) => boolean;
-  requestPasswordResetCode: () => string;
-  resetPasswordWithCode: (code: string, newPassword: string) => boolean;
+  requestPasswordResetEmail: () => Promise<boolean>;
 
   isBookingModalOpen: boolean;
   setIsBookingModalOpen: (open: boolean) => void;
@@ -709,17 +706,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return readSyncedValue('mr_handyworks_admin_pwd') || import.meta.env.VITE_ADMIN_PASSWORD || '';
   });
 
-  const [recoveryPhone, setRecoveryPhoneState] = useState<string>(() => {
-    return readSyncedValue('mr_handyworks_admin_phone') || BUSINESS_INFO.phone || '(574) 555-0199';
-  });
-
-  const setRecoveryPhone = (phone: string) => {
-    const clean = phone.trim();
-    setRecoveryPhoneState(clean);
-    writeSyncedValue('mr_handyworks_admin_phone', clean);
-    showNotification(language === 'es' ? 'Teléfono de recuperación guardado' : 'Recovery phone number saved');
-  };
-
   const [recoveryEmail, setRecoveryEmailState] = useState<string>(() => {
     const saved = readSyncedValue('mr_handyworks_admin_email');
     return saved && saved.toLowerCase() !== 'brian@mr-handyworks-llc.com'
@@ -746,37 +732,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return true;
   };
 
-  const requestPasswordResetCode = (): string => {
-    const code = String(Math.floor(100000 + Math.random() * 900000));
-    const payload = {
-      code,
-      expiresAt: Date.now() + 15 * 60 * 1000
-    };
-    sessionStorage.setItem('mr_handyworks_reset_otp', JSON.stringify(payload));
-    return code;
-  };
+  const requestPasswordResetEmail = async (): Promise<boolean> => {
+    if (!supabase || !recoveryEmail) {
+      showNotification(language === 'es' ? 'La recuperación por correo no está configurada' : 'Email recovery is not configured');
+      return false;
+    }
 
-  const resetPasswordWithCode = (code: string, newPassword: string): boolean => {
-    const raw = sessionStorage.getItem('mr_handyworks_reset_otp');
-    if (!raw) {
-      showNotification(language === 'es' ? 'Solicita un código de recuperación primero' : 'Please request a reset code first');
+    const { error } = await supabase.auth.resetPasswordForEmail(recoveryEmail, {
+      redirectTo: `${window.location.origin}/#/admin`
+    });
+    if (error) {
+      showNotification(language === 'es' ? 'No se pudo enviar el enlace de recuperación' : 'Could not send the recovery link');
       return false;
     }
-    try {
-      const parsed = JSON.parse(raw);
-      if (parsed.expiresAt < Date.now()) {
-        showNotification(language === 'es' ? 'El código ha expirado. Solicita uno nuevo.' : 'Code expired. Please request a new one.');
-        return false;
-      }
-      if (parsed.code.trim() !== code.trim()) {
-        showNotification(language === 'es' ? 'Código de verificación incorrecto' : 'Invalid verification code');
-        return false;
-      }
-      sessionStorage.removeItem('mr_handyworks_reset_otp');
-      return changeAdminPassword(newPassword);
-    } catch {
-      return false;
-    }
+
+    showNotification(language === 'es' ? 'Enlace de recuperación enviado al correo del administrador' : 'Recovery link sent to the administrator email');
+    return true;
   };
 
   const [adminUser, setAdminUser] = useState<AdminUser>(() => {
@@ -869,7 +840,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       if (error || !data.user) return false;
       const user: AdminUser = {
         isAuthenticated: true,
-        email: data.user.email || data.user.phone || recoveryPhone,
+        email: data.user.email || recoveryEmail,
         twoFactorActive: true,
         lastLogin: new Date().toLocaleTimeString()
       };
@@ -1047,13 +1018,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         adminUser,
         adminLogin,
         adminLogout,
-        recoveryPhone,
-        setRecoveryPhone,
         recoveryEmail,
         setRecoveryEmail,
         changeAdminPassword,
-        requestPasswordResetCode,
-        resetPasswordWithCode,
+        requestPasswordResetEmail,
         isBookingModalOpen,
         setIsBookingModalOpen,
         isBookingWizardOpen: isBookingModalOpen,
