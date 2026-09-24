@@ -390,17 +390,6 @@ export const BookingWizardModal: React.FC = () => {
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/75 p-2 backdrop-blur-xs sm:p-4 animate-in fade-in duration-200">
       <div className="relative my-2 flex max-h-[calc(100dvh-1rem)] w-full min-w-0 max-w-2xl flex-col sm:my-6 sm:max-h-[calc(100dvh-2rem)]">
         
-        {/* Brand Header Above Card (Harmonized to corporate style & privacy) */}
-        <div className="text-center mb-2.5 hidden sm:block">
-          <h2 className="text-lg sm:text-xl font-black text-white tracking-tight drop-shadow-md">
-            Mr. Handyworks LLC of Northern St. Joseph and Elkhart Counties
-          </h2>
-          <p className="text-xs sm:text-sm font-semibold text-amber-200/90 flex items-center justify-center gap-1.5 mt-0.5">
-            <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>South Bend, IN 46637 • Licensed &amp; Insured Professional Services</span>
-          </p>
-        </div>
-
         {/* Main Card Container with Corporate System Palette */}
         <div className="flex flex-col overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900">
           
