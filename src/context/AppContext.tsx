@@ -342,7 +342,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             break;
           }
           try {
-            setPortfolio(JSON.parse(event.value));
+            const parsed = JSON.parse(event.value);
+            if (Array.isArray(parsed)) {
+              const initialMap = new Map(INITIAL_PORTFOLIO.map(item => [item.id, item]));
+              setPortfolio(parsed.map((item: PortfolioMedia) => {
+                const defaultItem = initialMap.get(item.id);
+                return defaultItem ? { ...item, ...defaultItem } : item;
+              }));
+            } else {
+              setPortfolio(parsed);
+            }
           } catch {
             break;
           }
@@ -460,7 +469,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // 7. Portfolio State & CRUD
   const [portfolio, setPortfolio] = useState<PortfolioMedia[]>(() => {
     const saved = readSyncedValue('mr_handyworks_portfolio');
-    return parseStoredValue(saved, INITIAL_PORTFOLIO);
+    const parsed = parseStoredValue(saved, INITIAL_PORTFOLIO);
+    if (saved && Array.isArray(parsed)) {
+      const initialMap = new Map(INITIAL_PORTFOLIO.map(item => [item.id, item]));
+      return parsed.map(item => {
+        const defaultItem = initialMap.get(item.id);
+        return defaultItem ? { ...item, ...defaultItem } : item;
+      });
+    }
+    return parsed;
   });
 
   const addPortfolioItem = (item: Omit<PortfolioMedia, 'id'>) => {
@@ -721,7 +738,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const clean = email.trim();
     setRecoveryEmailState(clean);
     writeSyncedValue('mr_handyworks_admin_email', clean);
-    showNotification(language === 'es' ? 'Correo opcional guardado' : 'Optional backup email saved');
+    showNotification(language === 'es' ? 'Correo de recuperación guardado' : 'Recovery email saved');
   };
 
   const changeAdminPassword = (newPwd: string): boolean => {

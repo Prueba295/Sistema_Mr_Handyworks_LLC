@@ -40,7 +40,12 @@ Deploy the generated `dist/` directory as a Vite static site. Configure SPA fall
 - Public booking requests are inserted into `booking_requests`.
 - Staff bookings are loaded and updated through Supabase Realtime after Supabase Auth login.
 - Booking attachments are uploaded to the `booking-attachments` Storage bucket and the booking stores their public URLs.
+- Alert preferences are controlled from the Admin Alerts tab. Device subscriptions are stored per authenticated user in `push_subscriptions`.
 - Without Supabase environment variables, the app intentionally falls back to browser-local storage for local development only.
+
+## 6. Closed-browser phone alerts
+
+The browser can receive alerts while closed only after deploying `supabase/functions/send-booking-alert/index.ts` and configuring a Supabase Database Webhook for `booking_requests` inserts. Set these Edge Function secrets: `BOOKING_ALERT_SECRET`, `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `ALERT_CONTACT_EMAIL`, and the standard Supabase service-role variables. Never put those secrets in Vercel or frontend code. The function accepts only the configured webhook secret and only emits the allowlisted `NEW_BOOKING` event.
 
 ## 5. Production checks
 

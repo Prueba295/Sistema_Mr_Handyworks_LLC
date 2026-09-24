@@ -19,7 +19,8 @@ import {
   playNotificationChime, 
   triggerDesktopNotification, 
   dispatchBookingWebhook, 
-  buildOwnerSMSNotificationUrl 
+  buildOwnerSMSNotificationUrl,
+  buildOwnerWhatsAppNotificationUrl
 } from '../utils/liveNotifier';
 import confetti from 'canvas-confetti';
 import { 
@@ -50,7 +51,8 @@ import {
   CreditCard,
   Smartphone,
   DollarSign,
-  Send
+  Send,
+  MessageCircle
 } from 'lucide-react';
 
 export const BookingWizardModal: React.FC = () => {
@@ -152,10 +154,8 @@ export const BookingWizardModal: React.FC = () => {
     const phoneCheck = validateUSPhone(clientPhone);
     if (!phoneCheck.isValid) errors.phone = phoneCheck.error;
 
-    if (clientEmail.trim()) {
-      const emailCheck = validateEmail(clientEmail);
-      if (!emailCheck.isValid) errors.email = emailCheck.error;
-    }
+    const emailCheck = validateEmail(clientEmail);
+    if (!emailCheck.isValid) errors.email = emailCheck.error;
 
     const addressCheck = validateStreetAddress(clientAddress);
     if (!addressCheck.isValid) errors.address = addressCheck.error;
@@ -165,7 +165,7 @@ export const BookingWizardModal: React.FC = () => {
 
   const isContactStepValid = useMemo(() => {
     const errors = validateContactFields();
-    return Object.keys(errors).length === 0 && Boolean(clientName && clientPhone && clientAddress);
+    return Object.keys(errors).length === 0 && Boolean(clientName && clientPhone && clientEmail && clientAddress);
   }, [clientName, clientPhone, clientEmail, clientAddress]);
 
   if (!isBookingWizardOpen) return null;
@@ -302,11 +302,17 @@ export const BookingWizardModal: React.FC = () => {
   const handleFinishBooking = async () => {
     setIsSubmitting(true);
 
-    const cleanName = sanitizeXSS(clientName);
+    if (!clientAttachments.some(attachment => attachment.type === 'image')) {
+      setIsSubmitting(false);
+      showNotification(language === 'es' ? 'Sube al menos una foto clara del trabajo para solicitar una cotización.' : 'Please upload at least one clear project photo to request a quote.');
+      return;
+    }
+
+    const cleanName = sanitizeXSS(clientName).trim();
     const cleanPhone = formatUSPhone(clientPhone);
-    const cleanEmail = sanitizeXSS(clientEmail).toLowerCase();
-    const cleanAddress = sanitizeXSS(clientAddress);
-    const cleanDetails = sanitizeXSS(projectDetails);
+    const cleanEmail = sanitizeXSS(clientEmail).trim().toLowerCase();
+    const cleanAddress = sanitizeXSS(clientAddress).trim();
+    const cleanDetails = sanitizeXSS(projectDetails).trim();
 
     // Cryptographically generate privacy token (no plain text exposure in logs)
     const secureToken = await createEncryptedBookingToken(
@@ -338,7 +344,7 @@ export const BookingWizardModal: React.FC = () => {
       scheduledTimeSlot: scheduledSlot,
       clientName: cleanName,
       clientPhone: cleanPhone,
-      clientEmail: cleanEmail || 'client@example.com',
+      clientEmail: cleanEmail,
       clientAddress: cleanAddress,
       status: 'PENDING',
       paymentMethod: 'CASH',
@@ -363,6 +369,18 @@ export const BookingWizardModal: React.FC = () => {
       setTimeout(() => {
         generateQuotePDF(newBooking, language);
       }, 400);
+    } catch {
+      // safe fallback
+    }
+
+    // Automatically prompt SMS application on mobile devices with all details filled
+    try {
+      const smsUrl = buildOwnerSMSNotificationUrl(newBooking, BUSINESS_INFO.phoneRaw);
+      if (typeof window !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        setTimeout(() => {
+          window.location.href = smsUrl;
+        }, 700);
+      }
     } catch {
       // safe fallback
     }
@@ -559,7 +577,7 @@ export const BookingWizardModal: React.FC = () => {
                     <span>Need a Quote?</span>
                   </div>
                   <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
-                    Tell us what you need, including measurements, project details, and photos. We’ll review your request and provide a quote.
+                    Tell us what you need, including measurements and project details. We’ll review your request and provide a quote.
                   </p>
                   <div className="pt-2 border-t border-blue-500/20">
                     <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
@@ -834,10 +852,12 @@ export const BookingWizardModal: React.FC = () => {
               <div className="space-y-5 animate-in fade-in">
                 <div>
                   <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                    Who should we contact?
+                    {language === 'es' ? '¿A quién debemos contactar?' : 'Who should we contact?'}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                    Please provide accurate contact details so we can verify and coordinate your service appointment.
+                    {language === 'es'
+                      ? 'Por favor proporciona tus datos de contacto exactos para verificar y coordinar tu servicio.'
+                      : 'Please provide accurate contact details so we can verify and coordinate your service appointment.'}
                   </p>
                 </div>
 
@@ -845,7 +865,7 @@ export const BookingWizardModal: React.FC = () => {
                   {/* Full Name */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                      Full Name <span className="text-amber-500">*</span>
+                      {language === 'es' ? 'Nombre Completo' : 'Full Name'} <span className="text-amber-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -862,7 +882,7 @@ export const BookingWizardModal: React.FC = () => {
                         const check = validateFullName(clientName);
                         setFormErrors(prev => ({ ...prev, fullName: check.error }));
                       }}
-                      placeholder="e.g. John Miller"
+                      placeholder={language === 'es' ? 'ej. Juan Pérez' : 'e.g. John Miller'}
                       className={`w-full px-3.5 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800 text-sm font-semibold text-slate-900 dark:text-white outline-none transition-all ${
                         formErrors.fullName && touchedFields.fullName
                           ? 'border-rose-500 focus:ring-2 focus:ring-rose-500/20'
@@ -872,7 +892,15 @@ export const BookingWizardModal: React.FC = () => {
                     {formErrors.fullName && touchedFields.fullName && (
                       <p className="mt-1 text-xs font-semibold text-rose-500 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                        <span>{formErrors.fullName}</span>
+                        <span>
+                          {language === 'es'
+                            ? (formErrors.fullName.includes('both')
+                                ? 'Por favor ingresa tu nombre y apellido (ej. Juan Pérez).'
+                                : formErrors.fullName.includes('letters')
+                                ? 'El nombre solo puede contener letras y espacios.'
+                                : 'Ingresa un nombre y apellido válidos.')
+                            : formErrors.fullName}
+                        </span>
                       </p>
                     )}
                   </div>
@@ -880,7 +908,7 @@ export const BookingWizardModal: React.FC = () => {
                   {/* Phone Number (Auto-formatted) */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                      Phone Number <span className="text-amber-500">*</span>
+                      {language === 'es' ? 'Teléfono Móvil' : 'Phone Number'} <span className="text-amber-500">*</span>
                     </label>
                     <input
                       type="tel"
@@ -908,20 +936,29 @@ export const BookingWizardModal: React.FC = () => {
                     {formErrors.phone && touchedFields.phone && (
                       <p className="mt-1 text-xs font-semibold text-rose-500 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                        <span>{formErrors.phone}</span>
+                        <span>
+                          {language === 'es'
+                            ? (formErrors.phone.includes('area code')
+                                ? 'El código de área de EE. UU. no puede comenzar con 0 o 1.'
+                                : formErrors.phone.includes('reachable')
+                                ? 'Por favor ingresa un teléfono real y alcanzable.'
+                                : 'Ingresa un número telefónico válido de 10 dígitos.')
+                            : formErrors.phone}
+                        </span>
                       </p>
                     )}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Email Address */}
+                  {/* Email Address - Strictly Required */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                      Email Address (Optional)
+                      {language === 'es' ? 'Correo Electrónico' : 'Email Address'} <span className="text-amber-500">*</span>
                     </label>
                     <input
                       type="email"
+                      required
                       value={clientEmail}
                       onChange={(e) => {
                         setClientEmail(e.target.value);
@@ -935,7 +972,7 @@ export const BookingWizardModal: React.FC = () => {
                         const check = validateEmail(clientEmail);
                         setFormErrors(prev => ({ ...prev, email: check.error }));
                       }}
-                      placeholder="e.g. client@example.com"
+                      placeholder={language === 'es' ? 'ej. cliente@ejemplo.com' : 'e.g. client@example.com'}
                       className={`w-full px-3.5 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800 text-sm font-semibold text-slate-900 dark:text-white outline-none transition-all ${
                         formErrors.email && touchedFields.email
                           ? 'border-rose-500 focus:ring-2 focus:ring-rose-500/20'
@@ -945,7 +982,13 @@ export const BookingWizardModal: React.FC = () => {
                     {formErrors.email && touchedFields.email && (
                       <p className="mt-1 text-xs font-semibold text-rose-500 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                        <span>{formErrors.email}</span>
+                        <span>
+                          {language === 'es'
+                            ? (formErrors.email.includes('required')
+                                ? 'El correo electrónico es obligatorio.'
+                                : 'Ingresa un correo electrónico válido (ej. cliente@ejemplo.com).')
+                            : formErrors.email}
+                        </span>
                       </p>
                     )}
                   </div>
@@ -953,7 +996,7 @@ export const BookingWizardModal: React.FC = () => {
                   {/* Zip Code */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                      Zip Code
+                      {language === 'es' ? 'Código Postal' : 'Zip Code'}
                     </label>
                     <input
                       type="text"
@@ -967,7 +1010,7 @@ export const BookingWizardModal: React.FC = () => {
                 {/* Street Address */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                    Street Address <span className="text-amber-500">*</span>
+                    {language === 'es' ? 'Dirección del Proyecto' : 'Street Address'} <span className="text-amber-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -984,7 +1027,7 @@ export const BookingWizardModal: React.FC = () => {
                       const check = validateStreetAddress(clientAddress);
                       setFormErrors(prev => ({ ...prev, address: check.error }));
                     }}
-                    placeholder="e.g. 1428 E Jefferson Blvd or 51591 SR-933"
+                    placeholder={language === 'es' ? 'ej. 1428 E Jefferson Blvd o 51591 SR-933' : 'e.g. 1428 E Jefferson Blvd or 51591 SR-933'}
                     className={`w-full px-3.5 py-3 rounded-xl border bg-slate-50 dark:bg-slate-800 text-sm font-semibold text-slate-900 dark:text-white outline-none transition-all ${
                       formErrors.address && touchedFields.address
                         ? 'border-rose-500 focus:ring-2 focus:ring-rose-500/20'
@@ -994,19 +1037,29 @@ export const BookingWizardModal: React.FC = () => {
                   {formErrors.address && touchedFields.address && (
                     <p className="mt-1 text-xs font-semibold text-rose-500 flex items-center gap-1">
                       <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                      <span>{formErrors.address}</span>
+                      <span>
+                        {language === 'es'
+                          ? (formErrors.address.includes('street number')
+                              ? 'La dirección debe incluir el número y la calle.'
+                              : formErrors.address.includes('letters')
+                              ? 'La dirección contiene caracteres no válidos.'
+                              : 'Por favor ingresa una dirección física válida.')
+                          : formErrors.address}
+                      </span>
                     </p>
                   )}
                 </div>
 
-                {/* Privacy & Direct Coordination Notice (No raw personal owner info exposed) */}
+                {/* Privacy & Direct Coordination Notice */}
                 <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5">
                   <Lock className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div className="leading-relaxed">
                     <strong className="font-bold text-slate-900 dark:text-white block">
-                      Privacy &amp; Direct Communication Guarantee:
+                      {language === 'es' ? 'Garantía de Privacidad y Comunicación Directa:' : 'Privacy & Direct Communication Guarantee:'}
                     </strong>
-                    Your information is protected and never shared with third parties. No payment is charged online. Direct phone and SMS communication buttons become available once your appointment request is submitted.
+                    {language === 'es'
+                      ? 'Tu información está protegida y nunca se comparte con terceros. No se realiza ningún cobro en línea. El correo y el teléfono se utilizan exclusivamente para confirmar los detalles de tu cita y coordinar el servicio.'
+                      : 'Your information is protected and never shared with third parties. No payment is charged online. Direct phone, email, and SMS communication are used exclusively to coordinate your appointment.'}
                   </div>
                 </div>
               </div>
@@ -1017,24 +1070,36 @@ export const BookingWizardModal: React.FC = () => {
               <div className="space-y-6 animate-in fade-in">
                 <div>
                   <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                    Tell Us About Your Project
+                    {language === 'es' ? 'Cuéntanos sobre tu Proyecto' : 'Tell Us About Your Project'}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                    Please describe what you need done and include any helpful details such as measurements, quantities, existing conditions, and accessibility.
+                    {language === 'es'
+                      ? 'Describe el trabajo que necesitas y adjunta al menos una foto clara para que podamos cotizarte con precisión.'
+                      : 'Please describe what you need done and include any helpful details such as measurements, quantities, existing conditions, and accessibility.'}
                   </p>
                 </div>
 
                 {/* Project Description Textarea */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                    Project details:
+                  <label htmlFor="projectDetails" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                    {language === 'es' ? 'Descripción del Proyecto:' : 'Project details:'}
                   </label>
                   <textarea
+                    id="projectDetails"
+                    name="projectDetails"
                     rows={3}
                     value={projectDetails}
-                    onChange={(e) => setProjectDetails(sanitizeXSS(e.target.value))}
-                    placeholder="e.g. Need 75-inch TV mounted above the stone fireplace with concealed in-wall cabling..."
-                    className="w-full p-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white outline-none focus:border-[#0B3C5D] focus:ring-1 focus:ring-[#0B3C5D]"
+                    onChange={(e) => setProjectDetails(e.target.value)}
+                    onKeyDown={(e) => {
+                      // Prevent space or enter from triggering parent button clicks or window scroll
+                      if (e.key === ' ' || e.code === 'Space') {
+                        e.stopPropagation();
+                      }
+                    }}
+                    placeholder={language === 'es'
+                      ? 'Describe aquí los detalles de tu trabajo (ej. Montar TV de 75 pulgadas sobre chimenea de piedra con cables ocultos)...'
+                      : 'e.g. Need 75-inch TV mounted above the stone fireplace with concealed in-wall cabling...'}
+                    className="w-full p-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-900 dark:text-white outline-none focus:border-[#0B3C5D] focus:ring-2 focus:ring-[#0B3C5D]/20 transition-all resize-y min-h-[90px]"
                   />
                 </div>
 
@@ -1042,7 +1107,7 @@ export const BookingWizardModal: React.FC = () => {
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                      {language === 'es' ? 'Subir Fotos' : 'Upload Photos'}
+                      {language === 'es' ? 'Subir Fotos *' : 'Upload Photos *'}
                     </label>
                     <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
                       {language === 'es' ? 'Compresión ligera • Sin saturar hosting' : 'Optimized in-browser • Zero server bloat'}
@@ -1066,12 +1131,12 @@ export const BookingWizardModal: React.FC = () => {
                     <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
                       {language === 'es' 
                         ? 'Arrastra cualquier archivo aquí (fotos, videos, planos, documentos) o haz clic para explorar' 
-                        : 'Please upload clear photos of the work area, existing installation, and anything else that may help us understand the project. Multiple photos are recommended.'}
+                        : 'At least one clear photo of the work area is required for a quote. Multiple photos are recommended.'}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                       {language === 'es' 
                         ? 'Cualquier extensión: JPG, PNG, PDF, DOCX, MP4, MOV, HEIC, etc. (Máx. 40 MB)' 
-                        : 'Better details and photos help us provide a more accurate quote.'}
+                        : 'Include the existing installation and anything else that may help us understand the project.'}
                     </p>
                   </div>
 
@@ -1299,14 +1364,29 @@ export const BookingWizardModal: React.FC = () => {
                       : `Booking #${createdBooking.id} for ${createdBooking.clientName} with ${createdBooking.attachments?.length || 0} client attachment(s) is ready for instant delivery to Mr Handyworks LLC service desk.`}
                   </p>
 
-                  <div className="grid grid-cols-1 gap-2 pt-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                     <a
                       href={buildOwnerSMSNotificationUrl(createdBooking, BUSINESS_INFO.phoneRaw)}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs shadow-xs transition-colors cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs shadow-xs transition-colors cursor-pointer"
                     >
-                      <Send className="w-3.5 h-3.5" />
-                      <span>{language === 'es' ? 'Enviar a SMS de Servicio' : 'Send via SMS'}</span>
+                      <Send className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{language === 'es' ? 'Enviar Notificación por SMS' : 'Send via SMS'}</span>
                     </a>
+                    <a
+                      href={buildOwnerWhatsAppNotificationUrl(createdBooking, BUSINESS_INFO.phoneRaw)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs shadow-xs transition-colors cursor-pointer"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>{language === 'es' ? 'Enviar por WhatsApp' : 'Send via WhatsApp'}</span>
+                    </a>
+                  </div>
+
+                  <div className="text-[11px] text-slate-600 dark:text-slate-300 pt-1 border-t border-amber-500/20 leading-relaxed">
+                    {language === 'es'
+                      ? '📸 Tus fotos y documentos adjuntos están guardados de forma segura en el sistema con el código de orden #' + createdBooking.id + '. Al presionar el botón de envío, el técnico Brian Cueva recibe el informe con todos los datos.'
+                      : '📸 Your photos and uploaded documents are securely saved under order #' + createdBooking.id + '. Technician Brian Cueva will receive the complete work order summary.'}
                   </div>
                 </div>
 

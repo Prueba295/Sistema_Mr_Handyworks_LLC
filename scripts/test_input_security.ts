@@ -51,7 +51,7 @@ assert(formatUSPhone('5745550192') === '(574) 555-0192', 'Formats phone cleanly'
 console.log('\n3. Email Validation:');
 assert(!validateEmail('aa').isValid, 'Rejects "aa"');
 assert(!validateEmail('test@').isValid, 'Rejects incomplete email');
-assert(validateEmail('').isValid, 'Accepts empty email (optional)');
+assert(!validateEmail('').isValid, 'Rejects empty email (mandatory)');
 assert(validateEmail('client@gmail.com').isValid, 'Accepts valid email');
 
 // 4. Street Address

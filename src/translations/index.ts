@@ -127,7 +127,7 @@ export const translations = {
       consultationNotice: 'Tarifa fija de consulta y diagnóstico en sitio: $125. El costo final de mano de obra varía según horas, tamaño y alcance de la instalación.',
       detailsLabel: 'Describe brevemente tu proyecto:',
       detailsPlaceholder: 'Ej: Deseo montar una TV sobre la chimenea y ocultar los cables por dentro de la pared...',
-      attachPhoto: 'Adjuntar Fotos del Área (Opcional):',
+      attachPhoto: 'Adjuntar Fotos del Área:',
       photoUploaded: 'Foto cargada correctamente',
       clientName: 'Nombre Completo',
       clientPhone: 'Teléfono Móvil (para confirmación)',

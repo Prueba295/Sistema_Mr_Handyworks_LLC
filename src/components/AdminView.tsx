@@ -1121,7 +1121,7 @@ export const AdminView: React.FC = () => {
                       type="email"
                       value={settingsRecoveryEmail}
                       onChange={(e) => setSettingsRecoveryEmail(e.target.value)}
-                      placeholder={language === 'es' ? 'Mrhandyworks25@gmail.com (Opcional)' : 'Optional backup email'}
+                      placeholder="Mrhandyworks25@gmail.com"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white"
                     />
                     <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500 italic">

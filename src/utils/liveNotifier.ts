@@ -35,44 +35,73 @@ export function formatOwnerDispatchMessage(booking: Booking): string {
     return normalized || fallback;
   };
 
-  const clientName = cleanText(booking.clientName, 'Not provided');
-  const clientPhone = cleanText(booking.clientPhone, 'Not provided');
-  const clientEmail = cleanText(booking.clientEmail, 'Not provided');
-  const clientAddress = cleanText(booking.clientAddress, 'Address on file');
-  const serviceType = cleanText(booking.serviceType, 'General handyman service');
-  const projectDetails = cleanText(booking.projectDetails, 'No additional notes');
-  const attachmentsList = booking.attachments && booking.attachments.length > 0
-    ? booking.attachments.map((a, i) => `- ${i + 1}. ${cleanText(a.name, 'Unnamed file')} (${a.type.toUpperCase()}, ${a.sizeFormatted})`).join('\n')
-    : (booking.photoUrl ? '- 1. Photo attached by client' : '- None');
+  const clientName = cleanText(booking.clientName, 'Cliente');
+  const clientPhone = cleanText(booking.clientPhone, 'No disponible');
+  const clientEmail = cleanText(booking.clientEmail, 'No disponible');
+  const clientAddress = cleanText(booking.clientAddress, 'En registro');
+  const zipCode = cleanText(booking.zipCode, '46637');
+  const serviceType = cleanText(booking.serviceType, 'Servicio General');
+  const projectDetails = cleanText(booking.projectDetails, 'Sin notas adicionales');
+  
+  const attachments = booking.attachments || [];
+  const attachmentsCount = attachments.length || (booking.photoUrl ? 1 : 0);
+  
+  let attachmentsList = '- Ninguno';
+  if (attachments.length > 0) {
+    attachmentsList = attachments.map((a) => {
+      const type = (a.type || 'archivo').toUpperCase();
+      const urlInfo = a.dataUrl && a.dataUrl.startsWith('http') ? `\n  Link: ${a.dataUrl}` : '';
+      return `• [${type}] ${cleanText(a.name, 'Archivo')} (${a.sizeFormatted || 'adjunto'})${urlInfo}`;
+    }).join('\n');
+  } else if (booking.photoUrl) {
+    attachmentsList = `• [FOTO] Foto del área ${booking.photoUrl.startsWith('http') ? `\n  Link: ${booking.photoUrl}` : '(en portal)'}`;
+  }
 
-  return `MR HANDYWORKS LLC - NEW SERVICE REQUEST
+  return `MR HANDYWORKS LLC - NUEVA SOLICITUD DE SERVICIO
 
-Order ID: #${booking.id}
-Client: ${clientName}
-Phone: ${clientPhone}
+Orden: #${booking.id}
+Cliente: ${clientName}
+Teléfono: ${clientPhone}
 Email: ${clientEmail}
-Address: ${clientAddress} (ZIP: ${cleanText(booking.zipCode, 'Not provided')})
-Service: ${serviceType}
-Date: ${cleanText(booking.scheduledDate, 'Not provided')}
-Time: ${cleanText(booking.scheduledTimeSlot, 'Not provided')}
-On-site consultation, if required: starting at $125.00 (may vary by location and project complexity)
+Dirección: ${clientAddress} (ZIP: ${zipCode})
+Servicio: ${serviceType}
+Fecha solicitada: ${cleanText(booking.scheduledDate, 'Por coordinar')}
+Horario: ${cleanText(booking.scheduledTimeSlot, 'Por coordinar')}
 
-Attachments (${booking.attachments?.length || (booking.photoUrl ? 1 : 0)}):
-${attachmentsList}
-
-Notes:
+Descripción del Trabajo:
 ${projectDetails}
 
-Admin portal: https://mr-handyworks-llc.com/#admin`;
+Fotos y Documentos (${attachmentsCount}):
+${attachmentsList}
+
+Ver orden y fotos en el portal:
+https://mr-handyworks-llc.com/#admin`;
 }
 
 /**
  * Build SMS link directly addressed to owner Brian Cueva
+ * Automatically adapts separator for iOS (&body=) vs Android/Desktop (?body=)
  */
 export function buildOwnerSMSNotificationUrl(booking: Booking, ownerPhoneRaw: string = '15742799355'): string {
   const cleanPhone = ownerPhoneRaw.replace(/\D/g, '');
   const message = formatOwnerDispatchMessage(booking);
-  return `sms:${cleanPhone}?body=${encodeURIComponent(message)}`;
+  const encoded = encodeURIComponent(message);
+  
+  const isIOS = typeof navigator !== 'undefined' && (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  );
+  
+  return isIOS ? `sms:${cleanPhone}&body=${encoded}` : `sms:${cleanPhone}?body=${encoded}`;
+}
+
+/**
+ * Build WhatsApp link for direct instant messaging to owner
+ */
+export function buildOwnerWhatsAppNotificationUrl(booking: Booking, ownerPhoneRaw: string = '15742799355'): string {
+  const cleanPhone = ownerPhoneRaw.replace(/\D/g, '');
+  const message = formatOwnerDispatchMessage(booking);
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
 
 /**

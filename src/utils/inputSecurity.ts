@@ -21,8 +21,7 @@ export function sanitizeXSS(input: string): string {
   return input
     .replace(/[<>]/g, '') // remove HTML tags
     .replace(/javascript:/gi, '')
-    .replace(/on\w+=/gi, '')
-    .trim();
+    .replace(/on\w+=/gi, '');
 }
 
 /**
@@ -93,12 +92,12 @@ export function validateUSPhone(phone: string): { isValid: boolean; error?: stri
 
 /**
  * Validates Email Address:
- * Optional, but if provided, must strictly adhere to RFC 5322 format.
+ * Strictly required and must adhere to RFC 5322 format.
  */
 export function validateEmail(email: string): { isValid: boolean; error?: string } {
-  const sanitized = sanitizeXSS(email).toLowerCase();
+  const sanitized = sanitizeXSS(email).trim().toLowerCase();
   if (!sanitized) {
-    return { isValid: true }; // optional
+    return { isValid: false, error: 'Email address is required.' };
   }
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
