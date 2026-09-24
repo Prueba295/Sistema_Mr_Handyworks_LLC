@@ -171,18 +171,18 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en') => {
                   ${booking.projectDetails}
                 </div>
                 <div style="font-size: 11px; color: #0284c7; margin-top: 4px;">
-                  ${isEs ? '• Tarifa fija de Consulta y Diagnóstico en sitio: $125. La mano de obra final varía según horas y alcance de la instalación.' : '• Fixed On-site Consultation & Diagnostic Fee: $125. Final labor varies by hours and installation scope.'}
+                  ${isEs ? '• El precio del proyecto queda pendiente de revisión. Si se requiere una consulta en sitio, comienza en $125 y puede variar.' : '• Project pricing is pending review. If an on-site consultation is required, it starts at $125 and may vary.'}
                 </div>
               </td>
               <td>${booking.estimatedHours}</td>
-              <td style="text-align: right; font-weight: 600;">$125.00</td>
+              <td style="text-align: right; font-weight: 600;">${isEs ? 'Pendiente' : 'Pending'}</td>
             </tr>
             <tr class="total-row">
               <td colspan="2" style="text-align: right;">
-                ${isEs ? 'Tarifa Fija de Consulta en Sitio' : 'Fixed On-Site Consultation Fee'}:
+                ${isEs ? 'Precio del Proyecto' : 'Project Price'}:
               </td>
               <td style="text-align: right; font-size: 15px; color: #0B3C5D; font-weight: bold;">
-                $125.00
+                ${isEs ? 'Pendiente de revisión' : 'Pending review'}
               </td>
             </tr>
           </tbody>

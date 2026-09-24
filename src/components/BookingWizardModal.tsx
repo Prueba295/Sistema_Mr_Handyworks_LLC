@@ -330,7 +330,7 @@ export const BookingWizardModal: React.FC = () => {
       serviceType: selectedServiceName,
       zipCode: zipCode.trim() || '46637',
       estimatedHours: durationTier,
-      estimatedPrice: 125, // Fixed $125 consultation fee
+      estimatedPrice: 0,
       projectDetails: `${projectType}: ${cleanDetails || 'On-site consultation & diagnostic inspection'}`,
       photoUrl: stampedAttachments.find(a => a.type === 'image')?.dataUrl || undefined,
       attachments: stampedAttachments,
@@ -400,7 +400,7 @@ export const BookingWizardModal: React.FC = () => {
                 Mr Handyworks LLC
               </div>
               <h3 className="text-xl sm:text-3xl font-black tracking-tight text-white mt-0.5">
-                Book Online Now
+                Submit a Request
               </h3>
             </div>
             <button
@@ -553,20 +553,22 @@ export const BookingWizardModal: React.FC = () => {
             {/* ================= STEP 2: SERVICE (COLLAPSIBLE SELECTION) ================= */}
             {!isCompleted && step === 2 && (
               <div className="space-y-6 animate-in fade-in">
-                {/* Official Fee Callout Banner */}
-                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-start sm:items-center justify-between gap-3">
-                  <div>
-                    <div className="text-xs font-black uppercase tracking-wider text-[#0B3C5D] dark:text-blue-300 flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
-                      <span>Official Pricing Transparency</span>
-                    </div>
-                    <div className="text-xs text-slate-700 dark:text-slate-300 mt-0.5">
-                      Fixed on-site consultation &amp; diagnostic fee: <strong>$125.00</strong>. Final project labor &amp; materials are quoted on-site.
-                    </div>
+                <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 space-y-2">
+                  <div className="text-base font-black text-[#0B3C5D] dark:text-blue-300 flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
+                    <span>Need a Quote?</span>
                   </div>
-                  <div className="text-right shrink-0">
-                    <span className="text-xl sm:text-2xl font-black text-[#0B3C5D] dark:text-blue-300">$125</span>
-                    <span className="text-[10px] block font-bold text-slate-500">Fixed Fee</span>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                    Select the service you need and provide as much information as possible, including photos, measurements, and project details. We’ll review your request and provide a quote when enough information is available.
+                  </p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                    Some projects may require an on-site consultation before final pricing can be provided.
+                  </p>
+                  <div className="pt-2 border-t border-blue-500/20">
+                    <div className="text-xs font-black text-[#0B3C5D] dark:text-blue-300">On-Site Consultation — Starting at $125</div>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
+                      Some projects require an in-person assessment before we can provide accurate pricing. Consultation fees start at $125 and may vary depending on location and project complexity.
+                    </p>
                   </div>
                 </div>
 
@@ -605,9 +607,6 @@ export const BookingWizardModal: React.FC = () => {
                             <span className="inline-flex items-center gap-1 text-[11px] font-black px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-700 dark:text-emerald-400">
                               <CheckCircle2 className="w-3 h-3" />
                               Active Choice
-                            </span>
-                            <span className="text-[11px] font-bold text-[#0B3C5D] dark:text-blue-300">
-                              $125 Fixed Consultation Fee
                             </span>
                           </div>
                         </div>
@@ -666,11 +665,6 @@ export const BookingWizardModal: React.FC = () => {
                                     {s.descEn}
                                   </div>
                                 </div>
-                                <span className={`text-[11px] font-black shrink-0 px-2 py-1 rounded-lg ${
-                                  isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
-                                }`}>
-                                  $125 Fixed Fee
-                                </span>
                               </button>
                             );
                           })}
@@ -694,11 +688,6 @@ export const BookingWizardModal: React.FC = () => {
                                 }`}
                               >
                                 <span className="font-bold text-xs sm:text-sm">{opt}</span>
-                                <span className={`text-[11px] font-black shrink-0 px-2 py-1 rounded-lg ${
-                                  isSelected ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
-                                }`}>
-                                  $125 Fixed Fee
-                                </span>
                               </button>
                             );
                           })}
@@ -1032,17 +1021,17 @@ export const BookingWizardModal: React.FC = () => {
               <div className="space-y-6 animate-in fade-in">
                 <div>
                   <h3 className="text-xl font-black text-slate-900 dark:text-white">
-                    Project Details &amp; Summary
+                    Tell Us About Your Project
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                    Provide any special instructions or photos of the project area, then submit your request.
+                    Please describe what you need done and include any helpful details such as measurements, quantities, existing conditions, and accessibility.
                   </p>
                 </div>
 
                 {/* Project Description Textarea */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                    Describe your project or special requests:
+                    Project details:
                   </label>
                   <textarea
                     rows={3}
@@ -1057,7 +1046,7 @@ export const BookingWizardModal: React.FC = () => {
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                      {language === 'es' ? 'Adjuntar Fotos, Videos o Documentos (Opcional)' : 'Attach Photos, Videos or Documents (Optional)'}
+                      {language === 'es' ? 'Subir Fotos' : 'Upload Photos'}
                     </label>
                     <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
                       {language === 'es' ? 'Compresión ligera • Sin saturar hosting' : 'Optimized in-browser • Zero server bloat'}
@@ -1081,12 +1070,12 @@ export const BookingWizardModal: React.FC = () => {
                     <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
                       {language === 'es' 
                         ? 'Arrastra cualquier archivo aquí (fotos, videos, planos, documentos) o haz clic para explorar' 
-                        : 'Drop any file here (photos, videos, blueprints, documents) or click to browse'}
+                        : 'Please upload clear photos of the work area, existing installation, and anything else that may help us understand the project. Multiple photos are recommended.'}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                       {language === 'es' 
                         ? 'Cualquier extensión: JPG, PNG, PDF, DOCX, MP4, MOV, HEIC, etc. (Máx. 40 MB)' 
-                        : 'All extensions supported: JPG, PNG, PDF, DOCX, MP4, MOV, HEIC, etc. (Max 40 MB)'}
+                        : 'Better details and photos help us provide a more accurate quote.'}
                     </p>
                   </div>
 
@@ -1174,19 +1163,8 @@ export const BookingWizardModal: React.FC = () => {
                     <span className="text-slate-600 dark:text-slate-400">Service Address:</span>
                     <span className="font-semibold text-slate-800 dark:text-slate-200">{clientAddress} ({zipCode})</span>
                   </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-700">
-                    <div>
-                      <span className="font-black text-slate-800 dark:text-slate-200 block">
-                        Fixed On-Site Consultation Fee:
-                      </span>
-                      <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                        {language === 'es' ? 'Monto referencial • Se abona al coordinar por llamada o en la visita' : 'Referential amount • Paid upon phone coordination or service visit'}
-                      </span>
-                    </div>
-                    <span className="text-lg font-black text-[#0B3C5D] dark:text-blue-300 shrink-0">$125.00</span>
-                  </div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 leading-relaxed border-t border-slate-200 dark:border-slate-700">
-                    * Final project labor will be evaluated on-site according to work hours and installation requirements. Confirmation and payment details will be coordinated directly via call or SMS. No online charge is processed today.
+                    Submitting this request does not confirm an appointment or final project price. Mr Handyworks LLC will review your project details and contact you to confirm pricing and availability.
                   </div>
                 </div>
               </div>
@@ -1201,12 +1179,12 @@ export const BookingWizardModal: React.FC = () => {
 
                 <div className="space-y-1">
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-                    {language === 'es' ? '¡Solicitud de Reserva Recibida!' : 'Booking Request Received!'}
+                    {language === 'es' ? 'Solicitud Recibida' : 'Request Received'}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
                     {language === 'es' 
-                      ? <>Gracias, <strong>{createdBooking.clientName}</strong>. Tu cita ha sido registrada con éxito en el sistema.</>
-                      : <>Thank you, <strong>{createdBooking.clientName}</strong>! Your appointment has been successfully registered.</>}
+                      ? <>Gracias, <strong>{createdBooking.clientName}</strong>. Recibimos tu solicitud y revisaremos la información proporcionada para contactarte.</>
+                      : <>Thank you, <strong>{createdBooking.clientName}</strong>. We’ve received your request and will review the information provided. We’ll contact you to discuss pricing, availability, or any additional information needed.</>}
                   </p>
                 </div>
 
@@ -1243,19 +1221,6 @@ export const BookingWizardModal: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-slate-700 dark:text-slate-300 font-bold block">
-                          {language === 'es' ? 'Tarifa de Consulta en Sitio:' : 'Fixed Consultation Fee:'}
-                        </span>
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                          {language === 'es' ? 'Monto referencial • Se abona al coordinar por llamada' : 'Referential fee • Paid upon phone coordination'}
-                        </span>
-                      </div>
-                      <span className="font-black text-base text-slate-900 dark:text-white">$125.00</span>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Accepted Payment Methods Block (Visible Badges) */}
@@ -1461,7 +1426,7 @@ export const BookingWizardModal: React.FC = () => {
                   className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-black shadow-md transition-all cursor-pointer"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>{isSubmitting ? 'Submitting...' : 'Book Online Now'}</span>
+                  <span>{isSubmitting ? 'Submitting...' : 'Submit Request'}</span>
                 </button>
               )}
             </div>

@@ -55,7 +55,7 @@ Address: ${clientAddress} (ZIP: ${cleanText(booking.zipCode, 'Not provided')})
 Service: ${serviceType}
 Date: ${cleanText(booking.scheduledDate, 'Not provided')}
 Time: ${cleanText(booking.scheduledTimeSlot, 'Not provided')}
-Consultation fee: $125.00 (due upon coordination or visit)
+On-site consultation, if required: starting at $125.00 (may vary by location and project complexity)
 
 Attachments (${booking.attachments?.length || (booking.photoUrl ? 1 : 0)}):
 ${attachmentsList}
