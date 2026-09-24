@@ -59,9 +59,9 @@ export const HomeView: React.FC = () => {
     {
       step: '01',
       titleEs: 'Solicita tu Servicio',
-      titleEn: 'Request & Estimate',
+      titleEn: 'Request an Estimate',
       descEs: 'Selecciona tu servicio y la franja de horario preferida a través de nuestro formulario de reserva en línea.',
-      descEn: 'Select your service and preferred appointment window through our online booking form.'
+      descEn: 'Tell us about your project and select your preferred appointment window through our online request form.'
     },
     {
       step: '02',

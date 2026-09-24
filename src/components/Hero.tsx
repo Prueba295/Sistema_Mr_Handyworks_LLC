@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
             <div>
               <div className="mb-3 flex items-start gap-3 rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-3 text-sm text-[var(--text)]">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
-                <span><strong>Clear estimates.</strong> No surprise charges or confusing handoffs.</span>
+                <span>Straightforward estimates. Any changes in scope or pricing are discussed with you before additional work proceeds.</span>
               </div>
               <button onClick={() => openBookingWizard()} className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#0B3C5D] px-5 py-3.5 text-sm font-black text-white shadow-lg shadow-[#0B3C5D]/20 hover:bg-[#07273d]">
                 Request your estimate <ArrowRight className="h-4 w-4" />

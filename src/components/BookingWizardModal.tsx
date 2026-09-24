@@ -408,7 +408,7 @@ export const BookingWizardModal: React.FC = () => {
           <div className="bg-gradient-to-r from-[#0B3C5D] via-[#0D4468] to-[#07273D] px-5 py-4 sm:px-8 sm:py-5 flex items-center justify-between text-white shrink-0 border-b border-white/10">
             <div>
               <div className="text-[10px] sm:text-xs font-black tracking-widest uppercase text-amber-300">
-                MR. HANDYWORKS OF NORTHERN ST JOSEPH &amp; ELKHART
+                Mr Handyworks LLC
               </div>
               <h3 className="text-xl sm:text-3xl font-black tracking-tight text-white mt-0.5">
                 Book Online Now
