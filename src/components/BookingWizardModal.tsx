@@ -1377,22 +1377,6 @@ export const BookingWizardModal: React.FC = () => {
                       <span>{language === 'es' ? 'Llamar a Servicio al Cliente' : 'Call Service Desk (Direct)'}</span>
                     </a>
 
-                    {/* Direct SMS Option */}
-                    {(() => {
-                      const hour = new Date().getHours();
-                      const greeting = hour >= 5 && hour < 12 ? 'Good morning!' : hour < 18 ? 'Good afternoon!' : 'Good evening!';
-                      const smsText = `${greeting} I requested an appointment on Mr Handyworks LLC (#${createdBooking.id}): ${createdBooking.serviceType} on ${createdBooking.scheduledDate} (${createdBooking.scheduledTimeSlot}) for ${createdBooking.clientName} at ${createdBooking.clientAddress}. Please confirm!`;
-
-                      return (
-                        <a
-                          href={`sms:${BUSINESS_INFO.phoneRaw}?body=${encodeURIComponent(smsText)}`}
-                          className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-md transition-colors cursor-pointer"
-                        >
-                          <Send className="w-4 h-4" />
-                          <span>{language === 'es' ? 'Enviar SMS Directo' : 'Send Direct SMS'}</span>
-                        </a>
-                      );
-                    })()}
                   </div>
 
                   {/* Download PDF Quote */}

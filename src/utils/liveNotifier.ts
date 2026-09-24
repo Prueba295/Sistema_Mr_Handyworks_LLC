@@ -30,29 +30,40 @@ export interface LiveNotificationPayload {
  * Prevents any mix-ups between customers or attached files.
  */
 export function formatOwnerDispatchMessage(booking: Booking): string {
+  const cleanText = (value: string | undefined, fallback: string): string => {
+    const normalized = (value || '').replace(/\s+/g, ' ').trim();
+    return normalized || fallback;
+  };
+
+  const clientName = cleanText(booking.clientName, 'Not provided');
+  const clientPhone = cleanText(booking.clientPhone, 'Not provided');
+  const clientEmail = cleanText(booking.clientEmail, 'Not provided');
+  const clientAddress = cleanText(booking.clientAddress, 'Address on file');
+  const serviceType = cleanText(booking.serviceType, 'General handyman service');
+  const projectDetails = cleanText(booking.projectDetails, 'No additional notes');
   const attachmentsList = booking.attachments && booking.attachments.length > 0
-    ? booking.attachments.map((a, i) => `  [${i + 1}] ${a.name} (${a.type.toUpperCase()} • ${a.sizeFormatted})`).join('\n')
-    : (booking.photoUrl ? '  [1] Photo attached by client' : '  (No files attached)');
+    ? booking.attachments.map((a, i) => `- ${i + 1}. ${cleanText(a.name, 'Unnamed file')} (${a.type.toUpperCase()}, ${a.sizeFormatted})`).join('\n')
+    : (booking.photoUrl ? '- 1. Photo attached by client' : '- None');
 
-  return `🚨 NEW WORK ORDER - MR HANDYWORKS LLC
-----------------------------------------
-📋 ORDER ID: #${booking.id}
-👤 CLIENT: ${booking.clientName}
-📞 CLIENT PHONE: ${booking.clientPhone}
-📧 CLIENT EMAIL: ${booking.clientEmail || 'N/A'}
-📍 ADDRESS: ${booking.clientAddress || 'Address on file'} (ZIP: ${booking.zipCode})
-🛠️ SERVICE: ${booking.serviceType}
-📅 SCHEDULED: ${booking.scheduledDate}
-⏰ WINDOW: ${booking.scheduledTimeSlot}
-💵 CONSULTATION FEE: $125.00 (Referential - collect upon coordination or visit)
+  return `MR HANDYWORKS LLC - NEW SERVICE REQUEST
 
-📁 CLIENT ATTACHMENTS (${booking.attachments?.length || (booking.photoUrl ? 1 : 0)}):
+Order ID: #${booking.id}
+Client: ${clientName}
+Phone: ${clientPhone}
+Email: ${clientEmail}
+Address: ${clientAddress} (ZIP: ${cleanText(booking.zipCode, 'Not provided')})
+Service: ${serviceType}
+Date: ${cleanText(booking.scheduledDate, 'Not provided')}
+Time: ${cleanText(booking.scheduledTimeSlot, 'Not provided')}
+Consultation fee: $125.00 (due upon coordination or visit)
+
+Attachments (${booking.attachments?.length || (booking.photoUrl ? 1 : 0)}):
 ${attachmentsList}
 
-📝 CLIENT NOTES:
-"${booking.projectDetails || 'No additional notes'}"
-----------------------------------------
-👉 ADMIN PORTAL: https://mr-handyworks-llc.com/#admin`;
+Notes:
+${projectDetails}
+
+Admin portal: https://mr-handyworks-llc.com/#admin`;
 }
 
 /**

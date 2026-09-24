@@ -411,22 +411,23 @@ export const INITIAL_BOOKINGS: Booking[] = [
   }
 ];
 
+export const STANDARD_TIME_SLOTS = ['09:00 AM', '12:00 PM', '03:00 PM', '07:00 PM'];
+
 export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   {
     date: '2026-09-21',
     isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']
+    slots: [...STANDARD_TIME_SLOTS]
   },
   {
     date: '2026-09-22',
     isBlocked: false,
-    slots: ['02:00 PM', '04:30 PM'],
-    note: 'Morning slot booked (Sarah Jenkins)'
+    slots: [...STANDARD_TIME_SLOTS]
   },
   {
     date: '2026-09-23',
     isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM']
+    slots: [...STANDARD_TIME_SLOTS]
   },
   {
     date: '2026-09-24',
@@ -437,13 +438,12 @@ export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   {
     date: '2026-09-25',
     isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']
+    slots: [...STANDARD_TIME_SLOTS]
   },
   {
     date: '2026-09-26',
     isBlocked: false,
-    slots: ['10:00 AM', '01:00 PM', '03:30 PM'],
-    note: 'Saturday schedule'
+    slots: [...STANDARD_TIME_SLOTS]
   },
   {
     date: '2026-09-27',
@@ -454,7 +454,7 @@ export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   {
     date: '2026-09-28',
     isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']
+    slots: [...STANDARD_TIME_SLOTS]
   },
   {
     date: '2026-09-29',
@@ -465,6 +465,6 @@ export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   {
     date: '2026-09-30',
     isBlocked: false,
-    slots: ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM']
+    slots: [...STANDARD_TIME_SLOTS]
   }
 ];

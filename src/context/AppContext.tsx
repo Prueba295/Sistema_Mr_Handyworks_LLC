@@ -19,6 +19,7 @@ import {
   INITIAL_REVIEWS, 
   INITIAL_QR_METHODS, 
   INITIAL_AVAILABILITY, 
+  STANDARD_TIME_SLOTS,
   INITIAL_BOOKINGS,
   BUSINESS_INFO
 } from '../data/initialData';
@@ -36,6 +37,11 @@ import {
   loadCloudBookings,
   updateCloudBooking
 } from '../utils/cloudBookings';
+import {
+  AlertSettings,
+  readAlertSettings,
+  writeAlertSettings
+} from '../utils/pushNotifications';
 
 interface BookingWizardPreload {
   serviceId?: string;
@@ -178,6 +184,8 @@ interface AppContextType {
 
   notification: string | null;
   showNotification: (msg: string) => void;
+  alertSettings: AlertSettings;
+  updateAlertSettings: (settings: Partial<AlertSettings>) => void;
   resetToDefaults: () => void;
 }
 
@@ -548,6 +556,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [availability, setAvailability] = useState<AvailabilityDay[]>(() => {
     const saved = readSyncedValue('mr_handyworks_availability');
     const current = parseStoredValue(saved, INITIAL_AVAILABILITY);
+    const scheduleVersionKey = 'mr_handyworks_schedule_v2';
+    if (!readSyncedValue(scheduleVersionKey)) {
+      const standardized = current.map(day => day.isBlocked
+        ? { ...day, slots: [] }
+        : { ...day, slots: [...STANDARD_TIME_SLOTS] });
+      writeSyncedValue('mr_handyworks_availability', JSON.stringify(standardized));
+      writeSyncedValue(scheduleVersionKey, 'true');
+      return standardized;
+    }
     const demoSeedKey = 'mr_handyworks_demo_busy_dates_v1';
     if (!readSyncedValue(demoSeedKey)) {
       const demoBusyDates = new Set(['2026-09-24', '2026-09-27', '2026-09-29']);
@@ -689,7 +706,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 12. Admin State, Password & Recovery
   const [adminPassword, setAdminPassword] = useState<string>(() => {
-    return readSyncedValue('mr_handyworks_admin_pwd') || 'brian2026';
+    return readSyncedValue('mr_handyworks_admin_pwd') || import.meta.env.VITE_ADMIN_PASSWORD || '';
   });
 
   const [recoveryPhone, setRecoveryPhoneState] = useState<string>(() => {
@@ -704,7 +721,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const [recoveryEmail, setRecoveryEmailState] = useState<string>(() => {
-    return readSyncedValue('mr_handyworks_admin_email') || 'brian@mr-handyworks-llc.com';
+    const saved = readSyncedValue('mr_handyworks_admin_email');
+    return saved && saved.toLowerCase() !== 'brian@mr-handyworks-llc.com'
+      ? saved
+      : 'Mrhandyworks25@gmail.com';
   });
 
   const setRecoveryEmail = (email: string) => {
@@ -841,7 +861,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const adminLogin = async (password: string): Promise<boolean> => {
     const cleanPassword = password.trim();
 
-    if (supabase) {
+    if (supabase && !import.meta.env.DEV) {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: recoveryEmail,
         password: cleanPassword
@@ -849,7 +869,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       if (error || !data.user) return false;
       const user: AdminUser = {
         isAuthenticated: true,
-        email: data.user.email || recoveryEmail,
+        email: data.user.email || data.user.phone || recoveryPhone,
         twoFactorActive: true,
         lastLogin: new Date().toLocaleTimeString()
       };
@@ -882,12 +902,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const attempts = Number(sessionStorage.getItem(attemptKey) ?? '0');
 
-    if (cleanPassword === adminPassword || cleanPassword === 'brian2026') {
+    if (adminPassword && cleanPassword === adminPassword) {
       sessionStorage.removeItem(attemptKey);
       sessionStorage.removeItem(lockoutKey);
       const user: AdminUser = {
         isAuthenticated: true,
-        email: recoveryEmail || 'brian@mrhandyworks.com',
+        email: recoveryEmail || 'Admin email',
         twoFactorActive: true,
         lastLogin: new Date().toLocaleTimeString()
       };
@@ -930,6 +950,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [activeQRProvider, setActiveQRProvider] = useState<PaymentQR | null>(INITIAL_QR_METHODS[0]);
   const [lightboxMedia, setLightboxMedia] = useState<PortfolioMedia | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+
+  const [alertSettings, setAlertSettings] = useState<AlertSettings>(() => readAlertSettings());
+
+  const updateAlertSettings = (updated: Partial<AlertSettings>) => {
+    setAlertSettings(current => {
+      const next = { ...current, ...updated };
+      writeAlertSettings(next);
+      return next;
+    });
+  };
 
   const showNotification = (msg: string) => {
     setNotification(msg);
@@ -1042,6 +1072,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setLightboxMedia,
         notification,
         showNotification,
+        alertSettings,
+        updateAlertSettings,
         resetToDefaults
       }}
     >

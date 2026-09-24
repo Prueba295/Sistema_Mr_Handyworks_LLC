@@ -69,7 +69,7 @@ export const AdminModal: React.FC = () => {
       setLoginError('');
       showNotification(language === 'es' ? 'Bienvenido, Brian. Sesión activa.' : 'Welcome Brian. Admin session active.');
     } else {
-      setLoginError(language === 'es' ? 'Contraseña incorrecta. (Prueba: brian2026)' : 'Incorrect password. (Try: brian2026)');
+      setLoginError(language === 'es' ? 'Contraseña incorrecta.' : 'Incorrect password.');
     }
   };
 
@@ -130,9 +130,6 @@ export const AdminModal: React.FC = () => {
               <h4 className="text-xl font-extrabold text-slate-900 dark:text-white">
                 {t.admin.loginSubtitle}
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                {language === 'es' ? 'Contraseña por defecto del sistema: brian2026' : 'Default system password: brian2026'}
-              </p>
             </div>
 
             <form onSubmit={handleLoginSubmit} className="space-y-4">

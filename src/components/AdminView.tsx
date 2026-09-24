@@ -41,6 +41,8 @@ import {
   EyeOff,
   KeyRound,
   ShieldAlert,
+  Bell,
+  BellOff,
   Languages,
   Check,
   X,
@@ -69,6 +71,7 @@ import {
   FileQuestion,
   Loader2
 } from 'lucide-react';
+import { enableSecurePushAlerts, disableSecurePushAlerts } from '../utils/pushNotifications';
 import { 
   getFileExtension, 
   getDetailedCategory, 
@@ -116,12 +119,14 @@ export const AdminView: React.FC = () => {
     setRecoveryEmail,
     changeAdminPassword,
     requestPasswordResetCode,
-    resetPasswordWithCode
+    resetPasswordWithCode,
+    alertSettings,
+    updateAlertSettings
   } = useApp();
 
   // Active sub-tab in Admin CMS
   const [activeTab, setActiveTab] = useState<
-    'PROFILE' | 'SERVICES' | 'PORTFOLIO' | 'CALENDAR' | 'REVIEWS' | 'BOOKINGS'
+    'PROFILE' | 'ALERTS' | 'SERVICES' | 'PORTFOLIO' | 'CALENDAR' | 'REVIEWS' | 'BOOKINGS'
   >('PROFILE');
 
   // Password login & security state
@@ -331,8 +336,8 @@ export const AdminView: React.FC = () => {
       } else {
         setLoginError(
           language === 'es'
-            ? `Contraseña incorrecta. Intento ${next}/5. (Clave de prueba: brian2026)`
-            : `Incorrect password. Attempt ${next}/5. (Demo key: brian2026)`
+            ? `Contraseña incorrecta. Intento ${next}/5.`
+            : `Incorrect password. Attempt ${next}/5.`
         );
       }
     }
@@ -755,7 +760,7 @@ export const AdminView: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between text-[11px] mt-1.5">
                   <span className="text-slate-400">
-                    {language === 'es' ? 'Clave inicial: brian2026' : 'Default key: brian2026'}
+                    {language === 'es' ? 'Credenciales administradas de forma segura' : 'Credentials are securely managed'}
                   </span>
                   <button
                     type="button"
@@ -1024,6 +1029,7 @@ export const AdminView: React.FC = () => {
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-200 dark:border-slate-700/80">
         {[
           { id: 'PROFILE', labelEs: 'Datos del Negocio', labelEn: 'Business Info', icon: Building2 },
+          { id: 'ALERTS', labelEs: 'Alertas', labelEn: 'Alerts', icon: ShieldAlert },
           { id: 'SERVICES', labelEs: `Servicios (${services.length})`, labelEn: `Services (${services.length})`, icon: Wrench },
           { id: 'PORTFOLIO', labelEs: `Fotos y Vídeos (${portfolio.length})`, labelEn: `Media & Projects (${portfolio.length})`, icon: ImageIcon },
           { id: 'CALENDAR', labelEs: 'Calendario & Horarios', labelEn: 'Calendar & Slots', icon: Calendar },
@@ -1323,7 +1329,7 @@ export const AdminView: React.FC = () => {
                       type="email"
                       value={settingsRecoveryEmail}
                       onChange={(e) => setSettingsRecoveryEmail(e.target.value)}
-                      placeholder={language === 'es' ? 'brian@mr-handyworks-llc.com (Opcional)' : 'Optional backup email'}
+                      placeholder={language === 'es' ? 'Mrhandyworks25@gmail.com (Opcional)' : 'Optional backup email'}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white"
                     />
                     <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500 italic">
@@ -1374,6 +1380,75 @@ export const AdminView: React.FC = () => {
                   </button>
                 </form>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'ALERTS' && (
+        <div className="max-w-3xl bg-white dark:bg-[#1A2332] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700/80 shadow-xs space-y-6">
+          <div className="border-b border-slate-200 dark:border-slate-700/80 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                <ShieldAlert className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  {language === 'es' ? 'Alertas de nuevas reservas' : 'New Booking Alerts'}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  {language === 'es' ? 'Solo avisos de reservas nuevas. Sin anuncios, campañas ni contenido externo.' : 'New booking alerts only. No ads, campaigns, or external content.'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50 dark:bg-emerald-950/20 p-4 space-y-2">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-black text-slate-900 dark:text-white">
+                  {language === 'es' ? 'Activar alertas en este dispositivo' : 'Enable alerts on this device'}
+                </p>
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                  {language === 'es' ? 'Requiere permiso explícito del sistema y sesión administrativa.' : 'Requires explicit system permission and an administrator session.'}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={async () => {
+                  if (alertSettings.pushEnabled) {
+                    await disableSecurePushAlerts();
+                    updateAlertSettings({ enabled: false, pushEnabled: false });
+                    showNotification(language === 'es' ? 'Alertas desactivadas en este dispositivo' : 'Alerts disabled on this device');
+                    return;
+                  }
+                  const result = await enableSecurePushAlerts();
+                  if (result.ok) {
+                    updateAlertSettings({ enabled: true, pushEnabled: true });
+                  }
+                  showNotification(result.message);
+                }}
+                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black text-white shadow-xs transition-colors cursor-pointer ${alertSettings.pushEnabled ? 'bg-rose-600 hover:bg-rose-700' : 'bg-emerald-600 hover:bg-emerald-700'}`}
+              >
+                {alertSettings.pushEnabled ? <BellOff className="w-4 h-4" /> : <Bell className="w-4 h-4" />}
+                <span>{alertSettings.pushEnabled ? (language === 'es' ? 'Desactivar' : 'Disable') : (language === 'es' ? 'Activar' : 'Enable')}</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <label className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 dark:border-slate-700 p-3">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{language === 'es' ? 'Sonido al recibir reserva' : 'Sound on new booking'}</span>
+              <input
+                type="checkbox"
+                checked={alertSettings.soundEnabled}
+                onChange={event => updateAlertSettings({ soundEnabled: event.target.checked })}
+                className="h-4 w-4 accent-emerald-600"
+              />
+            </label>
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-3 text-xs text-slate-600 dark:text-slate-300">
+              <span className="font-black text-slate-900 dark:text-white block">{language === 'es' ? 'Alcance protegido' : 'Protected scope'}</span>
+              {language === 'es' ? 'El sistema solo permite eventos NEW_BOOKING generados por el backend.' : 'Only backend-generated NEW_BOOKING events are allowed.'}
             </div>
           </div>
         </div>
