@@ -288,7 +288,7 @@ export const AdminView: React.FC = () => {
 
   // Calendar slot picker state
   const [selectedDate, setSelectedDate] = useState('2026-09-24');
-  const [customSlot, setCustomSlot] = useState('09:00 AM - 11:30 AM');
+  const [customSlot, setCustomSlot] = useState('09:00 AM - 12:00 PM');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -617,7 +617,7 @@ export const AdminView: React.FC = () => {
   const currentDayAvailability = availability.find(d => d.date === selectedDate) || {
     date: selectedDate,
     isBlocked: false,
-    slots: ['09:00 AM - 11:30 AM', '01:30 PM - 03:30 PM', '04:00 PM - 06:30 PM']
+    slots: ['09:00 AM - 12:00 PM', '12:00 PM - 03:00 PM', '03:00 PM - 07:00 PM']
   };
 
   // IF NOT AUTHENTICATED: Show hardened security login & OTP recovery screen
@@ -1843,7 +1843,7 @@ export const AdminView: React.FC = () => {
                   type="text"
                   value={customSlot}
                   onChange={(e) => setCustomSlot(e.target.value)}
-                  placeholder="e.g. 02:00 PM - 04:30 PM"
+                  placeholder="e.g. 03:00 PM - 07:00 PM"
                   className="flex-1 w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-white"
                 />
                 <button

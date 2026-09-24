@@ -84,7 +84,7 @@ export const BookingWizardModal: React.FC = () => {
   // Step 3: Schedule
   const [scheduledDate, setScheduledDate] = useState<string>('2026-09-23');
   const [calendarMonth, setCalendarMonth] = useState(() => new Date(2026, 8, 1));
-  const [scheduledSlot, setScheduledSlot] = useState<string>('09:00 AM - 11:30 AM');
+  const [scheduledSlot, setScheduledSlot] = useState<string>('09:00 AM - 12:00 PM');
 
   // Step 4: Contact & Strict Validation State
   const [clientName, setClientName] = useState<string>('');
@@ -833,10 +833,9 @@ export const BookingWizardModal: React.FC = () => {
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {[
-                      { slot: '09:00 AM - 11:30 AM', label: '09:00 AM - 11:30 AM (Morning)' },
-                      { slot: '11:30 AM - 02:00 PM', label: '11:30 AM - 02:00 PM (Midday)' },
-                      { slot: '02:00 PM - 04:30 PM', label: '02:00 PM - 04:30 PM (Afternoon)' },
-                      { slot: '04:30 PM - 07:00 PM', label: '04:30 PM - 07:00 PM (Late Afternoon)' }
+                      { slot: '09:00 AM - 12:00 PM', label: '09:00 AM - 12:00 PM (Morning)' },
+                      { slot: '12:00 PM - 03:00 PM', label: '12:00 PM - 03:00 PM (Midday)' },
+                      { slot: '03:00 PM - 07:00 PM', label: '03:00 PM - 07:00 PM (Afternoon)' }
                     ].map(item => (
                       <button
                         key={item.slot}

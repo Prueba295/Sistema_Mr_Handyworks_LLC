@@ -411,7 +411,11 @@ export const INITIAL_BOOKINGS: Booking[] = [
   }
 ];
 
-export const STANDARD_TIME_SLOTS = ['09:00 AM', '12:00 PM', '03:00 PM', '07:00 PM'];
+export const STANDARD_TIME_SLOTS = [
+  '09:00 AM - 12:00 PM',
+  '12:00 PM - 03:00 PM',
+  '03:00 PM - 07:00 PM'
+];
 
 export const INITIAL_AVAILABILITY: AvailabilityDay[] = [
   {
