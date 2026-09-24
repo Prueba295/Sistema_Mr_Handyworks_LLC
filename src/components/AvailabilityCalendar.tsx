@@ -9,7 +9,6 @@ import {
   CheckCircle2, 
   AlertCircle, 
   Sparkles,
-  ArrowRight,
   ShieldCheck
 } from 'lucide-react';
 
@@ -149,18 +148,17 @@ export const AvailabilityCalendar: React.FC = () => {
             </div>
 
             {selectedDayInfo && selectedDayInfo.slots.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {selectedDayInfo.slots.map((slot, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSlotClick(slot)}
-                    className="min-h-[48px] py-3 px-4 rounded-xl font-bold text-sm bg-white dark:bg-slate-700 border border-emerald-500/40 text-slate-800 dark:text-slate-100 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all flex items-center justify-between shadow-xs cursor-pointer group"
+                    className="min-h-[52px] min-w-0 w-full py-3 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm bg-white dark:bg-slate-700 border border-emerald-500/40 text-slate-800 dark:text-slate-100 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all flex items-center justify-center shadow-xs cursor-pointer group"
                   >
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2 whitespace-nowrap">
                       <Clock className="w-4 h-4 text-emerald-500 group-hover:text-white" />
                       <span>{slot}</span>
                     </span>
-                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
                 ))}
               </div>

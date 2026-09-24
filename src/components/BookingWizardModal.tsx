@@ -831,7 +831,7 @@ export const BookingWizardModal: React.FC = () => {
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
                     Preferred Arrival Window
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                     {[
                       { slot: '09:00 AM - 12:00 PM', label: '09:00 AM - 12:00 PM (Morning)' },
                       { slot: '12:00 PM - 03:00 PM', label: '12:00 PM - 03:00 PM (Midday)' },
