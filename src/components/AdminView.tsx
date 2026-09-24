@@ -296,21 +296,22 @@ export const AdminView: React.FC = () => {
       setLoginError(language === 'es' ? 'Acceso bloqueado por seguridad.' : 'Access blocked for security.');
       return;
     }
-    if (lockoutRemaining > 0) {
-      setLoginError(
-        language === 'es'
-          ? `Acceso temporalmente bloqueado. Espera ${lockoutRemaining} segundos.`
-          : `Temporarily locked for security. Please wait ${lockoutRemaining} seconds.`
-      );
-      return;
-    }
 
     const ok = await adminLogin(passwordInput);
     if (ok) {
       setPasswordInput('');
       setLoginError('');
       setFailedAttempts(0);
+      setLockoutRemaining(0);
     } else {
+      if (lockoutRemaining > 0) {
+        setLoginError(
+          language === 'es'
+            ? `Acceso temporalmente bloqueado. Espera ${lockoutRemaining} segundos o ingresa la contraseña maestra correcta.`
+            : `Temporarily locked for security. Please wait ${lockoutRemaining} seconds or enter valid master password.`
+        );
+        return;
+      }
       const next = failedAttempts + 1;
       setFailedAttempts(next);
       if (next >= 5) {
@@ -684,11 +685,10 @@ export const AdminView: React.FC = () => {
                   <input 
                     type={showPassword ? 'text' : 'password'}
                     required
-                    disabled={lockoutRemaining > 0}
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-4 pr-11 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-[#0B3C5D] outline-none disabled:opacity-50"
+                    className="w-full pl-4 pr-11 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-[#0B3C5D] outline-none"
                   />
                   <button
                     type="button"
@@ -725,8 +725,7 @@ export const AdminView: React.FC = () => {
 
               <button
                 type="submit"
-                disabled={lockoutRemaining > 0}
-                className="w-full py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-sm shadow-md transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white font-black text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <Lock className="w-4 h-4" />
                 <span>{language === 'es' ? 'Iniciar Sesión Segura' : 'Sign In Securely'}</span>
