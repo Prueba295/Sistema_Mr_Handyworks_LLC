@@ -210,7 +210,7 @@ export const QRModal: React.FC = () => {
           <div className="w-full max-w-md pt-2">
             <button
               onClick={() => {
-                showNotification(language === 'es' ? '¡Gracias! Verificaremos tu comprobante con el proyecto.' : 'Thank you! We will verify your deposit with the project.');
+                showNotification(language === 'es' ? '¡Gracias! Coordinaremos los detalles del proyecto contigo.' : 'Thank you! We will coordinate the project details with you.');
                 setIsQRModalOpen(false);
               }}
               className="w-full py-3 rounded-xl bg-[#0B3C5D] hover:bg-[#082a42] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-extrabold text-sm shadow-md transition-colors"
