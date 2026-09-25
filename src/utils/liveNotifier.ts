@@ -46,33 +46,21 @@ export function formatOwnerDispatchMessage(booking: Booking): string {
   const attachments = booking.attachments || [];
   const attachmentsCount = attachments.length || (booking.photoUrl ? 1 : 0);
   
+  const portalBase = 'https://sistema-mr-handyworks-llc.vercel.app';
+  const orderViewUrl = `${portalBase}/#view-order=${booking.id}`;
+
   let attachmentsList = '• None provided';
   if (attachments.length > 0) {
     attachmentsList = attachments.map((a, idx) => {
-      const type = (a.type || 'file').toUpperCase();
+      const type = (a.type || 'IMAGE').toUpperCase();
       const fileName = cleanText(a.name, `Attachment-${idx + 1}`);
       const sizeStr = a.sizeFormatted ? ` (${a.sizeFormatted})` : '';
 
-      let linkUrl = '';
-      if (a.dataUrl && a.dataUrl.startsWith('http')) {
-        linkUrl = a.dataUrl;
-      } else {
-        const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, '-');
-        linkUrl = `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${booking.id}/${a.id || `att-${idx + 1}`}-${safeName}`;
-      }
-
-      return `• [${type}] ${fileName}${sizeStr}\n  View: ${linkUrl}`;
+      return `• [${type}] ${fileName}${sizeStr}\n  View: ${orderViewUrl}`;
     }).join('\n\n');
   } else if (booking.photoUrl) {
-    const photoLink = booking.photoUrl.startsWith('http')
-      ? booking.photoUrl
-      : `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${booking.id}/project-photo.jpg`;
-    attachmentsList = `• [IMAGE] Project Reference Photo\n  View: ${photoLink}`;
+    attachmentsList = `• [IMAGE] Project Reference Photo\n  View: ${orderViewUrl}`;
   }
-
-  const portalBase = (typeof window !== 'undefined' && window.location && window.location.origin && !window.location.origin.includes('localhost'))
-    ? window.location.origin
-    : 'https://sistema-mr-handyworks-llc.vercel.app';
 
   return `MR HANDYWORKS LLC - NEW SERVICE REQUEST
 
@@ -92,8 +80,8 @@ ${projectDetails}
 Attachments (${attachmentsCount}):
 ${attachmentsList}
 
-Public View & Files:
-${portalBase}/#view-order=${booking.id}
+Photos & Work Order (No Login Required):
+${orderViewUrl}
 
 Admin Portal:
 ${portalBase}/#admin`;
@@ -320,9 +308,7 @@ export function formatClientStatusUpdateEmail(
   newStatus: BookingStatus,
   customNote?: string
 ): { subject: string; body: string } {
-  const portalBase = (typeof window !== 'undefined' && window.location && window.location.origin && !window.location.origin.includes('localhost'))
-    ? window.location.origin
-    : 'https://sistema-mr-handyworks-llc.vercel.app';
+  const portalBase = 'https://sistema-mr-handyworks-llc.vercel.app';
 
   const statusLabel = 
     newStatus === 'CONFIRMED' ? 'CONFIRMED / ACCEPTED' :
@@ -396,9 +382,7 @@ export function buildClientStatusSMSUrl(
   newStatus: BookingStatus,
   customNote?: string
 ): string {
-  const portalBase = (typeof window !== 'undefined' && window.location && window.location.origin && !window.location.origin.includes('localhost'))
-    ? window.location.origin
-    : 'https://sistema-mr-handyworks-llc.vercel.app';
+  const portalBase = 'https://sistema-mr-handyworks-llc.vercel.app';
 
   const statusLabel = 
     newStatus === 'CONFIRMED' ? 'CONFIRMED' :

@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Booking } from '../types';
 import { BUSINESS_INFO } from '../data/initialData';
 import { generateQuotePDF } from '../utils/pdfGenerator';
+import { supabase } from '../lib/supabase';
 import { 
   X, 
   Phone, 
@@ -16,7 +17,9 @@ import {
   CheckCircle2,
   File,
   Film,
-  Mail
+  Mail,
+  Loader2,
+  ZoomIn
 } from 'lucide-react';
 
 interface PublicOrderModalProps {
@@ -28,7 +31,98 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
   const { bookings, language } = useApp();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const booking = bookings.find(b => b.id === orderId);
+  const [remoteBooking, setRemoteBooking] = useState<Booking | null>(() => {
+    return bookings.find(b => b.id === orderId) || null;
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(!remoteBooking && Boolean(orderId));
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!orderId) return;
+
+    // Check if available in local state
+    const local = bookings.find(b => b.id === orderId);
+    if (local) {
+      setRemoteBooking(local);
+      setIsLoading(false);
+      return;
+    }
+
+    let isMounted = true;
+    setIsLoading(true);
+    setLoadError(null);
+
+    const fetchOrder = async () => {
+      try {
+        const cleanOrderId = orderId.trim();
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('booking_requests')
+            .select('payload')
+            .eq('id', cleanOrderId)
+            .maybeSingle();
+
+          if (!isMounted) return;
+
+          if (data?.payload) {
+            setRemoteBooking(data.payload as Booking);
+            setIsLoading(false);
+            return;
+          }
+        }
+
+        // Check local storage backups as fallback
+        const backupRaw = localStorage.getItem('mr_handyworks_bookings');
+        if (backupRaw) {
+          try {
+            const parsed = JSON.parse(backupRaw);
+            const found = Array.isArray(parsed) 
+              ? parsed.find((b: any) => b.id?.trim() === cleanOrderId) 
+              : null;
+            if (found && isMounted) {
+              setRemoteBooking(found);
+              setIsLoading(false);
+              return;
+            }
+          } catch {}
+        }
+
+        if (isMounted) {
+          setLoadError(language === 'es' ? 'Orden no encontrada' : 'Order Not Found');
+          setIsLoading(false);
+        }
+      } catch (err: any) {
+        if (isMounted) {
+          setLoadError(err?.message || 'Error loading order');
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void fetchOrder();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [orderId, bookings, language]);
+
+  const booking = remoteBooking || bookings.find(b => b.id === orderId);
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in">
+        <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-900 p-8 text-center space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl">
+          <Loader2 className="w-10 h-10 text-[#0B3C5D] dark:text-blue-400 animate-spin mx-auto" />
+          <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
+            {language === 'es' ? 'Cargando orden y fotos adjuntas...' : 'Loading order and attached files...'}
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Order #{orderId} • {language === 'es' ? 'Acceso público directo sin registro' : 'Direct public access, no login needed'}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (!booking) {
     return (
@@ -54,7 +148,18 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
     );
   }
 
-  const attachments = booking.attachments || [];
+  const rawAttachments = booking.attachments || [];
+  let attachments = [...rawAttachments];
+  if (booking.photoUrl && !attachments.some(a => a.dataUrl === booking.photoUrl)) {
+    attachments.unshift({
+      id: `${booking.id}-photo`,
+      name: 'Project_Reference_Photo.jpg',
+      type: 'image' as const,
+      sizeFormatted: 'Uploaded Photo',
+      dataUrl: booking.photoUrl,
+      createdAt: booking.createdAt
+    });
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/80 p-3 backdrop-blur-sm animate-in fade-in duration-150">
@@ -235,8 +340,8 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
                         </div>
                       )}
 
-                      {/* File Details & Direct Link */}
-                      <div className="space-y-1.5 pt-1">
+                      {/* File Details & Action Buttons (Safe for iOS/Safari without blank tab) */}
+                      <div className="space-y-2 pt-1">
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-bold text-slate-800 dark:text-slate-200 truncate max-w-[180px]">
                             {att.name}
@@ -245,15 +350,32 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
                             {att.sizeFormatted || 'Cloud'}
                           </span>
                         </div>
-                        <a
-                          href={att.dataUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0B3C5D]/10 hover:bg-[#0B3C5D]/20 text-[#0B3C5D] dark:bg-blue-500/15 dark:text-blue-300 font-bold text-xs transition-colors cursor-pointer"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          <span>{language === 'es' ? 'Abrir Archivo Original' : 'Open Full File'}</span>
-                        </a>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (isImg) {
+                                setSelectedImage(att.dataUrl);
+                              } else if (att.dataUrl.startsWith('http')) {
+                                window.open(att.dataUrl, '_blank', 'noopener,noreferrer');
+                              } else {
+                                setSelectedImage(att.dataUrl);
+                              }
+                            }}
+                            className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0B3C5D]/10 hover:bg-[#0B3C5D]/20 text-[#0B3C5D] dark:bg-blue-500/15 dark:text-blue-300 font-bold text-xs transition-colors cursor-pointer"
+                          >
+                            <ZoomIn className="w-3.5 h-3.5" />
+                            <span>{language === 'es' ? 'Ver en Grande' : 'Enlarge Photo'}</span>
+                          </button>
+                          <a
+                            href={att.dataUrl}
+                            download={att.name || `Attachment-${idx + 1}`}
+                            className="inline-flex items-center justify-center p-2 rounded-xl bg-slate-200/70 hover:bg-slate-300/80 dark:bg-slate-700/70 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-bold transition-colors cursor-pointer"
+                            title={language === 'es' ? 'Descargar archivo' : 'Download file'}
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   );

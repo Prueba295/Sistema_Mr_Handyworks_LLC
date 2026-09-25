@@ -8,36 +8,39 @@ export async function prepareRemoteBooking(booking: Booking): Promise<Booking> {
   const remoteAttachments = await Promise.all(booking.attachments.map(async attachment => {
     const safeName = (attachment.name || 'file').replace(/[^a-zA-Z0-9._-]/g, '-');
     const storagePath = `${booking.id}/${attachment.id || 'att'}-${safeName}`;
-    const fallbackPublicUrl = `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${storagePath}`;
 
-    if (!attachment.dataUrl.startsWith('data:')) {
-      return {
-        ...attachment,
-        dataUrl: attachment.dataUrl.startsWith('http') ? attachment.dataUrl : fallbackPublicUrl
-      };
+    // If already http/https, keep it
+    if (attachment.dataUrl.startsWith('http')) {
+      return attachment;
     }
 
-    try {
-      const blob = await fetch(attachment.dataUrl).then(response => response.blob());
-      const { error } = await client.storage
-        .from('booking-attachments')
-        .upload(storagePath, blob, {
-          contentType: attachment.mimeType || blob.type || 'application/octet-stream',
-          upsert: true
-        });
+    // Attempt bucket upload if available
+    if (attachment.dataUrl.startsWith('data:')) {
+      try {
+        const blob = await fetch(attachment.dataUrl).then(response => response.blob());
+        const { data: uploadData, error } = await client.storage
+          .from('booking-attachments')
+          .upload(storagePath, blob, {
+            contentType: attachment.mimeType || blob.type || 'application/octet-stream',
+            upsert: true
+          });
 
-      if (error) {
-        console.warn('Storage upload notice, falling back to public storage URL:', error.message);
+        if (!error && uploadData) {
+          const { data } = client.storage.from('booking-attachments').getPublicUrl(storagePath);
+          if (data?.publicUrl) {
+            return { ...attachment, dataUrl: data.publicUrl };
+          }
+        }
+      } catch {
+        // Fallback gracefully to preserve original dataUrl
       }
-      const { data } = client.storage.from('booking-attachments').getPublicUrl(storagePath);
-      return { ...attachment, dataUrl: data.publicUrl || fallbackPublicUrl };
-    } catch (err) {
-      console.warn('Storage processing error, using deterministic public URL:', err);
-      return { ...attachment, dataUrl: fallbackPublicUrl };
     }
+
+    // ALWAYS preserve the valid dataUrl so the image is never lost or replaced with a 404
+    return attachment;
   }));
 
-  const firstImage = remoteAttachments.find(attachment => attachment.type === 'image');
+  const firstImage = remoteAttachments.find(attachment => attachment.type === 'image' || attachment.dataUrl.startsWith('data:image'));
   return {
     ...booking,
     attachments: remoteAttachments,

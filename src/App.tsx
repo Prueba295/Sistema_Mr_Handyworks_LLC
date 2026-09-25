@@ -80,7 +80,16 @@ const MainLayout: React.FC = () => {
         navigateTo('admin');
         return;
       }
-      const orderMatch = hash.match(/^#(?:view-)?order[=/]([A-Za-z0-9_-]+)/);
+      const searchParams = new URLSearchParams(window.location.search);
+      const queryOrderId = searchParams.get('order') || searchParams.get('view-order') || searchParams.get('id');
+      if (queryOrderId) {
+        setPublicOrderId(queryOrderId);
+        return;
+      }
+
+      const orderMatch = hash.match(/^#\/?(?:view-)?order[=/]([A-Za-z0-9_-]+)/i) || 
+                         hash.match(/[?&](?:view-)?order=([A-Za-z0-9_-]+)/i) ||
+                         hash.match(/^#\/?(ORD-[A-Za-z0-9_-]+)/i);
       if (orderMatch && orderMatch[1]) {
         setPublicOrderId(orderMatch[1]);
         return;
@@ -125,8 +134,8 @@ const MainLayout: React.FC = () => {
           orderId={publicOrderId}
           onClose={() => {
             setPublicOrderId(null);
-            if (window.location.hash.includes('order')) {
-              history.replaceState(null, '', window.location.pathname);
+            if (window.location.hash.toLowerCase().includes('order') || window.location.hash.toUpperCase().includes('ORD-')) {
+              window.history.replaceState(null, '', window.location.pathname);
             }
           }}
         />
