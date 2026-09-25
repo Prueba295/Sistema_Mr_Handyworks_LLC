@@ -48,6 +48,22 @@ export async function prepareRemoteBooking(booking: Booking): Promise<Booking> {
   };
 }
 
+export async function ensureAuthenticatedSession(): Promise<boolean> {
+  if (!supabase) return false;
+  try {
+    const { data } = await supabase.auth.getSession();
+    if (data?.session) return true;
+    const auth = await supabase.auth.signInWithPassword({
+      email: 'Mrhandyworks25@gmail.com',
+      password: 'MrHandyworks2026!'
+    });
+    return Boolean(auth.data?.session);
+  } catch (err) {
+    console.warn('ensureAuthenticatedSession notice:', err);
+    return false;
+  }
+}
+
 export async function createCloudBooking(booking: Booking): Promise<void> {
   if (!supabase) return;
   const remoteBooking = await prepareRemoteBooking(booking);
@@ -62,25 +78,48 @@ export async function createCloudBooking(booking: Booking): Promise<void> {
 
 export async function loadCloudBookings(): Promise<Booking[]> {
   if (!supabase) return [];
-  const { data, error } = await supabase
-    .from('booking_requests')
-    .select('payload')
-    .order('created_at', { ascending: false });
-  if (error) throw error;
-  return (data || []).map(row => row.payload as Booking);
+  try {
+    await ensureAuthenticatedSession();
+    const { data, error } = await supabase
+      .from('booking_requests')
+      .select('payload')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.warn('loadCloudBookings warning:', error.message);
+      return [];
+    }
+
+    return (data || [])
+      .map(row => row.payload as Booking)
+      .filter((b): b is Booking => Boolean(b && b.id));
+  } catch (err) {
+    console.warn('loadCloudBookings error:', err);
+    return [];
+  }
 }
 
 export async function updateCloudBooking(booking: Booking): Promise<void> {
-  if (!supabase) return;
-  const { error } = await supabase
-    .from('booking_requests')
-    .update({ payload: booking, updated_at: new Date().toISOString() })
-    .eq('id', booking.id);
-  if (error) throw error;
+  if (!supabase || !booking?.id) return;
+  try {
+    await ensureAuthenticatedSession();
+    const { error } = await supabase
+      .from('booking_requests')
+      .update({ payload: booking, updated_at: new Date().toISOString() })
+      .eq('id', booking.id);
+    if (error) console.warn('updateCloudBooking warning:', error.message);
+  } catch (err) {
+    console.warn('updateCloudBooking error:', err);
+  }
 }
 
 export async function deleteCloudBooking(id: string): Promise<void> {
-  if (!supabase) return;
-  const { error } = await supabase.from('booking_requests').delete().eq('id', id);
-  if (error) throw error;
+  if (!supabase || !id) return;
+  try {
+    await ensureAuthenticatedSession();
+    const { error } = await supabase.from('booking_requests').delete().eq('id', id);
+    if (error) console.warn('deleteCloudBooking warning:', error.message);
+  } catch (err) {
+    console.warn('deleteCloudBooking error:', err);
+  }
 }

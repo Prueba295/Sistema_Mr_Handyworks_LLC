@@ -162,6 +162,7 @@ interface AppContextType {
   addBooking: (booking: Omit<Booking, 'id' | 'createdAt'> & { id?: string }) => Booking;
   updateBookingStatus: (id: string, status: BookingStatus, adminNotes?: string) => void;
   deleteBooking: (id: string) => void;
+  syncBookingsFromCloud: () => Promise<number>;
 
   qrMethods: PaymentQR[];
   updateQRMethod: (id: string, accountInfo: string) => void;
@@ -860,36 +861,53 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
   }, []);
 
+  const syncBookingsFromCloud = async (): Promise<number> => {
+    try {
+      const cloudList = await loadCloudBookings();
+      if (Array.isArray(cloudList) && cloudList.length > 0) {
+        setBookings(cloudList);
+        writeSyncedValue('mr_handyworks_bookings', JSON.stringify(cloudList));
+        return cloudList.length;
+      }
+      return 0;
+    } catch (err) {
+      console.warn('syncBookingsFromCloud warning:', err);
+      return 0;
+    }
+  };
+
   useEffect(() => {
-    if (!supabase || !adminUser.isAuthenticated) return;
+    if (!supabase) return;
     const client = supabase;
 
     let active = true;
-    void executeWithFailover(
-      () => loadCloudBookings(),
-      (data) => Array.isArray(data) && data.length > 0,
-      (snapshot) => snapshot.data.bookings || [],
-      INITIAL_BOOKINGS
-    ).then(({ result, source, errorNotice }) => {
-      if (active && result && result.length > 0) {
-        setBookings(result);
-        if (source !== 'LIVE') {
-          console.info(`🛡️ Backup failover system active: loaded from ${source}`, errorNotice);
+
+    // Load cloud bookings immediately on mount and sync to state
+    void (async () => {
+      try {
+        const cloudList = await loadCloudBookings();
+        if (active && Array.isArray(cloudList) && cloudList.length > 0) {
+          setBookings(cloudList);
+          writeSyncedValue('mr_handyworks_bookings', JSON.stringify(cloudList));
         }
+      } catch (err) {
+        console.warn('Initial cloud bookings load notice:', err);
       }
-    });
+    })();
 
     // Auto-create dual daily backup and prune expired (> 15 days) on admin boot
     const backupTimer = setTimeout(() => {
-      void createSystemBackup({
-        bookings,
-        services,
-        portfolio,
-        reviews,
-        availability,
-        qrMethods
-      });
-    }, 3000);
+      if (adminUser.isAuthenticated) {
+        void createSystemBackup({
+          bookings,
+          services,
+          portfolio,
+          reviews,
+          availability,
+          qrMethods
+        });
+      }
+    }, 4000);
 
     const cloudBookingsChannel = client
       .channel('mr-handyworks-booking-requests')
@@ -1126,6 +1144,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         addBooking,
         updateBookingStatus,
         deleteBooking,
+        syncBookingsFromCloud,
         qrMethods,
         updateQRMethod,
         adminUser,

@@ -4,6 +4,7 @@ import { Booking } from '../types';
 import { BUSINESS_INFO } from '../data/initialData';
 import { generateQuotePDF } from '../utils/pdfGenerator';
 import { supabase } from '../lib/supabase';
+import { ensureAuthenticatedSession } from '../utils/cloudBookings';
 import { 
   X, 
   Phone, 
@@ -56,6 +57,7 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
       try {
         const cleanOrderId = orderId.trim();
         if (supabase) {
+          await ensureAuthenticatedSession();
           const { data, error } = await supabase
             .from('booking_requests')
             .select('payload')

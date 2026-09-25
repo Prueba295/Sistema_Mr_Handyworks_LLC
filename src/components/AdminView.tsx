@@ -114,6 +114,7 @@ export const AdminView: React.FC = () => {
     bookings, 
     updateBookingStatus, 
     deleteBooking,
+    syncBookingsFromCloud,
     qrMethods, 
     updateQRMethod,
     showNotification,
@@ -206,6 +207,7 @@ export const AdminView: React.FC = () => {
   // Work Orders & Bookings filtering & media lightbox state
   const [bookingFilterStatus, setBookingFilterStatus] = useState<'ALL' | BookingStatus>('ALL');
   const [bookingSearchQuery, setBookingSearchQuery] = useState('');
+  const [isSyncingBookings, setIsSyncingBookings] = useState(false);
 
   // Status update drafts & custom client resolution notes
   const [statusDrafts, setStatusDrafts] = useState<Record<string, { status: BookingStatus; note: string }>>({});
@@ -2259,7 +2261,7 @@ export const AdminView: React.FC = () => {
               <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
                 <span>{language === 'es' ? 'Gestión Integral de Reservas y Órdenes de Trabajo' : 'Work Orders & Reservations Hub'}</span>
                 <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-extrabold">
-                  {bookings.length}
+                  {Array.isArray(bookings) ? bookings.length : 0}
                 </span>
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -2268,30 +2270,45 @@ export const AdminView: React.FC = () => {
                   : 'Review customer appointments, download official PDF summaries, and inspect attached photos, videos or documents.'}
               </p>
             </div>
+
+            <button
+              type="button"
+              onClick={async () => {
+                setIsSyncingBookings(true);
+                const count = await syncBookingsFromCloud();
+                setIsSyncingBookings(false);
+                showNotification(language === 'es' ? `${count} órdenes sincronizadas con la nube` : `${count} orders synced from cloud`);
+              }}
+              disabled={isSyncingBookings}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0B3C5D] hover:bg-[#07273D] text-white text-xs font-bold shadow-md transition-all cursor-pointer self-start md:self-auto shrink-0"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isSyncingBookings ? 'animate-spin' : ''}`} />
+              <span>{isSyncingBookings ? (language === 'es' ? 'Sincronizando...' : 'Syncing...') : (language === 'es' ? 'Sincronizar con la Nube' : 'Sync from Cloud')}</span>
+            </button>
           </div>
 
           {/* Quick Metrics KPI Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
               <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">Total</span>
-              <span className="text-xl font-black text-slate-900 dark:text-white">{bookings.length}</span>
+              <span className="text-xl font-black text-slate-900 dark:text-white">{Array.isArray(bookings) ? bookings.length : 0}</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20">
               <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 block">Pending</span>
               <span className="text-xl font-black text-amber-700 dark:text-amber-300">
-                {bookings.filter(b => b.status === 'PENDING').length}
+                {(Array.isArray(bookings) ? bookings : []).filter(b => (b?.status || 'PENDING') === 'PENDING').length}
               </span>
             </div>
             <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
               <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 block">Confirmed</span>
               <span className="text-xl font-black text-emerald-700 dark:text-emerald-300">
-                {bookings.filter(b => b.status === 'CONFIRMED').length}
+                {(Array.isArray(bookings) ? bookings : []).filter(b => b?.status === 'CONFIRMED').length}
               </span>
             </div>
             <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20">
               <span className="text-[11px] font-bold text-blue-700 dark:text-blue-400 block">Completed</span>
               <span className="text-xl font-black text-blue-700 dark:text-blue-300">
-                {bookings.filter(b => b.status === 'COMPLETED').length}
+                {(Array.isArray(bookings) ? bookings : []).filter(b => b?.status === 'COMPLETED').length}
               </span>
             </div>
           </div>
@@ -2342,31 +2359,62 @@ export const AdminView: React.FC = () => {
           <div className="space-y-4">
             {(() => {
               const q = bookingSearchQuery.toLowerCase().trim();
-              const filtered = bookings.filter(b => {
-                const matchesStatus = bookingFilterStatus === 'ALL' || b.status === bookingFilterStatus;
+              const safeBookings = Array.isArray(bookings) ? bookings : [];
+              const filtered = safeBookings.filter(b => {
+                if (!b) return false;
+                const bStatus = b.status || 'PENDING';
+                const matchesStatus = bookingFilterStatus === 'ALL' || bStatus === bookingFilterStatus;
                 const matchesQuery = !q || (
-                  b.clientName.toLowerCase().includes(q) ||
-                  b.id.toLowerCase().includes(q) ||
-                  b.clientPhone.toLowerCase().includes(q) ||
-                  b.serviceType.toLowerCase().includes(q) ||
-                  (b.clientAddress && b.clientAddress.toLowerCase().includes(q))
+                  (b.clientName || '').toLowerCase().includes(q) ||
+                  (b.id || '').toLowerCase().includes(q) ||
+                  (b.clientPhone || '').toLowerCase().includes(q) ||
+                  (b.serviceType || '').toLowerCase().includes(q) ||
+                  (b.clientAddress ? b.clientAddress.toLowerCase().includes(q) : false)
                 );
                 return matchesStatus && matchesQuery;
               });
 
               if (filtered.length === 0) {
                 return (
-                  <div className="text-center p-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-xs text-slate-500">
-                    {language === 'es' ? 'No se encontraron reservas con los filtros aplicados.' : 'No reservations found matching the filters.'}
+                  <div className="text-center p-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-xs text-slate-500 space-y-3">
+                    <p>{language === 'es' ? 'No se encontraron reservas con los filtros aplicados.' : 'No reservations found matching the filters.'}</p>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        setIsSyncingBookings(true);
+                        const count = await syncBookingsFromCloud();
+                        setIsSyncingBookings(false);
+                        showNotification(language === 'es' ? `${count} órdenes recuperadas de la nube` : `${count} orders loaded from cloud`);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/10 text-blue-600 font-bold hover:bg-blue-500/20 transition-colors cursor-pointer"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      <span>{language === 'es' ? 'Recargar desde Supabase' : 'Reload from Supabase'}</span>
+                    </button>
                   </div>
                 );
               }
 
               return filtered.map(b => {
                 const draft = getBookingDraft(b);
+                const clientName = b.clientName || (language === 'es' ? 'Cliente' : 'Customer');
+                const clientPhone = b.clientPhone || '';
+                const cleanPhone = clientPhone.replace(/\D/g, '');
+                const clientEmail = b.clientEmail || 'N/A';
+                const clientAddress = b.clientAddress || 'South Bend area';
+                const zipCode = b.zipCode || '46637';
+                const serviceType = b.serviceType || 'General Handyman Service';
+                const projectDetails = b.projectDetails || 'No additional project notes provided';
+                const bStatus = b.status || 'PENDING';
+                const attachmentsCount = b.attachments?.length || (b.photoUrl ? 1 : 0);
+                const createdDate = b.createdAt ? new Date(b.createdAt) : null;
+                const formattedDate = createdDate && !isNaN(createdDate.getTime()) 
+                  ? `${createdDate.toLocaleDateString()} ${createdDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                  : 'Recent';
+
                 return (
                 <div 
-                  key={b.id}
+                  key={b.id || Math.random()}
                   className="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/40 space-y-4 shadow-2xs"
                 >
                   {/* Card Header */}
@@ -2377,10 +2425,10 @@ export const AdminView: React.FC = () => {
                       </span>
                       <div>
                         <h4 className="font-extrabold text-sm text-slate-900 dark:text-white leading-tight">
-                          {b.clientName}
+                          {clientName}
                         </h4>
                         <p className="text-[10px] text-slate-500 dark:text-slate-400">
-                          {language === 'es' ? 'Registrado el:' : 'Created:'} {new Date(b.createdAt).toLocaleDateString()} {new Date(b.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          {language === 'es' ? 'Registrado el:' : 'Created:'} {formattedDate}
                         </p>
                       </div>
                     </div>
@@ -2388,16 +2436,16 @@ export const AdminView: React.FC = () => {
                     {/* Quick Status Pill */}
                     <div className="flex items-center gap-2">
                       <span className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase ${
-                        b.status === 'CONFIRMED' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20' :
-                        b.status === 'COMPLETED' ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/20' :
-                        b.status === 'CANCELLED' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border border-rose-500/20' :
+                        bStatus === 'CONFIRMED' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20' :
+                        bStatus === 'COMPLETED' ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/20' :
+                        bStatus === 'CANCELLED' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border border-rose-500/20' :
                         'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20'
                       }`}>
-                        {b.status}
+                        {bStatus}
                       </span>
                       <select
-                        value={draft.status}
-                        onChange={(e) => handleDraftStatusChange(b.id, b.status, e.target.value as BookingStatus)}
+                        value={draft.status || bStatus}
+                        onChange={(e) => handleDraftStatusChange(b.id, bStatus, e.target.value as BookingStatus)}
                         className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 cursor-pointer"
                       >
                         <option value="PENDING">PENDING</option>
@@ -2826,7 +2874,7 @@ export const AdminView: React.FC = () => {
 
                       {/* Call Client Direct */}
                       <a
-                        href={`tel:${b.clientPhone.replace(/\D/g, '')}`}
+                        href={`tel:${(b.clientPhone || '').replace(/\D/g, '')}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors cursor-pointer"
                       >
                         <Phone className="w-3.5 h-3.5 text-emerald-500" />
@@ -2835,8 +2883,8 @@ export const AdminView: React.FC = () => {
 
                       {/* Message Client via SMS */}
                       <a
-                        href={`sms:${b.clientPhone.replace(/\D/g, '')}?body=${encodeURIComponent(
-                          `Hello ${b.clientName}, this is the Mr Handyworks LLC service team regarding your work order #${b.id} for ${b.serviceType}.`
+                        href={`sms:${(b.clientPhone || '').replace(/\D/g, '')}?body=${encodeURIComponent(
+                          `Hello ${clientName}, this is the Mr Handyworks LLC service team regarding your work order #${b.id} for ${serviceType}.`
                         )}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-xs font-bold transition-colors cursor-pointer"
                       >
