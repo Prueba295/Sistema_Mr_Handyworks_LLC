@@ -143,7 +143,7 @@ async function syncFromThumbtack() {
   console.log('Resumen:');
   console.log(`- Fotos HD activas: 125`);
   console.log(`- Reseñas 5.0 verificadas: ${allReviews.length || 80}`);
-  console.log(`- Perfil verificado: Mr. Handyworks LLC (Brian Cueva)`);
+  console.log(`- Perfil verificado: Mr. Handyworks LLC (Mr Handyworks LLC)`);
 }
 
 syncFromThumbtack();

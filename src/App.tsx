@@ -29,6 +29,8 @@ import {
   MessageSquare
 } from 'lucide-react';
 
+import { PublicOrderModal } from './components/PublicOrderModal';
+
 const sectionLinks = [
   { key: 'home', label: 'Home', icon: House },
   { key: 'services', label: 'Services', icon: Wrench },
@@ -69,21 +71,34 @@ const MainLayout: React.FC = () => {
     navigateTo,
   } = useApp();
 
+  const [publicOrderId, setPublicOrderId] = React.useState<string | null>(null);
+
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === '#admin') {
-      navigateTo('admin');
-      return;
-    }
-    if (hash && hash.length > 1) {
-      const targetId = hash.replace(/^#\/?/, '');
-      const el = document.getElementById(targetId);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }, 150);
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#admin') {
+        navigateTo('admin');
+        return;
       }
-    }
+      const orderMatch = hash.match(/^#(?:view-)?order[=/]([A-Za-z0-9_-]+)/);
+      if (orderMatch && orderMatch[1]) {
+        setPublicOrderId(orderMatch[1]);
+        return;
+      }
+      if (hash && hash.length > 1) {
+        const targetId = hash.replace(/^#\/?/, '');
+        const el = document.getElementById(targetId);
+        if (el) {
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
   }, [navigateTo]);
 
   return (
@@ -105,6 +120,17 @@ const MainLayout: React.FC = () => {
       <BookingWizardModal />
       <QRModal />
       <AdminModal />
+      {publicOrderId && (
+        <PublicOrderModal
+          orderId={publicOrderId}
+          onClose={() => {
+            setPublicOrderId(null);
+            if (window.location.hash.includes('order')) {
+              history.replaceState(null, '', window.location.pathname);
+            }
+          }}
+        />
+      )}
 
       {notification && (
         <div className="fixed bottom-6 right-4 sm:right-6 z-50 bg-slate-900 text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-2.5">

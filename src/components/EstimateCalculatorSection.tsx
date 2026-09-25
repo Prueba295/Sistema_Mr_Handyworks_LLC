@@ -223,7 +223,7 @@ export const EstimateCalculatorSection: React.FC = () => {
               </div>
             </div>
 
-            {/* What Brian Evaluates */}
+            {/* What Mr Handyworks LLC Evaluates */}
             <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
               <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#0B3C5D] dark:text-blue-300">
                 <Wrench className="w-4 h-4" />

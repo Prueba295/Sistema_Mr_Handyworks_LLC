@@ -42,6 +42,11 @@ import {
   readAlertSettings,
   writeAlertSettings
 } from '../utils/pushNotifications';
+import {
+  executeWithFailover,
+  createSystemBackup,
+  purgeExpiredBackups
+} from '../utils/systemBackupManager';
 
 interface BookingWizardPreload {
   serviceId?: string;
@@ -855,11 +860,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const client = supabase;
 
     let active = true;
-    void loadCloudBookings()
-      .then(remoteBookings => {
-        if (active && remoteBookings.length > 0) setBookings(remoteBookings);
-      })
-      .catch(() => undefined);
+    void executeWithFailover(
+      () => loadCloudBookings(),
+      (data) => Array.isArray(data) && data.length > 0,
+      (snapshot) => snapshot.data.bookings || [],
+      INITIAL_BOOKINGS
+    ).then(({ result, source, errorNotice }) => {
+      if (active && result && result.length > 0) {
+        setBookings(result);
+        if (source !== 'LIVE') {
+          console.info(`🛡️ Backup failover system active: loaded from ${source}`, errorNotice);
+        }
+      }
+    });
+
+    // Auto-create dual daily backup and prune expired (> 15 days) on admin boot
+    const backupTimer = setTimeout(() => {
+      void createSystemBackup({
+        bookings,
+        services,
+        portfolio,
+        reviews,
+        availability,
+        qrMethods
+      });
+    }, 3000);
 
     const cloudBookingsChannel = client
       .channel('mr-handyworks-booking-requests')
@@ -877,6 +902,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     return () => {
       active = false;
+      clearTimeout(backupTimer);
       void client.removeChannel(cloudBookingsChannel);
     };
   }, [adminUser.isAuthenticated]);

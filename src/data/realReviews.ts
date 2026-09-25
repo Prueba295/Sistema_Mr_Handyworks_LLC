@@ -8,8 +8,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "2 weeks ago",
-    "commentEs": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!",
-    "commentEn": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!",
+    "commentEs": "We asked Mr Handyworks LLC to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Mr Handyworks LLC was able to do that without hesitation. We’re extremely happy with Mr Handyworks LLC’s service and would definitely recommend him!",
+    "commentEn": "We asked Mr Handyworks LLC to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Mr Handyworks LLC was able to do that without hesitation. We’re extremely happy with Mr Handyworks LLC’s service and would definitely recommend him!",
     "tags": [
       "TV Mounting",
       "Verified Thumbtack Hire"
@@ -65,8 +65,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jun 20, 2026",
-    "commentEs": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house.",
-    "commentEn": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house.",
+    "commentEs": "Mr Handyworks LLC was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Mr Handyworks LLC and he will be our go-to for fixes around the house.",
+    "commentEn": "Mr Handyworks LLC was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Mr Handyworks LLC and he will be our go-to for fixes around the house.",
     "tags": [
       "Sink or Faucet Installation or Replacement",
       "Verified Thumbtack Hire"
@@ -84,8 +84,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "May 28, 2026",
-    "commentEs": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
-    "commentEn": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
+    "commentEs": "Mr Handyworks LLC installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Mr Handyworks LLC completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Mr Handyworks LLC insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
+    "commentEn": "Mr Handyworks LLC installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Mr Handyworks LLC completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Mr Handyworks LLC insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -122,8 +122,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jun 13, 2026",
-    "commentEs": "Brian installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!",
-    "commentEn": "Brian installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!",
+    "commentEs": "Mr Handyworks LLC installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!",
+    "commentEn": "Mr Handyworks LLC installed a doggie door in my exterior back door. He was very professional, arrived fully prepared, and the job came out awesome! He was very responsive and provided great work at a fair price!",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -141,8 +141,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Aug 11, 2026",
-    "commentEs": "Brian was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again.",
-    "commentEn": "Brian was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again.",
+    "commentEs": "Mr Handyworks LLC was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again.",
+    "commentEn": "Mr Handyworks LLC was great. He came early and set the tv up. He was very knowledgeable and did a great job. I definitely would use them again.",
     "tags": [
       "TV Mounting",
       "Verified Thumbtack Hire"
@@ -160,8 +160,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Aug 11, 2026",
-    "commentEs": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
-    "commentEn": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
+    "commentEs": "I needed a gas water heater installed. Mr Handyworks LLC was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
+    "commentEn": "I needed a gas water heater installed. Mr Handyworks LLC was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
     "tags": [
       "Water Heater Repair or Maintenance",
       "Verified Thumbtack Hire"
@@ -198,8 +198,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jan 17, 2026",
-    "commentEs": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bathroom working again.",
-    "commentEn": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bathroom working again.",
+    "commentEs": "Mr Handyworks LLC did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Mr Handyworks LLC was able to solve everything that needed to be done to get our bathroom working again.",
+    "commentEn": "Mr Handyworks LLC did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Mr Handyworks LLC was able to solve everything that needed to be done to get our bathroom working again.",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -217,8 +217,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jun 23, 2026",
-    "commentEs": "Really happy with the work Brian did for us. He was easy to communicate with, showed up on time, and knocked the job out quickly. Everything looks great and works perfectly. Thanks again!",
-    "commentEn": "Really happy with the work Brian did for us. He was easy to communicate with, showed up on time, and knocked the job out quickly. Everything looks great and works perfectly. Thanks again!",
+    "commentEs": "Really happy with the work Mr Handyworks LLC did for us. He was easy to communicate with, showed up on time, and knocked the job out quickly. Everything looks great and works perfectly. Thanks again!",
+    "commentEn": "Really happy with the work Mr Handyworks LLC did for us. He was easy to communicate with, showed up on time, and knocked the job out quickly. Everything looks great and works perfectly. Thanks again!",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -236,8 +236,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Dec 26, 2025",
-    "commentEs": "Brian did an excellent job installing my security  camera. communication was great, h arrived on time, and everything worked flawlessly",
-    "commentEn": "Brian did an excellent job installing my security  camera. communication was great, h arrived on time, and everything worked flawlessly",
+    "commentEs": "Mr Handyworks LLC did an excellent job installing my security  camera. communication was great, h arrived on time, and everything worked flawlessly",
+    "commentEn": "Mr Handyworks LLC did an excellent job installing my security  camera. communication was great, h arrived on time, and everything worked flawlessly",
     "tags": [
       "TV Mounting",
       "Verified Thumbtack Hire"
@@ -293,8 +293,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Dec 13, 2025",
-    "commentEs": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Brian!",
-    "commentEn": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Brian!",
+    "commentEs": "Mr Handyworks LLC was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Mr Handyworks LLC!",
+    "commentEn": "Mr Handyworks LLC was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the job done in a little over 2 hours. Would definitely recommend to family and friends for his service. Thank you again, Mr Handyworks LLC!",
     "tags": [
       "Water Heater Installation or Replacement",
       "Verified Thumbtack Hire"
@@ -312,8 +312,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jan 10, 2026",
-    "commentEs": "Brian did a quality job securing my mailbox door. He is very efficient, got the job done quickly, even while raining outside.  I highly reccomend him.",
-    "commentEn": "Brian did a quality job securing my mailbox door. He is very efficient, got the job done quickly, even while raining outside.  I highly reccomend him.",
+    "commentEs": "Mr Handyworks LLC did a quality job securing my mailbox door. He is very efficient, got the job done quickly, even while raining outside.  I highly reccomend him.",
+    "commentEn": "Mr Handyworks LLC did a quality job securing my mailbox door. He is very efficient, got the job done quickly, even while raining outside.  I highly reccomend him.",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -369,8 +369,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jul 11, 2026",
-    "commentEs": "Brian replaced three toilets for us, and once he got into the job, he found a few issues with the subfloor that needed to be fixed. He let us know what was going on, took care of everything, and never made it feel like a headache. The price was fair, the work turned out great, and everything was cleaned up before he left. Ill definitely be calling him again",
-    "commentEn": "Brian replaced three toilets for us, and once he got into the job, he found a few issues with the subfloor that needed to be fixed. He let us know what was going on, took care of everything, and never made it feel like a headache. The price was fair, the work turned out great, and everything was cleaned up before he left. Ill definitely be calling him again",
+    "commentEs": "Mr Handyworks LLC replaced three toilets for us, and once he got into the job, he found a few issues with the subfloor that needed to be fixed. He let us know what was going on, took care of everything, and never made it feel like a headache. The price was fair, the work turned out great, and everything was cleaned up before he left. Ill definitely be calling him again",
+    "commentEn": "Mr Handyworks LLC replaced three toilets for us, and once he got into the job, he found a few issues with the subfloor that needed to be fixed. He let us know what was going on, took care of everything, and never made it feel like a headache. The price was fair, the work turned out great, and everything was cleaned up before he left. Ill definitely be calling him again",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -426,8 +426,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "3 weeks ago",
-    "commentEs": "I had some odds and ends things around the house I needed done.   Brian was professional and did a great job on all my projects!",
-    "commentEn": "I had some odds and ends things around the house I needed done.   Brian was professional and did a great job on all my projects!",
+    "commentEs": "I had some odds and ends things around the house I needed done.   Mr Handyworks LLC was professional and did a great job on all my projects!",
+    "commentEn": "I had some odds and ends things around the house I needed done.   Mr Handyworks LLC was professional and did a great job on all my projects!",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -464,8 +464,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Aug 19, 2026",
-    "commentEs": "\"I had an excellent experience!  Handyman  LLC. Brian and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca",
-    "commentEn": "\"I had an excellent experience!  Handyman  LLC. Brian and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca",
+    "commentEs": "\"I had an excellent experience!  Handyman  LLC. Mr Handyworks LLC and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca",
+    "commentEn": "\"I had an excellent experience!  Handyman  LLC. Mr Handyworks LLC and his assistant arrived right on time, was very polite, and did quality work. Everything was completed efficiently, the price was fair, and they left the work area completely clean. I highly recommended\nRebecca",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -483,8 +483,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jul 10, 2026",
-    "commentEs": "Our water heater finally quit, and I was not looking forward to dealing with it. I called Mr Handyworks, and Brian and his helper came out to replace it. They got the old one out, installed the new one, and had everything working again sooner than I expected, The price was a little higher than a couple of the other quotes I got, but after seeing the quality of the work, I completely understand why. They took their time, answered the questions I had, and never made me feel like they were just trying to rush through the job. The whole experience was a lot less stressful than I expected, and Im really glad I went with them. Ill definitely be calling Brian again the next time I need something done around the house",
-    "commentEn": "Our water heater finally quit, and I was not looking forward to dealing with it. I called Mr Handyworks, and Brian and his helper came out to replace it. They got the old one out, installed the new one, and had everything working again sooner than I expected, The price was a little higher than a couple of the other quotes I got, but after seeing the quality of the work, I completely understand why. They took their time, answered the questions I had, and never made me feel like they were just trying to rush through the job. The whole experience was a lot less stressful than I expected, and Im really glad I went with them. Ill definitely be calling Brian again the next time I need something done around the house",
+    "commentEs": "Our water heater finally quit, and I was not looking forward to dealing with it. I called Mr Handyworks, and Mr Handyworks LLC and his helper came out to replace it. They got the old one out, installed the new one, and had everything working again sooner than I expected, The price was a little higher than a couple of the other quotes I got, but after seeing the quality of the work, I completely understand why. They took their time, answered the questions I had, and never made me feel like they were just trying to rush through the job. The whole experience was a lot less stressful than I expected, and Im really glad I went with them. Ill definitely be calling Mr Handyworks LLC again the next time I need something done around the house",
+    "commentEn": "Our water heater finally quit, and I was not looking forward to dealing with it. I called Mr Handyworks, and Mr Handyworks LLC and his helper came out to replace it. They got the old one out, installed the new one, and had everything working again sooner than I expected, The price was a little higher than a couple of the other quotes I got, but after seeing the quality of the work, I completely understand why. They took their time, answered the questions I had, and never made me feel like they were just trying to rush through the job. The whole experience was a lot less stressful than I expected, and Im really glad I went with them. Ill definitely be calling Mr Handyworks LLC again the next time I need something done around the house",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -559,8 +559,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 3,
     "date": "2 weeks ago",
-    "commentEs": "Brian replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again.",
-    "commentEn": "Brian replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again.",
+    "commentEs": "Mr Handyworks LLC replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again.",
+    "commentEn": "Mr Handyworks LLC replaced a shower head, inspected the dryer, and cleaned the dryer vent.\n\nPros: 1. He was good at communication in general (+1 star)\n\nCons: 1. Very, very expensive service (-1 star)\n2. Wasn't truthful about the material cost. We found that out when I asked for the receipt. That raises questions about whether he is being honest about the rest of the work. (-1 star)\n3. We had agreed that he would let me know the cost of all the work after the initial inspection. But he didn't. Had I known what he was going to charge for the shower head alone, I would not have proceeded with the job. (-1 star)\n\nSafe to say, I will not be asking for his services again.",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -616,8 +616,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Feb 28, 2026",
-    "commentEs": "Brian put together several pieces of furniture for us and did an excellent job!",
-    "commentEn": "Brian put together several pieces of furniture for us and did an excellent job!",
+    "commentEs": "Mr Handyworks LLC put together several pieces of furniture for us and did an excellent job!",
+    "commentEn": "Mr Handyworks LLC put together several pieces of furniture for us and did an excellent job!",
     "tags": [
       "Furniture Assembly",
       "Verified Thumbtack Hire"
@@ -654,8 +654,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jun 14, 2026",
-    "commentEs": "Very happy with the service. Brian explained everything clearly, completed the job quickly, and cleaned up afterward. Highly recommend",
-    "commentEn": "Very happy with the service. Brian explained everything clearly, completed the job quickly, and cleaned up afterward. Highly recommend",
+    "commentEs": "Very happy with the service. Mr Handyworks LLC explained everything clearly, completed the job quickly, and cleaned up afterward. Highly recommend",
+    "commentEn": "Very happy with the service. Mr Handyworks LLC explained everything clearly, completed the job quickly, and cleaned up afterward. Highly recommend",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -692,8 +692,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jul 8, 2026",
-    "commentEs": "Had Brian install vinyl flooring in my house and it came out better than I expected. Everything looks clean and professionally done, and the room feels completely different now. He was straightforward, showed up on time, and got the job done without any headaches. Its hard to find someone who actually cares about the quality of their work these days. Id definitely hire him again",
-    "commentEn": "Had Brian install vinyl flooring in my house and it came out better than I expected. Everything looks clean and professionally done, and the room feels completely different now. He was straightforward, showed up on time, and got the job done without any headaches. Its hard to find someone who actually cares about the quality of their work these days. Id definitely hire him again",
+    "commentEs": "Had Mr Handyworks LLC install vinyl flooring in my house and it came out better than I expected. Everything looks clean and professionally done, and the room feels completely different now. He was straightforward, showed up on time, and got the job done without any headaches. Its hard to find someone who actually cares about the quality of their work these days. Id definitely hire him again",
+    "commentEn": "Had Mr Handyworks LLC install vinyl flooring in my house and it came out better than I expected. Everything looks clean and professionally done, and the room feels completely different now. He was straightforward, showed up on time, and got the job done without any headaches. Its hard to find someone who actually cares about the quality of their work these days. Id definitely hire him again",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -711,8 +711,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jul 7, 2026",
-    "commentEs": "Brian and his helper painted three rooms in our house, and we couldnt be happier with how everything turned out. They repaired a few damaged spots in the drywall before painting, and you would never know there was any damage. The paint looks great, the lines are clean, and the whole house feels brighter. Brian was easy to work with, the price was fair, and he kept us updated throughout the job. You can tell he has plenty of experience because everything turned out exactly the way we were hoping. Well definitely be calling him again for our next project",
-    "commentEn": "Brian and his helper painted three rooms in our house, and we couldnt be happier with how everything turned out. They repaired a few damaged spots in the drywall before painting, and you would never know there was any damage. The paint looks great, the lines are clean, and the whole house feels brighter. Brian was easy to work with, the price was fair, and he kept us updated throughout the job. You can tell he has plenty of experience because everything turned out exactly the way we were hoping. Well definitely be calling him again for our next project",
+    "commentEs": "Mr Handyworks LLC and his helper painted three rooms in our house, and we couldnt be happier with how everything turned out. They repaired a few damaged spots in the drywall before painting, and you would never know there was any damage. The paint looks great, the lines are clean, and the whole house feels brighter. Mr Handyworks LLC was easy to work with, the price was fair, and he kept us updated throughout the job. You can tell he has plenty of experience because everything turned out exactly the way we were hoping. Well definitely be calling him again for our next project",
+    "commentEn": "Mr Handyworks LLC and his helper painted three rooms in our house, and we couldnt be happier with how everything turned out. They repaired a few damaged spots in the drywall before painting, and you would never know there was any damage. The paint looks great, the lines are clean, and the whole house feels brighter. Mr Handyworks LLC was easy to work with, the price was fair, and he kept us updated throughout the job. You can tell he has plenty of experience because everything turned out exactly the way we were hoping. Well definitely be calling him again for our next project",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -730,8 +730,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jul 6, 2026",
-    "commentEs": "Brian and his crew did a great job replacing our fence. They were on time, worked hard, and kept me updated throughout the project. The finished fence looks solid and exactly how I wanted it. Its nice to find someone who takes pride in their work. Id definitely call Mr Handyworks LLC again for future projects",
-    "commentEn": "Brian and his crew did a great job replacing our fence. They were on time, worked hard, and kept me updated throughout the project. The finished fence looks solid and exactly how I wanted it. Its nice to find someone who takes pride in their work. Id definitely call Mr Handyworks LLC again for future projects",
+    "commentEs": "Mr Handyworks LLC and his crew did a great job replacing our fence. They were on time, worked hard, and kept me updated throughout the project. The finished fence looks solid and exactly how I wanted it. Its nice to find someone who takes pride in their work. Id definitely call Mr Handyworks LLC again for future projects",
+    "commentEn": "Mr Handyworks LLC and his crew did a great job replacing our fence. They were on time, worked hard, and kept me updated throughout the project. The finished fence looks solid and exactly how I wanted it. Its nice to find someone who takes pride in their work. Id definitely call Mr Handyworks LLC again for future projects",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -749,8 +749,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jun 30, 2026",
-    "commentEs": "I had a great experience with Brian. He was professional, arrived on time, and did exactly what he said he would. The quality of the work was excellent, and he made sure everything was done right before he left. Fair pricing, great communication, and very reliable. Ill definitely be calling him again for future projects. Highly recommend!",
-    "commentEn": "I had a great experience with Brian. He was professional, arrived on time, and did exactly what he said he would. The quality of the work was excellent, and he made sure everything was done right before he left. Fair pricing, great communication, and very reliable. Ill definitely be calling him again for future projects. Highly recommend!",
+    "commentEs": "I had a great experience with Mr Handyworks LLC. He was professional, arrived on time, and did exactly what he said he would. The quality of the work was excellent, and he made sure everything was done right before he left. Fair pricing, great communication, and very reliable. Ill definitely be calling him again for future projects. Highly recommend!",
+    "commentEn": "I had a great experience with Mr Handyworks LLC. He was professional, arrived on time, and did exactly what he said he would. The quality of the work was excellent, and he made sure everything was done right before he left. Fair pricing, great communication, and very reliable. Ill definitely be calling him again for future projects. Highly recommend!",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -768,8 +768,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Jun 6, 2026",
-    "commentEs": "The work that Brian did and his overall responsiveness was excellent and I will definitely use again.",
-    "commentEn": "The work that Brian did and his overall responsiveness was excellent and I will definitely use again.",
+    "commentEs": "The work that Mr Handyworks LLC did and his overall responsiveness was excellent and I will definitely use again.",
+    "commentEn": "The work that Mr Handyworks LLC did and his overall responsiveness was excellent and I will definitely use again.",
     "tags": [
       "Fence and Gate Repairs",
       "Verified Thumbtack Hire"
@@ -787,8 +787,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "May 3, 2026",
-    "commentEs": "Brian is phenomenal! I will use his services every single time that I need any work done on my home.",
-    "commentEn": "Brian is phenomenal! I will use his services every single time that I need any work done on my home.",
+    "commentEs": "Mr Handyworks LLC is phenomenal! I will use his services every single time that I need any work done on my home.",
+    "commentEn": "Mr Handyworks LLC is phenomenal! I will use his services every single time that I need any work done on my home.",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -844,8 +844,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "Mar 4, 2026",
-    "commentEs": "My job was completed quickly, professionally, and for reasonable price.  I would absolutely hire Brian and again!",
-    "commentEn": "My job was completed quickly, professionally, and for reasonable price.  I would absolutely hire Brian and again!",
+    "commentEs": "My job was completed quickly, professionally, and for reasonable price.  I would absolutely hire Mr Handyworks LLC and again!",
+    "commentEn": "My job was completed quickly, professionally, and for reasonable price.  I would absolutely hire Mr Handyworks LLC and again!",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"
@@ -939,8 +939,8 @@ export const REAL_THUMBTACK_REVIEWS: Review[] = [
     "location": "South Bend, IN",
     "rating": 5,
     "date": "6 days ago",
-    "commentEs": "Brian, was on time and did a quality work.",
-    "commentEn": "Brian, was on time and did a quality work.",
+    "commentEs": "Mr Handyworks LLC, was on time and did a quality work.",
+    "commentEn": "Mr Handyworks LLC, was on time and did a quality work.",
     "tags": [
       "Handyman",
       "Verified Thumbtack Hire"

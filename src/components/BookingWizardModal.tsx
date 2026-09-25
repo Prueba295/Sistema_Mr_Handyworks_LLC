@@ -22,8 +22,11 @@ import {
   dispatchBookingWebhook, 
   buildOwnerSMSNotificationUrl,
   buildOwnerWhatsAppNotificationUrl,
-  triggerOwnerSMSDispatch
+  triggerOwnerSMSDispatch,
+  buildAdminEmailDispatchUrl,
+  triggerAdminEmailDispatch
 } from '../utils/liveNotifier';
+import { createSystemBackup } from '../utils/systemBackupManager';
 import confetti from 'canvas-confetti';
 import { 
   X, 
@@ -54,7 +57,9 @@ import {
   Smartphone,
   DollarSign,
   Send,
-  MessageCircle
+  MessageCircle,
+  Mail,
+  ExternalLink
 } from 'lucide-react';
 
 export const BookingWizardModal: React.FC = () => {
@@ -387,6 +392,22 @@ export const BookingWizardModal: React.FC = () => {
 
     try {
       triggerOwnerSMSDispatch(finalBooking, BUSINESS_INFO.phoneRaw);
+    } catch {
+      // safe fallback
+    }
+
+    // Automatically dispatch work order details to admin email
+    try {
+      triggerAdminEmailDispatch(finalBooking, 'Mrhandyworks25@gmail.com');
+    } catch {
+      // safe fallback
+    }
+
+    // Trigger dual system backup and 15-day purge in background
+    try {
+      void createSystemBackup({
+        bookings: [finalBooking, ...bookings]
+      });
     } catch {
       // safe fallback
     }
@@ -1415,15 +1436,32 @@ export const BookingWizardModal: React.FC = () => {
                   </div>
 
                   {/* Download PDF Quote */}
-                  <div className="pt-1">
+                  <div className="space-y-2 pt-1">
                     <button
                       type="button"
                       onClick={() => generateQuotePDF(createdBooking, language)}
                       className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs hover:border-[#0B3C5D] dark:hover:border-blue-400 transition-colors cursor-pointer"
                     >
                       <Download className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
-                      <span>{language === 'es' ? 'Descargar Resumen y Presupuesto (PDF)' : 'Download Summary & Estimate (PDF)'}</span>
+                      <span>{language === 'es' ? 'Descargar Resumen y Presupuesto (PDF con Fotos Adjuntas)' : 'Download Summary & Estimate (PDF with Attached Media)'}</span>
                     </button>
+
+                    <a
+                      href={buildAdminEmailDispatchUrl(createdBooking, 'Mrhandyworks25@gmail.com')}
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                    >
+                      <Mail className="w-4 h-4 text-amber-300" />
+                      <span>{language === 'es' ? 'Enviar Orden al Correo Admin (Mrhandyworks25@gmail.com)' : 'Email Work Order to Admin (Mrhandyworks25@gmail.com)'}</span>
+                    </a>
+
+                    <a
+                      href={`#view-order=${createdBooking.id}`}
+                      onClick={() => setIsBookingWizardOpen(false)}
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 text-slate-800 dark:text-slate-200 font-bold text-xs transition-colors cursor-pointer"
+                    >
+                      <ExternalLink className="w-4 h-4 text-[#0B3C5D] dark:text-blue-400" />
+                      <span>{language === 'es' ? 'Ver Orden y Fotos en Visor Público (Sin Registro)' : 'Open Public Order Viewer (No Login)'}</span>
+                    </a>
                   </div>
                 </div>
               </div>

@@ -32,8 +32,8 @@ export const REAL_PORTFOLIO_ITEMS: PortfolioMedia[] = [
       "Bathroom",
       "Fixtures"
     ],
-    "descriptionEs": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstair",
-    "descriptionEn": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstair",
+    "descriptionEs": "Mr Handyworks LLC was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstair",
+    "descriptionEn": "Mr Handyworks LLC was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstair",
     "featured": true,
     "author": "Patrick E.",
     "date": "Jun 20, 2026"
@@ -50,8 +50,8 @@ export const REAL_PORTFOLIO_ITEMS: PortfolioMedia[] = [
       "Bathtub",
       "Bathroom"
     ],
-    "descriptionEs": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bat",
-    "descriptionEn": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bat",
+    "descriptionEs": "Mr Handyworks LLC did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Mr Handyworks LLC was able to solve everything that needed to be done to get our bat",
+    "descriptionEn": "Mr Handyworks LLC did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Mr Handyworks LLC was able to solve everything that needed to be done to get our bat",
     "featured": true,
     "author": "Emma M.",
     "date": "Jan 17, 2026"
@@ -68,8 +68,8 @@ export const REAL_PORTFOLIO_ITEMS: PortfolioMedia[] = [
       "Plumbing",
       "Emergency"
     ],
-    "descriptionEs": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the j",
-    "descriptionEn": "Brian was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the j",
+    "descriptionEs": "Mr Handyworks LLC was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the j",
+    "descriptionEn": "Mr Handyworks LLC was amazing! We had a water heater leak and needed immediate assistance with replacing our old unit. He responded right away and was able to come out the next day. He communicated well and was on time. He got the j",
     "featured": true,
     "author": "Markiesha M.",
     "date": "Dec 13, 2025"
@@ -86,8 +86,8 @@ export const REAL_PORTFOLIO_ITEMS: PortfolioMedia[] = [
       "Repairs",
       "Maintenance"
     ],
-    "descriptionEs": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bat",
-    "descriptionEn": "Brian did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Brian was able to solve everything that needed to be done to get our bat",
+    "descriptionEs": "Mr Handyworks LLC did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Mr Handyworks LLC was able to solve everything that needed to be done to get our bat",
+    "descriptionEn": "Mr Handyworks LLC did an amazing job!! He and his team worked so hard the whole time and really helped us out. We have an older house with some big issues, and Mr Handyworks LLC was able to solve everything that needed to be done to get our bat",
     "featured": true,
     "author": "Emma M.",
     "date": "Jan 17, 2026"
@@ -104,8 +104,8 @@ export const REAL_PORTFOLIO_ITEMS: PortfolioMedia[] = [
       "Plumbing",
       "Gas Line"
     ],
-    "descriptionEs": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
-    "descriptionEn": "I needed a gas water heater installed. Brian was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
+    "descriptionEs": "I needed a gas water heater installed. Mr Handyworks LLC was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
+    "descriptionEn": "I needed a gas water heater installed. Mr Handyworks LLC was able to work around my schedule to get it done. Very professional, fair price, and he explained everything that was being done and why. Will be using in the future",
     "featured": true,
     "author": "Terry T.",
     "date": "Aug 11, 2026"

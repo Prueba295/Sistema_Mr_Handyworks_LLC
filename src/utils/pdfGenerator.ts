@@ -663,6 +663,94 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       </div>
 
     </div>
+
+    ${attachments.length > 0 || booking.photoUrl ? `
+    <!-- PAGE 2: ATTACHED EVIDENCE & CUSTOMER UPLOADS (MANDATORY ANNEX) -->
+    <div class="page-sheet" style="page-break-before: always; break-before: page; margin-top: 24px;">
+      
+      <!-- Header -->
+      <div class="header">
+        <div class="header-brand">
+          <div class="logo-container">MH</div>
+          <div class="header-text">
+            <h1>Mr Handyworks LLC</h1>
+            <p>${isEs ? 'Anexo Oficial • Fotos y Documentos del Proyecto' : 'Official Annex • Project Photos & Uploaded Files'}</p>
+          </div>
+        </div>
+        <div class="header-meta">
+          <div class="meta-tag" style="background: rgba(14, 165, 233, 0.25); color: #38bdf8; border-color: #0284c7;">
+            ${isEs ? 'Evidencia Adjunta' : 'Client Evidence'}
+          </div>
+          <div class="order-number">ORD #${booking.id}</div>
+          <div class="order-date">${bookingDate.toLocaleDateString(isEs ? 'es-ES' : 'en-US')}</div>
+        </div>
+      </div>
+
+      <!-- Body Content -->
+      <div class="body-content" style="gap: 16px; padding: 22px 32px;">
+        <div class="section-pill" style="align-self: flex-start;">
+          ${isEs ? 'Archivos Adjuntados por el Cliente' : 'Customer Uploaded Documentation'}
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; font-size: 11px; color: #475569; line-height: 1.4;">
+          ${isEs 
+            ? `Se adjuntan ${attachmentsCount} archivo(s) proporcionados por el cliente (${clientName}) para la inspección y diagnóstico previo. Todos los archivos están indexados de forma segura.`
+            : `Attached are ${attachmentsCount} file(s) provided by customer (${clientName}) for diagnostic inspection and scope evaluation. All media items are securely indexed.`}
+        </div>
+
+        <!-- Media Grid -->
+        <div class="attachments-grid" style="display: grid; grid-template-columns: ${attachments.length > 1 ? '1fr 1fr' : '1fr'}; gap: 14px; flex-grow: 1; align-content: start;">
+          ${attachments.map((att, idx) => {
+            const isImg = att.type === 'image' || (att.name && att.name.match(/\.(jpe?g|png|webp|gif)$/i));
+            const isVid = att.type === 'video' || (att.name && att.name.match(/\.(mp4|mov|webm)$/i));
+            const directUrl = att.dataUrl || `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${booking.id}/${att.id || `att-${idx + 1}`}-${(att.name || 'file').replace(/[^a-zA-Z0-9._-]/g, '-')}`;
+            return `
+            <div style="border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between; gap: 8px;">
+              ${isImg ? `
+                <div style="height: ${attachments.length > 2 ? '140px' : '230px'}; display: flex; align-items: center; justify-content: center; background: #0f172a; border-radius: 8px; overflow: hidden;">
+                  <img src="${att.dataUrl}" alt="${att.name}" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+                </div>
+              ` : `
+                <div style="height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 8px; color: #0b3c5d;">
+                  <span style="font-size: 30px;">📄</span>
+                  <span style="font-size: 11px; font-weight: 700; margin-top: 4px;">${att.type.toUpperCase()}</span>
+                </div>
+              `}
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #0f172a;">
+                  <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">${att.name}</span>
+                  <span style="color: #64748b; font-family: monospace;">${att.sizeFormatted || 'Cloud'}</span>
+                </div>
+                <div style="margin-top: 4px; font-size: 9px; color: #0284c7; word-break: break-all;">
+                  <a href="${directUrl}" target="_blank" style="color: #0284c7; text-decoration: none;">🔗 ${isEs ? 'Ver archivo original en alta resolución' : 'View full high-res file in cloud'}</a>
+                </div>
+              </div>
+            </div>
+            `;
+          }).join('')}
+        </div>
+
+        <div style="border-top: 1px dashed #cbd5e1; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #64748b;">
+          <span>Mr Handyworks LLC • Cloud Storage Verified</span>
+          <span>Order #${booking.id} • Customer: ${clientName}</span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <div class="footer-left">
+          <div class="footer-item"><span class="footer-tag">TEL</span>${BUSINESS_INFO.phone || '(574) 279-9355'}</div>
+          <div class="footer-item"><span class="footer-tag">EMAIL</span>${BUSINESS_INFO.email || 'Mrhandyworks25@gmail.com'}</div>
+          <div class="footer-item"><span class="footer-tag">ÁREA</span>South Bend & Michiana</div>
+        </div>
+        <div class="footer-right">
+          Mr Handyworks LLC • Official Annex
+        </div>
+      </div>
+
+    </div>
+    ` : ''}
+
   </div>
 
 </body>

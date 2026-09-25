@@ -23,7 +23,7 @@ console.log('Saved JSON-LD to scripts/json_ld.json. Number of objects:', jsonLds
 const allScripts = content.match(/<script[^>]*>([\s\S]*?)<\/script>/gi) || [];
 console.log('Total script tags:', allScripts.length);
 allScripts.forEach((s, idx) => {
-  if (s.includes('window.') || s.includes('557892581429960708') || s.includes('Brian') || s.includes('reviews')) {
+  if (s.includes('window.') || s.includes('557892581429960708') || s.includes('Mr Handyworks LLC') || s.includes('reviews')) {
     console.log(`Script ${idx} matches keywords, length: ${s.length}`);
     if (s.length < 1000) {
       console.log(s);

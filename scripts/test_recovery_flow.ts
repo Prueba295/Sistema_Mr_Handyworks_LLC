@@ -31,7 +31,7 @@ console.log('======================================================\n');
 console.log('1. Primary Recovery Phone Validation:');
 assert(!validateUSPhone('').isValid, 'Rejects empty phone number as primary recovery');
 assert(!validateUSPhone('12345').isValid, 'Rejects short phone number');
-assert(validateUSPhone('(574) 555-0199').isValid, 'Accepts Brian\'s formatted phone number (574) 555-0199');
+assert(validateUSPhone('(574) 555-0199').isValid, 'Accepts Mr Handyworks LLC\'s formatted phone number (574) 555-0199');
 assert(validateUSPhone('5745550199').isValid, 'Accepts 10-digit unformatted phone number 5745550199');
 assert(formatUSPhone('5745550199') === '(574) 555-0199', 'Formats phone correctly to (574) 555-0199');
 
@@ -39,7 +39,7 @@ assert(formatUSPhone('5745550199') === '(574) 555-0199', 'Formats phone correctl
 console.log('\n2. Email Validation:');
 assert(!validateEmail('').isValid, 'Rejects empty string for email (mandatory)');
 assert(!validateEmail('   ').isValid, 'Rejects whitespace-only email');
-assert(validateEmail('brian@mr-handyworks-llc.com').isValid, 'Accepts valid email');
+assert(validateEmail('contact@mrhandyworks.com').isValid, 'Accepts valid email');
 assert(!validateEmail('invalid-email-address').isValid, 'Rejects malformed email');
 
 // 3. 6-digit OTP generation logic

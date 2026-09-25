@@ -76,7 +76,7 @@ if (bizSec?.subsections) {
 const completeData = {
   business: {
     name: 'Mr Handyworks LLC',
-    owner: 'Brian Cueva',
+    owner: 'Mr Handyworks LLC',
     location: 'South Bend, IN 46615',
     category: 'Handyman, Home Improvement, General Contractor',
     badge: 'Top Pro',
@@ -86,7 +86,7 @@ const completeData = {
     status: 'Licensed, Bonded & Insured',
     backgroundCheck: 'Verified by Thumbtack',
     moneyBackGuarantee: 'Thumbtack Guarantee Eligible',
-    introduction: `Hi, I’m Brian, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.
+    introduction: `Hi, I’m Mr Handyworks LLC, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.
 From TV mounting and fixture installations to carpentry, painting, and general repairs, I take pride in delivering clean, precise work with strong attention to detail. No shortcuts, no guesswork, just solid, dependable results.
 Most of my work comes from repeat clients and referrals, which reflects the quality and consistency I bring to every job.
 Mr. Handyworks LLC is fully insured and bonded, so you can have peace of mind knowing your home is in safe, professional hands. I believe in clear communication, fair pricing, and showing up when I say I will.
@@ -133,7 +133,7 @@ Este documento reúne toda la información comercial real, servicios, garantías
 - **Teléfono de contacto:** ${completeData.business.phone}
 - **Enlace de origen:** [Perfil oficial en Thumbtack](${completeData.business.thumbtackUrl})
 
-### Presentación de Brian Cueva (Bio oficial)
+### Presentación de Mr Handyworks LLC (Bio oficial)
 > "${completeData.business.introduction.replace(/\n/g, '\n> ')}"
 
 ---

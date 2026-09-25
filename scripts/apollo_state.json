@@ -887,7 +887,7 @@
           "__typename": "ServicePageBusinessInfoSection",
           "id": "ServicePageBusinessInfoSection",
           "title": "About this pro",
-          "introduction": "Hi, I’m Brian, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.\nFrom TV mounting and fixture installations to carpentry, painting, and general repairs, I take pride in delivering clean, precise work with strong attention to detail. No shortcuts, no guesswork, just solid, dependable results.\nMost of my work comes from repeat clients and referrals, which reflects the quality and consistency I bring to every job.\nMr. Handyworks LLC is fully insured and bonded, so you can have peace of mind knowing your home is in safe, professional hands. I believe in clear communication, fair pricing, and showing up when I say I will.\nIf you’re looking for someone reliable who treats your home with respect and takes pride in the work, I’m ready to help.",
+          "introduction": "Hi, I’m Mr Handyworks LLC, owner of Mr. Handyworks LLC. I provide professional home repairs, installations, and remodeling services; done right the first time.\nFrom TV mounting and fixture installations to carpentry, painting, and general repairs, I take pride in delivering clean, precise work with strong attention to detail. No shortcuts, no guesswork, just solid, dependable results.\nMost of my work comes from repeat clients and referrals, which reflects the quality and consistency I bring to every job.\nMr. Handyworks LLC is fully insured and bonded, so you can have peace of mind knowing your home is in safe, professional hands. I believe in clear communication, fair pricing, and showing up when I say I will.\nIf you’re looking for someone reliable who treats your home with respect and takes pride in the work, I’m ready to help.",
           "subsections": [
             {
               "__typename": "ServicePageBusinessFactsSubsection",
@@ -2231,7 +2231,7 @@
                     "segments": [
                       {
                         "__typename": "FormattedTextSegment",
-                        "text": "We asked Brian to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Brian was able to do that without hesitation. We’re extremely happy with Brian’s service and would definitely recommend him!",
+                        "text": "We asked Mr Handyworks LLC to mount a 65” TV above a fireplace and hide the chords. He was extremely responsive and did a great job! He was prepared and offered to provide the mount, an extension chord, and the covering for the chord. My husband decided last minute to order a thing to mount the Apple TV behind the TV as well, and Mr Handyworks LLC was able to do that without hesitation. We’re extremely happy with Mr Handyworks LLC’s service and would definitely recommend him!",
                         "emphasis": [],
                         "url": null,
                         "clickTrackingData": null,
@@ -2396,7 +2396,7 @@
                     "segments": [
                       {
                         "__typename": "FormattedTextSegment",
-                        "text": "Brian was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Briab and he will be our go-to for fixes around the house.",
+                        "text": "Mr Handyworks LLC was extremly responsive as soon as I reached out about our projects. he reached out immediately to gather more information and provide a quote for services. We had a faucet and drain replaced as well as our upstairs bathroom recaulked. We we're impressed with the caliber of services as well as the price. I would highly recommend utilizing Mr Handyworks LLC and he will be our go-to for fixes around the house.",
                         "emphasis": [],
                         "url": null,
                         "clickTrackingData": null,
@@ -2457,7 +2457,7 @@
                     "segments": [
                       {
                         "__typename": "FormattedTextSegment",
-                        "text": "Brian installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Brian completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Brian insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
+                        "text": "Mr Handyworks LLC installed two new pendant lights in our dining room and the results were beautiful!  The two new lights required a complex assembly process and Mr Handyworks LLC completed the task quickly.  Because of the extra labor involved I offered to pay extra, but Mr Handyworks LLC insisted on only being compensated for what he originally quoted.  A true professional, I highly recommend!",
                         "emphasis": [],
                         "url": null,
                         "clickTrackingData": null,
@@ -2889,7 +2889,7 @@
                   "segments": [
                     {
                       "__typename": "FormattedTextSegment",
-                      "text": "Brian Cueva",
+                      "text": "Mr Handyworks LLC",
                       "emphasis": [],
                       "url": null,
                       "clickTrackingData": null,
@@ -2914,7 +2914,7 @@
                     "segments": [
                       {
                         "__typename": "FormattedTextSegment",
-                        "text": "Brian Cueva",
+                        "text": "Mr Handyworks LLC",
                         "emphasis": [],
                         "url": null,
                         "clickTrackingData": null,

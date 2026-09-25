@@ -92,8 +92,49 @@ ${projectDetails}
 Attachments (${attachmentsCount}):
 ${attachmentsList}
 
+Public View & Files:
+${portalBase}/#view-order=${booking.id}
+
 Admin Portal:
 ${portalBase}/#admin`;
+}
+
+/**
+ * Build Email Dispatch URL to automatically send the complete Work Order and
+ * attachments links to the admin email: Mrhandyworks25@gmail.com and contact@mrhandyworks.com
+ */
+export function buildAdminEmailDispatchUrl(
+  booking: Booking, 
+  adminEmail: string = 'Mrhandyworks25@gmail.com'
+): string {
+  const subject = encodeURIComponent(`[Work Order #${booking.id}] New Booking: ${booking.serviceType} - ${booking.clientName}`);
+  const bodyText = formatOwnerDispatchMessage(booking);
+  const body = encodeURIComponent(bodyText);
+  return `mailto:${adminEmail}?cc=contact@mrhandyworks.com&subject=${subject}&body=${body}`;
+}
+
+/**
+ * Automatically trigger email dispatch to admin
+ */
+export function triggerAdminEmailDispatch(
+  booking: Booking, 
+  adminEmail: string = 'Mrhandyworks25@gmail.com'
+): string {
+  const mailUrl = buildAdminEmailDispatchUrl(booking, adminEmail);
+  if (typeof window !== 'undefined') {
+    try {
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = mailUrl;
+      document.body.appendChild(iframe);
+      setTimeout(() => {
+        try { document.body.removeChild(iframe); } catch {}
+      }, 3000);
+    } catch {
+      // safe fallback
+    }
+  }
+  return mailUrl;
 }
 
 /**
