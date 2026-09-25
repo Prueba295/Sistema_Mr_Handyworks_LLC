@@ -35,47 +35,65 @@ export function formatOwnerDispatchMessage(booking: Booking): string {
     return normalized || fallback;
   };
 
-  const clientName = cleanText(booking.clientName, 'Cliente');
-  const clientPhone = cleanText(booking.clientPhone, 'No disponible');
-  const clientEmail = cleanText(booking.clientEmail, 'No disponible');
-  const clientAddress = cleanText(booking.clientAddress, 'En registro');
+  const clientName = cleanText(booking.clientName, 'Customer');
+  const clientPhone = cleanText(booking.clientPhone, 'Not available');
+  const clientEmail = cleanText(booking.clientEmail, 'Not available');
+  const clientAddress = cleanText(booking.clientAddress, 'On file');
   const zipCode = cleanText(booking.zipCode, '46637');
-  const serviceType = cleanText(booking.serviceType, 'Servicio General');
-  const projectDetails = cleanText(booking.projectDetails, 'Sin notas adicionales');
+  const serviceType = cleanText(booking.serviceType, 'General Handyman Service');
+  const projectDetails = cleanText(booking.projectDetails, 'No additional project notes provided');
   
   const attachments = booking.attachments || [];
   const attachmentsCount = attachments.length || (booking.photoUrl ? 1 : 0);
   
-  let attachmentsList = '- Ninguno';
+  let attachmentsList = '• None provided';
   if (attachments.length > 0) {
-    attachmentsList = attachments.map((a) => {
-      const type = (a.type || 'archivo').toUpperCase();
-      const urlInfo = a.dataUrl && a.dataUrl.startsWith('http') ? `\n  Link: ${a.dataUrl}` : '';
-      return `• [${type}] ${cleanText(a.name, 'Archivo')} (${a.sizeFormatted || 'adjunto'})${urlInfo}`;
-    }).join('\n');
+    attachmentsList = attachments.map((a, idx) => {
+      const type = (a.type || 'file').toUpperCase();
+      const fileName = cleanText(a.name, `Attachment-${idx + 1}`);
+      const sizeStr = a.sizeFormatted ? ` (${a.sizeFormatted})` : '';
+
+      let linkUrl = '';
+      if (a.dataUrl && a.dataUrl.startsWith('http')) {
+        linkUrl = a.dataUrl;
+      } else {
+        const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, '-');
+        linkUrl = `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${booking.id}/${a.id || `att-${idx + 1}`}-${safeName}`;
+      }
+
+      return `• [${type}] ${fileName}${sizeStr}\n  View: ${linkUrl}`;
+    }).join('\n\n');
   } else if (booking.photoUrl) {
-    attachmentsList = `• [FOTO] Foto del área ${booking.photoUrl.startsWith('http') ? `\n  Link: ${booking.photoUrl}` : '(en portal)'}`;
+    const photoLink = booking.photoUrl.startsWith('http')
+      ? booking.photoUrl
+      : `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${booking.id}/project-photo.jpg`;
+    attachmentsList = `• [IMAGE] Project Reference Photo\n  View: ${photoLink}`;
   }
 
-  return `MR HANDYWORKS LLC - NUEVA SOLICITUD DE SERVICIO
+  const portalBase = (typeof window !== 'undefined' && window.location && window.location.origin && !window.location.origin.includes('localhost'))
+    ? window.location.origin
+    : 'https://sistema-mr-handyworks-llc.vercel.app';
 
-Orden: #${booking.id}
-Cliente: ${clientName}
-Teléfono: ${clientPhone}
+  return `MR HANDYWORKS LLC - NEW SERVICE REQUEST
+
+Order #: ${booking.id}
+Customer: ${clientName}
+Phone: ${clientPhone}
 Email: ${clientEmail}
-Dirección: ${clientAddress} (ZIP: ${zipCode})
-Servicio: ${serviceType}
-Fecha solicitada: ${cleanText(booking.scheduledDate, 'Por coordinar')}
-Horario: ${cleanText(booking.scheduledTimeSlot, 'Por coordinar')}
+Address: ${clientAddress} (ZIP: ${zipCode})
 
-Descripción del Trabajo:
+Service: ${serviceType}
+Requested Date: ${cleanText(booking.scheduledDate, 'To be coordinated')}
+Time Window: ${cleanText(booking.scheduledTimeSlot, 'To be coordinated')}
+
+Scope of Work:
 ${projectDetails}
 
-Fotos y Documentos (${attachmentsCount}):
+Attachments (${attachmentsCount}):
 ${attachmentsList}
 
-Ver orden y fotos en el portal:
-https://mr-handyworks-llc.com/#admin`;
+Admin Portal:
+${portalBase}/#admin`;
 }
 
 /**

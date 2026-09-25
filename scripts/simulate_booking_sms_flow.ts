@@ -111,10 +111,11 @@ assert(dispatchMessage.includes('1428 E Jefferson Blvd'), 'Incluye la dirección
 assert(dispatchMessage.includes('46637'), 'Incluye el código postal');
 assert(dispatchMessage.includes('TV Mounting & Wall Hanging'), 'Incluye el servicio');
 assert(dispatchMessage.includes(cleanDescription), 'Incluye la descripción completa con espacios');
+assert(dispatchMessage.includes('NEW SERVICE REQUEST'), 'Incluye el encabezado oficial en inglés');
 assert(dispatchMessage.includes('foto_chimenea_area.jpg'), 'Incluye el nombre de la foto adjunta');
 assert(dispatchMessage.includes('plano_electrico_sala.pdf'), 'Incluye el documento adjunto');
 assert(dispatchMessage.includes('video_vista_pared.mp4'), 'Incluye el video adjunto');
-assert(dispatchMessage.includes('https://mr-handyworks-llc.com/#admin'), 'Incluye el enlace al portal administrativo');
+assert(dispatchMessage.includes('https://sistema-mr-handyworks-llc.vercel.app/#admin'), 'Incluye el enlace al portal administrativo activo');
 
 // 6. Verificación de URL de SMS para iOS y Android
 console.log('\n5. Verificación de Generación de URLs de Despacho (SMS y WhatsApp):');

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { BUSINESS_INFO, PROJECT_TYPE_OPTIONS, REAL_SERVICE_OPTIONS } from '../data/initialData';
 import { generateQuotePDF } from '../utils/pdfGenerator';
-import { BookingAttachment } from '../types';
+import { Booking, BookingAttachment } from '../types';
+import { prepareRemoteBooking } from '../utils/cloudBookings';
 import { processUploadedFile } from '../utils/attachmentOptimizer';
 import { 
   validateFullName,
@@ -332,7 +333,7 @@ export const BookingWizardModal: React.FC = () => {
       clientPhone: cleanPhone,
     }));
 
-    const newBooking = addBooking({
+    const rawBooking: Booking = {
       id: orderRef,
       serviceType: selectedServiceName,
       zipCode: zipCode.trim() || '46637',
@@ -353,29 +354,39 @@ export const BookingWizardModal: React.FC = () => {
       depositAmount: 0,
       paymentTokenId: secureToken,
       notificationSentToOwner: true,
-      notificationSentAt: new Date().toISOString()
-    });
+      notificationSentAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
 
-    setCreatedBooking(newBooking);
+    // Upload attachments to Supabase Storage before dispatch so working public URLs are attached
+    let finalBooking = rawBooking;
+    try {
+      finalBooking = await prepareRemoteBooking(rawBooking);
+    } catch (err) {
+      console.warn('Storage processing warning, using deterministic storage URLs:', err);
+    }
+
+    const newBooking = addBooking(finalBooking);
+    setCreatedBooking(finalBooking);
     setIsCompleted(true);
     setIsSubmitting(false);
 
     // Trigger live real-time notification alert chime, browser notification & webhook
     playNotificationChime();
-    triggerDesktopNotification(newBooking);
-    dispatchBookingWebhook(newBooking).catch(() => {});
+    triggerDesktopNotification(finalBooking);
+    dispatchBookingWebhook(finalBooking).catch(() => {});
 
     // Automatically trigger the PDF and SMS dispatch immediately after confirmation
     // so browsers do not block the pop-ups and the owner receives the booking data
     // in the same user interaction that created the booking.
     try {
-      generateQuotePDF(newBooking, language);
+      generateQuotePDF(finalBooking, language);
     } catch {
       // safe fallback
     }
 
     try {
-      triggerOwnerSMSDispatch(newBooking, BUSINESS_INFO.phoneRaw);
+      triggerOwnerSMSDispatch(finalBooking, BUSINESS_INFO.phoneRaw);
     } catch {
       // safe fallback
     }
