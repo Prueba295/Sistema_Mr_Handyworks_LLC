@@ -2,7 +2,8 @@ import { Booking } from '../types';
 import { BUSINESS_INFO } from '../data/initialData';
 
 export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en') => {
-  const isEs = language === 'es';
+  // Official Work Orders and client documents are standardized in 100% professional English
+  const isEs = false;
   const bookingDate = new Date(booking.createdAt || Date.now());
   const year = bookingDate.getFullYear();
   const monthStr = String(bookingDate.getMonth() + 1).padStart(2, '0');
@@ -167,8 +168,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
     /* Exact 8.5in x 11in Single Page Sheet */
     .page-sheet {
       width: 8.5in;
-      height: 11in;
-      max-height: 11in;
+      min-height: 11in;
       background: #ffffff;
       margin: 0 auto;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -176,7 +176,6 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       flex-direction: column;
       justify-content: space-between;
       position: relative;
-      overflow: hidden;
     }
 
     /* Header */
@@ -306,10 +305,10 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
     .detail-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
+      align-items: center;
+      gap: 12px;
       font-size: 11px;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       line-height: 1.35;
     }
     .detail-row:last-child {
@@ -319,12 +318,19 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       color: #64748b;
       font-weight: 600;
       flex-shrink: 0;
+      font-size: 10.5px;
     }
     .detail-val {
       color: #0f172a;
       font-weight: 700;
       text-align: right;
       word-break: break-word;
+      font-size: 11px;
+    }
+    .detail-val a {
+      color: #0284c7;
+      text-decoration: underline;
+      word-break: break-all;
     }
 
     /* Scope of Work */
@@ -514,17 +520,20 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       .canvas-wrapper {
         padding: 0 !important;
         margin: 0 !important;
+        display: block !important;
       }
       .page-sheet {
         width: 8.5in !important;
-        height: 11in !important;
-        max-height: 11in !important;
-        margin: 0 !important;
+        min-height: 10.9in !important;
+        margin: 0 auto !important;
         border: none !important;
         box-shadow: none !important;
-        page-break-after: avoid !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
+      }
+      .page-sheet:first-child {
+        page-break-after: always;
+        break-after: page;
       }
     }
   </style>

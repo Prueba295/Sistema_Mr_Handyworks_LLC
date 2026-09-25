@@ -223,17 +223,11 @@ export const AdminView: React.FC = () => {
       let note = existing.note;
       if (!note.trim()) {
         if (newStatus === 'CONFIRMED') {
-          note = language === 'es'
-            ? '¡Tu cita ha sido CONFIRMADA y ACEPTADA! Nuestro equipo asistirá puntualmente en el horario acordado.'
-            : 'Your appointment has been CONFIRMED and ACCEPTED! Our team will arrive punctually during the scheduled window.';
+          note = 'Your appointment has been CONFIRMED and ACCEPTED! Our team will arrive punctually during the scheduled window.';
         } else if (newStatus === 'CANCELLED') {
-          note = language === 'es'
-            ? 'Lamentablemente no disponemos de disponibilidad para el horario seleccionado. Por favor contáctanos para coordinar un nuevo horario.'
-            : 'Regrettably, we cannot accommodate this booking at the selected time. Please reach out to coordinate an alternative date.';
+          note = 'Regrettably, we cannot accommodate this booking at the selected time. Please reach out to coordinate an alternative date.';
         } else if (newStatus === 'COMPLETED') {
-          note = language === 'es'
-            ? '¡Trabajo finalizado con éxito! Gracias por confiar en Mr Handyworks LLC.'
-            : 'Service completed successfully! Thank you for trusting Mr Handyworks LLC.';
+          note = 'Your service project has been completed to full satisfaction! Thank you for trusting Mr Handyworks LLC.';
         }
       }
       return {
