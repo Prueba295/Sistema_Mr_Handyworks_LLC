@@ -11,7 +11,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
   const quoteNumber = `MHW-${year}-${monthStr}${dayStr}-${cleanId}`;
   
   const clientName = booking.clientName?.trim() || (isEs ? 'Cliente' : 'Customer');
-  const clientPhone = booking.clientPhone?.trim() || '(574) 279-9355';
+  const clientPhone = booking.clientPhone?.trim() || 'N/A';
   const clientEmail = booking.clientEmail?.trim() || 'N/A';
   const clientAddress = booking.clientAddress?.trim() || (isEs ? 'Dirección en registro' : 'Address on file');
   const zipCode = booking.zipCode?.trim() || '';
@@ -20,6 +20,42 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
   const serviceType = booking.serviceType?.trim() || (isEs ? 'Reparación y Servicio Residencial' : 'Residential Repair & Service');
   const scheduledDate = booking.scheduledDate?.trim() || (isEs ? 'Por confirmar en sitio' : 'To be confirmed on-site');
   const scheduledTime = booking.scheduledTimeSlot?.trim() || (isEs ? 'Franja horaria preferente' : 'Preferred arrival window');
+
+  // Status Badge Configuration
+  const getStatusBadge = () => {
+    switch (booking.status) {
+      case 'CONFIRMED':
+        return {
+          label: isEs ? 'CONFIRMADA / ACEPTADA' : 'CONFIRMED / ACCEPTED',
+          color: '#15803d',
+          bg: '#dcfce7',
+          border: '#86efac'
+        };
+      case 'COMPLETED':
+        return {
+          label: isEs ? 'COMPLETADA' : 'COMPLETED',
+          color: '#0369a1',
+          bg: '#e0f2fe',
+          border: '#7dd3fc'
+        };
+      case 'CANCELLED':
+        return {
+          label: isEs ? 'RECHAZADA / CANCELADA' : 'DECLINED / CANCELLED',
+          color: '#b91c1c',
+          bg: '#fee2e2',
+          border: '#fca5a5'
+        };
+      case 'PENDING':
+      default:
+        return {
+          label: isEs ? 'PENDIENTE DE CONFIRMACIÓN' : 'PENDING CONFIRMATION',
+          color: '#b45309',
+          bg: '#fef3c7',
+          border: '#fcd34d'
+        };
+    }
+  };
+  const statusBadge = getStatusBadge();
 
   const projectDetails = booking.projectDetails?.trim() || (isEs 
     ? 'Servicio residencial solicitado según especificaciones del cliente. El alcance detallado de mano de obra y materiales será verificado en sitio.'
@@ -522,7 +558,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
           <div class="logo-container">MH</div>
           <div class="header-text">
             <h1>${isEs ? 'Orden de Solicitud de Servicio' : 'Service Request Work Order'}</h1>
-            <p>Mr Handyworks LLC • South Bend, IN • (574) 279-9355</p>
+            <p>Mr Handyworks LLC • South Bend, IN • Verified Professional Service</p>
           </div>
         </div>
         <div class="header-meta">
@@ -554,11 +590,19 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
             </div>
             <div class="detail-row">
               <span class="detail-label">${isEs ? 'Teléfono Móvil' : 'Mobile Phone'}:</span>
-              <span class="detail-val">${clientPhone}</span>
+              <span class="detail-val">
+                ${booking.clientPhone && booking.clientPhone !== 'N/A'
+                  ? `<a href="tel:${booking.clientPhone.replace(/[^0-9+]/g, '')}" style="color: #0284c7; text-decoration: underline; font-weight: 700;">${clientPhone}</a>`
+                  : clientPhone}
+              </span>
             </div>
             <div class="detail-row">
               <span class="detail-label">${isEs ? 'Correo' : 'Email'}:</span>
-              <span class="detail-val">${clientEmail}</span>
+              <span class="detail-val">
+                ${booking.clientEmail && booking.clientEmail !== 'N/A'
+                  ? `<a href="mailto:${booking.clientEmail.trim()}" style="color: #0284c7; text-decoration: underline; font-weight: 700; word-break: break-all;">${clientEmail}</a>`
+                  : clientEmail}
+              </span>
             </div>
             <div class="detail-row">
               <span class="detail-label">${isEs ? 'Dirección' : 'Address'}:</span>
@@ -586,11 +630,28 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
             </div>
             <div class="detail-row">
               <span class="detail-label">${isEs ? 'Estado de Cita' : 'Booking Status'}:</span>
-              <span class="detail-val" style="color: #0284c7;">${isEs ? 'Pendiente Confirmación' : 'Pending Confirmation'}</span>
+              <span class="detail-val">
+                <span style="display: inline-block; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 11px; color: ${statusBadge.color}; background: ${statusBadge.bg}; border: 1px solid ${statusBadge.border}; text-transform: uppercase;">
+                  ${statusBadge.label}
+                </span>
+              </span>
             </div>
           </div>
 
         </div>
+
+        ${booking.adminNotes ? `
+        <!-- Admin Resolution & Message to Client -->
+        <div style="background: ${statusBadge.bg}; border: 1px solid ${statusBadge.border}; border-left: 4px solid ${statusBadge.color}; border-radius: 10px; padding: 10px 14px; margin-bottom: 2px;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: ${statusBadge.color}; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span>📢 ${isEs ? 'Resolución / Mensaje del Administrador al Cliente' : 'Official Admin Resolution & Note to Customer'}</span>
+            ${booking.statusUpdatedAt ? `<span style="font-size: 9px; font-weight: 600; color: #475569;">${new Date(booking.statusUpdatedAt).toLocaleDateString(isEs ? 'es-ES' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>` : ''}
+          </div>
+          <div style="font-size: 11px; color: #1e293b; line-height: 1.45; font-weight: 500;">
+            "${booking.adminNotes}"
+          </div>
+        </div>
+        ` : ''}
 
         <!-- Scope of Work & Problem Description -->
         <div class="scope-box">
@@ -632,7 +693,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
             <ul class="terms-list">
               <li>${isEs ? 'Las consultas en sitio inician en $125. El costo final de mano de obra y materiales se evalúa y presupuesta en sitio antes de comenzar trabajos adicionales.' : 'On-site consultations start at $125. Final project labor and materials are evaluated on-site and confirmed with customer before executing additional work.'}</li>
               <li>${isEs ? 'No se ha realizado ningún cobro por adelantado en el sistema web. Todo pago se coordina directamente con el equipo de Mr Handyworks al confirmar la cita o al completar el trabajo.' : 'No advance payment has been charged online. All payments are coordinated directly with the Mr Handyworks Team upon schedule confirmation or project completion.'}</li>
-              <li>${isEs ? 'Métodos aceptados: Zelle, Venmo, Cash App y Apple Pay coordinados al teléfono oficial (574) 279-9355 (no buscar por nombres para evitar cuentas similares), Efectivo, Cheque y Tarjetas (+3.5%).' : 'Accepted payments: Zelle, Venmo, Cash App, and Apple Pay coordinated strictly to official phone (574) 279-9355 (do not search by names to avoid duplicate accounts), Cash, Check, and Cards (+3.5%).'}</li>
+              <li>${isEs ? 'Métodos aceptados: Zelle, Venmo, Cash App y Apple Pay coordinados directamente con la empresa oficial (no buscar por nombres personales para evitar cuentas similares), Efectivo, Cheque y Tarjetas (+3.5%).' : 'Accepted payments: Zelle, Venmo, Cash App, and Apple Pay coordinated directly through official business accounts (do not search by personal names to avoid duplicate accounts), Cash, Check, and Cards (+3.5%).'}</li>
               <li>${isEs ? 'Agradecemos notificar con al menos 24 horas de cortesía en caso de requerir reprogramación.' : 'Please provide 24-hour advance notice for any schedule changes or cancellations.'}</li>
             </ul>
           </div>
@@ -653,7 +714,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       <!-- Footer -->
       <div class="footer">
         <div class="footer-left">
-          <div class="footer-item"><span class="footer-tag">TEL</span>${BUSINESS_INFO.phone || '(574) 279-9355'}</div>
+          <div class="footer-item"><span class="footer-tag">STATUS</span>Licensed & Insured</div>
           <div class="footer-item"><span class="footer-tag">EMAIL</span>${BUSINESS_INFO.email || 'Mrhandyworks25@gmail.com'}</div>
           <div class="footer-item"><span class="footer-tag">ÁREA</span>South Bend & Michiana</div>
         </div>
@@ -739,7 +800,7 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       <!-- Footer -->
       <div class="footer">
         <div class="footer-left">
-          <div class="footer-item"><span class="footer-tag">TEL</span>${BUSINESS_INFO.phone || '(574) 279-9355'}</div>
+          <div class="footer-item"><span class="footer-tag">STATUS</span>Licensed & Insured</div>
           <div class="footer-item"><span class="footer-tag">EMAIL</span>${BUSINESS_INFO.email || 'Mrhandyworks25@gmail.com'}</div>
           <div class="footer-item"><span class="footer-tag">ÁREA</span>South Bend & Michiana</div>
         </div>

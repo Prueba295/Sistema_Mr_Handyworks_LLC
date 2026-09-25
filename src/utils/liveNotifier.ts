@@ -1,8 +1,8 @@
-import { Booking, BookingAttachment } from '../types';
+import { Booking, BookingAttachment, BookingStatus } from '../types';
 
 /**
  * MR HANDYWORKS LLC - LIVE REAL-TIME NOTIFICATION DISPATCHER
- * Directly connects customer bookings to the verified service team phone: (574) 279-9355
+ * Coordinates customer bookings, notifications, and status updates
  */
 
 export interface LiveNotificationPayload {
@@ -311,3 +311,146 @@ export async function dispatchBookingWebhook(
     return { success: false, error: err?.message || 'Webhook transmission failed' };
   }
 }
+
+/**
+ * Format official client notification email when admin changes booking status
+ */
+export function formatClientStatusUpdateEmail(
+  booking: Booking,
+  newStatus: BookingStatus,
+  customNote?: string
+): { subject: string; body: string } {
+  const portalBase = (typeof window !== 'undefined' && window.location && window.location.origin && !window.location.origin.includes('localhost'))
+    ? window.location.origin
+    : 'https://sistema-mr-handyworks-llc.vercel.app';
+
+  const statusLabel = 
+    newStatus === 'CONFIRMED' ? 'CONFIRMED / ACCEPTED' :
+    newStatus === 'CANCELLED' ? 'DECLINED / CANCELLED' :
+    newStatus === 'COMPLETED' ? 'COMPLETED' :
+    'PENDING CONFIRMATION';
+
+  const subject = `[Mr Handyworks LLC] Service Request #${booking.id} - Status Update: ${statusLabel}`;
+
+  const defaultNote = 
+    newStatus === 'CONFIRMED' 
+      ? 'Your appointment has been officially confirmed! Our professional team will arrive during your scheduled window.' 
+      : newStatus === 'CANCELLED'
+      ? 'We regret to inform you that we are unable to accept this booking request at the selected time. Please check our portal or contact us to coordinate an alternative date.'
+      : newStatus === 'COMPLETED'
+      ? 'Your service project has been marked as completed. Thank you for choosing Mr Handyworks LLC!'
+      : 'Your request is currently under review by our dispatch team.';
+
+  const resolutionMessage = (customNote && customNote.trim()) ? customNote.trim() : defaultNote;
+
+  const body = `Dear ${booking.clientName || 'Customer'},
+
+This is an official update regarding your service request #${booking.id} with Mr Handyworks LLC.
+
+==================================================
+BOOKING STATUS: ${statusLabel}
+==================================================
+
+Service Requested: ${booking.serviceType || 'Handyman Service'}
+Scheduled Date:    ${booking.scheduledDate || 'To be coordinated'}
+Arrival Window:    ${booking.scheduledTimeSlot || 'To be coordinated'}
+Location:          ${booking.clientAddress || 'South Bend area'} (ZIP: ${booking.zipCode || ''})
+
+ADMINISTRATOR RESOLUTION & NOTES:
+"${resolutionMessage}"
+
+==================================================
+VIEW YOUR UPDATED OFFICIAL WORK ORDER & PDF:
+You can view your updated Work Order PDF and registered details at any time using the direct link below (no login required):
+${portalBase}/#view-order=${booking.id}
+
+For any questions, additional work, or scheduling adjustments, please contact us:
+Email: Mrhandyworks25@gmail.com
+Website: ${portalBase}
+
+Thank you for trusting Mr Handyworks LLC.
+Professional Assembly • Clean Installations • Built to Last
+Licensed & Insured`;
+
+  return { subject, body };
+}
+
+/**
+ * Generate mailto URL to directly notify client at their email address
+ */
+export function buildClientStatusEmailUrl(
+  booking: Booking,
+  newStatus: BookingStatus,
+  customNote?: string
+): string {
+  const { subject, body } = formatClientStatusUpdateEmail(booking, newStatus, customNote);
+  const targetEmail = (booking.clientEmail || '').trim();
+  return `mailto:${targetEmail}?cc=Mrhandyworks25@gmail.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+/**
+ * Generate SMS link for client mobile phone
+ */
+export function buildClientStatusSMSUrl(
+  booking: Booking,
+  newStatus: BookingStatus,
+  customNote?: string
+): string {
+  const portalBase = (typeof window !== 'undefined' && window.location && window.location.origin && !window.location.origin.includes('localhost'))
+    ? window.location.origin
+    : 'https://sistema-mr-handyworks-llc.vercel.app';
+
+  const statusLabel = 
+    newStatus === 'CONFIRMED' ? 'CONFIRMED' :
+    newStatus === 'CANCELLED' ? 'CANCELLED' :
+    newStatus === 'COMPLETED' ? 'COMPLETED' :
+    'PENDING';
+
+  const defaultNote = 
+    newStatus === 'CONFIRMED' 
+      ? 'Your appointment has been confirmed! Our team will arrive during your scheduled window.' 
+      : newStatus === 'CANCELLED'
+      ? 'We are unable to confirm your booking for the selected time. Please contact us to reschedule.'
+      : 'Your booking has been updated.';
+
+  const resolutionMessage = (customNote && customNote.trim()) ? customNote.trim() : defaultNote;
+
+  const smsText = `Mr Handyworks LLC: Your service request #${booking.id} (${booking.serviceType}) is now ${statusLabel}. Note: "${resolutionMessage}". View your official Work Order: ${portalBase}/#view-order=${booking.id}`;
+
+  const cleanPhone = (booking.clientPhone || '').replace(/\D/g, '');
+  const encoded = encodeURIComponent(smsText);
+  const isIOS = typeof navigator !== 'undefined' && (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  );
+  const separator = isIOS ? '&' : '?';
+  return cleanPhone ? `sms:${cleanPhone}${separator}body=${encoded}` : `sms:?body=${encoded}`;
+}
+
+/**
+ * Trigger client email dispatch via iframe or window navigation
+ */
+export function triggerClientStatusNotification(
+  booking: Booking,
+  newStatus: BookingStatus,
+  customNote?: string
+): string {
+  const mailUrl = buildClientStatusEmailUrl(booking, newStatus, customNote);
+  if (typeof window !== 'undefined') {
+    try {
+      const a = document.createElement('a');
+      a.href = mailUrl;
+      a.target = '_blank';
+      a.rel = 'noopener,noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        try { document.body.removeChild(a); } catch {}
+      }, 1000);
+    } catch {
+      window.location.href = mailUrl;
+    }
+  }
+  return mailUrl;
+}
+

@@ -16,7 +16,12 @@ import {
   BookingStatus,
   ServiceCategory
 } from '../types';
-import { buildOwnerSMSNotificationUrl } from '../utils/liveNotifier';
+import { 
+  buildOwnerSMSNotificationUrl,
+  buildClientStatusEmailUrl,
+  buildClientStatusSMSUrl,
+  triggerClientStatusNotification
+} from '../utils/liveNotifier';
 import { createSystemBackup, loadBackupSnapshot } from '../utils/systemBackupManager';
 import { 
   Lock, 
@@ -201,6 +206,70 @@ export const AdminView: React.FC = () => {
   // Work Orders & Bookings filtering & media lightbox state
   const [bookingFilterStatus, setBookingFilterStatus] = useState<'ALL' | BookingStatus>('ALL');
   const [bookingSearchQuery, setBookingSearchQuery] = useState('');
+
+  // Status update drafts & custom client resolution notes
+  const [statusDrafts, setStatusDrafts] = useState<Record<string, { status: BookingStatus; note: string }>>({});
+
+  const getBookingDraft = (booking: Booking) => {
+    return statusDrafts[booking.id] || {
+      status: booking.status,
+      note: booking.adminNotes || ''
+    };
+  };
+
+  const handleDraftStatusChange = (bookingId: string, currentStatus: BookingStatus, newStatus: BookingStatus) => {
+    setStatusDrafts(prev => {
+      const existing = prev[bookingId] || { status: currentStatus, note: '' };
+      let note = existing.note;
+      if (!note.trim()) {
+        if (newStatus === 'CONFIRMED') {
+          note = language === 'es'
+            ? '¡Tu cita ha sido CONFIRMADA y ACEPTADA! Nuestro equipo asistirá puntualmente en el horario acordado.'
+            : 'Your appointment has been CONFIRMED and ACCEPTED! Our team will arrive punctually during the scheduled window.';
+        } else if (newStatus === 'CANCELLED') {
+          note = language === 'es'
+            ? 'Lamentablemente no disponemos de disponibilidad para el horario seleccionado. Por favor contáctanos para coordinar un nuevo horario.'
+            : 'Regrettably, we cannot accommodate this booking at the selected time. Please reach out to coordinate an alternative date.';
+        } else if (newStatus === 'COMPLETED') {
+          note = language === 'es'
+            ? '¡Trabajo finalizado con éxito! Gracias por confiar en Mr Handyworks LLC.'
+            : 'Service completed successfully! Thank you for trusting Mr Handyworks LLC.';
+        }
+      }
+      return {
+        ...prev,
+        [bookingId]: { status: newStatus, note }
+      };
+    });
+  };
+
+  const handleDraftNoteChange = (bookingId: string, currentStatus: BookingStatus, note: string) => {
+    setStatusDrafts(prev => ({
+      ...prev,
+      [bookingId]: {
+        status: prev[bookingId]?.status || currentStatus,
+        note
+      }
+    }));
+  };
+
+  const handleSaveAndNotifyClient = (booking: Booking) => {
+    const draft = getBookingDraft(booking);
+    updateBookingStatus(booking.id, draft.status, draft.note);
+    const updatedBooking: Booking = {
+      ...booking,
+      status: draft.status,
+      adminNotes: draft.note,
+      statusUpdatedAt: new Date().toISOString()
+    };
+    triggerClientStatusNotification(updatedBooking, draft.status, draft.note);
+    showNotification(
+      language === 'es'
+        ? `Estado guardado. Notificación preparada para ${booking.clientEmail}`
+        : `Status saved. Notification dispatched to ${booking.clientEmail}`
+    );
+  };
+
   const [previewAttachment, setPreviewAttachment] = useState<BookingAttachment | null>(null);
   const [imageLoadError, setImageLoadError] = useState(false);
   const [isAttemptingImageHealing, setIsAttemptingImageHealing] = useState(false);
@@ -2299,7 +2368,9 @@ export const AdminView: React.FC = () => {
                 );
               }
 
-              return filtered.map(b => (
+              return filtered.map(b => {
+                const draft = getBookingDraft(b);
+                return (
                 <div 
                   key={b.id}
                   className="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/40 space-y-4 shadow-2xs"
@@ -2320,19 +2391,19 @@ export const AdminView: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Status Changer */}
+                    {/* Quick Status Pill */}
                     <div className="flex items-center gap-2">
                       <span className={`px-2.5 py-1 rounded-lg text-xs font-black uppercase ${
-                        b.status === 'CONFIRMED' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400' :
-                        b.status === 'COMPLETED' ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400' :
-                        b.status === 'CANCELLED' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400' :
-                        'bg-amber-500/15 text-amber-700 dark:text-amber-400'
+                        b.status === 'CONFIRMED' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20' :
+                        b.status === 'COMPLETED' ? 'bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/20' :
+                        b.status === 'CANCELLED' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border border-rose-500/20' :
+                        'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20'
                       }`}>
                         {b.status}
                       </span>
                       <select
-                        value={b.status}
-                        onChange={(e) => updateBookingStatus(b.id, e.target.value as BookingStatus)}
+                        value={draft.status}
+                        onChange={(e) => handleDraftStatusChange(b.id, b.status, e.target.value as BookingStatus)}
                         className="px-2.5 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 cursor-pointer"
                       >
                         <option value="PENDING">PENDING</option>
@@ -2580,13 +2651,168 @@ export const AdminView: React.FC = () => {
                     </div>
                   </div>
 
+                  {/* Section: Status Control & Customer Notification */}
+                  <div className="mt-3 p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 space-y-3 shadow-2xs">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                          <span>{language === 'es' ? 'Gestión de Estado y Notificación al Cliente:' : 'Status Management & Customer Notification:'}</span>
+                        </span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${
+                          draft.status === 'CONFIRMED' ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30' :
+                          draft.status === 'CANCELLED' ? 'bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/30' :
+                          draft.status === 'COMPLETED' ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30' :
+                          'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30'
+                        }`}>
+                          {draft.status === 'CONFIRMED' ? (language === 'es' ? 'ACEPTADO / CONFIRMADO' : 'CONFIRMED') :
+                           draft.status === 'CANCELLED' ? (language === 'es' ? 'RECHAZADO / CANCELADO' : 'CANCELLED') :
+                           draft.status === 'COMPLETED' ? (language === 'es' ? 'COMPLETADO' : 'COMPLETED') :
+                           (language === 'es' ? 'PENDIENTE' : 'PENDING')}
+                        </span>
+                      </div>
+
+                      {/* Quick status selector buttons */}
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => handleDraftStatusChange(b.id, b.status, 'CONFIRMED')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                            draft.status === 'CONFIRMED'
+                              ? 'bg-emerald-600 text-white shadow-xs ring-2 ring-emerald-400'
+                              : 'bg-slate-100 dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-300/60 dark:border-emerald-700/60 hover:bg-emerald-50'
+                          }`}
+                        >
+                          ✓ {language === 'es' ? 'Aceptar / Confirmar' : 'Confirm'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDraftStatusChange(b.id, b.status, 'CANCELLED')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                            draft.status === 'CANCELLED'
+                              ? 'bg-rose-600 text-white shadow-xs ring-2 ring-rose-400'
+                              : 'bg-slate-100 dark:bg-slate-800 text-rose-700 dark:text-rose-400 border border-rose-300/60 dark:border-rose-700/60 hover:bg-rose-50'
+                          }`}
+                        >
+                          ✕ {language === 'es' ? 'Rechazar / Cancelar' : 'Decline'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDraftStatusChange(b.id, b.status, 'COMPLETED')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                            draft.status === 'COMPLETED'
+                              ? 'bg-blue-600 text-white shadow-xs ring-2 ring-blue-400'
+                              : 'bg-slate-100 dark:bg-slate-800 text-blue-700 dark:text-blue-400 border border-blue-300/60 dark:border-blue-700/60 hover:bg-blue-50'
+                          }`}
+                        >
+                          ★ {language === 'es' ? 'Completado' : 'Completed'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDraftStatusChange(b.id, b.status, 'PENDING')}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-extrabold transition-all cursor-pointer ${
+                            draft.status === 'PENDING'
+                              ? 'bg-amber-600 text-white shadow-xs ring-2 ring-amber-400'
+                              : 'bg-slate-100 dark:bg-slate-800 text-amber-700 dark:text-amber-400 border border-amber-300/60 dark:border-amber-700/60 hover:bg-amber-50'
+                          }`}
+                        >
+                          ⏳ {language === 'es' ? 'Pendiente' : 'Pending'}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Custom Admin Note Input */}
+                    <div>
+                      <label className="text-[11px] font-bold text-slate-600 dark:text-slate-300 flex items-center justify-between mb-1">
+                        <span>
+                          {language === 'es' ? 'Mensaje o motivo para el cliente (se incluye en la notificación por correo y en el PDF oficial):' : 'Custom Note for Customer (Included in email notification and official PDF):'}
+                        </span>
+                        {b.statusUpdatedAt && (
+                          <span className="text-[10px] text-slate-400">
+                            {language === 'es' ? 'Última actualización:' : 'Last update:'} {new Date(b.statusUpdatedAt).toLocaleDateString()}
+                          </span>
+                        )}
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={draft.note}
+                        onChange={(e) => handleDraftNoteChange(b.id, b.status, e.target.value)}
+                        placeholder={language === 'es' ? 'Escribe aquí indicaciones para el cliente, confirmación de cita o motivo...' : 'Write custom confirmation instructions or decline details...'}
+                        className="w-full text-xs p-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#0B3C5D]"
+                      />
+                    </div>
+
+                    {/* Manual Save & Client Notification Dispatch Buttons */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {/* Save & Notify via Email */}
+                        <button
+                          type="button"
+                          onClick={() => handleSaveAndNotifyClient(b)}
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black shadow-xs transition-colors cursor-pointer"
+                          title="Guarda el estado y abre el correo para enviar la notificación oficial con el PDF actualizado al cliente"
+                        >
+                          <Mail className="w-3.5 h-3.5" />
+                          <span>{language === 'es' ? 'Guardar y Notificar al Cliente (Correo)' : 'Save & Notify Customer (Email)'}</span>
+                        </button>
+
+                        {/* Save & Notify via SMS */}
+                        <a
+                          href={buildClientStatusSMSUrl(b, draft.status, draft.note)}
+                          onClick={() => updateBookingStatus(b.id, draft.status, draft.note)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-500/40 bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-xs font-bold transition-colors cursor-pointer"
+                          title="Enviar SMS al cliente con el enlace a su orden actualizada"
+                        >
+                          <Send className="w-3.5 h-3.5 text-blue-600" />
+                          <span>{language === 'es' ? 'Notificar por SMS' : 'Notify via SMS'}</span>
+                        </a>
+
+                        {/* Save Status Only */}
+                        <button
+                          type="button"
+                          onClick={() => updateBookingStatus(b.id, draft.status, draft.note)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-bold transition-colors cursor-pointer"
+                        >
+                          <Save className="w-3.5 h-3.5 text-slate-500" />
+                          <span>{language === 'es' ? 'Solo Guardar' : 'Save Only'}</span>
+                        </button>
+                      </div>
+
+                      {/* Preview updated PDF */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const previewBooking: Booking = {
+                            ...b,
+                            status: draft.status,
+                            adminNotes: draft.note,
+                            statusUpdatedAt: new Date().toISOString()
+                          };
+                          generateQuotePDF(previewBooking, language);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B3C5D] hover:bg-[#07273D] text-white text-xs font-black shadow-xs transition-colors cursor-pointer"
+                      >
+                        <Download className="w-3.5 h-3.5 text-amber-300" />
+                        <span>{language === 'es' ? 'Ver PDF Actualizado' : 'Preview Updated PDF'}</span>
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Card Bottom Actions */}
                   <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-200 dark:border-slate-700">
                     <div className="flex flex-wrap items-center gap-2">
                       {/* Generate / View PDF */}
                       <button
                         type="button"
-                        onClick={() => generateQuotePDF(b, language)}
+                        onClick={() => {
+                          const updatedBooking: Booking = {
+                            ...b,
+                            status: draft.status,
+                            adminNotes: draft.note,
+                            statusUpdatedAt: b.statusUpdatedAt
+                          };
+                          generateQuotePDF(updatedBooking, language);
+                        }}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B3C5D] hover:bg-[#07273D] text-white text-xs font-black shadow-xs transition-colors cursor-pointer"
                         title="Download or Print Work Order PDF"
                       >
@@ -2639,7 +2865,8 @@ export const AdminView: React.FC = () => {
                     </button>
                   </div>
                 </div>
-              ));
+              );
+            });
             })()}
           </div>
         </div>

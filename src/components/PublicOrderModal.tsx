@@ -15,7 +15,8 @@ import {
   Image as ImageIcon,
   CheckCircle2,
   File,
-  Film
+  Film,
+  Mail
 } from 'lucide-react';
 
 interface PublicOrderModalProps {
@@ -67,7 +68,12 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
             </span>
             <h2 className="text-lg sm:text-xl font-black text-white mt-0.5 flex items-center gap-2">
               <span>Order #{booking.id}</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              <span className={`text-xs px-2.5 py-0.5 rounded-full font-black uppercase border ${
+                booking.status === 'CONFIRMED' ? 'bg-emerald-500/25 text-emerald-300 border-emerald-400/40' :
+                booking.status === 'CANCELLED' ? 'bg-rose-500/25 text-rose-300 border-rose-400/40' :
+                booking.status === 'COMPLETED' ? 'bg-blue-500/25 text-blue-300 border-blue-400/40' :
+                'bg-amber-500/25 text-amber-300 border-amber-400/40'
+              }`}>
                 {booking.status}
               </span>
             </h2>
@@ -101,6 +107,14 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
                   {booking.clientPhone}
                 </a>
               </div>
+              {booking.clientEmail && (
+                <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+                  <Mail className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                  <a href={`mailto:${booking.clientEmail}`} className="hover:underline font-semibold text-blue-600 dark:text-blue-400 break-all">
+                    {booking.clientEmail}
+                  </a>
+                </div>
+              )}
               <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                 <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
                 <span>{booking.clientAddress || 'South Bend area'} (ZIP: {booking.zipCode})</span>
@@ -126,6 +140,31 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
             </div>
 
           </div>
+
+          {/* Official Admin Resolution & Message (If set by admin) */}
+          {booking.adminNotes && (
+            <div className={`p-4 rounded-2xl border space-y-1.5 ${
+              booking.status === 'CONFIRMED' ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800' :
+              booking.status === 'CANCELLED' ? 'bg-rose-50 dark:bg-rose-950/30 border-rose-300 dark:border-rose-800' :
+              booking.status === 'COMPLETED' ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-300 dark:border-blue-800' :
+              'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800'
+            }`}>
+              <div className={`text-[11px] font-black uppercase tracking-wider flex items-center justify-between ${
+                booking.status === 'CONFIRMED' ? 'text-emerald-700 dark:text-emerald-400' :
+                booking.status === 'CANCELLED' ? 'text-rose-700 dark:text-rose-400' :
+                booking.status === 'COMPLETED' ? 'text-blue-700 dark:text-blue-400' :
+                'text-amber-700 dark:text-amber-400'
+              }`}>
+                <span>📢 {language === 'es' ? 'Resolución Oficial de Mr Handyworks LLC:' : 'Official Admin Resolution & Note:'}</span>
+                {booking.statusUpdatedAt && (
+                  <span className="text-[10px] opacity-75 font-normal">{new Date(booking.statusUpdatedAt).toLocaleDateString()}</span>
+                )}
+              </div>
+              <p className="text-xs text-slate-800 dark:text-slate-200 font-semibold italic leading-relaxed">
+                "{booking.adminNotes}"
+              </p>
+            </div>
+          )}
 
           {/* Scope of Work */}
           <div className="p-4 rounded-2xl bg-blue-50/50 dark:bg-slate-800/40 border border-blue-100 dark:border-slate-700 space-y-1.5">

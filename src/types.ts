@@ -65,6 +65,8 @@ export interface Booking {
   cardLast4?: string;
   createdAt: string;
   notes?: string;
+  adminNotes?: string;
+  statusUpdatedAt?: string;
   notificationSentToOwner?: boolean;
   notificationSentAt?: string;
 }

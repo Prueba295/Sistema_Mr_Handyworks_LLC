@@ -160,7 +160,7 @@ interface AppContextType {
 
   bookings: Booking[];
   addBooking: (booking: Omit<Booking, 'id' | 'createdAt'> & { id?: string }) => Booking;
-  updateBookingStatus: (id: string, status: BookingStatus) => void;
+  updateBookingStatus: (id: string, status: BookingStatus, adminNotes?: string) => void;
   deleteBooking: (id: string) => void;
 
   qrMethods: PaymentQR[];
@@ -692,11 +692,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return newBooking;
   };
 
-  const updateBookingStatus = (id: string, status: BookingStatus) => {
+  const updateBookingStatus = (id: string, status: BookingStatus, adminNotes?: string) => {
     setBookings(prev => {
       const next = prev.map(b => {
         if (b.id !== id) return b;
-        const updatedBooking = { ...b, status };
+        const updatedBooking: Booking = { 
+          ...b, 
+          status,
+          ...(adminNotes !== undefined ? { adminNotes } : {}),
+          statusUpdatedAt: new Date().toISOString()
+        };
         void updateCloudBooking(updatedBooking);
         return updatedBooking;
       });
