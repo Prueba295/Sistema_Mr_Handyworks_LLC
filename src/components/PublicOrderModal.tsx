@@ -31,6 +31,7 @@ interface PublicOrderModalProps {
 export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onClose }) => {
   const { bookings, language } = useApp();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [mediaFilter, setMediaFilter] = useState<'all' | 'image' | 'video' | 'document'>('all');
 
   const [remoteBooking, setRemoteBooking] = useState<Booking | null>(() => {
     return bookings.find(b => b.id === orderId) || null;
@@ -285,14 +286,67 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
 
           {/* Attached Files & Photos Gallery (MANDATORY PUBLIC ACCESS) */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <h3 className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
                 <ImageIcon className="w-4 h-4 text-emerald-500" />
                 <span>{language === 'es' ? 'Archivos y Fotos Adjuntos' : 'Attached Photos & Files'} ({attachments.length})</span>
               </h3>
-              <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                {language === 'es' ? 'Acceso libre sin registro' : 'Public access, no login needed'}
-              </span>
+              
+              {/* Media Filter Tabs */}
+              {attachments.length > 2 && (
+                <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-[11px] font-bold">
+                  <button
+                    type="button"
+                    onClick={() => setMediaFilter('all')}
+                    className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                      mediaFilter === 'all' 
+                        ? 'bg-white dark:bg-slate-700 text-[#0B3C5D] dark:text-blue-300 shadow-2xs font-black' 
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                    }`}
+                  >
+                    {language === 'es' ? 'Todos' : 'All'} ({attachments.length})
+                  </button>
+                  {attachments.some(a => a.type === 'image' || a.name.match(/\.(jpe?g|png|webp|gif|heic)$/i)) && (
+                    <button
+                      type="button"
+                      onClick={() => setMediaFilter('image')}
+                      className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                        mediaFilter === 'image' 
+                          ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-300 shadow-2xs font-black' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                      }`}
+                    >
+                      {language === 'es' ? 'Fotos' : 'Photos'} ({attachments.filter(a => a.type === 'image' || a.name.match(/\.(jpe?g|png|webp|gif|heic)$/i)).length})
+                    </button>
+                  )}
+                  {attachments.some(a => a.type === 'video' || a.name.match(/\.(mp4|mov|webm)$/i)) && (
+                    <button
+                      type="button"
+                      onClick={() => setMediaFilter('video')}
+                      className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                        mediaFilter === 'video' 
+                          ? 'bg-white dark:bg-slate-700 text-amber-600 dark:text-amber-300 shadow-2xs font-black' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                      }`}
+                    >
+                      Videos ({attachments.filter(a => a.type === 'video' || a.name.match(/\.(mp4|mov|webm)$/i)).length})
+                    </button>
+                  )}
+                  {attachments.some(a => a.type !== 'image' && a.type !== 'video' && !a.name.match(/\.(jpe?g|png|webp|gif|heic|mp4|mov|webm)$/i)) && (
+                    <button
+                      type="button"
+                      onClick={() => setMediaFilter('document')}
+                      className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                        mediaFilter === 'document' 
+                          ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-300 shadow-2xs font-black' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                      }`}
+                    >
+                      {language === 'es' ? 'Docs' : 'Docs'} ({attachments.filter(a => a.type !== 'image' && a.type !== 'video' && !a.name.match(/\.(jpe?g|png|webp|gif|heic|mp4|mov|webm)$/i)).length})
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
 
             {attachments.length === 0 ? (
@@ -300,8 +354,14 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
                 {language === 'es' ? 'No se adjuntaron archivos adicionales en esta orden.' : 'No additional files were attached to this order.'}
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {attachments.map((att, idx) => {
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[55vh] overflow-y-auto pr-1">
+                {attachments.filter(att => {
+                  if (mediaFilter === 'all') return true;
+                  if (mediaFilter === 'image') return att.type === 'image' || att.name.match(/\.(jpe?g|png|webp|gif|heic)$/i);
+                  if (mediaFilter === 'video') return att.type === 'video' || att.name.match(/\.(mp4|mov|webm)$/i);
+                  if (mediaFilter === 'document') return att.type !== 'image' && att.type !== 'video' && !att.name.match(/\.(jpe?g|png|webp|gif|heic|mp4|mov|webm)$/i);
+                  return true;
+                }).map((att, idx) => {
                   const isImg = att.type === 'image' || att.name.match(/\.(jpe?g|png|webp|gif)$/i);
                   const isVid = att.type === 'video' || att.name.match(/\.(mp4|mov|webm)$/i);
                   return (
@@ -318,6 +378,7 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
                           <img 
                             src={att.dataUrl} 
                             alt={att.name}
+                            loading="lazy"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" 
                           />
                           <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-white text-xs font-bold gap-1.5">
@@ -331,6 +392,9 @@ export const PublicOrderModal: React.FC<PublicOrderModalProps> = ({ orderId, onC
                         <video 
                           src={att.dataUrl} 
                           controls 
+                          preload="metadata"
+                          playsInline
+                          poster={att.thumbnailUrl}
                           className="w-full h-44 rounded-xl bg-black object-contain"
                         />
                       )}

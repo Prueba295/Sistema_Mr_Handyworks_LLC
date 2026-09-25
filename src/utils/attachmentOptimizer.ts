@@ -324,13 +324,78 @@ export async function healOrConvertImageDataUrl(rawUrl: string): Promise<string 
 }
 
 /**
+ * Attempts to capture a crisp video frame thumbnail in-browser using HTML5 video and canvas
+ */
+export async function generateVideoThumbnail(file: File | Blob): Promise<string | null> {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return null;
+  return new Promise((resolve) => {
+    try {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      video.muted = true;
+      video.playsInline = true;
+      const objectUrl = URL.createObjectURL(file);
+      video.src = objectUrl;
+
+      const cleanup = () => {
+        URL.revokeObjectURL(objectUrl);
+        video.remove();
+      };
+
+      video.onloadeddata = () => {
+        try {
+          video.currentTime = Math.min(1, Math.max(0.1, (video.duration || 1) / 3));
+        } catch {
+          cleanup();
+          resolve(null);
+        }
+      };
+
+      video.onseeked = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const width = Math.min(480, video.videoWidth || 320);
+          const height = video.videoHeight ? Math.round((video.videoHeight * width) / video.videoWidth) : 240;
+          canvas.width = Math.max(1, width);
+          canvas.height = Math.max(1, height);
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(video, 0, 0, width, height);
+            const thumb = canvas.toDataURL('image/jpeg', 0.72);
+            cleanup();
+            resolve(thumb);
+            return;
+          }
+        } catch {}
+        cleanup();
+        resolve(null);
+      };
+
+      video.onerror = () => {
+        cleanup();
+        resolve(null);
+      };
+
+      // Safety timeout after 2.5 seconds
+      setTimeout(() => {
+        cleanup();
+        resolve(null);
+      }, 2500);
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+/**
  * Validates and converts ANY uploaded file into a lightweight, permanent BookingAttachment object.
- * Accepts any extension: photos (JPG, PNG, HEIC, WEBP, AVIF, RAW), videos, PDFs, docx, xlsx, txt, zip, cad.
+ * Accepts any extension: photos (JPG, PNG, HEIC, WEBP, AVIF, RAW), videos (MP4, MOV), PDFs, docx, xlsx, txt, zip, cad.
+ * Generates instant thumbnails and compresses photos to ensure high-speed upload.
  */
 export async function processUploadedFile(file: File): Promise<BookingAttachment> {
-  const maxBytes = 45 * 1024 * 1024; // Generous 45 MB ceiling
+  const maxBytes = 250 * 1024 * 1024; // Generous 250 MB ceiling for repair videos and detailed PDFs
   if (file.size > maxBytes) {
-    throw new Error(`File "${file.name}" exceeds 45 MB. Please select a smaller file.`);
+    throw new Error(`File "${file.name}" exceeds 250 MB. Please select a smaller file.`);
   }
 
   const ext = getFileExtension(file.name);
@@ -338,15 +403,25 @@ export async function processUploadedFile(file: File): Promise<BookingAttachment
   const isImageCandidate = attachmentType === 'image' || IMAGE_EXTENSIONS.has(ext) || file.type.startsWith('image/');
 
   let dataUrl: string;
+  let thumbnailUrl: string | undefined = undefined;
 
   if (isImageCandidate) {
     try {
-      dataUrl = await compressImageFile(file);
+      dataUrl = await compressImageFile(file, 1440, 0.76);
     } catch {
       dataUrl = await readFileAsDataURL(file);
     }
+  } else if (attachmentType === 'video' || VIDEO_EXTENSIONS.has(ext) || file.type.startsWith('video/')) {
+    // Generate video thumbnail for instant card rendering
+    try {
+      const generatedThumb = await generateVideoThumbnail(file);
+      if (generatedThumb) {
+        thumbnailUrl = generatedThumb;
+      }
+    } catch {}
+    dataUrl = await readFileAsDataURL(file);
   } else {
-    // Other formats (PDF, DOCX, XLSX, MP4, MOV, SVG, ZIP, TXT) read cleanly as DataURL
+    // Documents (PDF, DOCX, XLSX, SVG, ZIP, TXT)
     dataUrl = await readFileAsDataURL(file);
   }
 
@@ -362,6 +437,7 @@ export async function processUploadedFile(file: File): Promise<BookingAttachment
     mimeType: file.type || undefined,
     sizeFormatted: formatFileSize(approxSize || file.size),
     dataUrl,
+    thumbnailUrl,
     createdAt: new Date().toISOString()
   };
 }

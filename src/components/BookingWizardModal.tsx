@@ -107,6 +107,7 @@ export const BookingWizardModal: React.FC = () => {
   const [projectDetails, setProjectDetails] = useState<string>('');
   const [clientAttachments, setClientAttachments] = useState<BookingAttachment[]>([]);
   const [isProcessingAttachments, setIsProcessingAttachments] = useState<boolean>(false);
+  const [attachmentProgressText, setAttachmentProgressText] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Prefill or reset from trigger
@@ -223,8 +224,59 @@ export const BookingWizardModal: React.FC = () => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    if (clientAttachments.length + files.length > 8) {
-      showNotification('Maximum 8 files can be attached per booking request.');
+    // Check existing categorized files
+    const existingImages = clientAttachments.filter(a => a.type === 'image').length;
+    const existingVideos = clientAttachments.filter(a => a.type === 'video').length;
+
+    let newImagesCount = 0;
+    let newVideosCount = 0;
+
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      const isImg = f.type.startsWith('image/') || /\.(jpe?g|png|webp|gif|heic|heif|dng|raw)$/i.test(f.name);
+      const isVid = f.type.startsWith('video/') || /\.(mp4|mov|webm|avi|mkv|3gp)$/i.test(f.name);
+      if (isImg) newImagesCount++;
+      if (isVid) newVideosCount++;
+
+      // Max size check (250 MB ceiling per file)
+      if (f.size > 250 * 1024 * 1024) {
+        showNotification(
+          language === 'es'
+            ? `El archivo "${f.name}" supera los 250 MB permitidos.`
+            : `File "${f.name}" exceeds the 250 MB limit.`
+        );
+        if (e.target) e.target.value = '';
+        return;
+      }
+    }
+
+    if (existingImages + newImagesCount > 50) {
+      showNotification(
+        language === 'es'
+          ? `Límite de 50 fotos alcanzado (${existingImages} ya adjuntadas).`
+          : `Maximum 50 photos allowed (${existingImages} already attached).`
+      );
+      if (e.target) e.target.value = '';
+      return;
+    }
+
+    if (existingVideos + newVideosCount > 5) {
+      showNotification(
+        language === 'es'
+          ? `Límite de 5 videos alcanzado (${existingVideos} ya adjuntados).`
+          : `Maximum 5 videos allowed (${existingVideos} already attached).`
+      );
+      if (e.target) e.target.value = '';
+      return;
+    }
+
+    if (clientAttachments.length + files.length > 60) {
+      showNotification(
+        language === 'es'
+          ? `Límite total de 60 archivos por solicitud.`
+          : `Maximum 60 total files allowed per request.`
+      );
+      if (e.target) e.target.value = '';
       return;
     }
 
@@ -233,19 +285,25 @@ export const BookingWizardModal: React.FC = () => {
       const newAtts: BookingAttachment[] = [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        setAttachmentProgressText(
+          language === 'es'
+            ? `Optimizando archivo ${i + 1} de ${files.length} (${file.name})...`
+            : `Optimizing file ${i + 1} of ${files.length} (${file.name})...`
+        );
         const att = await processUploadedFile(file);
         newAtts.push(att);
       }
       setClientAttachments(prev => [...prev, ...newAtts]);
       showNotification(
         language === 'es'
-          ? `Se adjuntaron ${newAtts.length} archivo(s) optimizado(s).`
-          : `Added ${newAtts.length} attachment(s) (optimized).`
+          ? `Se agregaron ${newAtts.length} archivo(s) optimizado(s).`
+          : `Successfully added ${newAtts.length} optimized attachment(s).`
       );
     } catch (err: any) {
       showNotification(err?.message || 'Error processing attachment.');
     } finally {
       setIsProcessingAttachments(false);
+      setAttachmentProgressText('');
       if (e.target) e.target.value = '';
     }
   };
@@ -1157,29 +1215,32 @@ export const BookingWizardModal: React.FC = () => {
                     </div>
                     <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
                       {language === 'es' 
-                        ? 'Arrastra cualquier archivo aquí (fotos, videos, planos, documentos) o haz clic para explorar' 
-                        : 'At least one clear photo of the work area is required for a quote. Multiple photos are recommended.'}
+                        ? 'Arrastra cualquier archivo aquí (hasta 50 fotos, 5 videos, planos o documentos) o haz clic para explorar' 
+                        : 'Drag any files here (up to 50 photos, 5 videos, blueprints or documents) or click to browse'}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                       {language === 'es' 
-                        ? 'Cualquier extensión: JPG, PNG, PDF, DOCX, MP4, MOV, HEIC, etc. (Máx. 40 MB)' 
-                        : 'Include the existing installation and anything else that may help us understand the project.'}
+                        ? 'Fotos (JPG, PNG, HEIC), Videos (MP4, MOV) y Documentos (PDF, DOCX). Máx. 250 MB por archivo.' 
+                        : 'Photos (JPG, PNG, HEIC), Videos (MP4, MOV), and Documents (PDF, DOCX). Max 250 MB per file.'}
                     </p>
                   </div>
 
                   {isProcessingAttachments && (
                     <div className="mt-2.5 p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 flex items-center gap-2.5 text-xs text-blue-700 dark:text-blue-300 font-semibold animate-pulse">
                       <RefreshCw className="w-4 h-4 animate-spin shrink-0" />
-                      <span>{language === 'es' ? 'Optimizando y preparando archivos...' : 'Compressing and optimizing files in browser...'}</span>
+                      <span>{attachmentProgressText || (language === 'es' ? 'Optimizando y preparando archivos...' : 'Compressing and optimizing files in browser...')}</span>
                     </div>
                   )}
 
                   {clientAttachments.length > 0 && (
                     <div className="mt-3 space-y-2">
-                      <div className="text-[11px] font-bold text-slate-600 dark:text-slate-400">
-                        {language === 'es' ? `Archivos listos (${clientAttachments.length}):` : `Attached Files (${clientAttachments.length}):`}
+                      <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-400">
+                        <span>{language === 'es' ? `Archivos listos (${clientAttachments.length}):` : `Attached Files (${clientAttachments.length}):`}</span>
+                        <span className="text-[10px] text-slate-500">
+                          {clientAttachments.filter(a => a.type === 'image').length} {language === 'es' ? 'fotos' : 'photos'} • {clientAttachments.filter(a => a.type === 'video').length} videos
+                        </span>
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1">
                         {clientAttachments.map((att) => (
                           <div 
                             key={att.id}

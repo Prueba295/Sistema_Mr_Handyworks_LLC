@@ -2543,7 +2543,7 @@ export const AdminView: React.FC = () => {
                         </div>
 
                         {b.attachments && b.attachments.length > 0 ? (
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1">
                             {b.attachments.map(att => {
                               const attExt = getFileExtension(att.name);
                               const attCat = getDetailedCategory(att.name, att.mimeType);
@@ -2559,6 +2559,7 @@ export const AdminView: React.FC = () => {
                                       <img 
                                         src={normalizeDataUrl(att.dataUrl)} 
                                         alt={att.name} 
+                                        loading="lazy"
                                         onError={(e) => {
                                           (e.target as HTMLElement).style.display = 'none';
                                           const fallback = (e.target as HTMLElement).nextElementSibling;

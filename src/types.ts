@@ -39,6 +39,7 @@ export interface BookingAttachment {
   clientPhone?: string;
   fileExt?: string;
   mimeType?: string;
+  thumbnailUrl?: string;
 }
 
 export interface Booking {

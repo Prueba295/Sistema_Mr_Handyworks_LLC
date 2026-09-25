@@ -5,40 +5,47 @@ export async function prepareRemoteBooking(booking: Booking): Promise<Booking> {
   if (!supabase || !booking.attachments?.length) return booking;
   const client = supabase;
 
-  const remoteAttachments = await Promise.all(booking.attachments.map(async attachment => {
-    const safeName = (attachment.name || 'file').replace(/[^a-zA-Z0-9._-]/g, '-');
-    const storagePath = `${booking.id}/${attachment.id || 'att'}-${safeName}`;
+  // Process attachments in sequential batches of 3 to safely support up to 50+ attachments without network congestion
+  const remoteAttachments: BookingAttachment[] = [];
+  const chunkSize = 3;
+  for (let i = 0; i < booking.attachments.length; i += chunkSize) {
+    const batch = booking.attachments.slice(i, i + chunkSize);
+    const batchResults = await Promise.all(batch.map(async attachment => {
+      const safeName = (attachment.name || 'file').replace(/[^a-zA-Z0-9._-]/g, '-');
+      const storagePath = `${booking.id}/${attachment.id || 'att'}-${safeName}`;
 
-    // If already http/https, keep it
-    if (attachment.dataUrl.startsWith('http')) {
-      return attachment;
-    }
-
-    // Attempt bucket upload if available
-    if (attachment.dataUrl.startsWith('data:')) {
-      try {
-        const blob = await fetch(attachment.dataUrl).then(response => response.blob());
-        const { data: uploadData, error } = await client.storage
-          .from('booking-attachments')
-          .upload(storagePath, blob, {
-            contentType: attachment.mimeType || blob.type || 'application/octet-stream',
-            upsert: true
-          });
-
-        if (!error && uploadData) {
-          const { data } = client.storage.from('booking-attachments').getPublicUrl(storagePath);
-          if (data?.publicUrl) {
-            return { ...attachment, dataUrl: data.publicUrl };
-          }
-        }
-      } catch {
-        // Fallback gracefully to preserve original dataUrl
+      // If already http/https, keep it
+      if (attachment.dataUrl.startsWith('http')) {
+        return attachment;
       }
-    }
 
-    // ALWAYS preserve the valid dataUrl so the image is never lost or replaced with a 404
-    return attachment;
-  }));
+      // Attempt bucket upload if available
+      if (attachment.dataUrl.startsWith('data:')) {
+        try {
+          const blob = await fetch(attachment.dataUrl).then(response => response.blob());
+          const { data: uploadData, error } = await client.storage
+            .from('booking-attachments')
+            .upload(storagePath, blob, {
+              contentType: attachment.mimeType || blob.type || 'application/octet-stream',
+              upsert: true
+            });
+
+          if (!error && uploadData) {
+            const { data } = client.storage.from('booking-attachments').getPublicUrl(storagePath);
+            if (data?.publicUrl) {
+              return { ...attachment, dataUrl: data.publicUrl };
+            }
+          }
+        } catch {
+          // Fallback gracefully to preserve original dataUrl
+        }
+      }
+
+      // ALWAYS preserve the valid dataUrl so the image is never lost or replaced with a 404
+      return attachment;
+    }));
+    remoteAttachments.push(...batchResults);
+  }
 
   const firstImage = remoteAttachments.find(attachment => attachment.type === 'image' || attachment.dataUrl.startsWith('data:image'));
   return {

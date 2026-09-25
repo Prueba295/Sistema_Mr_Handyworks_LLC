@@ -62,7 +62,16 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
     ? 'Servicio residencial solicitado según especificaciones del cliente. El alcance detallado de mano de obra y materiales será verificado en sitio.'
     : 'Residential service requested as per customer specifications. Detailed labor scope and materials will be verified on-site.');
 
-  const attachmentsCount = booking.attachments ? booking.attachments.length : 0;
+  const attachments = booking.attachments || [];
+  const attachmentsCount = attachments.length;
+  const photosCount = attachments.filter(a => a.type === 'image' || (a.name && a.name.match(/\.(jpe?g|png|webp|gif|heic|heif)$/i))).length;
+  const videosCount = attachments.filter(a => a.type === 'video' || (a.name && a.name.match(/\.(mp4|mov|webm)$/i))).length;
+  const docsCount = Math.max(0, attachmentsCount - photosCount - videosCount);
+
+  // Take the primary reference photo for the PDF single-image display
+  const primaryImage = attachments.find(att => att.type === 'image' || (att.name && att.name.match(/\.(jpe?g|png|webp|gif|heic|heif)$/i))) 
+    || (booking.photoUrl ? { name: 'Primary Reference Photo', dataUrl: booking.photoUrl, type: 'image', sizeFormatted: 'Optimized' } : null);
+
   const attachmentsSummary = attachmentsCount > 0
     ? `${attachmentsCount} ${isEs ? 'archivo(s) adjunto(s) para revisión técnica' : 'media attachment(s) for technician review'}`
     : (isEs ? 'Sin fotos o archivos adjuntos' : 'No photos or files attached');
@@ -734,8 +743,8 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
 
     </div>
 
-    ${attachments.length > 0 || booking.photoUrl ? `
-    <!-- PAGE 2: ATTACHED EVIDENCE & CUSTOMER UPLOADS (MANDATORY ANNEX) -->
+    ${(primaryImage || attachments.length > 0) ? `
+    <!-- PAGE 2: ATTACHED EVIDENCE & PRIMARY REFERENCE PHOTO -->
     <div class="page-sheet" style="page-break-before: always; break-before: page; margin-top: 24px;">
       
       <!-- Header -->
@@ -744,12 +753,12 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
           <div class="logo-container">MH</div>
           <div class="header-text">
             <h1>Mr Handyworks LLC</h1>
-            <p>${isEs ? 'Anexo Oficial • Fotos y Documentos del Proyecto' : 'Official Annex • Project Photos & Uploaded Files'}</p>
+            <p>${isEs ? 'Anexo Oficial • Fotografía de Referencia y Registro Digital' : 'Official Annex • Primary Project Photo & Verified Media Index'}</p>
           </div>
         </div>
         <div class="header-meta">
           <div class="meta-tag" style="background: rgba(14, 165, 233, 0.25); color: #38bdf8; border-color: #0284c7;">
-            ${isEs ? 'Evidencia Adjunta' : 'Client Evidence'}
+            ${isEs ? 'Evidencia Registrada' : 'Verified Evidence'}
           </div>
           <div class="order-number">ORD #${booking.id}</div>
           <div class="order-date">${bookingDate.toLocaleDateString(isEs ? 'es-ES' : 'en-US')}</div>
@@ -759,48 +768,83 @@ export const generateQuotePDF = (booking: Booking, language: 'es' | 'en' = 'en')
       <!-- Body Content -->
       <div class="body-content" style="gap: 16px; padding: 22px 32px;">
         <div class="section-pill" style="align-self: flex-start;">
-          ${isEs ? 'Archivos Adjuntados por el Cliente' : 'Customer Uploaded Documentation'}
+          ${isEs ? 'Fotografía Principal de Inspección' : 'Primary Technical Inspection Photo'}
         </div>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; font-size: 11px; color: #475569; line-height: 1.4;">
-          ${isEs 
-            ? `Se adjuntan ${attachmentsCount} archivo(s) proporcionados por el cliente (${clientName}) para la inspección y diagnóstico previo. Todos los archivos están indexados de forma segura.`
-            : `Attached are ${attachmentsCount} file(s) provided by customer (${clientName}) for diagnostic inspection and scope evaluation. All media items are securely indexed.`}
+        <!-- Primary Photo Display (Single reference photo to guarantee email delivery & high speed) -->
+        ${primaryImage ? `
+        <div style="border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 12px; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <div style="height: 330px; display: flex; align-items: center; justify-content: center; background: #0f172a; border-radius: 10px; overflow: hidden;">
+            <img src="${primaryImage.dataUrl}" alt="${primaryImage.name || 'Primary Reference'}" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 11px;">
+            <span style="font-weight: 700; color: #0f172a;">📸 ${primaryImage.name || (isEs ? 'Foto de Referencia' : 'Primary Reference Photo')}</span>
+            <span style="color: #0284c7; font-weight: 700;">✓ ${isEs ? 'Verificada en Archivo' : 'Verified on File'}</span>
+          </div>
+        </div>
+        ` : `
+        <div style="border: 1px dashed #cbd5e1; border-radius: 12px; padding: 24px; text-align: center; color: #64748b; font-size: 12px;">
+          ${isEs ? 'Archivos registrados en la nube.' : 'Media files indexed in secure cloud.'}
+        </div>
+        `}
+
+        <!-- Media Summary Cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+          <div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #f8fafc; text-align: center;">
+            <span style="display: block; font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">${isEs ? 'Fotos' : 'Photos'}</span>
+            <span style="font-size: 18px; font-weight: 900; color: #0b3c5d;">${photosCount}</span>
+          </div>
+          <div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #f8fafc; text-align: center;">
+            <span style="display: block; font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">${isEs ? 'Videos' : 'Videos'}</span>
+            <span style="font-size: 18px; font-weight: 900; color: #d97706;">${videosCount}</span>
+          </div>
+          <div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #f8fafc; text-align: center;">
+            <span style="display: block; font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase;">${isEs ? 'Documentos' : 'Documents'}</span>
+            <span style="font-size: 18px; font-weight: 900; color: #0284c7;">${docsCount}</span>
+          </div>
         </div>
 
-        <!-- Media Grid -->
-        <div class="attachments-grid" style="display: grid; grid-template-columns: ${attachments.length > 1 ? '1fr 1fr' : '1fr'}; gap: 14px; flex-grow: 1; align-content: start;">
-          ${attachments.map((att, idx) => {
-            const isImg = att.type === 'image' || (att.name && att.name.match(/\.(jpe?g|png|webp|gif)$/i));
-            const isVid = att.type === 'video' || (att.name && att.name.match(/\.(mp4|mov|webm)$/i));
-            const directUrl = att.dataUrl || `https://jonkbrwdzhpsghsmjhbz.supabase.co/storage/v1/object/public/booking-attachments/${booking.id}/${att.id || `att-${idx + 1}`}-${(att.name || 'file').replace(/[^a-zA-Z0-9._-]/g, '-')}`;
-            return `
-            <div style="border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between; gap: 8px;">
-              ${isImg ? `
-                <div style="height: ${attachments.length > 2 ? '140px' : '230px'}; display: flex; align-items: center; justify-content: center; background: #0f172a; border-radius: 8px; overflow: hidden;">
-                  <img src="${att.dataUrl}" alt="${att.name}" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
-                </div>
-              ` : `
-                <div style="height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 8px; color: #0b3c5d;">
-                  <span style="font-size: 30px;">📄</span>
-                  <span style="font-size: 11px; font-weight: 700; margin-top: 4px;">${att.type.toUpperCase()}</span>
-                </div>
-              `}
-              <div>
-                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #0f172a;">
-                  <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">${att.name}</span>
-                  <span style="color: #64748b; font-family: monospace;">${att.sizeFormatted || 'Cloud'}</span>
-                </div>
-                <div style="margin-top: 4px; font-size: 9px; color: #0284c7; word-break: break-all;">
-                  <a href="${directUrl}" target="_blank" style="color: #0284c7; text-decoration: none;">🔗 ${isEs ? 'Ver archivo original en alta resolución' : 'View full high-res file in cloud'}</a>
-                </div>
+        <!-- Full Cloud Gallery Access Box -->
+        <div style="background: linear-gradient(135deg, #0b3c5d 0%, #154e74 100%); color: #ffffff; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.3px;">🌐 ${isEs ? 'Galería Digital Completa en la Nube' : 'Full Interactive Cloud Media Gallery'}</span>
+            <span style="background: #f59e0b; color: #0f172a; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px;">${attachmentsCount} ${isEs ? 'Archivos Totales' : 'Total Items'}</span>
+          </div>
+          <p style="margin: 0; font-size: 11px; color: #e2e8f0; line-height: 1.4;">
+            ${isEs 
+              ? `Para garantizar un archivo PDF ligero y de entrega inmediata por correo, la galería multimedia completa (hasta 50 fotos, videos de alta definición y documentos técnicos) está disponible en el enlace interactivo sin necesidad de iniciar sesión.`
+              : `To maintain a lightweight document optimized for immediate email delivery, the complete high-resolution media library (${attachmentsCount} files: photos, diagnostic videos, and technical plans) is securely accessible in the cloud viewer.`}
+          </p>
+          <div style="margin-top: 4px; padding: 8px 12px; background: rgba(255,255,255,0.12); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+            <a href="https://sistema-mr-handyworks-llc.vercel.app/?orderId=${booking.id}" target="_blank" style="color: #38bdf8; font-weight: 800; font-size: 11.5px; text-decoration: underline; word-break: break-all;">
+              🔗 ${isEs ? 'Abrir Galería Completa de Fotos y Videos' : 'Open Complete Interactive Photo & Video Gallery'}
+            </a>
+            <span style="color: #cbd5e1; font-size: 10px;">ID: #${booking.id}</span>
+          </div>
+        </div>
+
+        ${attachments.length > 1 ? `
+        <!-- Compact Itemized Inventory of Uploaded Files -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px;">
+          <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 6px;">
+            ${isEs ? 'Índice de Archivos Registrados en esta Orden' : 'Itemized Index of Uploaded Files'} (${attachments.length})
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 10px; color: #334155;">
+            ${attachments.slice(0, 10).map((att, idx) => `
+              <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 2px 4px; background: #ffffff; border-radius: 4px; border: 1px solid #e2e8f0;">
+                ${att.type === 'video' ? '🎬' : att.type === 'image' ? '📷' : '📄'} ${idx + 1}. ${att.name}
               </div>
-            </div>
-            `;
-          }).join('')}
+            `).join('')}
+            ${attachments.length > 10 ? `
+              <div style="font-weight: 700; color: #0284c7; padding: 2px 4px;">
+                + ${attachments.length - 10} ${isEs ? 'archivos más en la nube...' : 'more files in cloud viewer...'}
+              </div>
+            ` : ''}
+          </div>
         </div>
+        ` : ''}
 
-        <div style="border-top: 1px dashed #cbd5e1; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #64748b;">
+        <div style="border-top: 1px dashed #cbd5e1; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #64748b;">
           <span>Mr Handyworks LLC • Cloud Storage Verified</span>
           <span>Order #${booking.id} • Customer: ${clientName}</span>
         </div>
